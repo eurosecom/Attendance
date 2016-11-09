@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings" >
+
+    <EditTextPreference
+        android:key="servername"
+        android:defaultValue="www.ala.sk/androideshop"
+        android:summary="@string/servername_summary"
+        android:title="@string/servername_title" />
+
+    <EditTextPreference
+        android:key="username"
+        android:summary="@string/username_summary"
+        android:title="@string/username_title" />
+
+    <EditTextPreference
+        android:key="userpsw"
+        android:summary="@string/userpsw_summary"
+        android:title="@string/userpsw_title" />
+
+    <EditTextPreference
+    android:key="fir"
+    android:enabled="true"
+    android:summary="@string/fir_summary"
+    android:title="@string/fir_title" />
+
+    <EditTextPreference
+        android:key="ustype"
+        android:enabled="true"
+        android:summary="@string/ustype_summary"
+        android:title="@string/ustype_title" />
+
+    <EditTextPreference
+        android:key="usico"
+        android:enabled="true"
+        android:summary="@string/usico_summary"
+        android:title="@string/usico_title" />
+        
+</PreferenceScreen>

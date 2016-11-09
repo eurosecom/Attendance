@@ -1,0 +1,71 @@
+<resources>
+        <!-- Base application theme.-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- customize the color palette
+        <item name="colorPrimary">@color/material_blue_100</item>
+        <item name="colorPrimaryDark">@color/material_blue_300</item>
+        <item name="colorAccent">@color/material_red_A200</item>
+        -->
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowStyle</item>
+    </style>
+
+    <style name="AppTheme.DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <!-- white hamburger icon for drawer  -->
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <!-- dark actionbar with white text -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- white optionsmenu with black text -->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Activity with no Title -->
+    <style parent="AppTheme" name="ThemeOverlay.MyNoTitleActivity">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Dark Buttons -->
+    <style parent="ThemeOverlay.AppCompat.Dark" name="ThemeOverlay.MyDarkButton">
+    <item name="colorButtonNormal">@color/colorAccent</item>
+    <item name="android:layout_marginRight">4dp</item>
+    <item name="android:layout_marginLeft">4dp</item>
+    <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
+    <style parent="AppTheme" name="ThemeOverlay.FirebaseIcon">
+    <item name="android:layout_marginTop">@dimen/icon_top_margin</item>
+    <item name="android:layout_marginBottom">@dimen/icon_bottom_margin</item>
+    </style>
+
+
+    <style parent="AppTheme" name="ThemeOverlay.MyTitleText">
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">36sp</item>
+    </style>
+
+    <!-- Light EditTexts -->
+    <style parent="ThemeOverlay.AppCompat.Dark" name="ThemeOverlay.MyLightEditText"/>
+    <style parent="AppTheme" name="ThemeOverlay.MyTextDetail">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:fadeScrollbars">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:maxLines">5</item>
+    <item name="android:padding">4dp</item>
+    <item name="android:scrollbars">vertical</item>
+    <item name="android:textSize">14sp</item>
+    </style>
+
+
+</resources>
