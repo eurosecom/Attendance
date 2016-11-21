@@ -35,5 +35,11 @@
         android:enabled="true"
         android:summary="@string/usico_summary"
         android:title="@string/usico_title" />
+
+    <EditTextPreference
+        android:key="usatw"
+        android:enabled="true"
+        android:summary="@string/usatw_summary"
+        android:title="@string/usatw_title" />
         
 </PreferenceScreen>

@@ -224,6 +224,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
                         editor.putString("ustype", "0").apply();
                         editor.putString("usico", "0").apply();
+                        editor.putString("usatw", "0").apply();
 
                         editor.commit();
                     }
@@ -238,12 +239,13 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         editor.putString("ustype", "0").apply();
         editor.putString("usico", "0").apply();
+        editor.putString("usatw", "0").apply();
 
         editor.commit();
 
         String username = usernameFromEmail(user.getEmail());
         // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail(), "0", "0");
+        writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0");
 
     }
 
@@ -256,11 +258,11 @@ public class EmailPasswordActivity extends BaseActivity implements
     }
 
     // [START basic_write]
-    private void writeNewUser(String userId, String name, String email, String usertypex, String usericox) {
+    private void writeNewUser(String userId, String name, String email, String usertypex, String usericox, String useratwx) {
 
         //save new user
         //String ustypex = SettingsActivity.getUsType(this);
-        User user = new User(name, email, usertypex, usericox);
+        User user = new User(name, email, usertypex, usericox, useratwx);
         Log.d("setvalue", usertypex);
         //User user = new User(name, email);
         mDatabase.child("users").child(userId).setValue(user);
@@ -274,6 +276,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ustype", "0").apply();
         editor.putString("usico", "0").apply();
+        editor.putString("usatw", "0").apply();
         updateUI(null);
     }
 

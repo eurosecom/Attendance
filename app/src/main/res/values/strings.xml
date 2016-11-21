@@ -100,6 +100,8 @@
     <string name="ustype_summary">Set App by login. Admin, common user....</string>
     <string name="usico_title">Company of User.</string>
     <string name="usico_summary">ID of Company where user work.</string>
+    <string name="usatw_title">User at work.</string>
+    <string name="usatw_summary">1-user at work, 0-user leav work.</string>
 
     <!-- Nav Drawer -->
     <string name="slider">Slider</string>
@@ -127,6 +129,13 @@
     </array>
 
     <string name="descimg">descimg</string>
+    <string name="action_myemployee">My employees</string>
+    <string name="action_mycompany">My company</string>
 
+    <string name="incoming">Incoming work</string>
+    <string name="leaving">Leaving work</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="interruption">Interruption</string>
 
 </resources>

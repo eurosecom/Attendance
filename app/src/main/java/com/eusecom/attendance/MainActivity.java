@@ -17,9 +17,12 @@
 package com.eusecom.attendance;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +36,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,15 +73,16 @@ public class MainActivity extends ActionBarActivity {
 
     ActionBarDrawerToggle mDrawerToggle;                  // Declaring Action Bar Drawer Toggle
 
-    Button btnLogin, btnAtt;
     String incomplet;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "MainActivity";
-    private TextView mStatusTextView, usicoTextView;
+    private TextView mStatusTextView, usicoTextView, mText3;
     FirebaseUser user;
+    private ImageView mCompanyImage;
+    private ImageButton intowork, outsidework, imglogin, imgnepritomnost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +101,9 @@ public class MainActivity extends ActionBarActivity {
 
         mStatusTextView = (TextView) findViewById(R.id.status);
         usicoTextView = (TextView) findViewById(R.id.usico);
+        mCompanyImage = (ImageView) findViewById(R.id.mycompany);
+
+        mText3 = (TextView) findViewById(R.id.text3);
 
         incomplet = "0";
         String serverx = SettingsActivity.getServerName(this);
@@ -153,39 +163,6 @@ public class MainActivity extends ActionBarActivity {
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
-        // btn ean control stock
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // Launching All products Activity
-                Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        // btn ean no stock
-        btnAtt = (Button) findViewById(R.id.btnAtt);
-        btnAtt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (user != null) {
-                Intent i = new Intent(getApplicationContext(), DatabaseActivity.class);
-                startActivity(i);
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
-                    startActivity(i);
-                }
-
-            }
-        });
-
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // [START initialize_auth]
@@ -211,8 +188,113 @@ public class MainActivity extends ActionBarActivity {
         };
         // [END auth_state_listener
 
+        invalidateOptionsMenu();
+
+        intowork =(ImageButton)findViewById(R.id.intowork);
+        intowork.setOnClickListener(new View.OnClickListener()   {
+            public void onClick(View v)  {
+
+                if (user != null) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences.Editor editor = prefs.edit();
+
+                editor.putString("usatw", "1").apply();
+
+                editor.commit();
+
+                getCompanyIcon(user);
+
+                }else{
+
+                    Toast.makeText(MainActivity.this, "Login to Firebase.",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        outsidework =(ImageButton)findViewById(R.id.outsidework);
+        outsidework.setOnClickListener(new View.OnClickListener()   {
+            public void onClick(View v)  {
+
+                if (user != null) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences.Editor editor = prefs.edit();
+
+                editor.putString("usatw", "0").apply();
+
+                editor.commit();
+
+                getCompanyIcon(user);
+                }else{
+
+                    Toast.makeText(MainActivity.this, "Login to Firebase.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        imglogin =(ImageButton)findViewById(R.id.imglogin);
+        imglogin.setOnClickListener(new View.OnClickListener()   {
+            public void onClick(View v)  {
+
+                // Launching All products Activity
+                Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        imgnepritomnost =(ImageButton)findViewById(R.id.imgnepritomnost);
+        imgnepritomnost.setOnClickListener(new View.OnClickListener()   {
+            public void onClick(View v)  {
+
+                if (user != null) {
+                    Intent i = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    startActivity(i);
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
+                    startActivity(i);
+                }
+
+            }
+        });
+
 
     }//end oncreate
+
+    private void getCompanyIcon(FirebaseUser user) {
+
+        if (user != null) {
+
+            String usatwx = SettingsActivity.getUsAtw(this);
+
+            if( usatwx.equals("1")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
+                } else {
+                    mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
+                }
+            }else{
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.clock, getApplicationContext().getTheme()));
+                } else {
+                    mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.clock));
+                }
+            }
+
+
+        } else {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.clock, getApplicationContext().getTheme()));
+            } else {
+                mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.clock));
+            }
+        }
+    }
 
     private void updateUI(FirebaseUser user) {
 
@@ -221,18 +303,26 @@ public class MainActivity extends ActionBarActivity {
             String usicox = SettingsActivity.getUsIco(this);
             usicoTextView.setText(getString(R.string.emailpassword_usico_fmt, usicox));
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt, user.getEmail()));
+            mText3.setText(getString(R.string.logout));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imglogin.setImageDrawable(getResources().getDrawable(R.drawable.logout, getApplicationContext().getTheme()));
+            } else {
+                imglogin.setImageDrawable(getResources().getDrawable(R.drawable.logout));
+            }
 
-            //String ustypex = user.getUstype();
-            //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+            getCompanyIcon(user);
 
-            //findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
-            //findViewById(R.id.email_password_fields).setVisibility(View.GONE);
-            //findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
         } else {
             mStatusTextView.setText(R.string.signed_out);
             usicoTextView.setText("");
-            //mDetailTextView.setText(null);
+            mText3.setText(getString(R.string.login));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imglogin.setImageDrawable(getResources().getDrawable(R.drawable.login, getApplicationContext().getTheme()));
+            } else {
+                imglogin.setImageDrawable(getResources().getDrawable(R.drawable.login));
+            }
 
+            getCompanyIcon(user);
         }
     }
 
@@ -270,8 +360,21 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.options_menu, menu);
+
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menu.clear();
+        String ustypex = SettingsActivity.getUsType(this);
+        if( ustypex.equals("99")) {
+            getMenuInflater().inflate(R.menu.options_mainallmenu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.options_mainmenu, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

@@ -11,6 +11,7 @@ public class User {
     public String ustype;
     public String usico;
     public String usosc;
+    public String usatw;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -21,19 +22,21 @@ public class User {
         this.email = email;
     }
 
-    public User(String username, String email, String ustype, String usico) {
+    public User(String username, String email, String ustype, String usico, String usatw) {
         this.username = username;
         this.email = email;
         this.ustype = ustype;
         this.usico = usico;
+        this.usatw = usatw;
     }
 
-    public User(String username, String email, String ustype, String usico, String usosc) {
+    public User(String username, String email, String ustype, String usico, String usosc, String usatw) {
         this.username = username;
         this.email = email;
         this.ustype = ustype;
         this.usico = usico;
         this.usosc = usosc;
+        this.usatw = usatw;
     }
 
     public String getUstype() {
