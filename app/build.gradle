@@ -38,13 +38,13 @@ dependencies {
 
     //Firebase Authentication email password
     //by https://github.com/firebase/quickstart-android
-    compile 'com.google.firebase:firebase-auth:9.2.0'
+    compile 'com.google.firebase:firebase-auth:9.6.0'
     //only for Google Authentication
     //compile 'com.google.android.gms:play-services:9.2.0'
 
     //Firebase Storage
     compile 'pub.devrel:easypermissions:0.1.7'
-    compile 'com.google.firebase:firebase-storage:9.2.0'
+    compile 'com.google.firebase:firebase-storage:9.6.0'
 
     //firebase Database
     compile 'com.android.support:recyclerview-v7:23.0.0'
@@ -52,7 +52,7 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
 
     compile 'com.firebaseui:firebase-ui-database:0.4.0'
-    compile 'com.google.firebase:firebase-database:9.2.0'
+    compile 'com.google.firebase:firebase-database:9.6.0'
 }
 
 //do not forgot copy google-service.json from firebase/console to /app, there is firebaseapp url...

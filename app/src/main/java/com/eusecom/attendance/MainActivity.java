@@ -41,12 +41,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.Post;
+import com.eusecom.attendance.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -83,6 +91,9 @@ public class MainActivity extends ActionBarActivity {
     FirebaseUser user;
     private ImageView mCompanyImage;
     private ImageButton intowork, outsidework, imglogin, imgnepritomnost;
+    private String userIDX = "";
+    ValueEventListener connlist;
+    DatabaseReference connectedRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +174,7 @@ public class MainActivity extends ActionBarActivity {
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // [START initialize_auth]
@@ -177,9 +189,11 @@ public class MainActivity extends ActionBarActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    userIDX = user.getUid();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+                    userIDX = "";
                 }
                 // [START_EXCLUDE]
                 updateUI(user);
@@ -195,14 +209,15 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v)  {
 
                 if (user != null) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                SharedPreferences.Editor editor = prefs.edit();
 
-                editor.putString("usatw", "1").apply();
+                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String icox = SettingsActivity.getUsIco(MainActivity.this);
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
 
-                editor.commit();
+                writeAttendance(icox,userId,"0","1",ts,ts,"0","0","0","0" );
 
-                getCompanyIcon(user);
+
 
                 }else{
 
@@ -218,14 +233,14 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v)  {
 
                 if (user != null) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                SharedPreferences.Editor editor = prefs.edit();
 
-                editor.putString("usatw", "0").apply();
+                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String icox = SettingsActivity.getUsIco(MainActivity.this);
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
 
-                editor.commit();
+                writeAttendance(icox,userId,"0","2",ts,ts,"0","0","0","0" );
 
-                getCompanyIcon(user);
                 }else{
 
                     Toast.makeText(MainActivity.this, "Login to Firebase.",
@@ -238,9 +253,29 @@ public class MainActivity extends ActionBarActivity {
         imglogin.setOnClickListener(new View.OnClickListener()   {
             public void onClick(View v)  {
 
-                // Launching All products Activity
-                Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
-                startActivity(i);
+                connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+                connlist = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        boolean connected = snapshot.getValue(Boolean.class);
+                        if (connected) {
+                            System.out.println("connected");
+                            Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
+                            startActivity(i);
+                        } else {
+                            System.out.println("not connected");
+                            Toast.makeText(MainActivity.this, "Not connected", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        System.err.println("Listener was cancelled");
+                    }
+                };
+                connectedRef.addValueEventListener(connlist);
+
 
             }
         });
@@ -264,6 +299,47 @@ public class MainActivity extends ActionBarActivity {
 
 
     }//end oncreate
+
+
+    // [START basic_write]
+    private void writeAttendance(String usico, String usid, String ume, String dmxa, String daod, String dado, String dnixa,
+                                 String hodxb, String longi, String lati) {
+
+        String key = mDatabase.child("attendance").push().getKey();
+
+        Attendance attendance = new Attendance(usico, usid, ume, dmxa, daod, dado, dnixa, hodxb, longi, lati );
+
+        Map<String, Object> attValues = attendance.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        childUpdates.put("/attendances/" + key, attValues);
+        childUpdates.put("/company-attendances/" + usico + "/" + key, attValues);
+        childUpdates.put("/user-attendances/" + userIDX + "/" + key, attValues);
+
+        mDatabase.updateChildren(childUpdates);
+
+        String usatwx="0";
+        if( dmxa.equals("1")) {
+            usatwx="1";
+        }else{
+            usatwx="0";
+        }
+
+        mDatabase.child("users").child(userIDX).child("usatw").setValue(usatwx);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor editor = prefs.edit();
+
+            editor.putString("usatw", usatwx).apply();
+
+        editor.commit();
+
+        getCompanyIcon(user);
+
+
+    }
+    // [END basic_write]
 
     private void getCompanyIcon(FirebaseUser user) {
 
@@ -342,6 +418,9 @@ public class MainActivity extends ActionBarActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+        if (connlist != null) {
+            connectedRef.removeEventListener(connlist);
+        }
     }
     // [END on_stop_remove_listener]
 
@@ -396,4 +475,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }
