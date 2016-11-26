@@ -306,8 +306,23 @@ public class MainActivity extends ActionBarActivity {
                                  String hodxb, String longi, String lati) {
 
         String key = mDatabase.child("attendance").push().getKey();
+        String gpslat;
+        String gpslon;
+        GPSTracker mGPS = new GPSTracker(MainActivity.this);
+        gpslat="0"; gpslon="0";
 
-        Attendance attendance = new Attendance(usico, usid, ume, dmxa, daod, dado, dnixa, hodxb, longi, lati );
+        if(mGPS.canGetLocation ){
+            mGPS.getLocation();
+            gpslat=""+mGPS.getLatitude();
+            gpslon=""+mGPS.getLongitude();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            mGPS.showSettingsAlert();
+        }
+
+        Attendance attendance = new Attendance(usico, usid, ume, dmxa, daod, dado, dnixa, hodxb, gpslon, gpslat );
 
         Map<String, Object> attValues = attendance.toMap();
 
