@@ -14,10 +14,12 @@
 
     <application
         android:allowBackup="true"
+        android:name="android.support.multidex.MultiDexApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,16 +40,22 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity android:name=".DatabaseActivity"/>
+        <activity android:name=".IntsActivity" android:label="@string/interruption"/>
         <activity android:name=".NewPostActivity"/>
         <activity android:name=".SignInActivity"/>
         <activity android:name=".PostDetailActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".MapActivity"/>
 
         <service android:name=".MyDownloadService" android:exported="false"/>
         <!-- Android N SDK has new restrictions around sharing file:// URIs https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition -->
         <provider android:name="android.support.v4.content.FileProvider" android:exported="false" android:grantUriPermissions="true" android:authorities="com.eusecom.attendancet.fileprovider">
         <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
         </provider>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
     </application>
 

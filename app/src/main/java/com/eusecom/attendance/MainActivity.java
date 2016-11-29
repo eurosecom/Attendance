@@ -116,30 +116,8 @@ public class MainActivity extends ActionBarActivity {
 
         mText3 = (TextView) findViewById(R.id.text3);
 
-        incomplet = "0";
-        String serverx = SettingsActivity.getServerName(this);
-        if (serverx != null && !serverx.isEmpty()) {
-            // doSomething
-        }else {
-            serverx="www.ala.sk/androideshop";
-        }
-
-        String delims = "[/]+";
-        String[] serverxxx = serverx.split(delims);
-
-        if( serverxxx.length < 2 ) {
-            serverx="www.ala.sk/androideshop";
-            serverxxx = serverx.split(delims);
-        }
-
-        //Create Folder
-        File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/" + serverxxx[1] + "/inventura");
-        if(!folder.exists()) {
-            folder.mkdirs();
-        }
-
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2]};
+        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2],navMenuTitles[3]};
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 

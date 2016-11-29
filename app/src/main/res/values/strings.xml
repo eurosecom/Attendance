@@ -112,7 +112,8 @@
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Login/Logout</item>
-        <item >Attendance</item>
+        <item >Interruption</item>
+        <item >Google Maps</item>
         <item >Settings</item>
     </string-array>
 
@@ -123,6 +124,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
+        <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
@@ -137,5 +139,6 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="interruption">Interruption</string>
+
 
 </resources>
