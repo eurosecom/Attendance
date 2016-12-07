@@ -40,7 +40,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity android:name=".DatabaseActivity"/>
-        <activity android:name=".IntsActivity" android:label="@string/interruption"/>
+        <activity android:name=".AbsenceActivity" android:label="@string/absence"/>
         <activity android:name=".NewPostActivity"/>
         <activity android:name=".SignInActivity"/>
         <activity android:name=".PostDetailActivity"/>

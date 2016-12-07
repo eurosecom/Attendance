@@ -124,26 +124,8 @@ public class NewPostActivity extends BaseDatabaseActivity {
 
     private void submitPost() {
 
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    System.out.println("connected");
-                    showProgressDialog();
-                } else {
-                    System.out.println("not connected");
-                    hideProgressDialog();
-                    Toast.makeText(NewPostActivity.this, "Not connected", Toast.LENGTH_SHORT).show();
-                }
-            }
+        showProgressDialog();
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();
 
@@ -181,6 +163,7 @@ public class NewPostActivity extends BaseDatabaseActivity {
 
                         }
 
+                        hideProgressDialog();
                         // Finish this Activity, back to the stream
                         finish();
                         // [END_EXCLUDE]
@@ -189,6 +172,7 @@ public class NewPostActivity extends BaseDatabaseActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        hideProgressDialog();
                     }
                 });
         // [END single_value_read]
