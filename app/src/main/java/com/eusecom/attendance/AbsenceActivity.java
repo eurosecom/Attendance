@@ -18,6 +18,7 @@ package com.eusecom.attendance;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,21 +26,17 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.eusecom.attendance.fragment.AbsTypesFragment;
-import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.fragment.MyAbsenceFragment;
+import com.eusecom.attendance.fragment.MyAttendanceFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 public class  AbsenceActivity extends BaseDatabaseActivity {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     new MyAbsenceFragment(),
-                    new EmptyFragment(),
+                    new MyAttendanceFragment(),
                     new AbsTypesFragment(),
             };
             private final String[] mFragmentNames = new String[] {
@@ -75,11 +72,36 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
+
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                // Check if this is the page you want.
+                if(position == 0){
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+                    fab.setVisibility(View.VISIBLE);
+                }
+                if(position == 1){
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+                    fab.setVisibility(View.GONE);
+                }
+                if(position == 2){
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         // Button launches NewPostActivity
-        findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
