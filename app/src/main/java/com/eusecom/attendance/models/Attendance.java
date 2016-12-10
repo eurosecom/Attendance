@@ -14,6 +14,7 @@ public class Attendance {
     public String usid;
     public String ume;
     public String dmxa;
+    public String dmna;
     public String daod;
     public String dado;
     public String dnixa;
@@ -27,12 +28,13 @@ public class Attendance {
 
 
 
-    public Attendance(String usico, String usid, String ume, String dmxa, String daod, String dado, String dnixa,
+    public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
                       String hodxb, String longi, String lati) {
         this.usico = usico;
         this.usid = usid;
         this.ume = ume;
         this.dmxa = dmxa;
+        this.dmna = dmna;
         this.daod = daod;
         this.dado = dado;
         this.dnixa = dnixa;
@@ -56,6 +58,7 @@ public class Attendance {
         result.put("usid", usid);
         result.put("ume", ume);
         result.put("dmxa", dmxa);
+        result.put("dmna", dmna);
         result.put("daod", daod);
         result.put("dado", dado);
         result.put("dnixa", dnixa);

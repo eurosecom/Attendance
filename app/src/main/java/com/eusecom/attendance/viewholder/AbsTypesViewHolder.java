@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.eusecom.attendance.R;
 
-public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
+public class AbsTypesViewHolder extends RecyclerView.ViewHolder  {
 
     public TextView titleView;
     public TextView authorView;
@@ -17,7 +17,7 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
     public TextView numStarsView;
     public TextView bodyView;
 
-    public AbsenceViewHolder(View itemView) {
+    public AbsTypesViewHolder(View itemView) {
         super(itemView);
 
         titleView = (TextView) itemView.findViewById(R.id.post_title);
@@ -30,9 +30,9 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
-    public void bindToAbsence(com.eusecom.attendance.models.Attendance attendance, View.OnClickListener starClickListener) {
-        titleView.setText(attendance.dmxa);
-        authorView.setText(attendance.dmna);
+    public void bindToAbsence(com.eusecom.attendance.models.Absence absence, View.OnClickListener starClickListener) {
+        titleView.setText(absence.idm);
+        authorView.setText(absence.iname);
         numStarsView.setText("0");
         bodyView.setText("0");
 

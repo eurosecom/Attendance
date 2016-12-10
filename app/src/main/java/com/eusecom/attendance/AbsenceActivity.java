@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.eusecom.attendance.fragment.AbsTypesFragment;
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.fragment.MyAbsenceFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,12 +52,12 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
             private final Fragment[] mFragments = new Fragment[] {
                     new MyAbsenceFragment(),
                     new EmptyFragment(),
-                    new EmptyFragment(),
+                    new AbsTypesFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     "Absences",
-                    "Next",
-                    "Next"
+                    "Attendances",
+                    "AbsTypes"
             };
             @Override
             public Fragment getItem(int position) {

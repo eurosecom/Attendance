@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.models.Absence;
-import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.viewholder.AbsTypesViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,19 +36,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbsenceListFragment extends Fragment {
+public abstract class AbsTypesListFragment extends Fragment {
 
-    private static final String TAG = "AbsenceListFragment";
+    private static final String TAG = "AbsTypesListFragment";
 
     // [START define_database_reference]
     private DatabaseReference mDatabase;
     // [END define_database_reference]
 
-    private FirebaseRecyclerAdapter<Attendance, AbsenceViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Absence, AbsTypesViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
-    public AbsenceListFragment() {}
+    public AbsTypesListFragment() {}
     String absxy;
     String abskeydel=null;
     private ProgressDialog fProgressDialog;
@@ -122,11 +122,11 @@ public abstract class AbsenceListFragment extends Fragment {
 
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Attendance, AbsenceViewHolder>(Attendance.class, R.layout.item_absence,
-                AbsenceViewHolder.class, absencesQuery) {
+        mAdapter = new FirebaseRecyclerAdapter<Absence, AbsTypesViewHolder>(Absence.class, R.layout.item_absence,
+                AbsTypesViewHolder.class, absencesQuery) {
 
             @Override
-            protected void populateViewHolder(final AbsenceViewHolder viewHolder, final Attendance model, final int position) {
+            protected void populateViewHolder(final AbsTypesViewHolder viewHolder, final Absence model, final int position) {
                 final DatabaseReference absRef = getRef(position);
 
                 // Set click listener for the whole post view

@@ -188,12 +188,20 @@ public class MainActivity extends ActionBarActivity {
 
                 if (user != null) {
 
-                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String icox = SettingsActivity.getUsIco(MainActivity.this);
-                Long tsLong = System.currentTimeMillis()/1000;
-                String ts = tsLong.toString();
+                    String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
+                    if( usatwx.equals("0")) {
 
-                writeAttendance(icox,userId,"0","1",ts,ts,"0","0","0","0" );
+                        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        String icox = SettingsActivity.getUsIco(MainActivity.this);
+                        Long tsLong = System.currentTimeMillis() / 1000;
+                        String ts = tsLong.toString();
+
+                        writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0");
+
+                    }else{
+                        Toast.makeText(MainActivity.this, "You are at work now.",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
 
 
@@ -212,12 +220,20 @@ public class MainActivity extends ActionBarActivity {
 
                 if (user != null) {
 
-                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String icox = SettingsActivity.getUsIco(MainActivity.this);
-                Long tsLong = System.currentTimeMillis()/1000;
-                String ts = tsLong.toString();
+                    String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
+                    if( usatwx.equals("1")) {
 
-                writeAttendance(icox,userId,"0","2",ts,ts,"0","0","0","0" );
+                        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        String icox = SettingsActivity.getUsIco(MainActivity.this);
+                        Long tsLong = System.currentTimeMillis()/1000;
+                        String ts = tsLong.toString();
+
+                        writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0" );
+
+                    }else{
+                        Toast.makeText(MainActivity.this, "You are out of work now.",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
                 }else{
 
@@ -263,7 +279,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v)  {
 
                 if (user != null) {
-                    Intent i = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    Intent i = new Intent(getApplicationContext(), AbsenceActivity.class);
                     startActivity(i);
                 } else {
                     // User is signed out
@@ -280,7 +296,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     // [START basic_write]
-    private void writeAttendance(String usico, String usid, String ume, String dmxa, String daod, String dado, String dnixa,
+    private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
                                  String hodxb, String longi, String lati) {
 
         String key = mDatabase.child("attendance").push().getKey();
@@ -300,7 +316,7 @@ public class MainActivity extends ActionBarActivity {
             mGPS.showSettingsAlert();
         }
 
-        Attendance attendance = new Attendance(usico, usid, ume, dmxa, daod, dado, dnixa, hodxb, gpslon, gpslat );
+        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat );
 
         Map<String, Object> attValues = attendance.toMap();
 
