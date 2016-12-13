@@ -54,6 +54,11 @@
     <item name="android:textSize">36sp</item>
     </style>
 
+    <style parent="AppTheme" name="ThemeOverlay.MyDateText">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <!-- Light EditTexts -->
     <style parent="ThemeOverlay.AppCompat.Dark" name="ThemeOverlay.MyLightEditText"/>
     <style parent="AppTheme" name="ThemeOverlay.MyTextDetail">

@@ -23,6 +23,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,12 +38,18 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
+    int whatispage=0;
+    Toolbar mActionBarToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ints);
+        setContentView(R.layout.activity_absence);
         //showProgressDialog();
+
+        mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(mActionBarToolbar);
+        getSupportActionBar().setTitle(getString(R.string.absence));
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -83,14 +90,17 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
                 if(position == 0){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
                     fab.setVisibility(View.VISIBLE);
+                    whatispage=0;
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
                     fab.setVisibility(View.GONE);
+                    whatispage=1;
                 }
                 if(position == 2){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
                     fab.setVisibility(View.VISIBLE);
+                    whatispage=2;
                 }
             }
         });
@@ -105,7 +115,13 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(AbsenceActivity.this, NewPostActivity.class);
+                Intent i=null;
+                if( whatispage == 0 ) {
+                    i = new Intent(AbsenceActivity.this, NewAbsenceActivity.class);
+                }
+                if( whatispage == 2 ) {
+                    i = new Intent(AbsenceActivity.this, NewPostActivity.class);
+                }
                 Bundle extras = new Bundle();
                 extras.putString("editx", "0");
                 extras.putString("keyx", "0");

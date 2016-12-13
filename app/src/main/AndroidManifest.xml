@@ -41,6 +41,7 @@
 
         <activity android:name=".DatabaseActivity"/>
         <activity android:name=".AbsenceActivity" android:label="@string/absence"/>
+        <activity android:name=".NewAbsenceActivity" android:label="@string/absence"/>
         <activity android:name=".NewPostActivity"/>
         <activity android:name=".SignInActivity"/>
         <activity android:name=".PostDetailActivity"/>

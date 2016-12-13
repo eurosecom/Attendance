@@ -140,6 +140,16 @@
     <string name="logout">Logout</string>
     <string name="interruption">Interruption</string>
     <string name="absence">Absence</string>
+    <string name="newabsence">New Absence</string>
+
+    <string-array name="AbsenceSpinnerArray">
+        <item>506 Holliday</item>
+        <item>510 Bank holliday</item>
+    </string-array>
+    <string name="select_absence">Select a absence</string>
+
+    <string name="dateod">from date</string>
+    <string name="datedo">to date</string>
 
 
 </resources>
