@@ -21,6 +21,7 @@ public class Attendance {
     public String hodxb;
     public String longi;
     public String lati;
+    public String datm;
 
     public Attendance() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -29,7 +30,7 @@ public class Attendance {
 
 
     public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                      String hodxb, String longi, String lati) {
+                      String hodxb, String longi, String lati, String datm) {
         this.usico = usico;
         this.usid = usid;
         this.ume = ume;
@@ -41,6 +42,7 @@ public class Attendance {
         this.hodxb = hodxb;
         this.longi = longi;
         this.lati = lati;
+        this.datm = datm;
     }
 
 
@@ -65,6 +67,7 @@ public class Attendance {
         result.put("hodxb", hodxb);
         result.put("longi", longi);
         result.put("lati", lati);
+        result.put("datm", datm);
 
         return result;
     }

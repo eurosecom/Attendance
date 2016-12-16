@@ -196,7 +196,7 @@ public class MainActivity extends ActionBarActivity {
                         Long tsLong = System.currentTimeMillis() / 1000;
                         String ts = tsLong.toString();
 
-                        writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0");
+                        writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts);
 
                     }else{
                         Toast.makeText(MainActivity.this, "You are at work now.",
@@ -228,7 +228,7 @@ public class MainActivity extends ActionBarActivity {
                         Long tsLong = System.currentTimeMillis()/1000;
                         String ts = tsLong.toString();
 
-                        writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0" );
+                        writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0", ts );
 
                     }else{
                         Toast.makeText(MainActivity.this, "You are out of work now.",
@@ -297,7 +297,7 @@ public class MainActivity extends ActionBarActivity {
 
     // [START basic_write]
     private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                                 String hodxb, String longi, String lati) {
+                                 String hodxb, String longi, String lati, String datm) {
 
         String key = mDatabase.child("attendance").push().getKey();
         String gpslat;
@@ -316,7 +316,7 @@ public class MainActivity extends ActionBarActivity {
             mGPS.showSettingsAlert();
         }
 
-        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat );
+        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm );
 
         Map<String, Object> attValues = attendance.toMap();
 

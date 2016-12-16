@@ -150,6 +150,7 @@
 
     <string name="dateod">from date</string>
     <string name="datedo">to date</string>
+    <string name="hodiny">hours for 1.day, 0,nothing = all day</string>
 
 
 </resources>

@@ -2,8 +2,10 @@ package com.eusecom.attendance;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eusecom.attendance.models.Attendance;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +46,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
     private EditText mTitleField;
     private EditText mBodyField;
+    private EditText hodiny;
     private TextView dateodx, datedox, dateodl, datedol;
 
     String editx, keyx;
@@ -73,6 +78,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.field_body);
+        hodiny = (EditText) findViewById(R.id.inputhodiny);
         dateodx = (TextView) findViewById(R.id.dateodx);
         datedox = (TextView) findViewById(R.id.datedox);
         dateodl = (TextView) findViewById(R.id.dateodl);
@@ -127,11 +133,22 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
                 String datelx = "" + datel;
 
-                //Toast.makeText(NewAbsenceActivity.this, "Date " + datex, Toast.LENGTH_SHORT).show();
-                dateodx.setText(datex);
-                datedox.setText(datelx);
-                dateodl.setText(datelx);
-                datedol.setText(datelx);
+                long dateodlx = Long.parseLong(dateodl.getText().toString());
+                long datedolx = Long.parseLong(datedol.getText().toString());
+
+                if( datel > dateodlx ){
+                    datedox.setText(datex);
+                    datedol.setText(datelx);
+                }
+
+                if( datel <= datedolx ){
+                    dateodx.setText(datex);
+                    datedox.setText(datex);
+                    dateodl.setText(datelx);
+                    datedol.setText(datelx);
+                }
+
+
             }
         });
 
@@ -156,6 +173,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         datedox.setText(datex);
         dateodl.setText(datelx);
         datedol.setText(datelx);
+        hodiny.setText("0");
 
 
     }//end of oncreate
@@ -249,26 +267,14 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         showProgressDialog();
 
-        final String title = mTitleField.getText().toString();
-        final String body = mBodyField.getText().toString();
+        final String hodinyx = hodiny.getText().toString();
+        final String dateodlx = dateodl.getText().toString();
+        final String datedolx = datedol.getText().toString();
 
-        // Title is required
-        if (TextUtils.isEmpty(title)) {
-            mTitleField.setError(REQUIRED);
-            hideProgressDialog();
-            return;
-        }
-
-        // Body is required
-        if (TextUtils.isEmpty(body)) {
-            mBodyField.setError(REQUIRED);
-            hideProgressDialog();
-            return;
-        }
 
         // [START single_value_read]
         final String userId = getUid();
-        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+        mDatabase.child("user-attendances").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -283,8 +289,12 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                                     "Error: could not fetch user.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            // Write new post
-                            writeNewPost(userId, user.username, title, body);
+                            // Write new absence
+                            String icox = SettingsActivity.getUsIco(NewAbsenceActivity.this);
+                            Long tsLong = System.currentTimeMillis() / 1000;
+                            String ts = tsLong.toString();
+
+                            writeAttendance(icox, userId, "0", "506","Holliday", dateodlx, datedolx, "0", hodinyx, "0", "0", ts);
 
                         }
 
@@ -303,27 +313,50 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         // [END single_value_read]
     }
 
-    // [START write_fan_out]
-    private void writeNewPost(String userId, String username, String title, String body) {
-        // Create new post at /user-posts/$userid/$postid and at
-        // /posts/$postid simultaneously
+    // [START basic_write]
+    private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
+                                 String hodxb, String longi, String lati, String datm) {
 
-        String key = mDatabase.child("posts").push().getKey();
+        String userIDX = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String key = mDatabase.child("attendance").push().getKey();
+        String gpslat;
+        String gpslon;
+        GPSTracker mGPS = new GPSTracker(NewAbsenceActivity.this);
+        gpslat="0"; gpslon="0";
 
-        if( editx.equals("1")) {
-            key=keyx;
+        if(mGPS.canGetLocation ){
+            mGPS.getLocation();
+            gpslat=""+mGPS.getLatitude();
+            gpslon=""+mGPS.getLongitude();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            mGPS.showSettingsAlert();
         }
 
-        Post post = new Post(userId, username, title, body);
-        Map<String, Object> postValues = post.toMap();
+        Attendance attendance = new Attendance(usico, userIDX, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm );
+
+        Map<String, Object> attValues = attendance.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("/posts/" + key, postValues);
-        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+        childUpdates.put("/attendances/" + key, attValues);
+        childUpdates.put("/company-attendances/" + usico + "/" + key, attValues);
+        childUpdates.put("/user-attendances/" + userIDX + "/" + key, attValues);
 
         mDatabase.updateChildren(childUpdates);
-        //hideProgressDialog();
+
+        String usatwx="0";
+        if( dmxa.equals("1")) {
+            usatwx="1";
+        }else{
+            usatwx="0";
+        }
+
+        mDatabase.child("users").child(usid).child("usatw").setValue(usatwx);
+
+
     }
-    // [END write_fan_out]
+    // [END basic_write]
 }
