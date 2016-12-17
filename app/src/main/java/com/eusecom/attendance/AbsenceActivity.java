@@ -17,6 +17,7 @@
 package com.eusecom.attendance;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -27,13 +28,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+
 import com.eusecom.attendance.fragment.AbsTypesFragment;
+import com.eusecom.attendance.fragment.LiveFragment;
 import com.eusecom.attendance.fragment.MyAbsenceFragment;
 import com.eusecom.attendance.fragment.MyAttendanceFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class  AbsenceActivity extends BaseDatabaseActivity {
+public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragment.OnFragmentInteractionListener {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -57,11 +61,13 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
                     new MyAbsenceFragment(),
                     new MyAttendanceFragment(),
                     new AbsTypesFragment(),
+                    new LiveFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     "Absences",
                     "Attendances",
-                    "AbsTypes"
+                    "AbsTypes",
+                    "Live"
             };
             @Override
             public Fragment getItem(int position) {
@@ -160,8 +166,9 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         }
     }
 
-
-
-
+    @Override
+    public void onFragmentInteraction (Uri uri){
+        //only for LiveFragment
+    }
 
 }
