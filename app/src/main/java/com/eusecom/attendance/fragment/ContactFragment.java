@@ -1,6 +1,7 @@
 /*
- * http://stackoverflow.com/questions/41134470/recyclerview-in-fragment-no-adapter-attached-skipping-layout/41137626#41137626
- * /layout/latest_item.xml, fragment_new.xml
+ * http://stackoverflow.com/questions/41224253/firebase-database-with-recycler-view-in-fragment
+ * layout/item_contact.xml
+ * fragment/AdapterContact.java
  */
 
 package com.eusecom.attendance.fragment;
@@ -16,12 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.eusecom.attendance.models.Event;
 import com.eusecom.attendance.models.Poll;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -31,10 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.eusecom.attendance.R;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class LiveFragment extends Fragment {
+public class ContactFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,10 +50,10 @@ public class LiveFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public LiveFragment() {}
+    public ContactFragment() {}
 
-    public static LiveFragment newInstance(String param1, String param2) {
-        LiveFragment fragment = new LiveFragment();
+    public static ContactFragment newInstance(String param1, String param2) {
+        ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -85,7 +80,7 @@ public class LiveFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Inflate the layout for this fragment
-        final View v = inflater.inflate(R.layout.fragment_new, container, false);
+        final View v = inflater.inflate(R.layout.fragment_contact, container, false);
         Log.v("TAG", "ON CREATE CALLED FROM NEW");
 
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -147,34 +142,6 @@ public class LiveFragment extends Fragment {
                 //        .into(viewHolder.mPollImage);
                 Log.v("QUESTION", model.getQuestion());
                 //Log.v("IMAGE", model.getImage_URL());
-
-                final String whatsclick = model.getQuestion();
-                final DatabaseReference aRef = FirebaseDatabase.getInstance().getReference();
-
-                viewHolder.verify_button.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View arg0) {
-
-                        String key = aRef.child("ApprovedEvents").push().getKey();
-
-                        Log.d("clicked Button ", whatsclick + key);
-
-                        Event event = new Event(whatsclick, whatsclick, whatsclick );
-
-                        Map<String, Object> eventValues = event.toMap();
-
-                        Map<String, Object> childUpdates = new HashMap<>();
-
-                        childUpdates.put("/ApprovedEvents/" + key, eventValues);
-
-                        aRef.updateChildren(childUpdates);
-
-
-                    }
-                });
-
-
             }
         };
         mRecyclerview.setAdapter(mFireAdapter);
@@ -220,7 +187,6 @@ public class LiveFragment extends Fragment {
 
         TextView mPollQuestion;
         ImageView mPollImage;
-        Button verify_button;
 
 
         public PollHolder(View itemView) {
@@ -228,12 +194,8 @@ public class LiveFragment extends Fragment {
 
             mPollQuestion = (TextView) itemView.findViewById(R.id.latest_item_question);
             mPollImage = (ImageView) itemView.findViewById(R.id.pollThumbNailImage);
-            verify_button = (Button) itemView.findViewById(R.id.verify_button);
 
-
-
-
-        }//pollholder
+        }
     }
 
     /**

@@ -122,7 +122,7 @@ public abstract class AbsTypesListFragment extends Fragment {
 
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Absence, AbsTypesViewHolder>(Absence.class, R.layout.item_absence,
+        mAdapter = new FirebaseRecyclerAdapter<Absence, AbsTypesViewHolder>(Absence.class, R.layout.item_abstypes,
                 AbsTypesViewHolder.class, absencesQuery) {
 
             @Override

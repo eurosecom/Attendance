@@ -16,7 +16,7 @@ public class MyAbsenceFragment extends AbsenceListFragment {
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // [START absences_query]
-        Query recentAbsencesQuery = databaseReference.child("user-attendances").child(userId)
+        Query recentAbsencesQuery = databaseReference.child("user-attendances").child(userId).orderByChild("dmxa").startAt("500")
                 .limitToFirst(200);
         // [END absences_query]
 

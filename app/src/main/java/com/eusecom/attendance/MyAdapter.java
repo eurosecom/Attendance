@@ -208,6 +208,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
                                 break;
 
+                            case 5:
+
+                                // View v at position pos is clicked.
+                                Intent i5 = new Intent(mContext, SplashScreen.class);
+                                v.getContext().startActivity(i5);
+
+                                break;
 
                             default:
                                 break;

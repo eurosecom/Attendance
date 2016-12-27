@@ -28,7 +28,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/pollThumbNailImage"
+                android:id="@+id/star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -37,20 +37,11 @@
                 android:src="@drawable/ic_toggle_star_outline_24" />
 
             <TextView
-                android:id="@+id/latest_item_question"
+                android:id="@+id/post_num_stars"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 tools:text="7" />
-
-            <Button
-                android:id="@+id/verify_button"
-                android:text="Click"
-                android:visibility="visible"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                 />
 
         </LinearLayout>
 

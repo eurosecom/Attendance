@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eusecom.attendance.NewAbsenceActivity">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_custom">
+    </include>
+
+    <EditText
+        android:id="@+id/field_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/tool_bar"
+        android:visibility="gone"
+        android:hint="Title"
+        android:maxLines="1" />
+
+    <Spinner android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/field_title"
+        android:prompt="@string/select_absence"
+        android:drawSelectorOnTop="true"
+        android:id="@+id/spinner01"> </Spinner>
+
+    <LinearLayout
+        android:id="@+id/linlayup1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/spinner01">
+
+    <TextView
+        android:id="@+id/dateod"
+        android:text="@string/dateod"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        />
+
+    <TextView
+        android:id="@+id/dateodx"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:gravity="left"
+        android:textAppearance="@style/ThemeOverlay.MyDateText"
+        />
+
+    <TextView
+        android:id="@+id/dateodl"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/datedo"
+        android:text="@string/datedo"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:gravity="left"
+        />
+
+    <TextView
+        android:id="@+id/datedox"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:gravity="left"
+        android:textAppearance="@style/ThemeOverlay.MyDateText"
+        />
+
+    <TextView
+        android:id="@+id/datedol"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    </LinearLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textinp1"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:focusableInTouchMode="true"
+            android:focusable="false"
+            android:layout_below="@+id/linlayup1"
+            android:textColorHint="@color/black"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hodiny"
+                android:id="@+id/inputhodiny"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/black"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
+    <CalendarView
+        android:id="@+id/calview"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/textinp1"
+        android:showWeekNumber="false"
+        android:firstDayOfWeek="2" />
+
+    <EditText
+        android:id="@+id/field_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calview"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="5dp"
+        android:hint="Write your post..."
+        android:inputType="textMultiLine"
+        android:visibility="gone"
+        android:maxLines="10"
+        android:scrollHorizontally="false" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_submit_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_navigation_check_24"/>
+
+</RelativeLayout>

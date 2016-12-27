@@ -47,6 +47,7 @@
         <activity android:name=".PostDetailActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
+        <activity android:name=".SplashScreen"/>
 
         <service android:name=".MyDownloadService" android:exported="false"/>
         <!-- Android N SDK has new restrictions around sharing file:// URIs https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition -->

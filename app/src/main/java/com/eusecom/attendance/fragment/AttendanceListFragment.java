@@ -123,7 +123,7 @@ public abstract class AttendanceListFragment extends Fragment {
 
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Attendance, AttendanceViewHolder>(Attendance.class, R.layout.item_absence,
+        mAdapter = new FirebaseRecyclerAdapter<Attendance, AttendanceViewHolder>(Attendance.class, R.layout.item_attendance,
                 AttendanceViewHolder.class, absencesQuery) {
 
             @Override

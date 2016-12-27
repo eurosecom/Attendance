@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.eusecom.attendance.fragment.AbsTypesFragment;
+import com.eusecom.attendance.fragment.ContactFragment;
 import com.eusecom.attendance.fragment.LiveFragment;
 import com.eusecom.attendance.fragment.MyAbsenceFragment;
 import com.eusecom.attendance.fragment.MyAttendanceFragment;
