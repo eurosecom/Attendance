@@ -153,6 +153,10 @@
     <string name="dateod">from date</string>
     <string name="datedo">to date</string>
     <string name="hodiny">hours for 1.day, 0,nothing = all day</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="hodxb">hours</string>
+    <string name="datm">posted</string>
 
 
 </resources>
