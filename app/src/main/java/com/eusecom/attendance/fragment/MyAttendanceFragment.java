@@ -16,7 +16,7 @@ public class MyAttendanceFragment extends AttendanceListFragment {
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // [START absences_query]
-        Query recentAbsencesQuery = databaseReference.child("user-attendances").child(userId).orderByChild("dmxa").startAt("1").endAt("2")
+        Query recentAbsencesQuery = databaseReference.child("user-attendances").child(userId).orderByChild("datm")
                 .limitToFirst(200);
         // [END absences_query]
 

@@ -6,7 +6,7 @@
     tools:context=".AbsenceActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/absences_list"
+        android:id="@+id/attendances_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"

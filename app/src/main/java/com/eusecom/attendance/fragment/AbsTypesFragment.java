@@ -27,37 +27,37 @@ public class AbsTypesFragment extends AbsTypesListFragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild("absences")) {
+                if (snapshot.hasChild("absencetypes")) {
                     // run some code
                 }else{
                     Log.d("table interrupts ", "does not exist");
 
                     mDatabase = FirebaseDatabase.getInstance().getReference();
-                    String key = mDatabase.child("absences").push().getKey();
+                    String key = mDatabase.child("absencetypes").push().getKey();
                     Absence absence = new Absence("506","Holliday");
                     Map<String, Object> intValues = absence.toMap();
                     Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put("/absences/" + key, intValues);
+                    childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
                     absence = new Absence("510","Bank holliday");
                     intValues = absence.toMap();
-                    childUpdates.put("/absences/" + key, intValues);
+                    childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
                     absence = new Absence("518","Visit Doctor");
                     intValues = absence.toMap();
-                    childUpdates.put("/absences/" + key, intValues);
+                    childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
                     absence = new Absence("520","Other");
                     intValues = absence.toMap();
-                    childUpdates.put("/absences/" + key, intValues);
+                    childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
                     absence = new Absence("801","Illness");
                     intValues = absence.toMap();
-                    childUpdates.put("/absences/" + key, intValues);
+                    childUpdates.put("/absencetypes/" + key, intValues);
 
                     mDatabase.updateChildren(childUpdates);
 
@@ -70,7 +70,7 @@ public class AbsTypesFragment extends AbsTypesListFragment {
             }
         });
         // [START absences_query]
-        Query recentAbsencesQuery = databaseReference.child("absences")
+        Query recentAbsencesQuery = databaseReference.child("absencetypes")
                 .limitToFirst(200);
         // [END absences_query]
 

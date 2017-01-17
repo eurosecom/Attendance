@@ -294,7 +294,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                             Long tsLong = System.currentTimeMillis() / 1000;
                             String ts = tsLong.toString();
 
-                            writeAttendance(icox, userId, "0", "506","Holliday", dateodlx, datedolx, "0", hodinyx, "0", "0", ts);
+                            writeAbsence(icox, userId, "0", "506","Holliday", dateodlx, datedolx, "0", hodinyx, "0", "0", ts);
 
                         }
 
@@ -314,11 +314,11 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
     }
 
     // [START basic_write]
-    private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
+    private void writeAbsence(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
                                  String hodxb, String longi, String lati, String datm) {
 
         String userIDX = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String key = mDatabase.child("attendance").push().getKey();
+        String key = mDatabase.child("absences").push().getKey();
         String gpslat;
         String gpslon;
         GPSTracker mGPS = new GPSTracker(NewAbsenceActivity.this);
@@ -341,9 +341,9 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("/attendances/" + key, attValues);
-        childUpdates.put("/company-attendances/" + usico + "/" + key, attValues);
-        childUpdates.put("/user-attendances/" + userIDX + "/" + key, attValues);
+        childUpdates.put("/absences/" + key, attValues);
+        childUpdates.put("/company-absences/" + usico + "/" + key, attValues);
+        childUpdates.put("/user-absences/" + userIDX + "/" + key, attValues);
 
         mDatabase.updateChildren(childUpdates);
 

@@ -299,7 +299,7 @@ public class MainActivity extends ActionBarActivity {
     private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
                                  String hodxb, String longi, String lati, String datm) {
 
-        String key = mDatabase.child("attendance").push().getKey();
+        String key = mDatabase.child("attendances").push().getKey();
         String gpslat;
         String gpslon;
         GPSTracker mGPS = new GPSTracker(MainActivity.this);
