@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eusecom.attendance.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,9 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
     public TextView dateto;
     public TextView hodxb;
     public TextView datm;
+    FirebaseUser user;
+    private FirebaseAuth mAuth;
+    String usemail = "";
 
     public AbsenceViewHolder(View itemView) {
         super(itemView);
@@ -34,7 +39,11 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
         hodxb = (TextView) itemView.findViewById(R.id.hodxb);
         datm = (TextView) itemView.findViewById(R.id.datm);
 
-
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if (user != null) {
+            usemail = user.getEmail();
+        }
 
     }
 
@@ -54,7 +63,7 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
         hodxb.setText(attendance.hodxb);
 
         long timestampm = Long.parseLong(attendance.datm) * 1000L;
-        datm.setText(getDateTime(timestampm ));
+        datm.setText(usemail + " " + getDateTime(timestampm ));
 
         starView.setOnClickListener(starClickListener);
 
