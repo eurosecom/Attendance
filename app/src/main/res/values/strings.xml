@@ -149,6 +149,23 @@
     <string-array name="AbsenceSpinnerArray">
         <item>506 Holliday</item>
         <item>510 Bank holliday</item>
+        <item>518 Visit Doctor</item>
+        <item>520 Other</item>
+        <item>801 Illness</item>
+    </string-array>
+    <string-array name="AbsenceSpinnerArrayIdm">
+        <item>506</item>
+        <item>510</item>
+        <item>518</item>
+        <item>520</item>
+        <item>801</item>
+    </string-array>
+    <string-array name="AbsenceSpinnerArrayIname">
+        <item>Holliday</item>
+        <item>Bank holliday</item>
+        <item>Visit Doctor</item>
+        <item>Other</item>
+        <item>Illness</item>
     </string-array>
     <string name="select_absence">Select a absence</string>
 

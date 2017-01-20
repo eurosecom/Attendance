@@ -57,6 +57,11 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
     protected int mPos;
     protected String mSelection;
     Toolbar mActionBarToolbar;
+    Spinner spinner;
+    int spinposition=0;
+
+    String dmaxx, dmnxx;
+    String[] AbsIdm, AbsIname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +103,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner01);
+        spinner = (Spinner) findViewById(R.id.spinner01);
         this.mAdapter = ArrayAdapter.createFromResource(this, R.array.AbsenceSpinnerArray,
                 android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(this.mAdapter);
@@ -106,6 +111,20 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         AdapterView.OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
         spinner.setOnItemSelectedListener(spinnerListener);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView,
+                                       View selectedItemView, int position, long id) {
+                spinposition=position;
+
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {// do nothing
+            }
+
+        });
+
+
 
         CalendarView simpleCalendarView = (CalendarView) findViewById(R.id.calview); // get the reference of CalendarView
         simpleCalendarView.setFocusedMonthDateColor(getResources().getColor(R.color.primary_dark)); // set yellow color for the dates of focused month
@@ -270,7 +289,13 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         final String hodinyx = hodiny.getText().toString();
         final String dateodlx = dateodl.getText().toString();
         final String datedolx = datedol.getText().toString();
+        AbsIdm =   getResources().getStringArray(R.array.AbsenceSpinnerArrayIdm);
+        AbsIname =   getResources().getStringArray(R.array.AbsenceSpinnerArrayIname);
+        dmaxx = "506";
+        dmnxx = "Holliday";
 
+        dmaxx = AbsIdm[spinposition];
+        dmnxx = AbsIname[spinposition];
 
         // [START single_value_read]
         final String userId = getUid();
@@ -294,7 +319,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                             Long tsLong = System.currentTimeMillis() / 1000;
                             String ts = tsLong.toString();
 
-                            writeAbsence(icox, userId, "0", "506","Holliday", dateodlx, datedolx, "0", hodinyx, "0", "0", ts);
+                            writeAbsence(icox, userId, "0", dmaxx, dmnxx, dateodlx, datedolx, "0", hodinyx, "0", "0", ts);
 
                         }
 
