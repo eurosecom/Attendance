@@ -46,7 +46,7 @@
 
         </LinearLayout>
 
-        <include layout="@layout/include_absencevalues_layout"
+        <include layout="@layout/include_attendancevalues_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

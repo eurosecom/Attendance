@@ -61,14 +61,12 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
             private final Fragment[] mFragments = new Fragment[] {
                     new MyAbsenceFragment(),
                     new MyAttendanceFragment(),
-                    new AbsTypesFragment(),
-                    new LiveFragment(),
+                    new AbsTypesFragment()
             };
             private final String[] mFragmentNames = new String[] {
                     "Absences",
                     "Attendances",
-                    "AbsTypes",
-                    "Live"
+                    "AbsTypes"
             };
             @Override
             public Fragment getItem(int position) {

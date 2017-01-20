@@ -138,6 +138,8 @@
 
     <string name="incoming">Incoming work</string>
     <string name="leaving">Leaving work</string>
+    <string name="qincoming">Do you want to income to work ?</string>
+    <string name="qleaving">Do you want to leave work ?</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="interruption">Interruption</string>
@@ -158,6 +160,9 @@
     <string name="hodxb">hours</string>
     <string name="datm">posted</string>
     <string name="postedby">posted by</string>
+
+    <string name="textyes">Yes</string>
+    <string name="textno">No</string>
 
 
 </resources>

@@ -16,6 +16,7 @@
 
 package com.eusecom.attendance;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -28,6 +29,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -191,12 +193,32 @@ public class MainActivity extends ActionBarActivity {
                     String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
                     if( usatwx.equals("0")) {
 
-                        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        String icox = SettingsActivity.getUsIco(MainActivity.this);
-                        Long tsLong = System.currentTimeMillis() / 1000;
-                        String ts = tsLong.toString();
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle(getString(R.string.incoming))
+                                .setMessage(getString(R.string.qincoming))
+                                .setPositiveButton(R.string.textyes,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int whichButton) {
 
-                        writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts);
+                                                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                String icox = SettingsActivity.getUsIco(MainActivity.this);
+                                                Long tsLong = System.currentTimeMillis() / 1000;
+                                                String ts = tsLong.toString();
+
+                                                writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts);
+
+                                            }
+                                        })
+                                .setNegativeButton(R.string.textno,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int whichButton) {
+                                                // ignore, just dismiss
+
+                                            }
+                                        })
+                                .show();
 
                     }else{
                         Toast.makeText(MainActivity.this, "You are at work now.",
@@ -223,12 +245,32 @@ public class MainActivity extends ActionBarActivity {
                     String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
                     if( usatwx.equals("1")) {
 
-                        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        String icox = SettingsActivity.getUsIco(MainActivity.this);
-                        Long tsLong = System.currentTimeMillis()/1000;
-                        String ts = tsLong.toString();
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle(getString(R.string.leaving))
+                                .setMessage(getString(R.string.qleaving))
+                                .setPositiveButton(R.string.textyes,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int whichButton) {
 
-                        writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0", ts );
+                                                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                String icox = SettingsActivity.getUsIco(MainActivity.this);
+                                                Long tsLong = System.currentTimeMillis()/1000;
+                                                String ts = tsLong.toString();
+
+                                                writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0", ts );
+
+                                            }
+                                        })
+                                .setNegativeButton(R.string.textno,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int whichButton) {
+                                                // ignore, just dismiss
+
+                                            }
+                                        })
+                                .show();
 
                     }else{
                         Toast.makeText(MainActivity.this, "You are out of work now.",
