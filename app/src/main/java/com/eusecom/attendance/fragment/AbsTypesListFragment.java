@@ -58,13 +58,13 @@ public abstract class AbsTypesListFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_all_posts, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_abstypes, container, false);
 
         // [START create_database_reference]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END create_database_reference]
 
-        mRecycler = (RecyclerView) rootView.findViewById(R.id.messages_list);
+        mRecycler = (RecyclerView) rootView.findViewById(R.id.abstypes_list);
         mRecycler.setHasFixedSize(true);
 
         return rootView;

@@ -65,6 +65,9 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
         if( attendance.dmxa.equals("518")) {
             Picasso.with(mContext).load(R.drawable.abs518).resize(120, 120).into(absence_photo);
         }
+        if( attendance.dmxa.equals("520")) {
+            Picasso.with(mContext).load(R.drawable.abs520).resize(120, 120).into(absence_photo);
+        }
         if( attendance.dmxa.equals("801")) {
             Picasso.with(mContext).load(R.drawable.abs801).resize(120, 120).into(absence_photo);
         }
