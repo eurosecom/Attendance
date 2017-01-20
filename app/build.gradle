@@ -19,6 +19,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        //try Selectively compiling com.google.android.gms:play-services APIs into your executable
+        //https://developers.google.com/android/guides/setup
         multiDexEnabled true
 
     }
@@ -56,6 +58,9 @@ dependencies {
 
     //google maps
     compile 'com.google.android.gms:play-services:9.6.0'
+
+    //picasso
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }
 
 //do not forgot copy google-service.json from firebase/console to /app, there is firebaseapp url...
