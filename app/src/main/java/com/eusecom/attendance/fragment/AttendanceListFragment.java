@@ -250,10 +250,9 @@ public abstract class AttendanceListFragment extends Fragment {
 
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/posts/" + key, null);
-        childUpdates.put("/user-posts/" + userId + "/" + key, null);
-        childUpdates.put("/post-comments/" + key, null);
-
+        childUpdates.put("/attendances/" + key, null);
+        childUpdates.put("/user-attendances/" + userId + "/" + key, null);
+        childUpdates.put("/company-attendances/" + key, null);
 
         mDatabase.updateChildren(childUpdates);
 

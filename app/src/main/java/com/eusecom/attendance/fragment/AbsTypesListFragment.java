@@ -159,7 +159,8 @@ public abstract class AbsTypesListFragment extends Fragment {
 
                         abskeydel = absKey;
 
-                        getDialog(abskeydel);
+                        //no dialog
+                        //getDialog(abskeydel);
 
 
                         return true;
@@ -242,18 +243,7 @@ public abstract class AbsTypesListFragment extends Fragment {
     // [START deletefan_out]
     private void deletePost(String postkey) {
 
-        // delete post key from /posts and user-posts/$userid simultaneously
-        String userId = getUid();
-        String key = postkey;
 
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/posts/" + key, null);
-        childUpdates.put("/user-posts/" + userId + "/" + key, null);
-        childUpdates.put("/post-comments/" + key, null);
-
-
-        mDatabase.updateChildren(childUpdates);
 
     }
     // [END delete_fan_out]
@@ -287,13 +277,7 @@ public abstract class AbsTypesListFragment extends Fragment {
             public void onClick(View v) {
                 dialog.dismiss();
 
-                Intent i = new Intent(getActivity(), NewPostActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("editx", "1");
-                extras.putString("keyx", abskeydel);
 
-                i.putExtras(extras);
-                startActivity(i);
             }
         });
         dialog.show();

@@ -248,9 +248,9 @@ public abstract class AbsenceListFragment extends Fragment {
 
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/posts/" + key, null);
-        childUpdates.put("/user-posts/" + userId + "/" + key, null);
-        childUpdates.put("/post-comments/" + key, null);
+        childUpdates.put("/absences/" + key, null);
+        childUpdates.put("/user-absences/" + userId + "/" + key, null);
+        childUpdates.put("/company-absences/" + key, null);
 
 
         mDatabase.updateChildren(childUpdates);

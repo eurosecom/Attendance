@@ -104,7 +104,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
                 }
                 if(position == 2){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
-                    fab.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.GONE);
                     whatispage=2;
                 }
             }
