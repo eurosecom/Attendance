@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.attendance.NewPostActivity;
-import com.eusecom.attendance.models.Absence;
 import com.eusecom.attendance.models.Attendance;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -169,7 +168,7 @@ public abstract class AbsenceListFragment extends Fragment {
                 });
 
 
-                // Bind Absence to ViewHolder
+                // Bind Abstype to ViewHolder
                 viewHolder.bindToAbsence(model, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {

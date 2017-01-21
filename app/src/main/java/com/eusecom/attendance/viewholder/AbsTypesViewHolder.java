@@ -2,14 +2,16 @@ package com.eusecom.attendance.viewholder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eusecom.attendance.R;
 import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AbsTypesViewHolder extends RecyclerView.ViewHolder  {
 
@@ -31,8 +33,11 @@ public class AbsTypesViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
-    public void bindToAbsence(com.eusecom.attendance.models.Absence abstypes, View.OnClickListener starClickListener) {
-        absence_name.setText(abstypes.idm + " " + abstypes.iname);
+    public void bindToAbsence(com.eusecom.attendance.models.Abstype abstypes, View.OnClickListener starClickListener) {
+
+        long timestampm = abstypes.getDatmLong();
+
+        absence_name.setText(abstypes.idm + " " + abstypes.iname + " " + getDateTime(timestampm ));
         if( abstypes.idm.equals("506")) {
             Picasso.with(mContext).load(R.drawable.abs506).resize(120, 120).into(absence_photo);
         }
@@ -53,7 +58,17 @@ public class AbsTypesViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
+    private String getDateTime(long timeStamp){
 
+        try{
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
+        }
+        catch(Exception ex){
+            return "xx";
+        }
+    }
 
 
 }

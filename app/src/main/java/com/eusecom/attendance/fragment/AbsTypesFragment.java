@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.eusecom.attendance.models.Absence;
+import com.eusecom.attendance.models.Abstype;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,29 +34,29 @@ public class AbsTypesFragment extends AbsTypesListFragment {
 
                     mDatabase = FirebaseDatabase.getInstance().getReference();
                     String key = mDatabase.child("absencetypes").push().getKey();
-                    Absence absence = new Absence("506","Holliday");
-                    Map<String, Object> intValues = absence.toMap();
+                    Abstype abstype = new Abstype("506","Holliday");
+                    Map<String, Object> intValues = abstype.toMap();
                     Map<String, Object> childUpdates = new HashMap<>();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
-                    absence = new Absence("510","Bank holliday");
-                    intValues = absence.toMap();
+                    abstype = new Abstype("510","Bank holliday");
+                    intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
-                    absence = new Absence("518","Visit Doctor");
-                    intValues = absence.toMap();
+                    abstype = new Abstype("518","Visit Doctor");
+                    intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
-                    absence = new Absence("520","Other");
-                    intValues = absence.toMap();
+                    abstype = new Abstype("520","Other");
+                    intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("interrupts").push().getKey();
-                    absence = new Absence("801","Illness");
-                    intValues = absence.toMap();
+                    abstype = new Abstype("801","Illness");
+                    intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     mDatabase.updateChildren(childUpdates);

@@ -16,8 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eusecom.attendance.NewPostActivity;
-import com.eusecom.attendance.models.Absence;
+import com.eusecom.attendance.models.Abstype;
 import com.eusecom.attendance.viewholder.AbsTypesViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +29,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.eusecom.attendance.R;
 import com.eusecom.attendance.models.Post;
-import com.eusecom.attendance.viewholder.AbsenceViewHolder;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -44,7 +42,7 @@ public abstract class AbsTypesListFragment extends Fragment {
     private DatabaseReference mDatabase;
     // [END define_database_reference]
 
-    private FirebaseRecyclerAdapter<Absence, AbsTypesViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Abstype, AbsTypesViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
@@ -122,11 +120,11 @@ public abstract class AbsTypesListFragment extends Fragment {
 
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Absence, AbsTypesViewHolder>(Absence.class, R.layout.item_abstypes,
+        mAdapter = new FirebaseRecyclerAdapter<Abstype, AbsTypesViewHolder>(Abstype.class, R.layout.item_abstypes,
                 AbsTypesViewHolder.class, absencesQuery) {
 
             @Override
-            protected void populateViewHolder(final AbsTypesViewHolder viewHolder, final Absence model, final int position) {
+            protected void populateViewHolder(final AbsTypesViewHolder viewHolder, final Abstype model, final int position) {
                 final DatabaseReference absRef = getRef(position);
 
                 // Set click listener for the whole post view
@@ -170,7 +168,7 @@ public abstract class AbsTypesListFragment extends Fragment {
                 });
 
 
-                // Bind Absence to ViewHolder
+                // Bind Abstypes to ViewHolder
                 viewHolder.bindToAbsence(model, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {
