@@ -13,7 +13,7 @@ public class Abstype {
 
     public String idm;
     public String iname;
-    private HashMap<String, Object> datm;
+    private HashMap<String, Object> dats;
 
 
     public Abstype() {
@@ -24,9 +24,9 @@ public class Abstype {
         this.idm = idm;
         this.iname = iname;
 
-        HashMap<String, Object> datmObj = new HashMap<String, Object>();
-        datmObj.put("date", ServerValue.TIMESTAMP);
-        this.datm = datmObj;
+        HashMap<String, Object> datsObj = new HashMap<String, Object>();
+        datsObj.put("date", ServerValue.TIMESTAMP);
+        this.dats = datsObj;
 
     }
 
@@ -36,37 +36,37 @@ public class Abstype {
         HashMap<String, Object> result = new HashMap<>();
         result.put("idm", idm);
         result.put("iname", iname);
-        result.put("datm", datm);
+        result.put("dats", dats);
 
         return result;
     }
     // [END AbsType_to_map]
 
 
-    public HashMap<String, Object> getDatm() {
+    public HashMap<String, Object> getDats() {
         //If there is a dateCreated object already, then return that
-        if (datm!= null) {
-            return datm;
+        if (dats!= null) {
+            return dats;
         }
         //Otherwise make a new object set to ServerValue.TIMESTAMP
-        HashMap<String, Object> datmObj = new HashMap<String, Object>();
-        datmObj.put("date", ServerValue.TIMESTAMP);
-        return datmObj;
+        HashMap<String, Object> datsObj = new HashMap<String, Object>();
+        datsObj.put("date", ServerValue.TIMESTAMP);
+        return datsObj;
     }
 
 
     @Exclude
-    public long getDatmLong() {
-        return (long)datm.get("date");
+    public long getDatsLong() {
+        return (long)dats.get("date");
     }
 
     @Exclude
-    public String getDatmString() {
+    public String getDatsString() {
 
-        long datml = (long)datm.get("date");
-        String datms = datml + "";
+        long datsl = (long)dats.get("date");
+        String datss = datsl + "";
 
-        return datms;
+        return datss;
     }
 
 }

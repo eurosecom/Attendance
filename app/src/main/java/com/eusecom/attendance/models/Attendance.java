@@ -2,6 +2,7 @@ package com.eusecom.attendance.models;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class Attendance {
     public String longi;
     public String lati;
     public String datm;
+    private HashMap<String, Object> dats;
 
     public Attendance() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -43,6 +45,10 @@ public class Attendance {
         this.longi = longi;
         this.lati = lati;
         this.datm = datm;
+
+        HashMap<String, Object> datsObj = new HashMap<String, Object>();
+        datsObj.put("date", ServerValue.TIMESTAMP);
+        this.dats = datsObj;
     }
 
 
@@ -68,10 +74,37 @@ public class Attendance {
         result.put("longi", longi);
         result.put("lati", lati);
         result.put("datm", datm);
+        result.put("dats", dats);
 
         return result;
     }
     // [END post_to_map]
+
+    public HashMap<String, Object> getDats() {
+        //If there is a dateCreated object already, then return that
+        if (dats!= null) {
+            return dats;
+        }
+        //Otherwise make a new object set to ServerValue.TIMESTAMP
+        HashMap<String, Object> datsObj = new HashMap<String, Object>();
+        datsObj.put("date", ServerValue.TIMESTAMP);
+        return datsObj;
+    }
+
+
+    @Exclude
+    public long getDatsLong() {
+        return (long)dats.get("date");
+    }
+
+    @Exclude
+    public String getDatsString() {
+
+        long datsl = (long)dats.get("date");
+        String datss = datsl + "";
+
+        return datss;
+    }
 
 }
 // [END blog_user_class]

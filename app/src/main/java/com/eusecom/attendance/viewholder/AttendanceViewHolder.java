@@ -57,7 +57,8 @@ public class AttendanceViewHolder extends RecyclerView.ViewHolder  {
         }
         numStarsView.setText("0");
 
-        long timestampm = Long.parseLong(attendance.datm) * 1000L;
+        //long timestampm = Long.parseLong(attendance.datm) * 1000L;
+        long timestampm = attendance.getDatsLong();
         datm.setText(usemail + " " + getDateTime(timestampm ));
 
         starView.setOnClickListener(starClickListener);
@@ -79,7 +80,7 @@ public class AttendanceViewHolder extends RecyclerView.ViewHolder  {
     private String getDateTime(long timeStamp){
 
         try{
-            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             Date netDate = (new Date(timeStamp));
             return sdf.format(netDate);
         }

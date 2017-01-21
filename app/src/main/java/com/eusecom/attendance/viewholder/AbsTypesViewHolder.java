@@ -35,7 +35,7 @@ public class AbsTypesViewHolder extends RecyclerView.ViewHolder  {
 
     public void bindToAbsence(com.eusecom.attendance.models.Abstype abstypes, View.OnClickListener starClickListener) {
 
-        long timestampm = abstypes.getDatmLong();
+        long timestampm = abstypes.getDatsLong();
 
         absence_name.setText(abstypes.idm + " " + abstypes.iname + " " + getDateTime(timestampm ));
         if( abstypes.idm.equals("506")) {
@@ -61,7 +61,7 @@ public class AbsTypesViewHolder extends RecyclerView.ViewHolder  {
     private String getDateTime(long timeStamp){
 
         try{
-            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             Date netDate = (new Date(timeStamp));
             return sdf.format(netDate);
         }
