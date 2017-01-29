@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.attendance.NewPostActivity;
+import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,7 +87,7 @@ public abstract class AbsenceListFragment extends Fragment {
                 } else {
                     System.out.println("not connected");
                     hidefProgressDialog();
-                    if(isrunning) { Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show(); }
+                    if(isrunning) { Toast.makeText(getActivity(), getResources().getString(R.string.notconnected), Toast.LENGTH_SHORT).show(); }
                 }
             }
 
@@ -244,12 +245,12 @@ public abstract class AbsenceListFragment extends Fragment {
         // delete post key from /posts and user-posts/$userid simultaneously
         String userId = getUid();
         String key = postkey;
-
+        String usicox = SettingsActivity.getUsIco(getActivity());
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/absences/" + key, null);
         childUpdates.put("/user-absences/" + userId + "/" + key, null);
-        childUpdates.put("/company-absences/" + key, null);
+        childUpdates.put("/company-absences/" + usicox + "/" + key, null);
 
 
         mDatabase.updateChildren(childUpdates);
@@ -286,13 +287,15 @@ public abstract class AbsenceListFragment extends Fragment {
             public void onClick(View v) {
                 dialog.dismiss();
 
-                Intent i = new Intent(getActivity(), NewPostActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("editx", "1");
-                extras.putString("keyx", abskeydel);
+                Toast.makeText(getActivity(), getResources().getString(R.string.cantedititem), Toast.LENGTH_SHORT).show();
 
-                i.putExtras(extras);
-                startActivity(i);
+                //Intent i = new Intent(getActivity(), NewPostActivity.class);
+                //Bundle extras = new Bundle();
+                //extras.putString("editx", "1");
+                //extras.putString("keyx", abskeydel);
+
+                //i.putExtras(extras);
+                //startActivity(i);
             }
         });
         dialog.show();

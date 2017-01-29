@@ -85,7 +85,7 @@ public abstract class AbsTypesListFragment extends Fragment {
                 } else {
                     System.out.println("not connected");
                     hidefProgressDialog();
-                    if(isrunning) { Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show(); }
+                    if(isrunning) { Toast.makeText(getActivity(), getResources().getString(R.string.notconnected), Toast.LENGTH_SHORT).show(); }
                 }
             }
 
