@@ -24,6 +24,7 @@ public class Attendance {
     public String lati;
     public String datm;
     private HashMap<String, Object> dats;
+    public String aprv;
 
     public Attendance() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -32,7 +33,7 @@ public class Attendance {
 
 
     public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                      String hodxb, String longi, String lati, String datm) {
+                      String hodxb, String longi, String lati, String datm, String aprv) {
         this.usico = usico;
         this.usid = usid;
         this.ume = ume;
@@ -49,8 +50,29 @@ public class Attendance {
         HashMap<String, Object> datsObj = new HashMap<String, Object>();
         datsObj.put("date", ServerValue.TIMESTAMP);
         this.dats = datsObj;
+        this.aprv = aprv;
     }
 
+    public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
+                      String hodxb, String longi, String lati, String datm ) {
+        this.usico = usico;
+        this.usid = usid;
+        this.ume = ume;
+        this.dmxa = dmxa;
+        this.dmna = dmna;
+        this.daod = daod;
+        this.dado = dado;
+        this.dnixa = dnixa;
+        this.hodxb = hodxb;
+        this.longi = longi;
+        this.lati = lati;
+        this.datm = datm;
+
+        HashMap<String, Object> datsObj = new HashMap<String, Object>();
+        datsObj.put("date", ServerValue.TIMESTAMP);
+        this.dats = datsObj;
+        this.aprv = "0";
+    }
 
     public String getUsico() {
 
@@ -75,6 +97,8 @@ public class Attendance {
         result.put("lati", lati);
         result.put("datm", datm);
         result.put("dats", dats);
+        result.put("dats", dats);
+        result.put("appr", aprv);
 
         return result;
     }
