@@ -20,15 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".MainActivity"/>
         <activity
         android:name=".EmailPasswordActivity"
         android:label="@string/label_emailpassword"
@@ -47,7 +46,6 @@
         <activity android:name=".PostDetailActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
-        <activity android:name=".SplashScreen"/>
         <activity android:name=".MessagingActivity"/>
 
         <!-- for googlemaps            -->

@@ -1,94 +1,80 @@
 package com.eusecom.attendance;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import com.eusecom.attendance.models.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SplashScreen extends Activity {
 
-    private final static String TAG = SplashScreen.class.getSimpleName();
-    private static final String USER_IS_LOGIN = "UserIsLogin";
-    private static final String UI_ID_FIREBASE = "UiIdFirebase";
-    // Duration of wait
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
-
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private final int SPLASH_TIME_OUT = 1000;
     private FirebaseAuth mAuth;
-
-    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
-        mAuth = FirebaseAuth.getInstance();
-        //mUser = User.getInstance();
 
-        // New Handler to start the Menu-Activity and close this Splash-Screen after some seconds.
+        View backgroundImage = findViewById(R.id.background);
+        Drawable background = backgroundImage.getBackground();
+        background.setAlpha(20);
+
+        mAuth = FirebaseAuth.getInstance();
         new Handler().postDelayed(new Runnable() {
+
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
+
             @Override
             public void run() {
-                Log.d("run at handler", "Start splash screen");
-                mAuthListener = new FirebaseAuth.AuthStateListener() {
-                    @Override
-                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                        if (user != null) {
-                            // User is signed in
-                            //mUser.setLoginState(true);
-                            //mUser.setUiIdFirebase(user.getUid());
+                // This method will be executed once the timer is over
+                // Start your app main activity
+                Intent i = new Intent(SplashScreen.this, MainActivity.class);
+                startActivity(i);
 
-                            Log.d(TAG, "User state : signed_in:" + user.getUid());
-                            //StartMainActivity();
-                            //SplashScreen.this.finish();
-                        } else {
-                            // User is signed out
-                            //mUser.setLoginState(false);
-
-                            Log.d(TAG, "User state : signed_out");
-                            //StartSignInActivity();
-                            //SplashScreen.this.finish();
-                        }
-                    }
-                };
-                mAuth.addAuthStateListener(mAuthListener);
+                // close this activity
+                finish();
             }
-        }, SPLASH_DISPLAY_LENGTH);
+        }, SPLASH_TIME_OUT);
+        //new PrefetchData().execute();
 
-        //mAuth.addAuthStateListener(mAuthListener);
     }
 
-    public void StartMainActivity() {
-        Log.d(TAG, "User is in , Start MainActivity");
-        //Intent i = new Intent(SplashScreen.this,MainActivity.class);
-        //startActivity(i);
-    }
+    private class PrefetchData extends AsyncTask<Void, Void, Void> {
 
-    public void StartSignInActivity() {
-        Log.d(TAG, "User need to sign in , Start SignInActivity");
-        //Intent i = new Intent(SplashScreen.this,SignInActivity.class);
-        //startActivity(i);
-    }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // before making http calls
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
         }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            mAuth = FirebaseAuth.getInstance();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            Log.d("SplashScreen", " Start MainActivity");
+            Intent i = new Intent(SplashScreen.this,MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+
     }
 
 }
