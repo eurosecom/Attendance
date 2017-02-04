@@ -127,6 +127,7 @@ public abstract class AbsenceListFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final AbsenceViewHolder viewHolder, final Attendance model, final int position) {
+
                 final DatabaseReference absRef = getRef(position);
 
                 // Set click listener for the whole post view

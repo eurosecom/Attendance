@@ -109,6 +109,8 @@ public abstract class AbsTypesListFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // the initial data has been loaded, hide the progress bar
                 hidefProgressDialog();
+
+
             }
 
             @Override
@@ -130,7 +132,6 @@ public abstract class AbsTypesListFragment extends Fragment {
                 // Set click listener for the whole post view
                 final String absKey = absRef.getKey();
                 absxy = absRef.getKey();
-
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
