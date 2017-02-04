@@ -372,14 +372,12 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         mDatabase.updateChildren(childUpdates);
 
-        String usatwx="0";
-        if( dmxa.equals("1")) {
-            usatwx="1";
-        }else{
-            usatwx="0";
-        }
 
-        mDatabase.child("users").child(usid).child("usatw").setValue(usatwx);
+        String Notititle = dmxa + ""  + dmna;
+        String Notibody = "I woud like to get " + dmxa + " "  + dmna;
+        FirebaseMessaging firebasemessaging = new FirebaseMessaging("/topics/news", Notititle, Notibody);
+        //FirebaseMessaging firebasemessaging = new FirebaseMessaging(Constants.DEVICE_TOKEN, Notititle, Notibody);
+        firebasemessaging.SendNotification();
 
 
     }
