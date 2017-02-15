@@ -1,8 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -56,13 +62,31 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-database:0.4.0'
     compile 'com.google.firebase:firebase-database:9.6.0'
 
+    //Firebase Messaging
+    compile 'com.google.firebase:firebase-messaging:9.6.0'
+
     //google maps
     compile 'com.google.android.gms:play-services:9.6.0'
 
     //picasso
     compile 'com.squareup.picasso:picasso:2.5.0'
+
+    //retrofit2
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
+    //rxjava
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+
 }
 
 //do not forgot copy google-service.json from firebase/console to /app, there is firebaseapp url...
-//do not forgot classpath 'com.google.gms:google-services:3.0.0' to dependencies /retrofittest/builder.gradle
+//do not forgot classpath 'com.google.gms:google-services:3.0.0' to dependencies /attendance/builder.gradle
+//do not forgot apply plugin: 'com.google.gms.google-services' to bottom /attendance/app/builder.gradle
 apply plugin: 'com.google.gms.google-services'
