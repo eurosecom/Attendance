@@ -19,12 +19,12 @@ import com.eusecom.attendance.models.MessData;
 import com.eusecom.attendance.models.Message;
 import com.eusecom.attendance.models.NotifyData;
 
-public class FirebaseMessaging {
+public class FirebaseRxMessaging {
 
     String to, title, body;
 
 
-    public FirebaseMessaging(String to, String title, String body) {
+    public FirebaseRxMessaging(String to, String title, String body) {
         this.to= to;
         this.title = title;
         this.body = body;

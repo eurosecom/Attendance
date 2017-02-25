@@ -116,6 +116,7 @@
         <item >Google Maps</item>
         <item >Settings</item>
         <item >MessagingActivity</item>
+        <item >RxjavaActivity</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
@@ -125,6 +126,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
+        <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>

@@ -216,6 +216,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
                                 break;
 
+                            case 6:
+
+                                // View v at position pos is clicked.
+                                Intent i6 = new Intent(mContext, RxjavaActivity.class);
+                                v.getContext().startActivity(i6);
+
+                                break;
+
                             default:
                                 break;
                         }

@@ -375,8 +375,9 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         String Notititle = dmxa + ""  + dmna;
         String Notibody = "I woud like to get " + dmxa + " "  + dmna;
-        FirebaseMessaging firebasemessaging = new FirebaseMessaging("/topics/news", Notititle, Notibody);
-        //FirebaseMessaging firebasemessaging = new FirebaseMessaging(Constants.DEVICE_TOKEN, Notititle, Notibody);
+        String approvetopic = "/topics/news";
+        //FirebaseMessaging firebasemessaging = new FirebaseMessaging("/topics/news", Notititle, Notibody);
+        FirebaseRxMessaging firebasemessaging = new FirebaseRxMessaging(approvetopic, Notititle, Notibody);
         firebasemessaging.SendNotification();
 
 

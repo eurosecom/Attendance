@@ -113,7 +113,7 @@ public class MainActivity extends ActionBarActivity {
         mText3 = (TextView) findViewById(R.id.text3);
 
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2],navMenuTitles[3],navMenuTitles[4]};
+        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2],navMenuTitles[3],navMenuTitles[4],navMenuTitles[5]};
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
