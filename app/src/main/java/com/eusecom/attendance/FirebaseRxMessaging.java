@@ -14,7 +14,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import com.eusecom.attendance.models.MessData;
 import com.eusecom.attendance.models.Message;
 import com.eusecom.attendance.models.NotifyData;
@@ -22,6 +25,9 @@ import com.eusecom.attendance.models.NotifyData;
 public class FirebaseRxMessaging {
 
     String to, title, body;
+    private static final String TAG = RxjavaActivity.class.getSimpleName();
+    private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
+    private Subscription subscription;
 
 
     public FirebaseRxMessaging(String to, String title, String body) {
@@ -33,60 +39,30 @@ public class FirebaseRxMessaging {
 
     public boolean SendNotification() {
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                String keyid="key=" + Constants.LEGACY_SERVER_KEY;
-                // Request customization: add request headers
-                Request.Builder requestBuilder = original.newBuilder()
-                        .header("Authorization", keyid); // <-- this is the important line
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
-        });
-
-        httpClient.addInterceptor(logging);
-        OkHttpClient client = httpClient.build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://fcm.googleapis.com")//url of FCM message server
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())//use for convert JSON file into object
-                .build();
-
-        // prepare call in Retrofit 2.0
-        FirebaseAPI firebaseAPI = retrofit.create(FirebaseAPI.class);
-
-        //for messaging server
         MessData messdata = new MessData("This is a GCM Topic Message!");
         NotifyData notifydata = new NotifyData(title,body);
+        Message message = new Message(to, notifydata, "");
 
-        Call<Message> call2 = firebaseAPI.sendMessage(new Message(to, notifydata, ""));
-        call2.enqueue(new Callback<Message>() {
-            @Override
-            public void onResponse(Call<Message> call, Response<Message> response) {
+        subscription = FbmessClient.getInstance()
+                .sendmyMessage("xxxxx", message)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Message>() {
+                    @Override public void onCompleted() {
+                        Log.d(TAG, "In onCompleted()");
+                    }
 
-                Log.d("Response ", "onResponse");
-                //t1.setText("Notification sent");
-                Message message = response.body();
-                Log.d("message", message.getMessage_id());
+                    @Override public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Log.d(TAG, "In onError()");
+                    }
 
-            }
-
-            @Override
-            public void onFailure(Call<Message> call, Throwable t) {
-                Log.d("Response ", "onFailure");
-                //t1.setText("Notification failure");
-            }
-        });
-
-
+                    @Override public void onNext(Message message) {
+                        Log.d(TAG, "In onNext()");
+                        Log.d("message", message.getMessage_id());
+                        //adapter.setGitHubRepos(gitHubRepos);
+                    }
+                });
         return true;
     }
 
