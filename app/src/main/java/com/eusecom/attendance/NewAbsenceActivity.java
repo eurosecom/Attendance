@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.MessData;
+import com.eusecom.attendance.models.Message;
+import com.eusecom.attendance.models.NotifyData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +37,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class NewAbsenceActivity extends BaseDatabaseActivity {
 
@@ -62,6 +70,8 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
     String dmaxx, dmnxx;
     String[] AbsIdm, AbsIname;
+
+    private Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,6 +206,13 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
 
     }//end of oncreate
+
+    @Override protected void onDestroy() {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+        super.onDestroy();
+    }
 
     public class myOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
@@ -377,10 +394,60 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         String Notibody = "I woud like to get " + dmxa + " "  + dmna;
         String approvetopic = "/topics/news";
         //FirebaseMessaging firebasemessaging = new FirebaseMessaging("/topics/news", Notititle, Notibody);
-        FirebaseRxMessaging firebasemessaging = new FirebaseRxMessaging(approvetopic, Notititle, Notibody);
-        firebasemessaging.SendNotification();
+        FirebaseRxSendMessaging firebasemessaging = new FirebaseRxSendMessaging(approvetopic, Notititle, Notibody);
+        subscription = firebasemessaging.SendNotification();
 
 
     }
     // [END basic_write]
+
+    public class FirebaseRxSendMessaging {
+
+        String to, title, body;
+        private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
+        private Subscription subscription;
+
+
+        public FirebaseRxSendMessaging(String to, String title, String body) {
+            this.to = to;
+            this.title = title;
+            this.body = body;
+        }
+
+
+        public Subscription SendNotification() {
+
+            MessData messdata = new MessData("This is a GCM Topic Message!");
+            NotifyData notifydata = new NotifyData(title, body);
+            Message message = new Message(to, notifydata, "");
+
+            subscription = FbmessClient.getInstance()
+                    .sendmyMessage("xxxxx", message)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Message>() {
+                        @Override
+                        public void onCompleted() {
+                            Log.d(TAG, "In onCompleted()");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "In onError()");
+                        }
+
+                        @Override
+                        public void onNext(Message message) {
+                            Log.d(TAG, "In onNext()");
+                            Log.d("message", message.getMessage_id());
+                            //adapter.setGitHubRepos(gitHubRepos);
+                        }
+                    });
+            return subscription;
+        }
+
+    }//end of FirebaseRxSendMessaging
+
+
 }
