@@ -1,14 +1,14 @@
 package com.eusecom.attendance;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.MessData;
 import com.eusecom.attendance.models.Message;
@@ -211,6 +210,8 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
+
+        hideProgressDialog();
         super.onDestroy();
     }
 
@@ -340,9 +341,9 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
                         }
 
-                        hideProgressDialog();
+                        //hideProgressDialog();
                         // Finish this Activity, back to the stream
-                        finish();
+                        //finish();
                         // [END_EXCLUDE]
                     }
 
@@ -428,8 +429,36 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                     .subscribe(new Observer<Message>() {
                         @Override
                         public void onCompleted() {
+
+                            hideProgressDialog();
                             Log.d(TAG, "In onCompleted()");
+                            AlertDialog dialog = new AlertDialog.Builder(NewAbsenceActivity.this)
+                                    .setTitle(getString(R.string.abssave))
+                                    .setMessage(getString(R.string.mesapprovesent))
+                                    .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            finish();
+                                        }
+                                    })
+
+                                    .show();
+
+                            dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+                                @Override
+                                public boolean onKey(DialogInterface arg0, int keyCode,
+                                                     KeyEvent event) {
+                                    // TODO Auto-generated method stub
+                                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                        finish();
+                                        dialog.dismiss();
+                                    }
+                                    return true;
+                                }
+                            });
                         }
+
 
                         @Override
                         public void onError(Throwable e) {
@@ -448,6 +477,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         }
 
     }//end of FirebaseRxSendMessaging
+
 
 
 }

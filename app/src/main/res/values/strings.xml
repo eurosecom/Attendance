@@ -182,6 +182,7 @@
 
     <string name="textyes">Yes</string>
     <string name="textno">No</string>
+    <string name="textok">OK</string>
     <string name="cantedititem">You can not edit the items.</string>
     <string name="notconnected">Not connected.</string>
 
@@ -191,6 +192,9 @@
     <string name="log_token">Log Token</string>
     <string name="msg_subscribed">Subscribed to news topic</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="abssave">Absence saved.</string>
+    <string name="mesapprovesent">Absence sent to approve.</string>
 
 
 </resources>
