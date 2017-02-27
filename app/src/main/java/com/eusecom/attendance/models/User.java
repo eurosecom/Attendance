@@ -45,6 +45,12 @@ public class User {
 
     }
 
+    public String getUsname() {
+
+        return this.username;
+
+    }
+
     public String getUsico() {
 
         return this.usico;

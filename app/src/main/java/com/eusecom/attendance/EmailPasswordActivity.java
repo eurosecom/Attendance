@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.*;
 
 public class EmailPasswordActivity extends BaseActivity implements
         View.OnClickListener {
@@ -60,7 +61,7 @@ public class EmailPasswordActivity extends BaseActivity implements
     private FirebaseAuth.AuthStateListener mAuthListener;
     // [END declare_auth_listener]
 
-    String usertype="0", userico="0";
+    String usertype="0", userico="0", myuserid="", username="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -201,18 +202,29 @@ public class EmailPasswordActivity extends BaseActivity implements
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
-                        User user = dataSnapshot.getValue(User.class);
-                        usertype = user.getUstype();
-                        userico = user.getUsico();
+                        User userx = dataSnapshot.getValue(User.class);
+                        usertype = userx.getUstype();
+                        userico = userx.getUsico();
+                        myuserid = user.getUid();
                         Log.d("usertype", usertype);
+                        username = userx.getUsname();
 
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         SharedPreferences.Editor editor = prefs.edit();
 
                         editor.putString("ustype", usertype).apply();
                         editor.putString("usico", userico).apply();
+                        editor.putString("usname", username).apply();
 
                         editor.commit();
+
+                        String approvetopic = "approve" + userico;
+                        String mytopic = "mytopic" + myuserid;
+
+                        com.google.firebase.messaging.FirebaseMessaging.getInstance().subscribeToTopic(mytopic);
+                        if( usertype.equals("99")) {
+                            com.google.firebase.messaging.FirebaseMessaging.getInstance().subscribeToTopic(approvetopic);
+                        }
 
                     }
 

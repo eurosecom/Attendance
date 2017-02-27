@@ -25,6 +25,12 @@
     android:title="@string/fir_title" />
 
     <EditTextPreference
+        android:key="usname"
+        android:enabled="true"
+        android:summary="@string/usname_summary"
+        android:title="@string/usname_title" />
+
+    <EditTextPreference
         android:key="ustype"
         android:enabled="true"
         android:summary="@string/ustype_summary"

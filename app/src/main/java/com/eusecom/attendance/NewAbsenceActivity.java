@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.eusecom.attendance.models.User;
 import com.eusecom.attendance.models.Post;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -391,9 +392,17 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
         mDatabase.updateChildren(childUpdates);
 
 
-        String Notititle = dmxa + ""  + dmna;
-        String Notibody = "I woud like to get " + dmxa + " "  + dmna;
-        String approvetopic = "/topics/news";
+        String Notititle = SettingsActivity.getUsname(NewAbsenceActivity.this) + " "  + dmxa + " "  + dmna;
+        long timestampod = Long.parseLong(daod) * 1000L;
+        String datefroms = getDate(timestampod );
+        long timestampdo = Long.parseLong(dado) * 1000L;
+        String datetos = getDate(timestampdo );
+
+        String Notibody = getString(R.string.idliketoget) + " "  + dmxa + " "  + dmna + " "
+                + getString(R.string.from)  + " "  + datefroms + " "  +  getString(R.string.to) + " "  + datetos
+                + " "  + hodxb + " "  +  getString(R.string.hodiny);
+
+        String approvetopic = "/topics/approve" + SettingsActivity.getUsIco(NewAbsenceActivity.this);
         //FirebaseMessaging firebasemessaging = new FirebaseMessaging("/topics/news", Notititle, Notibody);
         FirebaseRxSendMessaging firebasemessaging = new FirebaseRxSendMessaging(approvetopic, Notititle, Notibody);
         subscription = firebasemessaging.SendNotification();
@@ -478,6 +487,17 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
     }//end of FirebaseRxSendMessaging
 
+    private String getDate(long timeStamp){
+
+        try{
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
+        }
+        catch(Exception ex){
+            return "xx";
+        }
+    }
 
 
 }

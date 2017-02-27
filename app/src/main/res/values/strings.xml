@@ -102,6 +102,8 @@
     <string name="usico_summary">ID of Company where user work.</string>
     <string name="usatw_title">User at work.</string>
     <string name="usatw_summary">1-user at work, 0-user leav work.</string>
+    <string name="usname_title">Name of user.</string>
+    <string name="usname_summary">Name of logged user.</string>
 
     <!-- Nav Drawer -->
     <string name="slider">Slider</string>
@@ -195,6 +197,8 @@
 
     <string name="abssave">Absence saved.</string>
     <string name="mesapprovesent">Absence sent to approve.</string>
+    <string name="idliketoget">I am asking a</string>
+
 
 
 </resources>
