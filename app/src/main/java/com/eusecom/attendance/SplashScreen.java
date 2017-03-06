@@ -28,7 +28,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
-
+        Log.d("Thread onCreate", Thread.currentThread().getName());
         DisposableObserver<Boolean> d = getDisposableObserver();
 
         getObservable()
@@ -64,6 +64,7 @@ public class SplashScreen extends Activity {
             @Override
             public void onComplete() {
 
+                Log.d("Thread onComplete", Thread.currentThread().getName());
                 Log.d("onComplete", " in");
                 Log.d("SplashScreen", " Start MainActivity");
                 Intent i = new Intent(SplashScreen.this,MainActivity.class);
@@ -79,6 +80,7 @@ public class SplashScreen extends Activity {
 
             @Override
             public void onNext(Boolean bool) {
+                Log.d("Thread onNext", Thread.currentThread().getName());
                 Log.d("onNext", " in");
             }
         };
@@ -89,6 +91,7 @@ public class SplashScreen extends Activity {
 
         try {
             mAuth = FirebaseAuth.getInstance();
+            Log.d("Threada doLongOp", Thread.currentThread().getName());
             Thread.sleep(2000);
         } catch (InterruptedException e) {
 

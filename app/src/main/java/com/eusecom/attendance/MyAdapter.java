@@ -211,16 +211,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             case 5:
 
                                 // View v at position pos is clicked.
-                                Intent i5 = new Intent(mContext, MessagingActivity.class);
-                                v.getContext().startActivity(i5);
+                                //Intent i5 = new Intent(mContext, MessagingActivity.class);
+                                //v.getContext().startActivity(i5);
 
                                 break;
 
                             case 6:
 
                                 // View v at position pos is clicked.
-                                Intent i6 = new Intent(mContext, RxjavaActivity.class);
-                                v.getContext().startActivity(i6);
+                                //Intent i6 = new Intent(mContext, RxjavaActivity.class);
+                                //v.getContext().startActivity(i6);
 
                                 break;
 

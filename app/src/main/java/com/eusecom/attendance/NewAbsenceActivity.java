@@ -403,7 +403,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                 + " "  + hodxb + " "  +  getString(R.string.hodiny);
 
         String approvetopic = "/topics/approve" + SettingsActivity.getUsIco(NewAbsenceActivity.this);
-        //FirebaseMessaging firebasemessaging = new FirebaseMessaging("/topics/news", Notititle, Notibody);
+        //FirebaseRetrofitMessaging firebasemessaging = new FirebaseRetrofitMessaging("/topics/news", Notititle, Notibody);
         FirebaseRxSendMessaging firebasemessaging = new FirebaseRxSendMessaging(approvetopic, Notititle, Notibody);
         subscription = firebasemessaging.SendNotification();
 

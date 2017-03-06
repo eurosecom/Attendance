@@ -39,7 +39,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.*;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 
 public class EmailPasswordActivity extends BaseActivity implements
         View.OnClickListener {
@@ -221,9 +222,9 @@ public class EmailPasswordActivity extends BaseActivity implements
                         String approvetopic = "approve" + userico;
                         String mytopic = "mytopic" + myuserid;
 
-                        com.google.firebase.messaging.FirebaseMessaging.getInstance().subscribeToTopic(mytopic);
+                        FirebaseMessaging.getInstance().subscribeToTopic(mytopic);
                         if( usertype.equals("99")) {
-                            com.google.firebase.messaging.FirebaseMessaging.getInstance().subscribeToTopic(approvetopic);
+                            FirebaseMessaging.getInstance().subscribeToTopic(approvetopic);
                         }
 
                     }
