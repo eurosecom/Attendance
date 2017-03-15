@@ -46,8 +46,8 @@
         <activity android:name=".PostDetailActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
-        <activity android:name=".MessagingActivity"/>
-        <activity android:name=".RxjavaActivity"/>
+        <activity android:name=".RxbusActivity"/>
+
 
         <!-- for googlemaps            -->
         <service android:name=".MyDownloadService" android:exported="false"/>
