@@ -1,5 +1,10 @@
 package com.eusecom.attendance;
 
+/**
+ * send events by https://github.com/kaushikgopal/RxJava-Android-Samples
+ * send pojo EventRxBus by https://quangson8128.github.io/2016/06/23/rxbus-android/
+ */
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

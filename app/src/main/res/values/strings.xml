@@ -118,7 +118,7 @@
         <item >Google Maps</item>
         <item >Settings</item>
         <item >Demo Rx Bus</item>
-        <item >Free</item>
+        <item >Custom Auth</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
