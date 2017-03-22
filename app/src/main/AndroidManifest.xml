@@ -47,7 +47,7 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".RxbusActivity"/>
-        <activity android:name=".CustomAuthActivity"/>
+
 
 
         <!-- for googlemaps            -->

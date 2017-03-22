@@ -219,8 +219,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             case 6:
 
                                 // View v at position pos is clicked.
-                                Intent i6 = new Intent(mContext, CustomAuthActivity.class);
-                                v.getContext().startActivity(i6);
+                                //Intent i6 = new Intent(mContext, CustomAuthActivity.class);
+                                //v.getContext().startActivity(i6);
 
                                 break;
 
