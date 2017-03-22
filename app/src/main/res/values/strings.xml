@@ -118,7 +118,7 @@
         <item >Google Maps</item>
         <item >Settings</item>
         <item >Demo Rx Bus</item>
-        <item >Custom Auth</item>
+        <item >Demo Rx Search debounced</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
@@ -198,6 +198,10 @@
     <string name="abssave">Absence saved.</string>
     <string name="mesapprovesent">Absence sent to approve.</string>
     <string name="idliketoget">I am asking a</string>
+
+    <!-- chees finder-->
+    <string name="nothing_found">No cheeses found</string>
+    <string name="search">search</string>
 
 
 

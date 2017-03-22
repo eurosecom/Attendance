@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cheeses">
+        <item>Abertam cheese</item>
+        <item>Acre</item>
+        <item>Adobera cheese</item>
+        <item>Afuega\'l pitu</item>
+        <item>Akkawi</item>
+        <item>Allgäuer Bergkäse</item>
+        <item>Alto Alentejo</item>
+        <item>Anari cheese</item>
+        <item>Andean Aconcagua region</item>
+        <item>Anthotyros</item>
+        <item>Appenzell</item>
+        <item>Appenzeller</item>
+        <item>Ardrahan Cheese</item>
+        <item>Areesh</item>
+        <item>Asadero cheese</item>
+        <item>Asturias</item>
+        <item>Atleet</item>
+        <item>Aura</item>
+        <item>Ayibe</item>
+        <item>Azores</item>
+        <item>Añejo cheese</item>
+        <item>Babybel</item>
+        <item>Bandel</item>
+        <item>Basket cheese</item>
+        <item>Bałtycki</item>
+        <item>Beira Baixa</item>
+        <item>Belgium</item>
+        <item>Belo Sirenje</item>
+        <item>Bergenost</item>
+        <item>Bergkäse</item>
+        <item>Berner Alpkäse</item>
+        <item>Beyaz peynir</item>
+        <item>Bilozhar</item>
+        <item>Bjurholm, Sweden</item>
+        <item>Blå Gotland</item>
+        <item>Bonifaz</item>
+        <item>Brick cheese</item>
+        <item>Brunost</item>
+        <item>Brussels cheese</item>
+        <item>Bryndza</item>
+        <item>Bryndza Podhalańska</item>
+        <item>Brânză de Suhaia</item>
+        <item>Brânzǎ de burduf</item>
+        <item>Bukovinskyi</item>
+        <item>Bundz</item>
+        <item>Bursztyn</item>
+        <item>Burträsk</item>
+        <item>Butterkäse</item>
+        <item>Byaslag</item>
+        <item>Cabrales cheese</item>
+        <item>Cambozola</item>
+        <item>Cantabria</item>
+        <item>Caravane cheese</item>
+        <item>Castelo Branco cheese</item>
+        <item>Catalonia</item>
+        <item>Catupiry</item>
+        <item>Caş</item>
+        <item>Caşcaval</item>
+        <item>Chanco cheese</item>
+        <item>Chaqueño</item>
+        <item>Chechil</item>
+        <item>Cheddar Cheese</item>
+        <item>Cheese curds</item>
+        <item>Cherni Vit</item>
+        <item>Chhena</item>
+        <item>Chhurpi</item>
+        <item>Chiapas cheese</item>
+        <item>Chihuahua cheese</item>
+        <item>Chimay cheeses</item>
+        <item>Chloro</item>
+        <item>Chura kampo</item>
+        <item>Chura loenpa</item>
+        <item>Circassian cheese</item>
+        <item>Colby cheese</item>
+        <item>Colby-Jack cheese</item>
+        <item>Colorado</item>
+        <item>Colorado Blackie</item>
+        <item>Cotija cheese</item>
+        <item>Cottage cheese</item>
+        <item>Cougar Gold cheese</item>
+        <item>County Cork</item>
+        <item>Cream cheese</item>
+        <item>Crema</item>
+        <item>Cremoso cheese</item>
+        <item>Creole cream cheese</item>
+        <item>Crete</item>
+        <item>Criollo</item>
+        <item>Criollo cheese</item>
+        <item>Croatian island of Pag</item>
+        <item>Cuajada</item>
+        <item>Cup Cheese</item>
+        <item>Dahi Chhena</item>
+        <item>Danbo</item>
+        <item>Danish Blue</item>
+        <item>Dimsi</item>
+        <item>Dobrodar</item>
+        <item>Domiati</item>
+        <item>Edamski</item>
+        <item>Eesti Juust</item>
+        <item>Emmentaler</item>
+        <item>Esrom</item>
+        <item>Extremadura</item>
+        <item>Farmer cheese</item>
+        <item>Feta</item>
+        <item>Flower of Rajya</item>
+        <item>Fuerteventura, Canary Islands</item>
+        <item>Fynbo</item>
+        <item>Galicia</item>
+        <item>Gamalost</item>
+        <item>Gamonedo cheese</item>
+        <item>Garrotxa cheese</item>
+        <item>Gauda</item>
+        <item>Geitost</item>
+        <item>Government cheese</item>
+        <item>Goya</item>
+        <item>Gołka</item>
+        <item>Graviera</item>
+        <item>Grevé</item>
+        <item>Gruyère</item>
+        <item>Gryficki</item>
+        <item>Gräddost</item>
+        <item>Guayana Region</item>
+        <item>Guayanés cheese</item>
+        <item>Gudbrandsdalsost</item>
+        <item>Halloumi</item>
+        <item>Handkäse</item>
+        <item>Harzer</item>
+        <item>Hauskyjza</item>
+        <item>Havarti</item>
+        <item>Hellim</item>
+        <item>Herrgårdsost</item>
+        <item>Herve cheese</item>
+        <item>Hirtenkäse</item>
+        <item>Hoop cheese</item>
+        <item>Hushållsost</item>
+        <item>Höfðingi</item>
+        <item>Idiazábal cheese</item>
+        <item>Imsil</item>
+        <item>Jameed</item>
+        <item>Jarlsberg cheese</item>
+        <item>Jibneh Arabieh</item>
+        <item>Jāņi cheese</item>
+        <item>Kadaka juust</item>
+        <item>Kalari</item>
+        <item>Kalimpong cheese</item>
+        <item>Karaván</item>
+        <item>Kashkaval</item>
+        <item>Kashkawan</item>
+        <item>Kasseri</item>
+        <item>Kačkavalj</item>
+        <item>Kaşar</item>
+        <item>Kefalograviera</item>
+        <item>Kefalotyri</item>
+        <item>Kelle Peyniri (Balıkesir)</item>
+        <item>Kesong puti</item>
+        <item>Khoya</item>
+        <item>Kopanisti</item>
+        <item>Korall</item>
+        <item>Korbáčiky</item>
+        <item>Kortowski</item>
+        <item>Koryciński</item>
+        <item>Kravská hrudka</item>
+        <item>Kunik cheese</item>
+        <item>L\'Etivaz</item>
+        <item>La Mancha, Castile–La Mancha</item>
+        <item>La Serena cheese</item>
+        <item>Labne</item>
+        <item>Labneh</item>
+        <item>Land of Herve, Belgium</item>
+        <item>Lapland</item>
+        <item>Lappi</item>
+        <item>Latvijas</item>
+        <item>Le Wavreumont</item>
+        <item>Lechicki</item>
+        <item>Leipäjuusto</item>
+        <item>León</item>
+        <item>Liederkranz cheese</item>
+        <item>Lighvan cheese</item>
+        <item>Liliput</item>
+        <item>Limburger</item>
+        <item>Limburger cheese</item>
+        <item>Lingallin</item>
+        <item>Liptauer</item>
+        <item>Liptauer or Kőrözött</item>
+        <item>Liqvan</item>
+        <item>Livno cheese</item>
+        <item>Livno, Bosnia and Herzegovina</item>
+        <item>Liège, Belgium</item>
+        <item>Lolland</item>
+        <item>Lubuski</item>
+        <item>Lüneberg cheese</item>
+        <item>Majdoule</item>
+        <item>Majorero cheese</item>
+        <item>Malaka</item>
+        <item>Manchego cheese</item>
+        <item>Manouri</item>
+        <item>Maredsous cheese</item>
+        <item>Maribo</item>
+        <item>Mató cheese</item>
+        <item>Maytag Blue cheese</item>
+        <item>Mazurski</item>
+        <item>Menonita</item>
+        <item>Metsovone</item>
+        <item>Mihaliç</item>
+        <item>Milbenkäse</item>
+        <item>Minas</item>
+        <item>Mish</item>
+        <item>Mohant</item>
+        <item>Molbo</item>
+        <item>Mols</item>
+        <item>Mondseer</item>
+        <item>Monte Enebro cheese</item>
+        <item>Monterey Jack cheese</item>
+        <item>Moose cheese</item>
+        <item>Motal</item>
+        <item>Muenster cheese</item>
+        <item>Murcia</item>
+        <item>Murcian cheese</item>
+        <item>Myconos</item>
+        <item>Myzithra</item>
+        <item>Nablus</item>
+        <item>Nabulsi cheese</item>
+        <item>Nacho cheese</item>
+        <item>Navarre and Basque Country</item>
+        <item>Nguri</item>
+        <item>Norvegia</item>
+        <item>Nøkkelost</item>
+        <item>Năsal cheese</item>
+        <item>Oaxaca cheese</item>
+        <item>Oka</item>
+        <item>Olomoucké syrečky</item>
+        <item>Oltermanni</item>
+        <item>Orava</item>
+        <item>Orda</item>
+        <item>Oscypek</item>
+        <item>Otlu (Van)</item>
+        <item>Ovčia hrudka</item>
+        <item>Oázis</item>
+        <item>Oštiepok</item>
+        <item>Paneer</item>
+        <item>Pannónia</item>
+        <item>Panquehue</item>
+        <item>Parenica</item>
+        <item>Passendale cheese</item>
+        <item>Passendale, Belgium</item>
+        <item>Paški sir</item>
+        <item>Pepper jack cheese</item>
+        <item>Picón Bejes-Tresviso</item>
+        <item>Pinconning cheese</item>
+        <item>Provel cheese</item>
+        <item>Province of Ávila</item>
+        <item>Przeworski</item>
+        <item>Prästost</item>
+        <item>Pule cheese</item>
+        <item>Pultost</item>
+        <item>Pálpusztai</item>
+        <item>Queijo Canastra</item>
+        <item>Queijo Cobocó</item>
+        <item>Queijo Manteiga</item>
+        <item>Queijo Meia Cura</item>
+        <item>Queijo coalho</item>
+        <item>Queijo de Colônia</item>
+        <item>Queijo de Nisa</item>
+        <item>Queijo do Pico</item>
+        <item>Queijo do Serro</item>
+        <item>Queijo prato</item>
+        <item>Queijo seco</item>
+        <item>Queijo-do-Reino</item>
+        <item>Quesillo</item>
+        <item>Queso Campesino</item>
+        <item>Queso Crema</item>
+        <item>Queso Cuajada</item>
+        <item>Queso Fresco</item>
+        <item>Queso Llanero</item>
+        <item>Queso Paipa</item>
+        <item>Queso Palmita</item>
+        <item>Queso Panela</item>
+        <item>Queso blanco</item>
+        <item>Queso crineja</item>
+        <item>Queso de cuajo</item>
+        <item>Queso de mano</item>
+        <item>Queso semiduro</item>
+        <item>Queso telita</item>
+        <item>Questo Costeño</item>
+        <item>Raclette</item>
+        <item>Radamer</item>
+        <item>Raejuusto</item>
+        <item>Rauchkäse</item>
+        <item>Red Hawk</item>
+        <item>Redykołka</item>
+        <item>Reggianito</item>
+        <item>Remoudou</item>
+        <item>Renaico</item>
+        <item>Requeijão</item>
+        <item>Rice cheese</item>
+        <item>Rodoric</item>
+        <item>Rokpol</item>
+        <item>Romadur</item>
+        <item>Roncal cheese</item>
+        <item>Roumy cheese</item>
+        <item>Rubing</item>
+        <item>Rushan</item>
+        <item>Saaremaa</item>
+        <item>Safed</item>
+        <item>Saga</item>
+        <item>Sakura cheese</item>
+        <item>Saloio</item>
+        <item>Samsø</item>
+        <item>Samsø cheese</item>
+        <item>Santarém cheese</item>
+        <item>Santorini</item>
+        <item>Sardo</item>
+        <item>Sbrinz</item>
+        <item>Schabziger</item>
+        <item>Serra da Estrela</item>
+        <item>Shanklish</item>
+        <item>Sirene</item>
+        <item>Smetankowyi</item>
+        <item>Smoked cheese</item>
+        <item>Snøfrisk</item>
+        <item>So (dairy product)</item>
+        <item>Southern Ostrobothnia, Kainuu</item>
+        <item>Soy cheese</item>
+        <item>String cheese</item>
+        <item>Stånga</item>
+        <item>Sulguni</item>
+        <item>Surti Paneer</item>
+        <item>Svecia</item>
+        <item>Swiss cheese</item>
+        <item>Syr</item>
+        <item>Syrian cheese</item>
+        <item>São Jorge</item>
+        <item>Słupski chłopczyk</item>
+        <item>Tandil</item>
+        <item>Teleme cheese</item>
+        <item>Telemea</item>
+        <item>Tetilla cheese</item>
+        <item>Tilsit cheese</item>
+        <item>Tilsiter</item>
+        <item>Tolmin</item>
+        <item>Tolminc cheese</item>
+        <item>Torta del Casar</item>
+        <item>Tounjski</item>
+        <item>Trappista cheese</item>
+        <item>Travnik, Bosnia and Herzegovina</item>
+        <item>Travnički (Vlašić) cheese</item>
+        <item>Tulum</item>
+        <item>Tupí</item>
+        <item>Tvaroh</item>
+        <item>Tvorog (творог)</item>
+        <item>Twaróg</item>
+        <item>Tybo</item>
+        <item>Tylżycki</item>
+        <item>Tyrolean grey (Tiroler Graukäse)</item>
+        <item>Tyrozouli</item>
+        <item>Tzfat cheese</item>
+        <item>Tête de Moine</item>
+        <item>Ukraїnskyi</item>
+        <item>Urda</item>
+        <item>Urdă</item>
+        <item>Urdǎ</item>
+        <item>Vacherin Fribourgeois</item>
+        <item>Vacherin Mont d\'Or</item>
+        <item>Valdeón cheese</item>
+        <item>Vesterhavsost</item>
+        <item>Vurda</item>
+        <item>Västerbottensost</item>
+        <item>Wagasi</item>
+        <item>Weisslacker</item>
+        <item>Wisconsin</item>
+        <item>Xynomizithra</item>
+        <item>Xynotyro</item>
+        <item>Zamojski</item>
+        <item>Zamora</item>
+        <item>Zamorano cheese</item>
+        <item>Zgorzelecki</item>
+        <item>Ädelost</item>
+        <item>Ġbejna</item>
+        <item>Łowicki</item>
+        <item>Škripavac</item>
+    </string-array>
+</resources>

@@ -22,4 +22,7 @@
     <dimen name="text_xlarge">24sp</dimen>
     <dimen name="text_xxlarge">60sp</dimen>
 
+    <!-- chees finder-->
+    <dimen name="default_margin">8dp</dimen>
+
 </resources>
