@@ -516,6 +516,13 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.approve) {
+
+            Intent is = new Intent(getApplicationContext(), ApproveActivity.class);
+            startActivity(is);
+            return true;
+        }
+
 
 
         return super.onOptionsItemSelected(item);

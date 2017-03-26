@@ -140,6 +140,7 @@
     <string name="descimg">descimg</string>
     <string name="action_myemployee">My employees</string>
     <string name="action_mycompany">My company</string>
+    <string name="action_approve">Approve the Absences</string>
 
     <string name="incoming">Incoming work</string>
     <string name="leaving">Leaving work</string>
@@ -150,6 +151,10 @@
     <string name="interruption">Interruption</string>
     <string name="absence">Absence</string>
     <string name="newabsence">New Absence</string>
+    <string name="absences">Absences</string>
+    <string name="attendances">Attendances</string>
+    <string name="abstypes">AbsTypes</string>
+    <string name="approve">Approve</string>
 
     <string-array name="AbsenceSpinnerArray">
         <item>506 Holliday</item>

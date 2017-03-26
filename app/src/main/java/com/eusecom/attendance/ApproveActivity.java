@@ -38,7 +38,7 @@ import com.eusecom.attendance.fragment.MyAttendanceFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragment.OnFragmentInteractionListener {
+public class  ApproveActivity extends BaseDatabaseActivity implements LiveFragment.OnFragmentInteractionListener {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -49,23 +49,21 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_absence);
+        setContentView(R.layout.activity_approve);
         //showProgressDialog();
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
-        getSupportActionBar().setTitle(getString(R.string.absence));
+        getSupportActionBar().setTitle(getString(R.string.action_approve));
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     new MyAbsenceFragment(),
-                    new MyAttendanceFragment(),
                     new AbsTypesFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                    getString(R.string.absences),
-                    getString(R.string.attendances),
+                    getString(R.string.approve),
                     getString(R.string.abstypes)
             };
             @Override
@@ -102,11 +100,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
                     fab.setVisibility(View.GONE);
                     whatispage=1;
                 }
-                if(position == 2){
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
-                    fab.setVisibility(View.GONE);
-                    whatispage=2;
-                }
+
             }
         });
 
@@ -122,10 +116,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
 
                 Intent i=null;
                 if( whatispage == 0 ) {
-                    i = new Intent(AbsenceActivity.this, NewAbsenceActivity.class);
-                }
-                if( whatispage == 2 ) {
-                    i = new Intent(AbsenceActivity.this, NewPostActivity.class);
+                    i = new Intent(ApproveActivity.this, NewAbsenceActivity.class);
                 }
                 Bundle extras = new Bundle();
                 extras.putString("editx", "0");
