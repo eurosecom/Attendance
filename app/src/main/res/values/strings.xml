@@ -84,6 +84,7 @@
     <string name="kontzmaz">Delete</string>
     <string name="kontnic">Back</string>
     <string name="delitem">Delete item</string>
+    <string name="cantdel">You can not delete items older than 3 min.</string>
     <string name="kontedit">Edit</string>
     <string name="edititem">Edit item</string>
     <string name="item">Item</string>

@@ -71,7 +71,10 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
         if( attendance.dmxa.equals("801")) {
             Picasso.with(mContext).load(R.drawable.abs801).resize(120, 120).into(absence_photo);
         }
-        numStarsView.setText("0");
+        numStarsView.setText(attendance.aprv);
+        if( attendance.aprv.equals("1")) {
+            Picasso.with(mContext).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(starView);
+        }
 
         //convert unix epoch timestamp (seconds) to milliseconds
         long timestampod = Long.parseLong(attendance.daod) * 1000L;

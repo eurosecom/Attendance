@@ -318,7 +318,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
         // [START single_value_read]
         final String userId = getUid();
-        mDatabase.child("user-attendances").child(userId).addListenerForSingleValueEvent(
+        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -329,6 +329,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                         if (user == null) {
                             // User is null, error out
                             Log.e(TAG, "User " + userId + " is unexpectedly null");
+                            hideProgressDialog();
                             Toast.makeText(NewAbsenceActivity.this,
                                     "Error: could not fetch user.",
                                     Toast.LENGTH_SHORT).show();

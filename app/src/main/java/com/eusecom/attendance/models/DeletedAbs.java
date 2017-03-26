@@ -9,69 +9,40 @@ import java.util.Map;
 
 // [START blog_user_class]
 @IgnoreExtraProperties
-public class Attendance {
+public class DeletedAbs {
 
     public String usico;
     public String usid;
-    public String ume;
-    public String dmxa;
-    public String dmna;
-    public String daod;
-    public String dado;
-    public String dnixa;
-    public String hodxb;
-    public String longi;
-    public String lati;
-    public String datm;
+    public String keyx;
     private HashMap<String, Object> dats;
     public String aprv;
 
-    public Attendance() {
+    public DeletedAbs() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
 
 
-    public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                      String hodxb, String longi, String lati, String datm, String aprv) {
+    public DeletedAbs(String usico, String usid, String keyx ) {
         this.usico = usico;
         this.usid = usid;
-        this.ume = ume;
-        this.dmxa = dmxa;
-        this.dmna = dmna;
-        this.daod = daod;
-        this.dado = dado;
-        this.dnixa = dnixa;
-        this.hodxb = hodxb;
-        this.longi = longi;
-        this.lati = lati;
-        this.datm = datm;
-
-        HashMap<String, Object> datsObj = new HashMap<String, Object>();
-        datsObj.put("date", ServerValue.TIMESTAMP);
-        this.dats = datsObj;
-        this.aprv = aprv;
-    }
-
-    public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                      String hodxb, String longi, String lati, String datm ) {
-        this.usico = usico;
-        this.usid = usid;
-        this.ume = ume;
-        this.dmxa = dmxa;
-        this.dmna = dmna;
-        this.daod = daod;
-        this.dado = dado;
-        this.dnixa = dnixa;
-        this.hodxb = hodxb;
-        this.longi = longi;
-        this.lati = lati;
-        this.datm = datm;
+        this.keyx = keyx;
 
         HashMap<String, Object> datsObj = new HashMap<String, Object>();
         datsObj.put("date", ServerValue.TIMESTAMP);
         this.dats = datsObj;
         this.aprv = "0";
+    }
+
+    public DeletedAbs(String usico, String usid, String keyx, String aprv) {
+        this.usico = usico;
+        this.usid = usid;
+        this.keyx = keyx;
+
+        HashMap<String, Object> datsObj = new HashMap<String, Object>();
+        datsObj.put("date", ServerValue.TIMESTAMP);
+        this.dats = datsObj;
+        this.aprv = aprv;
     }
 
     public String getUsico() {
@@ -86,17 +57,7 @@ public class Attendance {
         HashMap<String, Object> result = new HashMap<>();
         result.put("usico", usico);
         result.put("usid", usid);
-        result.put("ume", ume);
-        result.put("dmxa", dmxa);
-        result.put("dmna", dmna);
-        result.put("daod", daod);
-        result.put("dado", dado);
-        result.put("dnixa", dnixa);
-        result.put("hodxb", hodxb);
-        result.put("longi", longi);
-        result.put("lati", lati);
-        result.put("datm", datm);
-        result.put("dats", dats);
+        result.put("keyx", keyx);
         result.put("dats", dats);
         result.put("aprv", aprv);
 

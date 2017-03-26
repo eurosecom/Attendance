@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.DeletedAbs;
 import com.eusecom.attendance.viewholder.AttendanceViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.eusecom.attendance.R;
 import com.eusecom.attendance.models.Post;
@@ -53,6 +55,7 @@ public abstract class AttendanceListFragment extends Fragment {
     String abskeydel=null;
     private ProgressDialog fProgressDialog;
     boolean isCancelable, isrunning;
+    String timestampx;
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
@@ -97,6 +100,18 @@ public abstract class AttendanceListFragment extends Fragment {
             }
         });
 
+        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
+        gettimestramp.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //System.out.println(dataSnapshot.getValue());
+                timestampx=dataSnapshot.getValue().toString();
+                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
+
+            }
+
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+        gettimestramp.setValue(ServerValue.TIMESTAMP);
 
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
@@ -134,7 +149,6 @@ public abstract class AttendanceListFragment extends Fragment {
                 final String absKey = absRef.getKey();
                 absxy = absRef.getKey();
 
-
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -156,11 +170,26 @@ public abstract class AttendanceListFragment extends Fragment {
                     @Override
                     public boolean onLongClick(View v) {
 
+                        final String datsx = model.getDatsString();
+                        //Log.d(TAG, "datsx " + datsx);
+
+                        gettimestramp.setValue(ServerValue.TIMESTAMP);
+                        //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
+
+                        long timestampl = Long.parseLong(timestampx);
+                        long datsl = Long.parseLong(datsx);
+                        long rozdiel = timestampl - datsl;
+                        //Log.d(TAG, "rozdiel " + rozdiel);
+
                         Toast.makeText(getActivity(), "Longclick " + absKey,Toast.LENGTH_SHORT).show();
 
                         abskeydel = absKey;
 
-                        getDialog(abskeydel);
+                        if( rozdiel < 180000 ) {
+                            getDialog(abskeydel);
+                        }else{
+                            Toast.makeText(getActivity(), getResources().getString(R.string.cantdel),Toast.LENGTH_SHORT).show();
+                        }
 
 
                         return true;
@@ -254,6 +283,14 @@ public abstract class AttendanceListFragment extends Fragment {
         childUpdates.put("/company-attendances/" + usicox + "/" + key, null);
 
         mDatabase.updateChildren(childUpdates);
+
+        String keydel = mDatabase.child("deleted-absences").push().getKey();
+        DeletedAbs deletedabs = new DeletedAbs(usicox, userId, postkey );
+        Log.d(TAG, "postkey " + postkey);
+        Map<String, Object> delValues = deletedabs.toMap();
+        Map<String, Object> childDelUpdates = new HashMap<>();
+        childDelUpdates.put("/deleted-absences/" + keydel, delValues);
+        mDatabase.updateChildren(childDelUpdates);
 
     }
     // [END delete_fan_out]
