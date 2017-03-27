@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
     private String[] navMenuTitles;
     int ICONS[] = {R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit,
-            R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit};
+            R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit};
 
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
@@ -113,14 +113,14 @@ public class MainActivity extends ActionBarActivity {
         mText3 = (TextView) findViewById(R.id.text3);
 
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2],navMenuTitles[3],navMenuTitles[4],navMenuTitles[5]};
+        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2],navMenuTitles[3],navMenuTitles[4],navMenuTitles[5],navMenuTitles[6]};
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new MyAdapter(this, TITLES,ICONS,NAME,EMAIL,PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        mAdapter = new MainDrawerAdapter(this, TITLES,ICONS,NAME,EMAIL,PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
         // And passing the titles,icons,header view name, header view email,
         // and header view profile picture
         mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView

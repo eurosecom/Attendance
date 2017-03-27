@@ -120,6 +120,7 @@
         <item >Settings</item>
         <item >Demo Rx Bus</item>
         <item >Demo Rx Search debounced</item>
+        <item >Demo Rx zip and flatmap</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
@@ -129,6 +130,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
+        <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
         <item>@drawable/ic_image_edit</item>
