@@ -1,10 +1,11 @@
 package com.eusecom.attendance.fragment;
+import com.eusecom.attendance.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 
-public class MyApproveFragment extends AbsenceListFragment {
+public class MyApproveFragment extends ApproveListFragment {
 
     private DatabaseReference mDatabase;
 
@@ -13,10 +14,10 @@ public class MyApproveFragment extends AbsenceListFragment {
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
 
-        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String companyIco = SettingsActivity.getUsIco(getActivity());
 
         // [START absences_query]
-        Query recentAbsencesQuery = databaseReference.child("user-absences").child(userId).orderByChild("datm")
+        Query recentAbsencesQuery = databaseReference.child("company-absences").child(companyIco).orderByChild("aprv").equalTo("0")
                 .limitToFirst(200);
         // [END absences_query]
 

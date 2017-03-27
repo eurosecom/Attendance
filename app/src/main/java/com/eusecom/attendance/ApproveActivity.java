@@ -28,13 +28,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-
 import com.eusecom.attendance.fragment.AbsTypesFragment;
-import com.eusecom.attendance.fragment.ContactFragment;
 import com.eusecom.attendance.fragment.LiveFragment;
-import com.eusecom.attendance.fragment.MyAbsenceFragment;
-import com.eusecom.attendance.fragment.MyAttendanceFragment;
+import com.eusecom.attendance.fragment.MyApproveFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -59,7 +55,7 @@ public class  ApproveActivity extends BaseDatabaseActivity implements LiveFragme
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new MyAbsenceFragment(),
+                    new MyApproveFragment(),
                     new AbsTypesFragment()
             };
             private final String[] mFragmentNames = new String[] {

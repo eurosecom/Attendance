@@ -155,6 +155,7 @@
     <string name="attendances">Attendances</string>
     <string name="abstypes">AbsTypes</string>
     <string name="approve">Approve</string>
+    <string name="refuse">Refuse</string>
 
     <string-array name="AbsenceSpinnerArray">
         <item>506 Holliday</item>

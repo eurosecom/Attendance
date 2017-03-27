@@ -20,6 +20,7 @@ import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.DeletedAbs;
+import com.eusecom.attendance.viewholder.ApproveViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +33,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.eusecom.attendance.R;
 import com.eusecom.attendance.models.Post;
-import com.eusecom.attendance.viewholder.AbsenceViewHolder;
+import com.eusecom.attendance.viewholder.ApproveViewHolder;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -40,13 +41,13 @@ import java.util.Map;
 
 public abstract class ApproveListFragment extends Fragment {
 
-    private static final String TAG = "AbsenceListFragment";
+    private static final String TAG = "ApproveListFragment";
 
     // [START define_database_reference]
     private DatabaseReference mDatabase;
     // [END define_database_reference]
 
-    private FirebaseRecyclerAdapter<Attendance, AbsenceViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Attendance, ApproveViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
@@ -138,11 +139,11 @@ public abstract class ApproveListFragment extends Fragment {
 
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Attendance, AbsenceViewHolder>(Attendance.class, R.layout.item_absence,
-                AbsenceViewHolder.class, absencesQuery) {
+        mAdapter = new FirebaseRecyclerAdapter<Attendance, ApproveViewHolder>(Attendance.class, R.layout.item_absence,
+                ApproveViewHolder.class, absencesQuery) {
 
             @Override
-            protected void populateViewHolder(final AbsenceViewHolder viewHolder, final Attendance model, final int position) {
+            protected void populateViewHolder(final ApproveViewHolder viewHolder, final Attendance model, final int position) {
 
                 final DatabaseReference absRef = getRef(position);
 
@@ -187,11 +188,7 @@ public abstract class ApproveListFragment extends Fragment {
 
                         abskeydel = absKey;
 
-                        if( rozdiel < 180000 ) {
-                            getDialog(abskeydel);
-                        }else{
-                            Toast.makeText(getActivity(), getResources().getString(R.string.cantdel),Toast.LENGTH_SHORT).show();
-                        }
+                        getDialog(abskeydel);
 
 
                         return true;
@@ -202,7 +199,7 @@ public abstract class ApproveListFragment extends Fragment {
 
 
                 // Bind Abstype to ViewHolder
-                viewHolder.bindToAbsence(model, new View.OnClickListener() {
+                viewHolder.bindToApprove(model, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {
                         // Need to write to both places the post is stored
@@ -272,27 +269,9 @@ public abstract class ApproveListFragment extends Fragment {
     public abstract Query getQuery(DatabaseReference databaseReference);
 
     // [START deletefan_out]
-    private void deletePost(String postkey) {
-
-        // delete post key from /posts and user-posts/$userid simultaneously
-        String userId = getUid();
-        String key = postkey;
-        String usicox = SettingsActivity.getUsIco(getActivity());
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/absences/" + key, null);
-        childUpdates.put("/user-absences/" + userId + "/" + key, null);
-        childUpdates.put("/company-absences/" + usicox + "/" + key, null);
-        mDatabase.updateChildren(childUpdates);
+    private void approvePost(String postkey, int anodaj) {
 
 
-        String keydel = mDatabase.child("deleted-absences").push().getKey();
-        DeletedAbs deletedabs = new DeletedAbs(usicox, userId, postkey );
-        Log.d(TAG, "postkey " + postkey);
-        Map<String, Object> delValues = deletedabs.toMap();
-        Map<String, Object> childDelUpdates = new HashMap<>();
-        childDelUpdates.put("/deleted-absences/" + keydel, delValues);
-        mDatabase.updateChildren(childDelUpdates);
 
     }
     // [END delete_fan_out]
@@ -301,7 +280,7 @@ public abstract class ApproveListFragment extends Fragment {
 
         // custom dialog
         final Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.approve_dialog);
         dialog.setTitle(R.string.item);
         // set the custom dialog components - text, image and button
         String textx = getString(R.string.item) + " " + abskeydel;
@@ -310,31 +289,24 @@ public abstract class ApproveListFragment extends Fragment {
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
         image.setImageResource(R.drawable.ic_image_edit);
 
-        Button buttonDelete = (Button) dialog.findViewById(R.id.buttonDelete);
+        Button buttonApprove = (Button) dialog.findViewById(R.id.buttonApprove);
         // if button is clicked, close the custom dialog
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
+        buttonApprove.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 dialog.dismiss();
-                deletePost(abskeydel);
+                approvePost(abskeydel, 1);
             }
         });
-        Button buttonEdit = (Button) dialog.findViewById(R.id.buttonEdit);
+        Button buttonRefuse = (Button) dialog.findViewById(R.id.buttonRefuse);
         // if button is clicked, close the custom dialog
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
+        buttonRefuse.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 dialog.dismiss();
+                approvePost(abskeydel, 0);
 
-                Toast.makeText(getActivity(), getResources().getString(R.string.cantedititem), Toast.LENGTH_SHORT).show();
 
-                //Intent i = new Intent(getActivity(), NewPostActivity.class);
-                //Bundle extras = new Bundle();
-                //extras.putString("editx", "1");
-                //extras.putString("keyx", abskeydel);
-
-                //i.putExtras(extras);
-                //startActivity(i);
             }
         });
         dialog.show();
