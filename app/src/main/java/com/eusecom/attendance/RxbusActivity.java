@@ -8,7 +8,7 @@ package com.eusecom.attendance;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import com.eusecom.attendance.fragments.MainFragment;
+import com.eusecom.attendance.fragments.RxbusMainFragment;
 import com.eusecom.attendance.rxbus.RxBus;
 
 public class RxbusActivity
@@ -27,7 +27,7 @@ public class RxbusActivity
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                                       .replace(android.R.id.content, new MainFragment(), this.toString())
+                                       .replace(android.R.id.content, new RxbusMainFragment(), this.toString())
                                        .commit();
         }
     }

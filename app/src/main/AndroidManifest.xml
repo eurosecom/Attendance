@@ -49,6 +49,7 @@
         <activity android:name=".MapActivity"/>
         <activity android:name=".RxbusActivity"/>
         <activity android:name=".CheeseActivity"/>
+        <activity android:name=".RxzipActivity"/>
 
 
 
