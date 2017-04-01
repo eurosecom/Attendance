@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.DeletedAbs;
+import com.eusecom.attendance.retrofit.RfContributor;
+import com.eusecom.attendance.retrofit.RfEtestApi;
+import com.eusecom.attendance.retrofit.RfEtestService;
+import com.eusecom.attendance.retrofit.RfGithubApi;
+import com.eusecom.attendance.retrofit.RfGithubService;
+import com.eusecom.attendance.retrofit.RfUser;
 import com.eusecom.attendance.viewholder.ApproveViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +47,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
+import static android.text.TextUtils.isEmpty;
+import static java.lang.String.format;
+
 public abstract class ApproveListFragment extends Fragment {
 
     private static final String TAG = "ApproveListFragment";
@@ -57,6 +74,18 @@ public abstract class ApproveListFragment extends Fragment {
     private ProgressDialog fProgressDialog;
     boolean isCancelable, isrunning;
     String timestampx;
+
+    private RfEtestApi _githubService;
+    private CompositeDisposable _disposables;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        String githubToken = Constants.GITHUB_API_KEY;
+        _githubService = RfEtestService.createGithubService(githubToken);
+
+        _disposables = new CompositeDisposable();
+    }
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
@@ -259,6 +288,7 @@ public abstract class ApproveListFragment extends Fragment {
         if (mAdapter != null) {
             mAdapter.cleanup();
         }
+        _disposables.dispose();
     }
 
     public String getUid() {
@@ -271,7 +301,43 @@ public abstract class ApproveListFragment extends Fragment {
     // [START deletefan_out]
     private void approvePost(String postkey, int anodaj) {
 
+        _disposables.add(_githubService.contributors("square", "retrofit")
+                .flatMap(Observable::fromIterable)
+                .flatMap(contributor -> {
+                    Observable<RfUser> _userObservable = _githubService.user(contributor.login)
+                            .filter(user -> !isEmpty(user.name) && !isEmpty(user.email));
 
+                    return Observable.zip(_userObservable,
+                            Observable.just(contributor),
+                            Pair::new);
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Pair<RfUser,RfContributor>>() {
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "Retrofit call 2 completed ");
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "error while getting the list of contributors along with full " + "names");
+                    }
+
+                    @Override
+                    public void onNext(Pair pair) {
+                        RfUser user = ((Pair<RfUser, RfContributor>)pair).first;
+                        RfContributor contributor = ((Pair<RfUser, RfContributor>)pair).second;
+
+
+                        String snext =  " "  +  user.name + " "
+                                + user.email + " "
+                                + contributor.contributions;
+
+                        Log.d(TAG, "onnext " + snext);
+                    }
+                }));
 
     }
     // [END delete_fan_out]

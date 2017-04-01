@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 
+import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.R;
 import com.eusecom.attendance.retrofit.RfContributor;
 import com.eusecom.attendance.retrofit.RfGithubApi;
@@ -47,7 +48,7 @@ public class RetrofitFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String githubToken = getResources().getString(R.string.github_oauth_token);
+        String githubToken = Constants.GITHUB_API_KEY;
         _githubService = RfGithubService.createGithubService(githubToken);
 
         _disposables = new CompositeDisposable();
