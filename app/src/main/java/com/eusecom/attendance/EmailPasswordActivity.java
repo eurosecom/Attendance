@@ -62,7 +62,7 @@ public class EmailPasswordActivity extends BaseActivity implements
     private FirebaseAuth.AuthStateListener mAuthListener;
     // [END declare_auth_listener]
 
-    String usertype="0", userico="0", myuserid="", username="";
+    String usertype="0", userico="0", myuserid="", username="", userosc="0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -206,6 +206,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         User userx = dataSnapshot.getValue(User.class);
                         usertype = userx.getUstype();
                         userico = userx.getUsico();
+                        userosc = userx.getUsosc();
                         myuserid = user.getUid();
                         Log.d("usertype", usertype);
                         username = userx.getUsname();
@@ -215,6 +216,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
                         editor.putString("ustype", usertype).apply();
                         editor.putString("usico", userico).apply();
+                        editor.putString("usosc", userosc).apply();
                         editor.putString("usname", username).apply();
 
                         editor.commit();
@@ -237,6 +239,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
                         editor.putString("ustype", "0").apply();
                         editor.putString("usico", "0").apply();
+                        editor.putString("usosc", "0").apply();
                         editor.putString("usatw", "0").apply();
 
                         editor.commit();
@@ -252,13 +255,14 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         editor.putString("ustype", "0").apply();
         editor.putString("usico", "0").apply();
+        editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
 
         editor.commit();
 
         String username = usernameFromEmail(user.getEmail());
         // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0");
+        writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0", "0");
 
     }
 
@@ -271,11 +275,11 @@ public class EmailPasswordActivity extends BaseActivity implements
     }
 
     // [START basic_write]
-    private void writeNewUser(String userId, String name, String email, String usertypex, String usericox, String useratwx) {
+    private void writeNewUser(String userId, String name, String email, String usertypex, String usericox, String useratwx, String useroscx) {
 
         //save new user
         //String ustypex = SettingsActivity.getUsType(this);
-        User user = new User(name, email, usertypex, usericox, useratwx);
+        User user = new User(name, email, usertypex, usericox, useroscx, useratwx);
         Log.d("setvalue", usertypex);
         //User user = new User(name, email);
         mDatabase.child("users").child(userId).setValue(user);
@@ -289,6 +293,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ustype", "0").apply();
         editor.putString("usico", "0").apply();
+        editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
         updateUI(null);
     }

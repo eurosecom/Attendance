@@ -27,6 +27,7 @@ public class User {
         this.email = email;
         this.ustype = ustype;
         this.usico = usico;
+        this.usosc = "0";
         this.usatw = usatw;
     }
 
@@ -54,6 +55,12 @@ public class User {
     public String getUsico() {
 
         return this.usico;
+
+    }
+
+    public String getUsosc() {
+
+        return this.usosc;
 
     }
 

@@ -43,6 +43,12 @@
         android:title="@string/usico_title" />
 
     <EditTextPreference
+        android:key="usosc"
+        android:enabled="true"
+        android:summary="@string/usosc_summary"
+        android:title="@string/usosc_title" />
+
+    <EditTextPreference
         android:key="usatw"
         android:enabled="true"
         android:summary="@string/usatw_summary"
