@@ -197,10 +197,11 @@ public class MainActivity extends ActionBarActivity {
 
                                                 final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                 String icox = SettingsActivity.getUsIco(MainActivity.this);
+                                                String oscx = SettingsActivity.getUsOsc(MainActivity.this);
                                                 Long tsLong = System.currentTimeMillis() / 1000;
                                                 String ts = tsLong.toString();
 
-                                                writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts);
+                                                writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx);
 
                                             }
                                         })
@@ -249,10 +250,11 @@ public class MainActivity extends ActionBarActivity {
 
                                                 final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                 String icox = SettingsActivity.getUsIco(MainActivity.this);
+                                                String oscx = SettingsActivity.getUsOsc(MainActivity.this);
                                                 Long tsLong = System.currentTimeMillis()/1000;
                                                 String ts = tsLong.toString();
 
-                                                writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0", ts );
+                                                writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0", ts, oscx );
 
                                             }
                                         })
@@ -333,7 +335,7 @@ public class MainActivity extends ActionBarActivity {
 
     // [START basic_write]
     private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                                 String hodxb, String longi, String lati, String datm) {
+                                 String hodxb, String longi, String lati, String datm, String usosc) {
 
         String key = mDatabase.child("attendances").push().getKey();
         String gpslat;
@@ -352,7 +354,7 @@ public class MainActivity extends ActionBarActivity {
             mGPS.showSettingsAlert();
         }
 
-        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm );
+        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm, usosc );
 
         Map<String, Object> attValues = attendance.toMap();
 
