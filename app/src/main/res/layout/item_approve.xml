@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout for one item of absence at RcViewer AbsenceListFragmentjava with AbsenceViewHolder.java -->
+<!-- Layout for one item of approve at RcViewer ApproveListFragmentjava with ApproveViewHolder.java -->
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,7 @@
     android:layout_margin="5dp">
 
     <RelativeLayout
+        android:background="@drawable/selector_medium_high"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">

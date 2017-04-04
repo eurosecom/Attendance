@@ -168,7 +168,7 @@ public abstract class ApproveListFragment extends Fragment {
 
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Attendance, ApproveViewHolder>(Attendance.class, R.layout.item_absence,
+        mAdapter = new FirebaseRecyclerAdapter<Attendance, ApproveViewHolder>(Attendance.class, R.layout.item_approve,
                 ApproveViewHolder.class, absencesQuery) {
 
             @Override
@@ -317,6 +317,7 @@ public abstract class ApproveListFragment extends Fragment {
                     @Override
                     public void onComplete() {
                         Log.d(TAG, "Retrofit call 2 completed ");
+                        Toast.makeText(getActivity(), "Retrofit call 2 completed ", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -336,6 +337,7 @@ public abstract class ApproveListFragment extends Fragment {
                                 + contributor.contributions;
 
                         Log.d(TAG, "onnext " + snext);
+                        Toast.makeText(getActivity(), user.email, Toast.LENGTH_LONG).show();
                     }
                 }));
 
