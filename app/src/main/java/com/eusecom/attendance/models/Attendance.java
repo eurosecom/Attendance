@@ -140,5 +140,17 @@ public class Attendance {
         return datss;
     }
 
+    @Exclude
+    public String getDmxa() {
+
+        return dmxa;
+    }
+
+    @Exclude
+    public String getDaod() {
+
+        return daod;
+    }
+
 }
 // [END blog_user_class]

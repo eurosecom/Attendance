@@ -1,11 +1,15 @@
 package com.eusecom.attendance.retrofit;
 
+import com.eusecom.attendance.models.Attendance;
+
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -72,8 +76,13 @@ public interface RfEtestApi {
     /**
      * See https://developer.github.com/v3/repos/#list-contributors
      */
+    @FormUrlEncoded
+    @POST("/attendance/contributor.php")
+    Observable<List<RfContributor>> contributors(@Field("savetofir") String savetofir, @Field("keyf") String keyf,
+                                                 @Field("whoapprove") String whoapprove, @Field("approveabs_json") String approveabs_json);
+
     @GET("/attendance/contributor.php")
-    Observable<List<RfContributor>> contributors(@Query("owner") String owner,
+    Observable<List<RfContributor>> contributorsGET(@Query("owner") String owner,
                                                  @Query("repo") String repo);
 
     @GET("/attendance/contributor.json")

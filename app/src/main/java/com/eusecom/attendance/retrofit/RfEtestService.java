@@ -2,6 +2,7 @@ package com.eusecom.attendance.retrofit;
 
 import android.text.TextUtils;
 
+import com.eusecom.attendance.SettingsActivity;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import okhttp3.OkHttpClient;
@@ -16,10 +17,13 @@ public class RfEtestService {
     private RfEtestService() {
     }
 
-    public static RfEtestApi createGithubService(final String githubToken) {
+    public static RfEtestApi createGithubService(final String githubToken, final String urlx) {
+
+
         Retrofit.Builder builder = new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
               .addConverterFactory(GsonConverterFactory.create())
-              .baseUrl("http://www.eshoptest.sk");
+              .baseUrl(urlx);
+              //.baseUrl("http://www.eshoptest.sk");
               //.baseUrl("https://api.github.com");
 
         if (!TextUtils.isEmpty(githubToken)) {

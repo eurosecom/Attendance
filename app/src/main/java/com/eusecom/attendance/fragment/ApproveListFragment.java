@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.attendance.Constants;
+import com.eusecom.attendance.MainActivity;
 import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
@@ -43,6 +44,8 @@ import com.eusecom.attendance.R;
 import com.eusecom.attendance.models.Post;
 import com.eusecom.attendance.viewholder.ApproveViewHolder;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,8 +84,9 @@ public abstract class ApproveListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String githubToken = Constants.GITHUB_API_KEY;
-        _githubService = RfEtestService.createGithubService(githubToken);
+        String githubToken = Constants.ETEST_API_KEY;
+        String urlx = SettingsActivity.getServerName(getActivity());
+        _githubService = RfEtestService.createGithubService(githubToken, urlx);
 
         _disposables = new CompositeDisposable();
     }
@@ -217,7 +221,7 @@ public abstract class ApproveListFragment extends Fragment {
 
                         abskeydel = absKey;
 
-                        getDialog(abskeydel);
+                        getDialog(abskeydel, model);
 
 
                         return true;
@@ -299,9 +303,21 @@ public abstract class ApproveListFragment extends Fragment {
     public abstract Query getQuery(DatabaseReference databaseReference);
 
     // [START deletefan_out]
-    private void approvePost(String postkey, int anodaj) {
+    private void approvePost(String postkey, int anodaj, Attendance model) {
 
-        _disposables.add(_githubService.contributors("square", "retrofit")
+        final String datsx = model.getDatsString();
+        Log.d(TAG, "datsx " + datsx);
+        final String dmxax = model.getDmxa();
+        Log.d(TAG, "dmxax " + dmxax);
+        final String daodx = model.getDaod();
+        Log.d(TAG, "daodx " + daodx);
+
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        String approveabs_json = gson.toJson(model);
+        String savetofir =  SettingsActivity.getFir(getActivity());
+        String whoapprove =  SettingsActivity.getUsOsc(getActivity());
+
+        _disposables.add(_githubService.contributors(savetofir, postkey, whoapprove, approveabs_json)
                 .flatMap(Observable::fromIterable)
                 .flatMap(contributor -> {
                     Observable<RfUser> _userObservable = _githubService.user(contributor.login)
@@ -334,17 +350,18 @@ public abstract class ApproveListFragment extends Fragment {
 
                         String snext =  " "  +  user.name + " "
                                 + user.email + " "
-                                + contributor.contributions;
+                                + contributor.contributions + " "
+                                + contributor.memo;
 
                         Log.d(TAG, "onnext " + snext);
-                        Toast.makeText(getActivity(), user.email, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), snext, Toast.LENGTH_LONG).show();
                     }
                 }));
 
     }
     // [END delete_fan_out]
 
-    private void getDialog(String postkey) {
+    private void getDialog(String postkey, Attendance model) {
 
         // custom dialog
         final Dialog dialog = new Dialog(getActivity());
@@ -363,7 +380,7 @@ public abstract class ApproveListFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
-                approvePost(abskeydel, 1);
+                approvePost(abskeydel, 1, model);
             }
         });
         Button buttonRefuse = (Button) dialog.findViewById(R.id.buttonRefuse);
@@ -372,7 +389,7 @@ public abstract class ApproveListFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
-                approvePost(abskeydel, 0);
+                approvePost(abskeydel, 0, model);
 
 
             }
