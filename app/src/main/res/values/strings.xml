@@ -209,6 +209,12 @@
     <string name="abssave">Absence saved.</string>
     <string name="mesapprovesent">Absence sent to approve.</string>
     <string name="idliketoget">I am asking a</string>
+    <string name="abs_saved">The absence has saved to server</string>
+    <string name="abs_savednot">The absence has not saved to server</string>
+    <string name="absapproved">Absence approved.</string>
+    <string name="absapprovedok">Absence was approved.</string>
+    <string name="isapproved">Approved absence </string>
+    <string name="isrefused">Refused absence </string>
 
     <!-- chees finder-->
     <string name="nothing_found">No cheeses found</string>

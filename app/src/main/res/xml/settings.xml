@@ -4,7 +4,7 @@
 
     <EditTextPreference
         android:key="servername"
-        android:defaultValue="www.ala.sk/androideshop"
+        android:defaultValue="http:\\www.eshoptest.sk"
         android:summary="@string/servername_summary"
         android:title="@string/servername_title" />
 
@@ -19,10 +19,11 @@
         android:title="@string/userpsw_title" />
 
     <EditTextPreference
-    android:key="fir"
-    android:enabled="true"
-    android:summary="@string/fir_summary"
-    android:title="@string/fir_title" />
+        android:key="fir"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/fir_summary"
+        android:title="@string/fir_title" />
 
     <EditTextPreference
         android:key="usname"

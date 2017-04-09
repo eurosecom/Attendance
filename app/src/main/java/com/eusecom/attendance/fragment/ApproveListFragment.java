@@ -2,13 +2,16 @@ package com.eusecom.attendance.fragment;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +20,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eusecom.attendance.ApproveActivity;
 import com.eusecom.attendance.Constants;
+import com.eusecom.attendance.FbmessClient;
+import com.eusecom.attendance.GitHubRepoAdapter;
 import com.eusecom.attendance.MainActivity;
+import com.eusecom.attendance.NewAbsenceActivity;
 import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.DeletedAbs;
+import com.eusecom.attendance.models.MessData;
+import com.eusecom.attendance.models.Message;
+import com.eusecom.attendance.models.NotifyData;
 import com.eusecom.attendance.retrofit.RfContributor;
 import com.eusecom.attendance.retrofit.RfEtestApi;
 import com.eusecom.attendance.retrofit.RfEtestService;
@@ -47,6 +57,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +68,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import rx.Observer;
+import rx.Subscription;
 
 import static android.text.TextUtils.isEmpty;
 import static java.lang.String.format;
@@ -80,6 +95,8 @@ public abstract class ApproveListFragment extends Fragment {
 
     private RfEtestApi _githubService;
     private CompositeDisposable _disposables;
+
+    private Subscription subscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -292,6 +309,9 @@ public abstract class ApproveListFragment extends Fragment {
         if (mAdapter != null) {
             mAdapter.cleanup();
         }
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
         _disposables.dispose();
     }
 
@@ -317,10 +337,10 @@ public abstract class ApproveListFragment extends Fragment {
         String savetofir =  SettingsActivity.getFir(getActivity());
         String whoapprove =  SettingsActivity.getUsOsc(getActivity());
 
-        _disposables.add(_githubService.contributors(savetofir, postkey, whoapprove, approveabs_json)
+        _disposables.add(_githubService.contributors(savetofir, postkey, whoapprove, approveabs_json, anodaj)
                 .flatMap(Observable::fromIterable)
                 .flatMap(contributor -> {
-                    Observable<RfUser> _userObservable = _githubService.user(contributor.login)
+                    Observable<RfUser> _userObservable = _githubService.user(savetofir, postkey, whoapprove, approveabs_json, anodaj, contributor.login)
                             .filter(user -> !isEmpty(user.name) && !isEmpty(user.email));
 
                     return Observable.zip(_userObservable,
@@ -339,7 +359,8 @@ public abstract class ApproveListFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "error while getting the list of contributors along with full " + "names");
+                        String snext = "Error " + e + getResources().getString(R.string.abs_savednot);
+                        Toast.makeText(getActivity(), snext, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -347,11 +368,22 @@ public abstract class ApproveListFragment extends Fragment {
                         RfUser user = ((Pair<RfUser, RfContributor>)pair).first;
                         RfContributor contributor = ((Pair<RfUser, RfContributor>)pair).second;
 
+                        String snext =  "";
 
-                        String snext =  " "  +  user.name + " "
+                        String snextx =  " "  +  user.name + " "
                                 + user.email + " "
                                 + contributor.contributions + " "
-                                + contributor.memo;
+                                + contributor.memo + " "
+                                + contributor.saved;
+
+                        if(contributor.saved == 1 ) {
+                            snext = getResources().getString(R.string.abs_saved) + snextx;
+                            approveFBPost(abskeydel, contributor.anodaj, model);
+                        }else{
+                            snext = getResources().getString(R.string.abs_savednot);
+                            approveFBPost(abskeydel, contributor.anodaj, model);
+                        }
+
 
                         Log.d(TAG, "onnext " + snext);
                         Toast.makeText(getActivity(), snext, Toast.LENGTH_LONG).show();
@@ -362,6 +394,10 @@ public abstract class ApproveListFragment extends Fragment {
     // [END delete_fan_out]
 
     private void getDialog(String postkey, Attendance model) {
+
+        //if savetofir > 0 then save to server
+        String savetofir =  SettingsActivity.getFir(getActivity());
+        int savetofiri = Integer.parseInt(savetofir);
 
         // custom dialog
         final Dialog dialog = new Dialog(getActivity());
@@ -380,7 +416,11 @@ public abstract class ApproveListFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
-                approvePost(abskeydel, 1, model);
+                if(savetofiri>0){
+                    approvePost(abskeydel, 1, model);
+                }else{
+                    approvePost(abskeydel, 1, model);
+                }
             }
         });
         Button buttonRefuse = (Button) dialog.findViewById(R.id.buttonRefuse);
@@ -389,13 +429,56 @@ public abstract class ApproveListFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
-                approvePost(abskeydel, 0, model);
+                if(savetofiri>0){
+                    approvePost(abskeydel, 0, model);
+                }else{
+                    approvePost(abskeydel, 0, model);
+                }
 
 
             }
         });
         dialog.show();
 
+    }//end getdialog
+
+    private void approveFBPost(String postkey, int anodaj, Attendance model) {
+
+        //Toast.makeText(getActivity(), "Set approved=1", Toast.LENGTH_LONG).show();
+        String Notititle = SettingsActivity.getUsname(getActivity()) + " "  + model.dmxa + " "  + model.dmna;
+        long timestampod = Long.parseLong(model.daod) * 1000L;
+        String datefroms = getDate(timestampod );
+        long timestampdo = Long.parseLong(model.dado) * 1000L;
+        String datetos = getDate(timestampdo );
+        String Notibody ="";
+
+        if( anodaj == 1 ) {
+            Notibody = getString(R.string.isapproved) + " " + model.dmxa + " " + model.dmna + " "
+                    + getString(R.string.from) + " " + datefroms + " " + getString(R.string.to) + " " + datetos
+                    + " " + model.hodxb + " " + getString(R.string.hodiny);
+        }else{
+            Notibody = getString(R.string.isrefused) + " " + model.dmxa + " " + model.dmna + " "
+                    + getString(R.string.from) + " " + datefroms + " " + getString(R.string.to) + " " + datetos
+                    + " " + model.hodxb + " " + getString(R.string.hodiny);
+        }
+
+        String approvetopic = "/topics/approve" + SettingsActivity.getUsIco(getActivity());
+        //FirebaseRetrofitMessaging firebasemessaging = new FirebaseRetrofitMessaging("/topics/news", Notititle, Notibody);
+        FirebaseRxApproveMessaging firebasemessaging = new FirebaseRxApproveMessaging(approvetopic, Notititle, Notibody, anodaj);
+        subscription = firebasemessaging.SendNotification();
+
+    }
+
+    private String getDate(long timeStamp){
+
+        try{
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
+        }
+        catch(Exception ex){
+            return "xx";
+        }
     }
 
 
@@ -428,5 +511,89 @@ public abstract class ApproveListFragment extends Fragment {
         super.onPause();
         isrunning=false;
     }
+
+    public class FirebaseRxApproveMessaging {
+
+        String to, title, body;
+        int anodaj;
+        private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
+        private Subscription subscription;
+
+
+        public FirebaseRxApproveMessaging(String to, String title, String body, int anodaj) {
+            this.to = to;
+            this.title = title;
+            this.body = body;
+            this.anodaj = anodaj;
+        }
+
+
+        public Subscription SendNotification() {
+
+            MessData messdata = new MessData("This is a GCM Topic Message!");
+            NotifyData notifydata = new NotifyData(title, body);
+            Message message = new Message(to, notifydata, "");
+
+            subscription = FbmessClient.getInstance()
+                    .sendmyMessage("xxxxx", message)
+                    .subscribeOn(rx.schedulers.Schedulers.io())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Message>() {
+                        @Override
+                        public void onCompleted() {
+
+                            //hideProgressDialog();
+                            String notis="";
+                            if( anodaj == 1 ) {
+                                notis = getString(R.string.isapproved);
+                            }else{
+                                notis = getString(R.string.isrefused);
+                            }
+                            //Log.d(TAG, "In onCompleted()");
+                            AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                                    .setTitle(getString(R.string.absence))
+                                    .setMessage(notis)
+                                    .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            //getActivity().finish();
+                                        }
+                                    })
+
+                                    .show();
+
+                            dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+                                @Override
+                                public boolean onKey(DialogInterface arg0, int keyCode,
+                                                     KeyEvent event) {
+                                    // TODO Auto-generated method stub
+                                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                        //getActivity().finish();
+                                        dialog.dismiss();
+                                    }
+                                    return true;
+                                }
+                            });
+                        }
+
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "In onError()");
+                        }
+
+                        @Override
+                        public void onNext(Message message) {
+                            Log.d(TAG, "In onNext()");
+                            Log.d("message", message.getMessage_id());
+                            //adapter.setGitHubRepos(gitHubRepos);
+                        }
+                    });
+            return subscription;
+        }
+
+    }//end of FirebaseRxApproveMessaging
 
 }

@@ -77,9 +77,10 @@ public interface RfEtestApi {
      * See https://developer.github.com/v3/repos/#list-contributors
      */
     @FormUrlEncoded
-    @POST("/attendance/contributor.php")
+    @POST("/attendance/save_absence.php")
     Observable<List<RfContributor>> contributors(@Field("savetofir") String savetofir, @Field("keyf") String keyf,
-                                                 @Field("whoapprove") String whoapprove, @Field("approveabs_json") String approveabs_json);
+                                                 @Field("whoapprove") String whoapprove, @Field("approveabs_json") String approveabs_json,
+                                                 @Field("anodaj") int anodaj);
 
     @GET("/attendance/contributor.php")
     Observable<List<RfContributor>> contributorsGET(@Query("owner") String owner,
@@ -103,8 +104,14 @@ public interface RfEtestApi {
     /**
      * See https://developer.github.com/v3/users/
      */
+    @FormUrlEncoded
+    @POST("/attendance/email_absence.php")
+    Observable<RfUser> user(@Field("savetofir") String savetofir, @Field("keyf") String keyf,
+                            @Field("whoapprove") String whoapprove, @Field("approveabs_json") String approveabs_json,
+                            @Field("anodaj") int anodaj, @Field("user") String user);
+
     @GET("/attendance/user.php")
-    Observable<RfUser> user(@Query("user") String user);
+    Observable<RfUser> userold(@Query("user") String user);
 
     @GET("/users/{user}")
     Observable<RfUser> user_orig(@Path("user") String user);
