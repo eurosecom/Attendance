@@ -444,6 +444,19 @@ public abstract class ApproveListFragment extends Fragment {
 
     private void approveFBPost(String postkey, int anodaj, Attendance model) {
 
+        //set appr at firebase child
+        String apprx="1";
+        if( anodaj == 1) {
+            apprx="1";
+        }else{
+            apprx="2";
+        }
+
+        mDatabase.child("absences").child(postkey).child("aprv").setValue(apprx);
+        mDatabase.child("user-absences").child(model.usid).child(postkey).child("aprv").setValue(apprx);
+        mDatabase.child("company-absences").child(model.usico).child(postkey).child("aprv").setValue(apprx);
+
+        //send notifycation
         //Toast.makeText(getActivity(), "Set approved=1", Toast.LENGTH_LONG).show();
         String Notititle = SettingsActivity.getUsname(getActivity()) + " "  + model.dmxa + " "  + model.dmna;
         long timestampod = Long.parseLong(model.daod) * 1000L;
