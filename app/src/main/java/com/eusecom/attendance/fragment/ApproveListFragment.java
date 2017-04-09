@@ -20,24 +20,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eusecom.attendance.ApproveActivity;
+
 import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.FbmessClient;
 import com.eusecom.attendance.GitHubRepoAdapter;
-import com.eusecom.attendance.MainActivity;
-import com.eusecom.attendance.NewAbsenceActivity;
-import com.eusecom.attendance.NewPostActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.models.DeletedAbs;
 import com.eusecom.attendance.models.MessData;
 import com.eusecom.attendance.models.Message;
 import com.eusecom.attendance.models.NotifyData;
 import com.eusecom.attendance.retrofit.RfContributor;
 import com.eusecom.attendance.retrofit.RfEtestApi;
 import com.eusecom.attendance.retrofit.RfEtestService;
-import com.eusecom.attendance.retrofit.RfGithubApi;
-import com.eusecom.attendance.retrofit.RfGithubService;
 import com.eusecom.attendance.retrofit.RfUser;
 import com.eusecom.attendance.viewholder.ApproveViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -52,17 +46,12 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.eusecom.attendance.R;
 import com.eusecom.attendance.models.Post;
-import com.eusecom.attendance.viewholder.ApproveViewHolder;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -70,9 +59,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import rx.Observer;
 import rx.Subscription;
-
 import static android.text.TextUtils.isEmpty;
-import static java.lang.String.format;
 
 public abstract class ApproveListFragment extends Fragment {
 
