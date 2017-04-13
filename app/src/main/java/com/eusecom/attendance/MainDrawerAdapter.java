@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eusecom.attendance.mvp.MvpActivity;
+
 /**
  * Created by hp1 on 28-12-2014.
  */
@@ -227,8 +229,8 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
                             case 7:
 
                                 // View v at position pos is clicked.
-                                //Intent i7 = new Intent(mContext, RxzipActivity.class);
-                                //v.getContext().startActivity(i7);
+                                Intent i7 = new Intent(mContext, MvpActivity.class);
+                                v.getContext().startActivity(i7);
 
                                 break;
 

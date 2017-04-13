@@ -462,7 +462,8 @@ public abstract class ApproveListFragment extends Fragment {
                     + " " + model.hodxb + " " + getString(R.string.hodiny);
         }
 
-        String approvetopic = "/topics/approve" + SettingsActivity.getUsIco(getActivity());
+        //String approvetopic = "/topics/approve" + SettingsActivity.getUsIco(getActivity());
+        String approvetopic = "/topics/mytopic" + model.usid;
         //FirebaseRetrofitMessaging firebasemessaging = new FirebaseRetrofitMessaging("/topics/news", Notititle, Notibody);
         FirebaseRxApproveMessaging firebasemessaging = new FirebaseRxApproveMessaging(approvetopic, Notititle, Notibody, anodaj);
         subscription = firebasemessaging.SendNotification();

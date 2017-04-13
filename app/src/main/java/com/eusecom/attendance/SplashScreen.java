@@ -91,7 +91,7 @@ public class SplashScreen extends Activity {
 
         try {
             mAuth = FirebaseAuth.getInstance();
-            Log.d("Threada doLongOp", Thread.currentThread().getName());
+            Log.d("Thread doLongOp", Thread.currentThread().getName());
             Thread.sleep(2000);
         } catch (InterruptedException e) {
 
