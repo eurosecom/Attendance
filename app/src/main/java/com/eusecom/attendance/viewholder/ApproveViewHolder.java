@@ -75,6 +75,10 @@ public class ApproveViewHolder extends RecyclerView.ViewHolder  {
         if( attendance.aprv.equals("1")) {
             Picasso.with(mContext).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(starView);
         }
+        if( attendance.aprv.equals("2")) {
+            Picasso.with(mContext).load(R.drawable.ic_remove_circle_black_24dp).resize(120, 120).into(starView);
+        }
+
 
         //convert unix epoch timestamp (seconds) to milliseconds
         long timestampod = Long.parseLong(attendance.daod) * 1000L;

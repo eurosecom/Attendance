@@ -186,6 +186,9 @@ public abstract class AbsenceListFragment extends Fragment {
                         Toast.makeText(getActivity(), "Longclick " + absKey,Toast.LENGTH_SHORT).show();
 
                         abskeydel = absKey;
+                        if( model.aprv.equals("2")) {
+                            rozdiel=1;
+                        }
 
                         if( rozdiel < 180000 ) {
                             getDialog(abskeydel);

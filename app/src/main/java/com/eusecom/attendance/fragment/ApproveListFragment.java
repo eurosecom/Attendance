@@ -406,7 +406,7 @@ public abstract class ApproveListFragment extends Fragment {
                 if(savetofiri>0){
                     approvePost(abskeydel, 1, model);
                 }else{
-                    approvePost(abskeydel, 1, model);
+                    approveFBPost(abskeydel, 1, model);
                 }
             }
         });
@@ -419,7 +419,7 @@ public abstract class ApproveListFragment extends Fragment {
                 if(savetofiri>0){
                     approvePost(abskeydel, 0, model);
                 }else{
-                    approvePost(abskeydel, 0, model);
+                    approveFBPost(abskeydel, 0, model);
                 }
 
 
