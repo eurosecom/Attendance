@@ -525,6 +525,13 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.absmysql) {
+
+            Intent is = new Intent(getApplicationContext(), AbsServerActivity.class);
+            startActivity(is);
+            return true;
+        }
+
 
 
         return super.onOptionsItemSelected(item);

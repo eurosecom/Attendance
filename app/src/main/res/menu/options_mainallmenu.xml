@@ -7,6 +7,11 @@
     </item>
 
     <item
+        android:id="@+id/absmysql"
+        android:title="@string/action_absmysql">
+    </item>
+
+    <item
         android:id="@+id/myemploy"
         android:title="@string/action_myemployee">
     </item>
