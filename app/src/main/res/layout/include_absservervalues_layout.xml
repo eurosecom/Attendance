@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+        <TextView
+            android:id="@+id/datefromdesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/from" />
+
+        <TextView
+            android:id="@+id/datefrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/datefromdesc"
+            android:layout_toRightOf="@+id/datefromdesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/datetodesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/datefromdesc"
+            android:layout_toRightOf="@+id/datefrom"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/to" />
+
+        <TextView
+            android:id="@+id/dateto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/datefromdesc"
+            android:layout_toRightOf="@+id/datetodesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/hodxbdesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/datefromdesc"
+            android:layout_toRightOf="@+id/dateto"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/hodxb" />
+
+        <TextView
+            android:id="@+id/hodxb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/datefromdesc"
+            android:layout_toRightOf="@+id/hodxbdesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/datmdesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/datefromdesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/postedby" />
+
+        <TextView
+            android:id="@+id/datm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/datmdesc"
+            android:layout_below="@+id/datefromdesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            />
+
+
+</RelativeLayout>

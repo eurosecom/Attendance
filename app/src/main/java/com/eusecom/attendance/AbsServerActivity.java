@@ -42,7 +42,7 @@ import io.reactivex.schedulers.Schedulers;
 
 //by https://www.raywenderlich.com/141980/rxandroid-tutorial
 
-public class AbsServerActivity extends CheeseBaseSearchActivity {
+public class AbsServerActivity extends AbsServerBaseSearchActivity {
 
   private Disposable mDisposable;
 
@@ -67,7 +67,7 @@ public class AbsServerActivity extends CheeseBaseSearchActivity {
         .map(new Function<String, List<String>>() {
           @Override
           public List<String> apply(String query) {
-            return mCheeseSearchEngine.search(query);
+            return mAbsServerSearchEngine.search(query);
           }
         })
         .observeOn(AndroidSchedulers.mainThread())
