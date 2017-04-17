@@ -27,12 +27,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.eusecom.attendance.models.Attendance;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,8 +63,10 @@ public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
     mSearchButton = (Button) findViewById(R.id.search_button);
     mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-    List<String> cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses));
-    mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses);
+    List<String> cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
+    List<Attendance> listabsserver = initListAbsServer();
+
+    mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses, listabsserver);
   }
 
   protected void showProgressBar() {
@@ -78,5 +85,38 @@ public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
       mAdapter.setCheeses(result);
     }
   }
+
+  protected void showResultAs(List<Attendance> resultAs) {
+
+    if (resultAs.isEmpty()) {
+      Toast.makeText(this, R.string.nothing_found, Toast.LENGTH_SHORT).show();
+      mAdapter.setCheeses(Collections.<String>emptyList());
+    } else {
+      Log.d("showResultAs ", resultAs.get(0).dmna);
+      mAdapter.setAbsserver(resultAs);
+    }
+  }
+
+  protected List<Attendance> initListAbsServer() {
+
+    List<Attendance> listabsserver = new ArrayList<>();
+
+    final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String icox = SettingsActivity.getUsIco(AbsServerBaseSearchActivity.this);
+    String oscx = SettingsActivity.getUsOsc(AbsServerBaseSearchActivity.this);
+    Long tsLong = System.currentTimeMillis() / 1000;
+    String ts = tsLong.toString();
+
+    Attendance attendance = new Attendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx );
+    listabsserver.add(attendance);
+    attendance = new Attendance(icox, userId, "0", "2","Outcoming work", ts, ts, "0", "0", "0", "0", ts, oscx );
+    listabsserver.add(attendance);
+    attendance = new Attendance(icox, userId, "0", "506","Holliday", ts, ts, "0", "0", "0", "0", ts, oscx );
+    listabsserver.add(attendance);
+
+    return listabsserver;
+  }
+
+
 
 }

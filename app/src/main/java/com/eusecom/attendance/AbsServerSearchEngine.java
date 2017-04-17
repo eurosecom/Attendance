@@ -22,24 +22,33 @@
 
 package com.eusecom.attendance;
 
+import android.util.Log;
+
+import com.eusecom.attendance.models.Attendance;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AbsServerSearchEngine {
 
   private final List<String> mCheeses;
+  private final List<Attendance> mListabsserver;
+  private final int mListabsserverCount;
   private final int mCheesesCount;
 
-  public AbsServerSearchEngine(List<String> cheeses) {
+  public AbsServerSearchEngine(List<String> cheeses, List<Attendance> listabsserver) {
     mCheeses = cheeses;
+    mListabsserver = listabsserver;
     mCheesesCount = mCheeses.size();
+    mListabsserverCount = mListabsserver.size();
   }
 
   public List<String> search(String query) {
     query = query.toLowerCase();
 
     try {
-      Thread.sleep(2000);
+      Thread.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -53,6 +62,28 @@ public class AbsServerSearchEngine {
     }
 
     return result;
+  }
+
+  public List<Attendance> searchModel(String query) {
+    query = query.toLowerCase();
+    Log.d("searchModel", query);
+
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    List<Attendance> resultAs = new ArrayList<Attendance>();
+
+    for (int i = 0; i < mListabsserverCount; i++) {
+      if (mListabsserver.get(i).dmna.toLowerCase().contains(query)) {
+        resultAs.add(mListabsserver.get(i));
+        Log.d("mListabs.get(i).dmna", mListabsserver.get(i).dmna);
+      }
+    }
+
+    return resultAs;
   }
 
 }

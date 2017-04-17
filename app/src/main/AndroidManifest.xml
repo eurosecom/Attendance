@@ -41,6 +41,7 @@
         <activity android:name=".DatabaseActivity"/>
         <activity android:name=".ApproveActivity" android:label="@string/action_approve"/>
         <activity android:name=".AbsServerActivity" android:label="@string/action_absmysql"/>
+        <activity android:name=".AbsServerAsActivity" android:label="@string/action_absmysql"/>
         <activity android:name=".AbsenceActivity" android:label="@string/absence"/>
         <activity android:name=".NewAbsenceActivity" android:label="@string/absence"/>
         <activity android:name=".NewPostActivity"/>

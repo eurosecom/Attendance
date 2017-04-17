@@ -147,6 +147,12 @@ public class Attendance {
     }
 
     @Exclude
+    public String getDmna() {
+
+        return dmna;
+    }
+
+    @Exclude
     public String getDaod() {
 
         return daod;

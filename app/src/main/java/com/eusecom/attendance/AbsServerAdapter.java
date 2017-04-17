@@ -23,16 +23,20 @@
 package com.eusecom.attendance;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.eusecom.attendance.models.Attendance;
+
 import java.util.List;
 
 public class AbsServerAdapter extends RecyclerView.Adapter<AbsServerAdapter.AbsServerViewHolder> {
 
-  private List<String> mCheeses;
+    private List<String> mCheeses;
+    private List<Attendance> mListabsserver;
 
   @Override
   public AbsServerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,18 +49,27 @@ public class AbsServerAdapter extends RecyclerView.Adapter<AbsServerAdapter.AbsS
 
   @Override
   public void onBindViewHolder(AbsServerViewHolder holder, int position) {
-    holder.title.setText(mCheeses.get(position));
+      //holder.title.setText(mCheeses.get(position));
+      holder.title.setText(mListabsserver.get(position).dmna);
   }
 
-  @Override
-  public int getItemCount() {
-    return mCheeses == null ? 0 : mCheeses.size();
-  }
+    @Override
+    //public int getItemCount() { return mCheeses == null ? 0 : mCheeses.size();}
+    public int getItemCount() {
+        return mListabsserver == null ? 0 : mListabsserver.size();
+    }
 
-  public void setCheeses(List<String> cheeses) {
-    mCheeses = cheeses;
-    notifyDataSetChanged();
-  }
+    public void setCheeses(List<String> cheeses) {
+        mCheeses = cheeses;
+        notifyDataSetChanged();
+    }
+
+    public void setAbsserver(List<Attendance> listabsserver) {
+        mListabsserver = listabsserver;
+        Log.d("setAbsserver ", mListabsserver.get(0).dmna);
+        notifyDataSetChanged();
+    }
+
 
   public static class AbsServerViewHolder extends RecyclerView.ViewHolder {
     public final TextView title;

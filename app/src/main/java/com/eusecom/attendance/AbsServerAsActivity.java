@@ -25,6 +25,7 @@ package com.eusecom.attendance;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import com.eusecom.attendance.models.Attendance;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
@@ -39,9 +40,9 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 //by https://www.raywenderlich.com/141980/rxandroid-tutorial
-//to find over List<String>
+//to find over List<Attendance>
 
-public class AbsServerActivity extends AbsServerBaseSearchActivity {
+public class AbsServerAsActivity extends AbsServerBaseSearchActivity {
 
   private Disposable mDisposable;
 
@@ -63,18 +64,18 @@ public class AbsServerActivity extends AbsServerBaseSearchActivity {
           }
         })
         .observeOn(Schedulers.io())
-        .map(new Function<String, List<String>>() {
+        .map(new Function<String, List<Attendance>>() {
           @Override
-          public List<String> apply(String query) {
-            return mAbsServerSearchEngine.search(query);
+          public List<Attendance> apply(String query) {
+            return mAbsServerSearchEngine.searchModel(query);
           }
         })
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Consumer<List<String>>() {
+        .subscribe(new Consumer<List<Attendance>>() {
           @Override
-          public void accept(List<String> result) {
+          public void accept(List<Attendance> result) {
             hideProgressBar();
-            showResult(result);
+            showResultAs(result);
           }
         });
   }

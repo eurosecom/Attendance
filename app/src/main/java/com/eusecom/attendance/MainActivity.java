@@ -527,7 +527,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.absmysql) {
 
-            Intent is = new Intent(getApplicationContext(), AbsServerActivity.class);
+            Intent is = new Intent(getApplicationContext(), AbsServerAsActivity.class);
             startActivity(is);
             return true;
         }

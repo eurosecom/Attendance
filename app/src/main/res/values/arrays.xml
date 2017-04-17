@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="cheeses3">
+    <item>Land1 cheese</item>
+    <item>Land2 cheese</item>
+    <item>Land3 cheese</item>
+    </string-array>
     <string-array name="cheeses">
         <item>Abertam cheese</item>
         <item>Acre</item>
