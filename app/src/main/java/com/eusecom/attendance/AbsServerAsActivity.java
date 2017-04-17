@@ -42,7 +42,7 @@ import io.reactivex.schedulers.Schedulers;
 //by https://www.raywenderlich.com/141980/rxandroid-tutorial
 //to find over List<Attendance>
 
-public class AbsServerAsActivity extends AbsServerBaseSearchActivity {
+public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   private Disposable mDisposable;
 

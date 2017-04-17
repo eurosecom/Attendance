@@ -33,38 +33,43 @@ import com.eusecom.attendance.models.Attendance;
 
 import java.util.List;
 
-public class AbsServerAdapter extends RecyclerView.Adapter<AbsServerAdapter.AbsServerViewHolder> {
+public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.AbsServerAsViewHolder> {
 
     private List<String> mCheeses;
     private List<Attendance> mListabsserver;
 
   @Override
-  public AbsServerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public AbsServerAsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     //LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
     //View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
 
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_absserver,parent,false);
-    return new AbsServerViewHolder(view);
+    return new AbsServerAsViewHolder(view);
   }
 
   @Override
-  public void onBindViewHolder(AbsServerViewHolder holder, int position) {
-      holder.title.setText(mCheeses.get(position));
+  public void onBindViewHolder(AbsServerAsViewHolder holder, int position) {
+      //holder.title.setText(mCheeses.get(position));
+      holder.title.setText(mListabsserver.get(position).dmna);
   }
 
     @Override
-    public int getItemCount() { return mCheeses == null ? 0 : mCheeses.size();}
+    public int getItemCount() {
+        return mListabsserver == null ? 0 : mListabsserver.size();
+    }
 
 
-    public void setCheeses(List<String> cheeses) {
-        mCheeses = cheeses;
+    public void setAbsserver(List<Attendance> listabsserver) {
+        mListabsserver = listabsserver;
+        Log.d("setAbsserver ", mListabsserver.get(0).dmna);
         notifyDataSetChanged();
     }
 
-  public static class AbsServerViewHolder extends RecyclerView.ViewHolder {
+
+  public static class AbsServerAsViewHolder extends RecyclerView.ViewHolder {
     public final TextView title;
 
-    public AbsServerViewHolder(View itemView) {
+    public AbsServerAsViewHolder(View itemView) {
       super(itemView);
       title = (TextView) itemView.findViewById(R.id.datefrom);
     }

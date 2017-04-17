@@ -42,12 +42,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
+public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
   protected AbsServerSearchEngine mAbsServerSearchEngine;
   protected EditText mQueryEditText;
   protected Button mSearchButton;
-  private AbsServerAdapter mAdapter;
+  private AbsServerAsAdapter mAdapter;
   private ProgressBar mProgressBar;
 
   @Override
@@ -57,13 +57,13 @@ public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
 
     RecyclerView list = (RecyclerView) findViewById(R.id.list);
     list.setLayoutManager(new LinearLayoutManager(this));
-    list.setAdapter(mAdapter = new AbsServerAdapter());
+    list.setAdapter(mAdapter = new AbsServerAsAdapter());
 
     mQueryEditText = (EditText) findViewById(R.id.query_edit_text);
     mSearchButton = (Button) findViewById(R.id.search_button);
     mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-    List<String> cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses));
+    List<String> cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
     List<Attendance> listabsserver = initListAbsServer();
 
     mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses, listabsserver);
@@ -77,23 +77,25 @@ public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
     mProgressBar.setVisibility(View.GONE);
   }
 
-  protected void showResult(List<String> result) {
-    if (result.isEmpty()) {
+
+  protected void showResultAs(List<Attendance> resultAs) {
+
+    if (resultAs.isEmpty()) {
       Toast.makeText(this, R.string.nothing_found, Toast.LENGTH_SHORT).show();
-      mAdapter.setCheeses(Collections.<String>emptyList());
+      //mAdapter.setCheeses(Collections.<String>emptyList());
     } else {
-      mAdapter.setCheeses(result);
+      Log.d("showResultAs ", resultAs.get(0).dmna);
+      mAdapter.setAbsserver(resultAs);
     }
   }
-
 
   protected List<Attendance> initListAbsServer() {
 
     List<Attendance> listabsserver = new ArrayList<>();
 
     final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    String icox = SettingsActivity.getUsIco(AbsServerBaseSearchActivity.this);
-    String oscx = SettingsActivity.getUsOsc(AbsServerBaseSearchActivity.this);
+    String icox = SettingsActivity.getUsIco(AbsServerAsBaseSearchActivity.this);
+    String oscx = SettingsActivity.getUsOsc(AbsServerAsBaseSearchActivity.this);
     Long tsLong = System.currentTimeMillis() / 1000;
     String ts = tsLong.toString();
 
