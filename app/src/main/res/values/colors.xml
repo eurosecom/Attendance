@@ -92,8 +92,8 @@
     <color name="material_red_A200">#ffff5252</color>
     <color name="material_red_A400">#ffff1744</color>
 
-    <color name="material_blue_100">#ffc6dafc</color>
-    <color name="material_blue_300">#ff7baaf7</color>
+    <color name="material_blue_100">#b3e1f7</color>
+    <color name="material_blue_300">#67c3ef</color>
     <color name="material_blue_500">#ff4285f4</color>
     <color name="material_blue_700">#ff3367d6</color>
     <color name="material_blue_A200">#ff448aff</color>

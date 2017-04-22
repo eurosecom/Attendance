@@ -1,5 +1,7 @@
 package com.eusecom.attendance;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Created by chris on 6/1/16.
  */
@@ -18,5 +20,16 @@ public class GitHubRepo {
         this.description = description;
         this.language = language;
         this.stargazersCount = stargazersCount;
+    }
+
+
+    public String getName() {
+
+        return name;
+    }
+
+    public String getUrl() {
+
+        return htmlUrl;
     }
 }

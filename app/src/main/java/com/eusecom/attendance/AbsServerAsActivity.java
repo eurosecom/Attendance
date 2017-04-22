@@ -24,8 +24,10 @@ package com.eusecom.attendance;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.retrofit.AbsServerClient;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
@@ -39,12 +41,17 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+import rx.Subscription;
+
 //by https://www.raywenderlich.com/141980/rxandroid-tutorial
 //to find over List<Attendance>
+
+//by https://www.toptal.com/android/functional-reactive-android-rxjava username=arriolac
 
 public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   private Disposable mDisposable;
+  private Subscription subscription;
 
   @Override
   protected void onStart() {
@@ -78,7 +85,10 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
             showResultAs(result);
           }
         });
-  }
+
+      getAbsServer("");
+
+  }//end onstart
 
   @Override
   protected void onStop() {
@@ -86,6 +96,20 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
     if (!mDisposable.isDisposed()) {
       mDisposable.dispose();
     }
+    if (subscription != null && !subscription.isUnsubscribed()) {
+      subscription.unsubscribe();
+    }
+
+  }
+
+
+  @Override
+  public void onBackPressed() {
+
+      super.onBackPressed();
+      hideProgressBar();
+      finish();
+
   }
 
   // 1
@@ -161,5 +185,29 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
         }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
   }
 
+  private void getAbsServer(String username) {
+    subscription = AbsServerClient.getInstance()
+            .getAbsServer(username)
+            .subscribeOn(rx.schedulers.Schedulers.io())
+            .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(new rx.Observer<List<Attendance>>() {
+              @Override public void onCompleted() {
+                Log.d("", "In onCompleted()");
+              }
+
+              @Override public void onError(Throwable e) {
+                e.printStackTrace();
+                Log.d("", "In onError()");
+              }
+
+              @Override public void onNext(List<Attendance> absserverRepos) {
+                Log.d("Thread onNext", Thread.currentThread().getName());
+                //Log.d("absserverRepos", absserverRepos.get(0).getDmna());
+                nastavResultAs(absserverRepos);
+                showResultAs(absserverRepos);
+
+              }
+            });
+  }
 
 }

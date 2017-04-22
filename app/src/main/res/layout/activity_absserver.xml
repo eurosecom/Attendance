@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+  <include layout="@layout/toolbar_custom" android:id="@+id/tool_bar"> </include>
+
   <Button
       android:id="@+id/search_button"
       android:layout_width="wrap_content"
@@ -14,7 +16,7 @@
       android:layout_margin="@dimen/default_margin"
       android:layout_alignParentRight="true"
       android:layout_alignParentEnd="true"
-      android:layout_alignParentTop="true"
+      android:layout_below="@id/tool_bar"
       android:layout_marginLeft="@dimen/default_margin"
       android:layout_marginStart="@dimen/default_margin"
       android:layout_marginTop="@dimen/default_margin" />
