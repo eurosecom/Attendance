@@ -11,7 +11,7 @@ import rx.Observable;
 public interface AbsServerService {
 
     @GET("/attendance/absserver.php")
-    Observable<List<Attendance>> getAbsServer(@Query("user") String userName);
+    Observable<List<Attendance>> getAbsServer(@Query("fromfir") String fromfir);
 
     @GET("/attendance/absserver.json")
     Observable<List<Attendance>> getAbsServerFromJson(@Query("user") String userName);

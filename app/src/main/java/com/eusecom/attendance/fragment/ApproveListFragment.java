@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.FbmessClient;
-import com.eusecom.attendance.GitHubRepoAdapter;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.MessData;
@@ -517,7 +516,6 @@ public abstract class ApproveListFragment extends Fragment {
 
         String to, title, body;
         int anodaj;
-        private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
         private Subscription subscription;
 
 

@@ -86,7 +86,8 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
           }
         });
 
-      getAbsServer("");
+      String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
+      getAbsServer(getfromfir);
 
   }//end onstart
 
@@ -185,9 +186,9 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
         }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
   }
 
-  private void getAbsServer(String username) {
+  private void getAbsServer(String fromfir) {
     subscription = AbsServerClient.getInstance()
-            .getAbsServer(username)
+            .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())
             .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
             .subscribe(new rx.Observer<List<Attendance>>() {

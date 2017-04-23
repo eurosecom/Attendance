@@ -416,7 +416,6 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
     public class FirebaseRxSendMessaging {
 
         String to, title, body;
-        private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
         private Subscription subscription;
 
 

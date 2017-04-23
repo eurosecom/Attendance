@@ -92,18 +92,13 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
           Picasso.with(holder.mContext).load(R.drawable.ic_remove_circle_black_24dp).resize(120, 120).into(holder.starView);
       }
 
-      //convert unix epoch timestamp (seconds) to milliseconds
-      long timestampod = Long.parseLong(mListabsserver.get(position).daod) * 1000L;
-      holder.datefrom.setText(getDate(timestampod ));
+      holder.datefrom.setText(mListabsserver.get(position).daod);
 
-      long timestampdo = Long.parseLong(mListabsserver.get(position).dado) * 1000L;
-      holder.dateto.setText(getDate(timestampdo ));
+      holder.dateto.setText(mListabsserver.get(position).dado);
 
-      long timestamp = Long.parseLong(mListabsserver.get(position).daod) * 1000L;
       holder.hodxb.setText(mListabsserver.get(position).hodxb);
 
-      long timestampm = Long.parseLong(mListabsserver.get(position).daod) * 1000L;
-      holder.datm.setText(holder.usemail + " " + getDateTime(timestampm ));
+      holder.datm.setText(holder.usemail + " " + mListabsserver.get(position).datm);
 
 
 
