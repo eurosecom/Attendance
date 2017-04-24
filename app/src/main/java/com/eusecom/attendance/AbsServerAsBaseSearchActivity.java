@@ -24,6 +24,7 @@ package com.eusecom.attendance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,15 +34,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.EventRxBus;
+import com.eusecom.attendance.rxbus.RxBus;
+import com.eusecom.attendance.rxbus.RxBusDemoFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
 
 public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
@@ -52,6 +62,8 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   private ProgressBar mProgressBar;
   Toolbar mActionBarToolbar;
   List<String> cheeses;
+  private RxBus _rxBus;
+  private CompositeDisposable _disposables;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,18 +74,50 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     setSupportActionBar(mActionBarToolbar);
     getSupportActionBar().setTitle(getString(R.string.action_absmysql));
 
-    RecyclerView list = (RecyclerView) findViewById(R.id.list);
-    list.setLayoutManager(new LinearLayoutManager(this));
-    list.setAdapter(mAdapter = new AbsServerAsAdapter());
-
     mQueryEditText = (EditText) findViewById(R.id.query_edit_text);
     mSearchButton = (Button) findViewById(R.id.search_button);
     mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
     cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
-    //List<Attendance> listabsserver = initListAbsServer();
 
-    //mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses, listabsserver);
+    _rxBus = getRxBusSingleton();
+
+    RecyclerView list = (RecyclerView) findViewById(R.id.list);
+    list.setLayoutManager(new LinearLayoutManager(this));
+    list.setAdapter(mAdapter = new AbsServerAsAdapter(_rxBus));
+
+    _disposables = new CompositeDisposable();
+
+    ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
+
+    _disposables
+            .add(tapEventEmitter.subscribe(event -> {
+              if (event instanceof AbsServerAsBaseSearchActivity.TapEvent) {
+                ///_showTapText();
+              }
+              if (event instanceof EventRxBus.Message) {
+                ///tvContent = (TextView) findViewById(R.id.tvContent);
+                ///tvContent.setText(((EventRxBus.Message) event).message);
+                _showTapTextToast(((EventRxBus.Message) event).message);
+              }
+            }));
+
+    _disposables
+            .add(tapEventEmitter.publish(stream ->
+                    stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
+                      ///_showTapCount(taps.size());
+                    }));
+
+    _disposables.add(tapEventEmitter.connect());
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+
+    _disposables.clear();
+
   }
 
   protected void showProgressBar() {
@@ -121,5 +165,42 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   }
 
 
+  public RxBus getRxBusSingleton() {
+    if (_rxBus == null) {
+      _rxBus = new RxBus();
+    }
+
+    return _rxBus;
+  }
+
+
+  private void _showTapText() {
+    ///_tapEventTxtShow.setVisibility(View.VISIBLE);
+    ///_tapEventTxtShow.setAlpha(1f);
+    ///ViewCompat.animate(_tapEventTxtShow).alphaBy(-1f).setDuration(400);
+
+    Toast.makeText(AbsServerAsBaseSearchActivity.this, "You are at work now.",
+            Toast.LENGTH_LONG).show();
+  }
+
+  private void _showTapTextToast(String texttoast) {
+
+    Toast.makeText(AbsServerAsBaseSearchActivity.this, texttoast,
+            Toast.LENGTH_LONG).show();
+  }
+
+  private void _showTapCount(int size) {
+    ///_tapEventCountShow.setText(String.valueOf(size));
+    ///_tapEventCountShow.setVisibility(View.VISIBLE);
+    ///_tapEventCountShow.setScaleX(1f);
+    ///_tapEventCountShow.setScaleY(1f);
+    //ViewCompat.animate(_tapEventCountShow)
+    ///        .scaleXBy(-1f)
+    ///        .scaleYBy(-1f)
+    ///        .setDuration(800)
+    ///        .setStartDelay(100);
+  }
+
+  public static class TapEvent {}
 
 }

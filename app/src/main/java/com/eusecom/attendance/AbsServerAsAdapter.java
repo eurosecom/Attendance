@@ -22,16 +22,21 @@
 
 package com.eusecom.attendance;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.EventRxBus;
+import com.eusecom.attendance.retrofit.RfEtestApi;
+import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -41,6 +46,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 import static com.eusecom.attendance.R.id.datefrom;
 import static com.eusecom.attendance.R.id.dateto;
 
@@ -48,13 +55,17 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
 
     private List<String> mCheeses;
     private List<Attendance> mListabsserver;
+    private RxBus _rxBus;
+
+    AbsServerAsAdapter(RxBus bus){
+
+        _rxBus = bus;
+    }
 
   @Override
   public AbsServerAsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    //LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-    //View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_absserver,parent,false);
+
     return new AbsServerAsViewHolder(view);
   }
 
@@ -98,7 +109,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
 
       holder.hodxb.setText(mListabsserver.get(position).hodxb);
 
-      holder.datm.setText(holder.usemail + " " + mListabsserver.get(position).datm);
+      holder.datm.setText(mListabsserver.get(position).lati + " " + mListabsserver.get(position).datm);
 
 
 
@@ -108,6 +119,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
 
                   // View v at position pos is long-clicked.
                   Log.d("onLongClickListener", mListabsserver.get(pos).dmna);
+                  getDialog(mListabsserver.get(position).longi, mListabsserver.get(position), holder.mContext);
 
               } else {
 
@@ -228,5 +240,50 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
             return "xx";
         }
     }
+
+
+    private void getDialog(String postkey, Attendance model, Context mContext) {
+
+        String fromfir =  SettingsActivity.getFir(mContext);
+        int savetofiri = Integer.parseInt(fromfir);
+
+        // custom dialog
+        final Dialog dialog = new Dialog(mContext);
+        dialog.setContentView(R.layout.absserver_dialog);
+        dialog.setTitle(R.string.item);
+        // set the custom dialog components - text, image and button
+        String textx = mContext.getString(R.string.item) + " " + postkey + ". " + model.lati + ". " + model.dmna + " " + model.daod + " / " + model.dado;
+        TextView text = (TextView) dialog.findViewById(R.id.text);
+        text.setText(textx);
+        ImageView image = (ImageView) dialog.findViewById(R.id.image);
+        image.setImageResource(R.drawable.ic_image_edit);
+
+        Button buttonDownload = (Button) dialog.findViewById(R.id.buttonDownload);
+        // if button is clicked, close the custom dialog
+        buttonDownload.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (_rxBus.hasObservers()) {
+                    _rxBus.send(new EventRxBus.Message(model.daod));
+                    _rxBus.send(new AbsServerAsBaseSearchActivity.TapEvent());
+                }
+                dialog.dismiss();
+
+            }
+        });
+        Button buttonClose = (Button) dialog.findViewById(R.id.buttonClose);
+        // if button is clicked, close the custom dialog
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+
+    }//end getdialog
+
 
 }//end class adapter

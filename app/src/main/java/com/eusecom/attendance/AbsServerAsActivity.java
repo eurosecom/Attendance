@@ -22,19 +22,28 @@
 
 package com.eusecom.attendance;
 
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.EventRxBus;
 import com.eusecom.attendance.retrofit.AbsServerClient;
+import com.eusecom.attendance.rxbus.RxBus;
+import com.eusecom.attendance.rxbus.RxBusDemoFragment;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.flowables.ConnectableFlowable;
 import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -88,6 +97,8 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
       getAbsServer(getfromfir);
+
+
 
   }//end onstart
 
@@ -210,5 +221,8 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
               }
             });
   }
+
+
+
 
 }
