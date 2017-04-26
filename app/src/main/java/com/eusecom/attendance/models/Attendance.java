@@ -26,6 +26,7 @@ public class Attendance {
     private HashMap<String, Object> dats;
     public String aprv;
     public String usosc;
+    public String cplxb;
 
     public Attendance() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -53,6 +54,7 @@ public class Attendance {
         this.dats = datsObj;
         this.aprv = aprv;
         this.usosc = usosc;
+        this.cplxb = "0";
     }
 
     public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
@@ -75,6 +77,7 @@ public class Attendance {
         this.dats = datsObj;
         this.aprv = "0";
         this.usosc = usosc;
+        this.cplxb = "0";
     }
 
     public String getUsico() {
@@ -109,6 +112,7 @@ public class Attendance {
         result.put("dats", dats);
         result.put("usosc", usosc);
         result.put("aprv", aprv);
+        result.put("cplxb", cplxb);
 
         return result;
     }
@@ -156,6 +160,12 @@ public class Attendance {
     public String getDaod() {
 
         return daod;
+    }
+
+    @Exclude
+    public  void setCplxb(String cplxb) {
+
+        this.cplxb = cplxb;
     }
 
 }

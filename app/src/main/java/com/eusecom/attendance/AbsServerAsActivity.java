@@ -120,7 +120,12 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       super.onBackPressed();
       hideProgressBar();
-      finish();
+      if (subscription != null && !subscription.isUnsubscribed()) {
+      subscription.unsubscribe();
+      }
+      if (!mDisposable.isDisposed()) {
+      mDisposable.dispose();
+      }
 
   }
 
@@ -198,17 +203,20 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
   }
 
   private void getAbsServer(String fromfir) {
+    showProgressBar();
     subscription = AbsServerClient.getInstance()
             .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())
             .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
             .subscribe(new rx.Observer<List<Attendance>>() {
               @Override public void onCompleted() {
+                hideProgressBar();
                 Log.d("", "In onCompleted()");
               }
 
               @Override public void onError(Throwable e) {
                 e.printStackTrace();
+                hideProgressBar();
                 Log.d("", "In onError()");
               }
 

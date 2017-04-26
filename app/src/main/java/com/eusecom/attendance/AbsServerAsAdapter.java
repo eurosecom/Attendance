@@ -265,7 +265,9 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
             public void onClick(View v) {
 
                 if (_rxBus.hasObservers()) {
-                    _rxBus.send(new EventRxBus.Message(model.daod));
+                    ///_rxBus.send(new EventRxBus.Message(model.daod)); OK
+                    //_rxBus.send(new EventRxBus.Absence(model.dmxa, model.dmna, model.daod, model.dado, model.dnixa, model.hodxb)); OK
+                    _rxBus.send(model);
                     _rxBus.send(new AbsServerAsBaseSearchActivity.TapEvent());
                 }
                 dialog.dismiss();

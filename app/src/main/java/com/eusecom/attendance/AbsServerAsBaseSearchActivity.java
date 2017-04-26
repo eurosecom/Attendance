@@ -42,16 +42,25 @@ import com.eusecom.attendance.models.EventRxBus;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxbus.RxBusDemoFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
+
+import static com.eusecom.attendance.R.id.date;
 
 public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
@@ -95,10 +104,11 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
               if (event instanceof AbsServerAsBaseSearchActivity.TapEvent) {
                 ///_showTapText();
               }
-              if (event instanceof EventRxBus.Message) {
+              if (event instanceof Attendance) {
                 ///tvContent = (TextView) findViewById(R.id.tvContent);
-                ///tvContent.setText(((EventRxBus.Message) event).message);
-                _showTapTextToast(((EventRxBus.Message) event).message);
+                ///tvContent.setText(((EventRxBus.Message) event).message); OK change event instanceof to EventRxBus.Message
+                ///_showTapTextToast(((EventRxBus.Absence) event).daod + " / " + ((EventRxBus.Absence) event).dado); OK change event instanceof to EventRxBus.Absence
+                saveAbsServer(((Attendance) event).daod + " / " + ((Attendance) event).dado, ((Attendance) event));
               }
             }));
 
@@ -106,7 +116,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
             .add(tapEventEmitter.publish(stream ->
                     stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
-                      ///_showTapCount(taps.size());
+                      ///_showTapCount(taps.size()); OK
                     }));
 
     _disposables.add(tapEventEmitter.connect());
@@ -144,26 +154,6 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
       mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses, resultAs);
   }
 
-  protected List<Attendance> initListAbsServer() {
-
-    List<Attendance> listabsserver = new ArrayList<>();
-
-    final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    String icox = SettingsActivity.getUsIco(AbsServerAsBaseSearchActivity.this);
-    String oscx = SettingsActivity.getUsOsc(AbsServerAsBaseSearchActivity.this);
-    Long tsLong = System.currentTimeMillis() / 1000;
-    String ts = tsLong.toString();
-
-    Attendance attendance = new Attendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx );
-    listabsserver.add(attendance);
-    attendance = new Attendance(icox, userId, "0", "2","Outcoming work", ts, ts, "0", "0", "0", "0", ts, oscx );
-    listabsserver.add(attendance);
-    attendance = new Attendance(icox, userId, "0", "506","Holliday", ts, ts, "0", "0", "0", "0", ts, oscx );
-    listabsserver.add(attendance);
-
-    return listabsserver;
-  }
-
 
   public RxBus getRxBusSingleton() {
     if (_rxBus == null) {
@@ -174,32 +164,79 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   }
 
 
-  private void _showTapText() {
-    ///_tapEventTxtShow.setVisibility(View.VISIBLE);
-    ///_tapEventTxtShow.setAlpha(1f);
-    ///ViewCompat.animate(_tapEventTxtShow).alphaBy(-1f).setDuration(400);
-
-    Toast.makeText(AbsServerAsBaseSearchActivity.this, "You are at work now.",
-            Toast.LENGTH_LONG).show();
-  }
-
-  private void _showTapTextToast(String texttoast) {
+  private void saveAbsServer(String texttoast, Attendance model) {
 
     Toast.makeText(AbsServerAsBaseSearchActivity.this, texttoast,
             Toast.LENGTH_LONG).show();
+    Log.d("_showTapTextToast", model.datm);
+
+    // [START declare_database_ref]
+    DatabaseReference  mDatabase = FirebaseDatabase.getInstance().getReference();
+    // [END declare_database_ref]
+
+    String userIDX = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String key = mDatabase.child("absences").push().getKey();
+    String gpslat="0";
+    String gpslon="0";
+    String icox = SettingsActivity.getUsIco(AbsServerAsBaseSearchActivity.this);
+
+    SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+    SimpleDateFormat fff = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    long daodl = 0l; long dadol = 0l; long datml = 0l;
+    try {
+      Date d = f.parse(model.daod);
+      daodl = d.getTime() / 1000;
+      Date dd = f.parse(model.dado);
+      dadol = dd.getTime() / 1000;
+      Date ddd = fff.parse(model.datm);
+      datml = ddd.getTime() / 1000;
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    String daods = daodl + "";
+    String dados = dadol + "";
+    String datms = datml + "";
+    Log.d("_showTapTextToast", datms);
+    String cplxb = model.longi;
+
+    writeAbsenceServerToFB(icox, userIDX, model.ume, model.dmxa, model.dmna, daods, dados, model.dnixa,
+            model.hodxb, gpslon, gpslat, datms, model.usosc,
+            mDatabase, key, cplxb );
+
+    writeKeyfToServer(icox, userIDX, model.ume, model.dmxa, model.dmna, daods, dados, model.dnixa,
+            model.hodxb, gpslon, gpslat, datms, model.usosc,
+            mDatabase, key, cplxb );
+
+  }//end saveAbsServer
+
+  private void writeKeyfToServer(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
+                                      String hodxb, String longi, String lati, String datm, String usosc,
+                                      DatabaseReference mDatabase, String key, String cplxb ) {
+
   }
 
-  private void _showTapCount(int size) {
-    ///_tapEventCountShow.setText(String.valueOf(size));
-    ///_tapEventCountShow.setVisibility(View.VISIBLE);
-    ///_tapEventCountShow.setScaleX(1f);
-    ///_tapEventCountShow.setScaleY(1f);
-    //ViewCompat.animate(_tapEventCountShow)
-    ///        .scaleXBy(-1f)
-    ///        .scaleYBy(-1f)
-    ///        .setDuration(800)
-    ///        .setStartDelay(100);
-  }
+
+  private void writeAbsenceServerToFB(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
+                            String hodxb, String longi, String lati, String datm, String usosc,
+                                  DatabaseReference mDatabase, String key, String cplxb ) {
+
+
+    Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, longi, lati, datm, usosc );
+    attendance.setCplxb(cplxb);
+
+    Map<String, Object> attValues = attendance.toMap();
+
+    Map<String, Object> childUpdates = new HashMap<>();
+
+    childUpdates.put("/absences/" + key, attValues);
+    childUpdates.put("/company-absences/" + usico + "/" + key, attValues);
+    childUpdates.put("/user-absences/" + usid + "/" + key, attValues);
+
+    mDatabase.updateChildren(childUpdates);
+
+
+  }//END writeAbsenceServer
+
 
   public static class TapEvent {}
 
