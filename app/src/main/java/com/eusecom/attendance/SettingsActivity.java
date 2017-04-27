@@ -19,6 +19,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String USER_OSC = "usosc";
 	public static final String USER_ATW = "usatw";
 	public static final String USNAME = "usname";
+	public static final String ROK = "rok";
 
 
 	@Override
@@ -64,6 +65,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getUsname(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(USNAME,"0");
+	}
+
+	public static String getRok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ROK,"2017");
 	}
 
 } 

@@ -19,13 +19,6 @@
         android:title="@string/userpsw_title" />
 
     <EditTextPreference
-        android:key="fir"
-        android:defaultValue="0"
-        android:enabled="true"
-        android:summary="@string/fir_summary"
-        android:title="@string/fir_title" />
-
-    <EditTextPreference
         android:key="usname"
         android:enabled="true"
         android:summary="@string/usname_summary"
@@ -38,12 +31,6 @@
         android:title="@string/ustype_title" />
 
     <EditTextPreference
-        android:key="usico"
-        android:enabled="true"
-        android:summary="@string/usico_summary"
-        android:title="@string/usico_title" />
-
-    <EditTextPreference
         android:key="usosc"
         android:enabled="true"
         android:summary="@string/usosc_summary"
@@ -54,5 +41,25 @@
         android:enabled="true"
         android:summary="@string/usatw_summary"
         android:title="@string/usatw_title" />
+
+    <EditTextPreference
+        android:key="usico"
+        android:enabled="true"
+        android:summary="@string/usico_summary"
+        android:title="@string/usico_title" />
+
+    <EditTextPreference
+        android:key="fir"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/fir_summary"
+        android:title="@string/fir_title" />
+
+    <EditTextPreference
+        android:key="rok"
+        android:defaultValue="2017"
+        android:enabled="true"
+        android:summary="@string/rok_summary"
+        android:title="@string/rok_title" />
         
 </PreferenceScreen>

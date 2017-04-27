@@ -27,6 +27,7 @@ public class Attendance {
     public String aprv;
     public String usosc;
     public String cplxb;
+    public String rok;
 
     public Attendance() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -55,6 +56,7 @@ public class Attendance {
         this.aprv = aprv;
         this.usosc = usosc;
         this.cplxb = "0";
+        this.rok = "2017";
     }
 
     public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
@@ -78,6 +80,7 @@ public class Attendance {
         this.aprv = "0";
         this.usosc = usosc;
         this.cplxb = "0";
+        this.rok = "2017";
     }
 
     public String getUsico() {
@@ -113,6 +116,7 @@ public class Attendance {
         result.put("usosc", usosc);
         result.put("aprv", aprv);
         result.put("cplxb", cplxb);
+        result.put("rok", rok);
 
         return result;
     }
@@ -166,6 +170,12 @@ public class Attendance {
     public  void setCplxb(String cplxb) {
 
         this.cplxb = cplxb;
+    }
+
+    @Exclude
+    public  void setRok(String rok) {
+
+        this.rok = rok;
     }
 
 }

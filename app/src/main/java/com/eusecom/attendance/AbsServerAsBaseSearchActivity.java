@@ -22,6 +22,8 @@
 
 package com.eusecom.attendance;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -33,6 +35,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -242,10 +245,11 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
               }
 
               @Override public void onNext(List<Attendance> absserverRepos) {
-                Log.d("Thread onNext", Thread.currentThread().getName());
-                Log.d("setKEYF onNext", absserverRepos.get(0).getDmna());
+                //Log.d("Thread onNext", Thread.currentThread().getName());
+                //Log.d("setKEYF onNext", absserverRepos.get(0).getDmna());
                 nastavResultAs(absserverRepos);
                 showResultAs(absserverRepos);
+                getDialogWhatNext();
 
               }
             });
@@ -269,10 +273,49 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     childUpdates.put("/company-absences/" + usico + "/" + key, attValues);
     childUpdates.put("/user-absences/" + usid + "/" + key, attValues);
 
-    //mDatabase.updateChildren(childUpdates);
+    mDatabase.updateChildren(childUpdates);
 
 
   }//END writeAbsenceServer
+
+  private void getDialogWhatNext() {
+
+    // custom dialog
+    final Dialog dialog = new Dialog(this);
+    dialog.setContentView(R.layout.absserver_dialog);
+    dialog.setTitle(R.string.next);
+    // set the custom dialog components - text, image and button
+    String textx = "";
+    TextView text = (TextView) dialog.findViewById(R.id.text);
+    text.setText(textx);
+    ImageView image = (ImageView) dialog.findViewById(R.id.image);
+    image.setImageResource(R.drawable.ic_image_edit);
+
+    Button buttonApprove = (Button) dialog.findViewById(R.id.buttonDownload);
+    buttonApprove.setText(getString(R.string.approve));
+    buttonApprove.setOnClickListener(new View.OnClickListener() {
+
+      public void onClick(View v) {
+        dialog.dismiss();
+
+        Intent is = new Intent(getApplicationContext(), ApproveActivity.class);
+        startActivity(is);
+        finish();
+
+      }
+    });
+    Button buttonRefuse = (Button) dialog.findViewById(R.id.buttonClose);
+    buttonRefuse.setOnClickListener(new View.OnClickListener() {
+
+      public void onClick(View v) {
+        dialog.dismiss();
+
+
+      }
+    });
+    dialog.show();
+
+  }//end getdialog
 
 
   public static class TapEvent {}
