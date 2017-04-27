@@ -42,7 +42,11 @@ public class AbsServerClient {
         return instance;
     }
 
-    public Observable<List<Attendance>> getAbsServer(@NonNull String userName) {
-        return absServerService.getAbsServer(userName);
+    public Observable<List<Attendance>> getAbsServer(@NonNull String fromfir) {
+        return absServerService.getAbsServer(fromfir);
+    }
+
+    public Observable<List<Attendance>> setKeyAndgetAbsServer(@NonNull String fromfir, @NonNull String keyf, @NonNull String cplxb) {
+        return absServerService.setKeyAndgetAbsServer(fromfir, keyf, cplxb);
     }
 }

@@ -13,6 +13,9 @@ public interface AbsServerService {
     @GET("/attendance/absserver.php")
     Observable<List<Attendance>> getAbsServer(@Query("fromfir") String fromfir);
 
+    @GET("/attendance/absserver.php")
+    Observable<List<Attendance>> setKeyAndgetAbsServer(@Query("fromfir") String fromfir, @Query("keyf") String keyf, @Query("cplxb") String cplxb);
+
     @GET("/attendance/absserver.json")
     Observable<List<Attendance>> getAbsServerFromJson(@Query("user") String userName);
 

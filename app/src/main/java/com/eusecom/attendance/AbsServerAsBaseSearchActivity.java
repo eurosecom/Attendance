@@ -39,6 +39,9 @@ import android.widget.Toast;
 
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.EventRxBus;
+import com.eusecom.attendance.retrofit.AbsServerClient;
+import com.eusecom.attendance.retrofit.RfEtestApi;
+import com.eusecom.attendance.retrofit.RfEtestService;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxbus.RxBusDemoFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,6 +62,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
+import rx.Subscription;
 
 import static com.eusecom.attendance.R.id.date;
 
@@ -74,6 +78,9 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   private RxBus _rxBus;
   private CompositeDisposable _disposables;
 
+  private RfEtestApi _githubService;
+  private Subscription subscription;
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -86,6 +93,10 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     mQueryEditText = (EditText) findViewById(R.id.query_edit_text);
     mSearchButton = (Button) findViewById(R.id.search_button);
     mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+    String githubToken = Constants.ETEST_API_KEY;
+    String urlx = SettingsActivity.getServerName(this);
+    _githubService = RfEtestService.createGithubService(githubToken, urlx);
 
     cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
 
@@ -211,7 +222,33 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
   private void writeKeyfToServer(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
                                       String hodxb, String longi, String lati, String datm, String usosc,
-                                      DatabaseReference mDatabase, String key, String cplxb ) {
+                                      DatabaseReference mDatabase, String keyf, String cplxb ) {
+
+    String getfromfir =  SettingsActivity.getFir(AbsServerAsBaseSearchActivity.this);
+    subscription = AbsServerClient.getInstance()
+            .setKeyAndgetAbsServer(getfromfir, keyf, cplxb)
+            .subscribeOn(rx.schedulers.Schedulers.io())
+            .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(new rx.Observer<List<Attendance>>() {
+              @Override public void onCompleted() {
+                hideProgressBar();
+                Log.d("", "setKEYF onCompleted()");
+              }
+
+              @Override public void onError(Throwable e) {
+                e.printStackTrace();
+                hideProgressBar();
+                Log.d("", "In onError()");
+              }
+
+              @Override public void onNext(List<Attendance> absserverRepos) {
+                Log.d("Thread onNext", Thread.currentThread().getName());
+                Log.d("setKEYF onNext", absserverRepos.get(0).getDmna());
+                nastavResultAs(absserverRepos);
+                showResultAs(absserverRepos);
+
+              }
+            });
 
   }
 
@@ -232,7 +269,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     childUpdates.put("/company-absences/" + usico + "/" + key, attValues);
     childUpdates.put("/user-absences/" + usid + "/" + key, attValues);
 
-    mDatabase.updateChildren(childUpdates);
+    //mDatabase.updateChildren(childUpdates);
 
 
   }//END writeAbsenceServer
