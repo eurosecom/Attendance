@@ -50,7 +50,7 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".RxbusActivity"/>
-        <activity android:name=".CheeseActivity"/>
+        <activity android:name=".RxFirebaseActivity"/>
         <activity android:name=".mvp.MvpActivity"/>
 
 

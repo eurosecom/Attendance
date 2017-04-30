@@ -82,6 +82,7 @@
     <string name="sign_up">Sign Up</string>
 
     <string name="kontzmaz">Delete</string>
+    <string name="kontadd">Add</string>
     <string name="kontnic">Back</string>
     <string name="next">Next</string>
     <string name="delitem">Delete item</string>
@@ -125,7 +126,7 @@
         <item >Settings</item>
         <item >Demo Rx Bus</item>
         <item >Demo Rx MvpActivity</item>
-        <item >Free </item>
+        <item >DEMO Rx Firebase</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>

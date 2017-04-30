@@ -229,8 +229,8 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
                             case 7:
 
                                 // View v at position pos is clicked.
-                                //Intent i7 = new Intent(mContext, CheeseActivity.class);
-                                //v.getContext().startActivity(i7);
+                                Intent i7 = new Intent(mContext, RxFirebaseActivity.class);
+                                v.getContext().startActivity(i7);
 
                                 break;
 
