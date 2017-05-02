@@ -111,6 +111,7 @@ public class PostsFragment extends Fragment {
   private final class GetPostsSubscriber extends Subscriber<DataSnapshot> {
     @Override public void onCompleted() {
       PostsFragment.this.showProgress(false);
+      unsubscribe();
     }
 
     @Override public void onError(Throwable e) {

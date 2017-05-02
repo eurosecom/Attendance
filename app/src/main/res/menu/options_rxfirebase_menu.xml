@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/del"
-        android:title="@string/kontzmaz">
+        android:title="@string/randomdel">
     </item>
 
 

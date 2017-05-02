@@ -82,6 +82,7 @@
     <string name="sign_up">Sign Up</string>
 
     <string name="kontzmaz">Delete</string>
+    <string name="randomdel">Random Delete</string>
     <string name="kontadd">Add</string>
     <string name="kontnic">Back</string>
     <string name="next">Next</string>

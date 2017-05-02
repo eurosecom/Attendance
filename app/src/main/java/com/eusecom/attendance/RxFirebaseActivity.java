@@ -6,14 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import rx.Subscriber;
 
 /**
  * The {@link AppCompatActivity} for the main screen
@@ -22,12 +31,14 @@ import java.util.Map;
 public class RxFirebaseActivity extends AppCompatActivity {
 
   private DatabaseReference mDatabase;
+  public ProgressBar progressBar;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_rxfirebase);
 
     mDatabase = FirebaseDatabase.getInstance().getReference();
+    progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
     final FragmentTransaction fragmentTransaction  = getSupportFragmentManager().beginTransaction();
     fragmentTransaction.add(R.id.fragmentContainer, PostsFragment.newInstance());
@@ -62,17 +73,9 @@ public class RxFirebaseActivity extends AppCompatActivity {
     //noinspection SimplifiableIfStatement
     if (id == R.id.add) {
 
-      String key = mDatabase.child("fireblog").push().getKey();
-      BlogPostEntity postx = new BlogPostEntity("new author", "new title" );
-
-      Map<String, Object> attValues = postx.toMap();
-
-      Map<String, Object> childUpdates = new HashMap<>();
-
-      childUpdates.put("/fireblog/" + key, attValues);
-
-      mDatabase.updateChildren(childUpdates);
-
+      showProgress(true);
+      BlogPostEntity postx = new BlogPostEntity("new author rx", "new title rx" );
+      addBlogPostRx(postx);
 
       return true;
     }
@@ -84,11 +87,59 @@ public class RxFirebaseActivity extends AppCompatActivity {
     }
 
 
-
-
-
     return super.onOptionsItemSelected(item);
+
+  }//end create options
+
+  private void addBlogPostRx(BlogPostEntity postx) {
+
+    final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog");
+    RxFirebaseDatabase.getInstance().observeSetValuePush(firebaseRef, postx).subscribe(new SetPostsSubscriber());
+
+  }//end of add BlogPostEntity
+
+
+  private void addBlogPost(BlogPostEntity postx) {
+
+    String key = mDatabase.child("fireblog").push().getKey();
+    Map<String, Object> attValues = postx.toMap();
+    Map<String, Object> childUpdates = new HashMap<>();
+    childUpdates.put("/fireblog/" + key, attValues);
+    mDatabase.updateChildren(childUpdates);
+
+  }//end of add BlogPostEntity
+
+  /**
+   * Subscriber for {@link //RxFirebaseDatabase} query
+   */
+  private final class SetPostsSubscriber extends Subscriber<String> {
+    @Override public void onCompleted() {
+      showProgress(false);
+      unsubscribe();
+    }
+
+    @Override public void onError(Throwable e) {
+      showProgress(false);
+      showError(e.getMessage());
+    }
+
+    @SuppressWarnings("unchecked") @Override public void onNext(String keyf) {
+      showMessage(keyf);
+    }
+  }//end of setpostssubscriber
+
+  private void showProgress(boolean isVisible) {
+    this.progressBar.clearAnimation();
+    this.progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    //this.getActivity().setProgressBarIndeterminateVisibility(isVisible); ??? App crashed by onDatachanged
   }
 
+  private void showError(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+  }
+
+  private void showMessage(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+  }
 
 }
