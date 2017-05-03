@@ -49,7 +49,6 @@
         <activity android:name=".PostDetailActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
-        <activity android:name=".RxbusActivity"/>
         <activity android:name=".RxFirebaseActivity"/>
         <activity android:name=".mvp.MvpActivity"/>
 

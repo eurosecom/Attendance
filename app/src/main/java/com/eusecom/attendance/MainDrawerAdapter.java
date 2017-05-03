@@ -213,8 +213,8 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
                             case 5:
 
                                 // View v at position pos is clicked.
-                                Intent i5 = new Intent(mContext, RxbusActivity.class);
-                                v.getContext().startActivity(i5);
+                                //Intent i5 = new Intent(mContext, RxbusActivity.class);
+                                //v.getContext().startActivity(i5);
 
                                 break;
 

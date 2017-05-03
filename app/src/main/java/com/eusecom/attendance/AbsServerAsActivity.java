@@ -27,14 +27,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.models.EventRxBus;
 import com.eusecom.attendance.retrofit.AbsServerClient;
-import com.eusecom.attendance.rxbus.RxBus;
-import com.eusecom.attendance.rxbus.RxBusDemoFragment;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;

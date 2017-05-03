@@ -39,14 +39,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.models.EventRxBus;
 import com.eusecom.attendance.retrofit.AbsServerClient;
 import com.eusecom.attendance.retrofit.RfEtestApi;
 import com.eusecom.attendance.retrofit.RfEtestService;
 import com.eusecom.attendance.rxbus.RxBus;
-import com.eusecom.attendance.rxbus.RxBusDemoFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
