@@ -83,10 +83,38 @@ public class RxFirebaseDatabase {
    * the object persistence
    */
   public Observable<String> observeSetValuePush(final DatabaseReference firebaseRef,
-      final Object object) {
+      final Object object, final int del) {
     return Observable.create(new Observable.OnSubscribe<String>() {
       @Override public void call(final Subscriber<? super String> subscriber) {
         final DatabaseReference ref = firebaseRef.push();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+          @Override public void onDataChange(DataSnapshot dataSnapshot) {
+            subscriber.onNext(ref.getKey());
+            subscriber.onCompleted();
+          }
+
+          @Override public void onCancelled(DatabaseError error) {
+            FirebaseDatabaseErrorFactory.buildError(subscriber, error);
+          }
+        });
+        ref.setValue(object);
+      }
+    }).compose(this.<String>applyScheduler());
+  }
+
+  /**
+   * This methods observes data deleting by the key in reference.
+   *
+   * @param firebaseRef {@link Query} this is reference of a Firebase Query and key
+   * @param object {@link Object} null object we want to delete
+   * @return an {@link rx.Observable} of the gdeleted key after
+   * the object persistence
+   */
+  public Observable<String> observeDelValuePush(final DatabaseReference firebaseRef,
+                                                final Object object, final int del) {
+    return Observable.create(new Observable.OnSubscribe<String>() {
+      @Override public void call(final Subscriber<? super String> subscriber) {
+        final DatabaseReference ref = firebaseRef;
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
           @Override public void onDataChange(DataSnapshot dataSnapshot) {
             subscriber.onNext(ref.getKey());

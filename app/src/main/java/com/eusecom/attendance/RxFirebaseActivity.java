@@ -75,13 +75,16 @@ public class RxFirebaseActivity extends AppCompatActivity {
 
       showProgress(true);
       BlogPostEntity postx = new BlogPostEntity("new author rx", "new title rx" );
-      addBlogPostRx(postx);
+      addBlogPostRx(postx,0);
 
       return true;
     }
 
     if (id == R.id.del) {
 
+      showProgress(true);
+      BlogPostEntity postx = new BlogPostEntity(null,null );
+      addBlogPostRx(postx,1);
 
       return true;
     }
@@ -91,10 +94,17 @@ public class RxFirebaseActivity extends AppCompatActivity {
 
   }//end create options
 
-  private void addBlogPostRx(BlogPostEntity postx) {
+  private void addBlogPostRx(BlogPostEntity postx, int del) {
 
-    final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog");
-    RxFirebaseDatabase.getInstance().observeSetValuePush(firebaseRef, postx).subscribe(new SetPostsSubscriber());
+    DatabaseReference firebaseRef = null;
+    if( del == 0 ) {
+      firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog");
+      RxFirebaseDatabase.getInstance().observeSetValuePush(firebaseRef, postx, del).subscribe(new SetPostsSubscriber());
+    }else{
+      firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog").child("-Kj9Lx8W3LwhkrsOfJXk");
+      RxFirebaseDatabase.getInstance().observeDelValuePush(firebaseRef, postx, del).subscribe(new SetPostsSubscriber());
+    }
+
 
   }//end of add BlogPostEntity
 
