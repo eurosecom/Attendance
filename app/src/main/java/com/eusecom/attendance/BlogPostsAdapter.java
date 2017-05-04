@@ -28,6 +28,22 @@ class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostViewHolder> {
   @Override public void onBindViewHolder(BlogPostViewHolder holder, int position) {
     BlogPostEntity blogPostEntity = mBlogPostEntities.get(position);
     holder.bindModel(blogPostEntity);
+
+    holder.setClickListener(new BlogPostViewHolder.ClickListener() {
+      public void onClick(View v, int pos, boolean isLongClick) {
+        if (isLongClick) {
+
+          Log.d("longClick", pos + "");
+
+
+        } else {
+
+          Log.d("shortClick", pos + "");
+
+        }
+      }
+    });
+
   }
 
   @Override public int getItemCount() {
