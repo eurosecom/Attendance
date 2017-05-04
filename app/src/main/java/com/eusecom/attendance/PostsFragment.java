@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ public class PostsFragment extends Fragment {
 
   public RecyclerView rvPostsList;
   public ProgressBar progressBar;
+  private LinearLayoutManager mManager;
+  public PostsFragment() {}
 
   /**
    * Factory method to instantiate Fragment
@@ -49,21 +52,36 @@ public class PostsFragment extends Fragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View fragmentView = inflater.inflate(R.layout.fragment_rxfirebase_posts, container, false);
+    //View fragmentView = inflater.inflate(R.layout.fragment_rxfirebase_posts, container, false);
+    View fragmentView = inflater.inflate(R.layout.fragment_rxfirebase, container, false);
 
-    rvPostsList = (RecyclerView) fragmentView.findViewById(R.id.rvPostsList);
+
+    //rvPostsList = (RecyclerView) fragmentView.findViewById(R.id.rvPostsList);
+    //progressBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar);
+    rvPostsList = (RecyclerView) fragmentView.findViewById(R.id.approve_list);
+    rvPostsList.setHasFixedSize(true);
+
     progressBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar);
 
     return fragmentView;
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    this.blogPostsAdapter = new BlogPostsAdapter(Collections.<BlogPostEntity>emptyList());
-    this.rvPostsList.setLayoutManager(new LinearLayoutManager(getContext()));
-    this.rvPostsList.setAdapter(blogPostsAdapter);
-    this.loadPosts();
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
+    blogPostsAdapter = new BlogPostsAdapter(Collections.<BlogPostEntity>emptyList());
+
+    mManager = new LinearLayoutManager(getActivity());
+    mManager.setReverseLayout(true);
+    mManager.setStackFromEnd(true);
+    rvPostsList.setLayoutManager(mManager);
+    rvPostsList.setAdapter(blogPostsAdapter);
+    loadPosts();
+
   }
+
+
 
   /**
    * Load the posts
@@ -71,7 +89,7 @@ public class PostsFragment extends Fragment {
   private void loadPosts() {
 
     Query fbQuery = firebaseRef.child("fireblog");
-    PostsFragment.this.showProgress(true);
+    showProgress(true);
     RxFirebaseDatabase.getInstance().observeValueEvent(fbQuery).subscribe(new GetPostsSubscriber());
   }
 
@@ -81,8 +99,10 @@ public class PostsFragment extends Fragment {
    * @param blogPostEntities {@link List} of {@link BlogPostEntity}
    */
   private void renderBlogPosts(List<BlogPostEntity> blogPostEntities) {
-    this.showProgress(false);
-    this.blogPostsAdapter.setData(blogPostEntities);
+    showProgress(false);
+    blogPostsAdapter.setData(blogPostEntities);
+    //Log.d("blogPostEntities", blogPostEntities.get(0).getTitle());
+    //Log.d("blogPostEntities", blogPostEntities.get(1).getTitle());
   }
 
   /**
@@ -91,8 +111,8 @@ public class PostsFragment extends Fragment {
    * @param isVisible {@link Boolean} VISIBLE: true | INVISIBLE: false
    */
   private void showProgress(boolean isVisible) {
-    this.progressBar.clearAnimation();
-    this.progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    progressBar.clearAnimation();
+    progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
    //this.getActivity().setProgressBarIndeterminateVisibility(isVisible); ??? App crashed by onDatachanged
   }
 
@@ -110,13 +130,13 @@ public class PostsFragment extends Fragment {
    */
   private final class GetPostsSubscriber extends Subscriber<DataSnapshot> {
     @Override public void onCompleted() {
-      PostsFragment.this.showProgress(false);
+      showProgress(false);
       unsubscribe();
     }
 
     @Override public void onError(Throwable e) {
-      PostsFragment.this.showProgress(false);
-      PostsFragment.this.showError(e.getMessage());
+      showProgress(false);
+      showError(e.getMessage());
     }
 
     @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
@@ -124,7 +144,7 @@ public class PostsFragment extends Fragment {
       for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
         blogPostEntities.add(childDataSnapshot.getValue(BlogPostEntity.class));
       }
-      PostsFragment.this.renderBlogPosts(blogPostEntities);
+      renderBlogPosts(blogPostEntities);
     }
   }
 }

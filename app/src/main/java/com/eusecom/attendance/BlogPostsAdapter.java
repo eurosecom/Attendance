@@ -1,6 +1,9 @@
 package com.eusecom.attendance;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import java.util.List;
@@ -10,33 +13,39 @@ import java.util.List;
  */
 class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostViewHolder> {
 
-  private List<BlogPostEntity> blogPostEntities;
+  private List<BlogPostEntity> mBlogPostEntities;
 
   public BlogPostsAdapter(List<BlogPostEntity> blogPostEntities) {
-    this.blogPostEntities = blogPostEntities;
+    mBlogPostEntities = blogPostEntities;
   }
 
-  @Override public BlogPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new BlogPostViewHolder(parent);
+  @Override public BlogPostViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
+    //View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_rxfirebase_post, viewGroup, false);
+    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_approve, viewGroup, false);
+    return new BlogPostViewHolder(view);
   }
 
   @Override public void onBindViewHolder(BlogPostViewHolder holder, int position) {
-    BlogPostEntity blogPostEntity = blogPostEntities.get(position);
+    BlogPostEntity blogPostEntity = mBlogPostEntities.get(position);
     holder.bindModel(blogPostEntity);
   }
 
   @Override public int getItemCount() {
-    return blogPostEntities.size();
+    Log.d("getItemCount", mBlogPostEntities.size() + "");
+    return mBlogPostEntities.size();
+
   }
 
   /**
    * Sets the data for adapter
    *
-   * @param blogPostEntities a {@link List} of {@link BlogPostEntity}
+   * @param blogPost a {@link List} of {@link BlogPostEntity}
    */
-  public void setData(List<BlogPostEntity> blogPostEntities) {
-    this.validateData(blogPostEntities);
-    this.blogPostEntities = blogPostEntities;
+  public void setData(List<BlogPostEntity> blogPost) {
+    this.validateData(blogPost);
+    mBlogPostEntities = blogPost;
+    //Log.d("AdapterSetData", mBlogPostEntities.get(0).getTitle());
+    //Log.d("AdapterSetData", mBlogPostEntities.get(1).getTitle());
     this.notifyDataSetChanged();
   }
 

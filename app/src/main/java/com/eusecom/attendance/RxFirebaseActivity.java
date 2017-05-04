@@ -41,7 +41,7 @@ public class RxFirebaseActivity extends AppCompatActivity {
     progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
     final FragmentTransaction fragmentTransaction  = getSupportFragmentManager().beginTransaction();
-    fragmentTransaction.add(R.id.fragmentContainer, PostsFragment.newInstance());
+    fragmentTransaction.replace(R.id.fragmentContainer, PostsFragment.newInstance());
     fragmentTransaction.commit();
 
   }//end oncreate
@@ -96,13 +96,13 @@ public class RxFirebaseActivity extends AppCompatActivity {
 
   private void addBlogPostRx(BlogPostEntity postx, int del) {
 
-    DatabaseReference firebaseRef = null;
+    //final DatabaseReference firebaseRef = null;
     if( del == 0 ) {
-      firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog");
+      final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog");
       RxFirebaseDatabase.getInstance().observeSetValuePush(firebaseRef, postx, del).subscribe(new SetPostsSubscriber());
     }else{
-      firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog").child("-Kj9Lx8W3LwhkrsOfJXk");
-      RxFirebaseDatabase.getInstance().observeDelValuePush(firebaseRef, postx, del).subscribe(new SetPostsSubscriber());
+      final DatabaseReference firebaseRefdel = FirebaseDatabase.getInstance().getReference().child("fireblog").child("-Kj9eLMKoAAe2o8B8IiL");
+      RxFirebaseDatabase.getInstance().observeDelValuePush(firebaseRefdel, postx, del).subscribe(new SetPostsSubscriber());
     }
 
 
