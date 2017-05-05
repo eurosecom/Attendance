@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +23,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
 import rx.Subscriber;
 
 /**
@@ -40,7 +46,7 @@ public class RxFirebaseActivity extends AppCompatActivity {
     mDatabase = FirebaseDatabase.getInstance().getReference();
     progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-    final FragmentTransaction fragmentTransaction  = getSupportFragmentManager().beginTransaction();
+    final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
     fragmentTransaction.replace(R.id.fragmentContainer, PostsFragment.newInstance());
     fragmentTransaction.commit();
 
@@ -93,6 +99,7 @@ public class RxFirebaseActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
 
   }//end create options
+
 
   private void addBlogPostRx(BlogPostEntity postx, int del) {
 
@@ -151,5 +158,6 @@ public class RxFirebaseActivity extends AppCompatActivity {
   private void showMessage(String message) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
+
 
 }

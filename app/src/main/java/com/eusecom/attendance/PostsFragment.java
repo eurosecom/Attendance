@@ -3,6 +3,7 @@ package com.eusecom.attendance;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import com.eusecom.attendance.BlogPostsAdapter;
@@ -22,6 +25,11 @@ import com.google.firebase.database.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
 import rx.Subscriber;
 
 /**
@@ -38,7 +46,9 @@ public class PostsFragment extends Fragment {
   public RecyclerView rvPostsList;
   public ProgressBar progressBar;
   private LinearLayoutManager mManager;
-  public PostsFragment() {}
+  public GetPostsSubscriber getPostsSubscriber;
+  private RxBus _rxBus;
+  private CompositeDisposable _disposables;
 
   /**
    * Factory method to instantiate Fragment
@@ -47,6 +57,55 @@ public class PostsFragment extends Fragment {
    */
   public static PostsFragment newInstance() {
     return new PostsFragment();
+  }
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    _rxBus = getRxBusSingleton();
+
+    _disposables = new CompositeDisposable();
+
+    ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
+
+    _disposables
+            .add(tapEventEmitter.subscribe(event -> {
+              if (event instanceof PostsFragment.TapEvent) {
+                ///_showTapText();
+              }
+              if (event instanceof BlogPostEntity) {
+                //saveAbsServer(((Attendance) event).daod + " / " + ((Attendance) event).dado, ((Attendance) event));
+                String keys = ((BlogPostEntity) event).getAuthor();
+                Log.d("In FRGM shortClick", keys);
+
+              }
+            }));
+
+    _disposables
+            .add(tapEventEmitter.publish(stream ->
+                    stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
+                      ///_showTapCount(taps.size()); OK
+                    }));
+
+    _disposables.add(tapEventEmitter.connect());
+
+  }//end oncreate
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    _disposables.clear();
+
+  }
+
+  public RxBus getRxBusSingleton() {
+    if (_rxBus == null) {
+      _rxBus = new RxBus();
+    }
+
+    return _rxBus;
   }
 
   @Nullable @Override
@@ -70,7 +129,8 @@ public class PostsFragment extends Fragment {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    blogPostsAdapter = new BlogPostsAdapter(Collections.<BlogPostEntity>emptyList());
+    blogPostsAdapter = new BlogPostsAdapter(Collections.<BlogPostEntity>emptyList(), _rxBus);
+    getPostsSubscriber = new GetPostsSubscriber();
 
     mManager = new LinearLayoutManager(getActivity());
     mManager.setReverseLayout(true);
@@ -79,6 +139,12 @@ public class PostsFragment extends Fragment {
     rvPostsList.setAdapter(blogPostsAdapter);
     loadPosts();
 
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    getPostsSubscriber.unsubscribe();
   }
 
 
@@ -90,7 +156,7 @@ public class PostsFragment extends Fragment {
 
     Query fbQuery = firebaseRef.child("fireblog");
     showProgress(true);
-    RxFirebaseDatabase.getInstance().observeValueEvent(fbQuery).subscribe(new GetPostsSubscriber());
+    RxFirebaseDatabase.getInstance().observeValueEvent(fbQuery).subscribe(getPostsSubscriber);
   }
 
   /**
@@ -131,20 +197,29 @@ public class PostsFragment extends Fragment {
   private final class GetPostsSubscriber extends Subscriber<DataSnapshot> {
     @Override public void onCompleted() {
       showProgress(false);
-      unsubscribe();
+      getPostsSubscriber.unsubscribe();
     }
 
     @Override public void onError(Throwable e) {
       showProgress(false);
       showError(e.getMessage());
+      getPostsSubscriber.unsubscribe();
     }
 
     @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
       List<BlogPostEntity> blogPostEntities = new ArrayList<>();
       for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-        blogPostEntities.add(childDataSnapshot.getValue(BlogPostEntity.class));
+        String keys = childDataSnapshot.getKey();
+        Log.d("keys ", keys);
+        BlogPostEntity resultx = childDataSnapshot.getValue(BlogPostEntity.class);
+        resultx.setAuthor(keys);
+        blogPostEntities.add(resultx);
       }
       renderBlogPosts(blogPostEntities);
     }
   }
+
+
+  public static class TapEvent {}
+
 }

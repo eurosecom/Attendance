@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import java.util.List;
 
@@ -14,9 +16,11 @@ import java.util.List;
 class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostViewHolder> {
 
   private List<BlogPostEntity> mBlogPostEntities;
+  private RxBus _rxBus;
 
-  public BlogPostsAdapter(List<BlogPostEntity> blogPostEntities) {
+  public BlogPostsAdapter(List<BlogPostEntity> blogPostEntities, RxBus bus) {
     mBlogPostEntities = blogPostEntities;
+    _rxBus = bus;
   }
 
   @Override public BlogPostViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
@@ -31,14 +35,20 @@ class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostViewHolder> {
 
     holder.setClickListener(new BlogPostViewHolder.ClickListener() {
       public void onClick(View v, int pos, boolean isLongClick) {
+
+        String keys = blogPostEntity.getAuthor();
         if (isLongClick) {
 
-          Log.d("longClick", pos + "");
+          Log.d("longClick", pos + " " + keys);
 
 
         } else {
 
-          Log.d("shortClick", pos + "");
+          Log.d("shortClick", pos + " " + keys);
+          if (_rxBus.hasObservers()) {
+            _rxBus.send(blogPostEntity);
+            _rxBus.send(new PostsFragment.TapEvent());
+          }
 
         }
       }
