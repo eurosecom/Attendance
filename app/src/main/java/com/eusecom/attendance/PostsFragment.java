@@ -2,6 +2,7 @@ package com.eusecom.attendance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,21 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
+import com.eusecom.attendance.animators.BaseItemAnimator;
+import com.eusecom.attendance.animators.FadeInAnimator;
+import com.eusecom.attendance.animators.FadeInDownAnimator;
+import com.eusecom.attendance.animators.FadeInLeftAnimator;
+import com.eusecom.attendance.animators.FadeInRightAnimator;
+import com.eusecom.attendance.animators.FadeInUpAnimator;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
-import com.eusecom.attendance.BlogPostsAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
@@ -47,8 +50,28 @@ public class PostsFragment extends Fragment {
   public ProgressBar progressBar;
   private LinearLayoutManager mManager;
   public GetPostsSubscriber getPostsSubscriber;
+  public SetPostsSubscriber setPostsSubscriber;
   private RxBus _rxBus;
   private CompositeDisposable _disposables;
+  FloatingActionButton fab;
+
+  enum Type {
+    FadeIn(new FadeInAnimator()),
+    FadeInDown(new FadeInDownAnimator()),
+    FadeInUp(new FadeInUpAnimator()),
+    FadeInLeft(new FadeInLeftAnimator()),
+    FadeInRight(new FadeInRightAnimator());
+
+    private BaseItemAnimator mAnimator;
+
+    Type(BaseItemAnimator animator) {
+      mAnimator = animator;
+    }
+
+    public BaseItemAnimator getAnimator() {
+      return mAnimator;
+    }
+  }
 
   /**
    * Factory method to instantiate Fragment
@@ -76,7 +99,11 @@ public class PostsFragment extends Fragment {
               if (event instanceof BlogPostEntity) {
                 //saveAbsServer(((Attendance) event).daod + " / " + ((Attendance) event).dado, ((Attendance) event));
                 String keys = ((BlogPostEntity) event).getAuthor();
+                //blogPostsAdapter.remove(0);
+                showProgress(true);
                 Log.d("In FRGM shortClick", keys);
+                BlogPostEntity postx = new BlogPostEntity(null, null, null);
+                delBlogPostRx(postx,1, keys);
 
               }
             }));
@@ -92,25 +119,9 @@ public class PostsFragment extends Fragment {
 
   }//end oncreate
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-
-    _disposables.clear();
-
-  }
-
-  public RxBus getRxBusSingleton() {
-    if (_rxBus == null) {
-      _rxBus = new RxBus();
-    }
-
-    return _rxBus;
-  }
-
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+                           @Nullable Bundle savedInstanceState) {
     //View fragmentView = inflater.inflate(R.layout.fragment_rxfirebase_posts, container, false);
     View fragmentView = inflater.inflate(R.layout.fragment_rxfirebase, container, false);
 
@@ -122,6 +133,20 @@ public class PostsFragment extends Fragment {
 
     progressBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar);
 
+    fab = (FloatingActionButton) fragmentView.findViewById(R.id.fab);
+    fab.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+      showProgress(true);
+      BlogPostEntity postx = new BlogPostEntity("new author rx", "new title rx", "0" );
+      int posxx = blogPostsAdapter.getItemCount()-1;
+      blogPostsAdapter.add(postx, posxx);
+      addBlogPostRx(postx,0);
+
+      }
+    });
+
     return fragmentView;
   }
 
@@ -131,23 +156,37 @@ public class PostsFragment extends Fragment {
 
     blogPostsAdapter = new BlogPostsAdapter(Collections.<BlogPostEntity>emptyList(), _rxBus);
     getPostsSubscriber = new GetPostsSubscriber();
+    setPostsSubscriber = new SetPostsSubscriber();
 
     mManager = new LinearLayoutManager(getActivity());
-    mManager.setReverseLayout(true);
-    mManager.setStackFromEnd(true);
+    //mManager.setReverseLayout(true);
+    //mManager.setStackFromEnd(true);
     rvPostsList.setLayoutManager(mManager);
     rvPostsList.setAdapter(blogPostsAdapter);
+    rvPostsList.setItemAnimator(new FadeInRightAnimator());
+    rvPostsList.getItemAnimator().setAddDuration(300);
+    rvPostsList.getItemAnimator().setRemoveDuration(300);
     loadPosts();
 
   }
 
   @Override
-  public void onPause() {
-    super.onPause();
+  public void onDestroy() {
+    super.onDestroy();
+
+    _disposables.clear();
     getPostsSubscriber.unsubscribe();
+    setPostsSubscriber.unsubscribe();
+
   }
 
+  public RxBus getRxBusSingleton() {
+    if (_rxBus == null) {
+      _rxBus = new RxBus();
+    }
 
+    return _rxBus;
+  }
 
   /**
    * Load the posts
@@ -221,5 +260,47 @@ public class PostsFragment extends Fragment {
 
 
   public static class TapEvent {}
+
+  private void delBlogPostRx(BlogPostEntity postx, int del, String keys) {
+
+
+      final DatabaseReference firebaseRefdel = FirebaseDatabase.getInstance().getReference().child("fireblog").child(keys);
+      RxFirebaseDatabase.getInstance().observeDelValuePush(firebaseRefdel, postx, del).subscribe(setPostsSubscriber);
+
+
+
+  }//end of add BlogPostEntity
+
+  /**
+   * Subscriber for {@link //RxFirebaseDatabase} query
+   */
+  private final class SetPostsSubscriber extends Subscriber<String> {
+    @Override public void onCompleted() {
+      showProgress(false);
+      setPostsSubscriber.unsubscribe();
+    }
+
+    @Override public void onError(Throwable e) {
+      showProgress(false);
+      showError(e.getMessage());
+      setPostsSubscriber.unsubscribe();
+    }
+
+    @SuppressWarnings("unchecked") @Override public void onNext(String keyf) {
+      showMessage(keyf);
+    }
+  }//end of setpostssubscriber
+
+  private void showMessage(String message) {
+    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  private void addBlogPostRx(BlogPostEntity postx, int del) {
+
+    final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("fireblog");
+    RxFirebaseDatabase.getInstance().observeSetValuePush(firebaseRef, postx, del).subscribe(setPostsSubscriber);
+
+
+  }//end of add BlogPostEntity
 
 }

@@ -45,6 +45,7 @@ class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostViewHolder> {
         } else {
 
           Log.d("shortClick", pos + " " + keys);
+          remove(position);
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
             _rxBus.send(new PostsFragment.TapEvent());
@@ -59,7 +60,19 @@ class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostViewHolder> {
   @Override public int getItemCount() {
     Log.d("getItemCount", mBlogPostEntities.size() + "");
     return mBlogPostEntities.size();
+  }
 
+
+  public void remove(int position) {
+    mBlogPostEntities.remove(position);
+    notifyItemRemoved(position);
+  }
+
+
+
+  public void add(BlogPostEntity addmodel, int position) {
+    mBlogPostEntities.add(position, addmodel);
+    notifyItemInserted(position);
   }
 
   /**
