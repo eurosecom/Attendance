@@ -54,6 +54,7 @@ public class PostsFragment extends Fragment {
   private RxBus _rxBus;
   private CompositeDisposable _disposables;
   FloatingActionButton fab;
+  int kolko=0;
 
   enum Type {
     FadeIn(new FadeInAnimator()),
@@ -140,7 +141,7 @@ public class PostsFragment extends Fragment {
 
       showProgress(true);
       BlogPostEntity postx = new BlogPostEntity("new author rx", "new title rx", "0" );
-      int posxx = blogPostsAdapter.getItemCount()-1;
+      int posxx = blogPostsAdapter.getItemCount();
       blogPostsAdapter.add(postx, posxx);
       addBlogPostRx(postx,0);
 
@@ -254,7 +255,8 @@ public class PostsFragment extends Fragment {
         resultx.setAuthor(keys);
         blogPostEntities.add(resultx);
       }
-      renderBlogPosts(blogPostEntities);
+      if( kolko >= 0 ) { renderBlogPosts(blogPostEntities); }
+      kolko=kolko+1;
     }
   }
 

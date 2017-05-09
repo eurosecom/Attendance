@@ -23,12 +23,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.xml.datatype.Duration;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
+
+import static android.R.attr.delay;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * The class is used as Decorator to
@@ -159,8 +170,13 @@ public class RxFirebaseDatabase {
           }
         }));
       }
-    }).compose(this.<DataSnapshot>applyScheduler());
+    }).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).compose(this.<DataSnapshot>applyScheduler());
   }
+
+  //}).delay(300, TimeUnit.MILLISECONDS).observeOn(Schedulers.newThread()).compose(this.<DataSnapshot>applyScheduler());
+  //do not work    }).delay(300, TimeUnit.MILLISECONDS).compose(this.<DataSnapshot>applyScheduler());
+  //work subscription is delayed, onNext is not delayed  }).delaySubscription(10, TimeUnit.SECONDS).compose(this.<DataSnapshot>applyScheduler());
+
 
   /**
    * This methods observes a firebase query and returns back ONCE
@@ -319,6 +335,7 @@ public class RxFirebaseDatabase {
         if (observeOnScheduler != null) {
           return observable.observeOn(observeOnScheduler);
         }
+        System.out.println("Observable thread: " + Thread.currentThread().getName());
         return observable;
       }
     };
