@@ -3,7 +3,6 @@ package com.eusecom.attendance.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ServerValue;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +52,7 @@ public class Attendance {
         HashMap<String, Object> datsObj = new HashMap<String, Object>();
         datsObj.put("date", ServerValue.TIMESTAMP);
         this.dats = datsObj;
+
         this.aprv = aprv;
         this.usosc = usosc;
         this.cplxb = "0";
@@ -77,6 +77,7 @@ public class Attendance {
         HashMap<String, Object> datsObj = new HashMap<String, Object>();
         datsObj.put("date", ServerValue.TIMESTAMP);
         this.dats = datsObj;
+
         this.aprv = "0";
         this.usosc = usosc;
         this.cplxb = "0";
@@ -112,7 +113,6 @@ public class Attendance {
         result.put("lati", lati);
         result.put("datm", datm);
         result.put("dats", dats);
-        result.put("dats", dats);
         result.put("usosc", usosc);
         result.put("aprv", aprv);
         result.put("cplxb", cplxb);
@@ -133,7 +133,6 @@ public class Attendance {
         return datsObj;
     }
 
-
     @Exclude
     public long getDatsLong() {
         return (long)dats.get("date");
@@ -147,6 +146,7 @@ public class Attendance {
 
         return datss;
     }
+
 
     @Exclude
     public String getDmxa() {
