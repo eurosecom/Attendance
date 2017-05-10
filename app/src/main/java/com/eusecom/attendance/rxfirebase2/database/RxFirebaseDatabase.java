@@ -170,13 +170,42 @@ public class RxFirebaseDatabase {
           }
         }));
       }
-    }).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).compose(this.<DataSnapshot>applyScheduler());
+    }).compose(this.<DataSnapshot>applyScheduler());
   }
 
-  //}).delay(300, TimeUnit.MILLISECONDS).observeOn(Schedulers.newThread()).compose(this.<DataSnapshot>applyScheduler());
-  //do not work    }).delay(300, TimeUnit.MILLISECONDS).compose(this.<DataSnapshot>applyScheduler());
-  //work subscription is delayed, onNext is not delayed  }).delaySubscription(10, TimeUnit.SECONDS).compose(this.<DataSnapshot>applyScheduler());
 
+  /**
+   * This methods observes a firebase query and returns back delayed
+   * Observable of the {@link DataSnapshot}
+   * when the firebase client uses a {@link ValueEventListener}
+   *
+   * @param firebaseRef {@link Query} this is reference of a Firebase Query
+   * @return an {@link rx.Observable} of datasnapshot to use
+   */
+  public Observable<DataSnapshot> observeValueEventDelayed(final Query firebaseRef) {
+    return Observable.create(new Observable.OnSubscribe<DataSnapshot>() {
+      @Override public void call(final Subscriber<? super DataSnapshot> subscriber) {
+        final ValueEventListener listener =
+                firebaseRef.addValueEventListener(new ValueEventListener() {
+                  @Override public void onDataChange(DataSnapshot dataSnapshot) {
+                    subscriber.onNext(dataSnapshot);
+                  }
+
+                  @Override public void onCancelled(DatabaseError error) {
+                    FirebaseDatabaseErrorFactory.buildError(subscriber, error);
+                  }
+                });
+
+        // When the subscription is cancelled, remove the listener
+        subscriber.add(Subscriptions.create(new Action0() {
+          @Override public void call() {
+            firebaseRef.removeEventListener(listener);
+          }
+        }));
+      }
+    }).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).compose(this.<DataSnapshot>applyScheduler());
+  }
+  //work subscription is delayed, onNext is not delayed  }).delaySubscription(10, TimeUnit.SECONDS).compose(this.<DataSnapshot>applyScheduler());
 
   /**
    * This methods observes a firebase query and returns back ONCE

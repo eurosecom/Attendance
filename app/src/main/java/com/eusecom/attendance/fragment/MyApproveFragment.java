@@ -7,8 +7,6 @@ import com.google.firebase.database.Query;
 
 public class MyApproveFragment extends ApproveListFragment {
 
-    private DatabaseReference mDatabase;
-
     public MyApproveFragment() {}
 
     @Override

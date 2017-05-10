@@ -196,7 +196,7 @@ public class PostsFragment extends Fragment {
 
     Query fbQuery = firebaseRef.child("fireblog");
     showProgress(true);
-    RxFirebaseDatabase.getInstance().observeValueEvent(fbQuery).subscribe(getPostsSubscriber);
+    RxFirebaseDatabase.getInstance().observeValueEventDelayed(fbQuery).subscribe(getPostsSubscriber);
   }
 
   /**

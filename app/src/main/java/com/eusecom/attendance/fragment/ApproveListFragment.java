@@ -3,7 +3,6 @@ package com.eusecom.attendance.fragment;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -19,11 +18,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.FbmessClient;
+import com.eusecom.attendance.PostsFragment;
 import com.eusecom.attendance.SettingsActivity;
+import com.eusecom.attendance.animators.BaseItemAnimator;
+import com.eusecom.attendance.animators.FadeInAnimator;
+import com.eusecom.attendance.animators.FadeInDownAnimator;
+import com.eusecom.attendance.animators.FadeInLeftAnimator;
+import com.eusecom.attendance.animators.FadeInRightAnimator;
+import com.eusecom.attendance.animators.FadeInUpAnimator;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.MessData;
 import com.eusecom.attendance.models.Message;
@@ -32,31 +36,36 @@ import com.eusecom.attendance.retrofit.RfContributor;
 import com.eusecom.attendance.retrofit.RfEtestApi;
 import com.eusecom.attendance.retrofit.RfEtestService;
 import com.eusecom.attendance.retrofit.RfUser;
-import com.eusecom.attendance.viewholder.ApproveViewHolder;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.eusecom.attendance.rxbus.RxBus;
+import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
+import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.Transaction;
 import com.eusecom.attendance.R;
-import com.eusecom.attendance.models.Post;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import rx.Observer;
+import rx.Subscriber;
 import rx.Subscription;
 import static android.text.TextUtils.isEmpty;
 
@@ -67,10 +76,6 @@ public abstract class ApproveListFragment extends Fragment {
     // [START define_database_reference]
     private DatabaseReference mDatabase;
     // [END define_database_reference]
-
-    private FirebaseRecyclerAdapter<Attendance, ApproveViewHolder> mAdapter;
-    private RecyclerView mRecycler;
-    private LinearLayoutManager mManager;
 
     public ApproveListFragment() {}
     String absxy;
@@ -84,6 +89,31 @@ public abstract class ApproveListFragment extends Fragment {
 
     private Subscription subscription;
 
+    enum Type {
+        FadeIn(new FadeInAnimator()),
+        FadeInDown(new FadeInDownAnimator()),
+        FadeInUp(new FadeInUpAnimator()),
+        FadeInLeft(new FadeInLeftAnimator()),
+        FadeInRight(new FadeInRightAnimator());
+
+        private BaseItemAnimator mAnimator;
+
+        Type(BaseItemAnimator animator) {
+            mAnimator = animator;
+        }
+
+        public BaseItemAnimator getAnimator() {
+            return mAnimator;
+        }
+    }
+
+    private ApproveRxAdapter mAdapter;
+    private RecyclerView mRecycler;
+    private LinearLayoutManager mManager;
+    public ApproveListFragment.GetApproveSubscriber getApproveSubscriber;
+    private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
+    private RxBus _rxBus;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +122,44 @@ public abstract class ApproveListFragment extends Fragment {
         _githubService = RfEtestService.createGithubService(githubToken, urlx);
 
         _disposables = new CompositeDisposable();
+
+        _rxBus = getRxBusSingleton();
+
+        ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
+
+        _disposables
+                .add(tapEventEmitter.subscribe(event -> {
+                    if (event instanceof ApproveListFragment.TapEvent) {
+                        ///_showTapText();
+                    }
+                    if (event instanceof BlogPostEntity) {
+                        //saveAbsServer(((Attendance) event).daod + " / " + ((Attendance) event).dado, ((Attendance) event));
+                        String keys = ((BlogPostEntity) event).getAuthor();
+
+                        //showProgress(true);
+                        Log.d("In FRGM shortClick", keys);
+                        BlogPostEntity postx = new BlogPostEntity(null, null, null);
+                        //delBlogPostRx(postx,1, keys);
+
+                    }
+                }));
+
+        _disposables
+                .add(tapEventEmitter.publish(stream ->
+                        stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
+                            ///_showTapCount(taps.size()); OK
+                        }));
+
+        _disposables.add(tapEventEmitter.connect());
+    }
+
+    public RxBus getRxBusSingleton() {
+        if (_rxBus == null) {
+            _rxBus = new RxBus();
+        }
+
+        return _rxBus;
     }
 
     @Override
@@ -114,28 +182,8 @@ public abstract class ApproveListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        showfProgressDialog();
-
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    System.out.println("connected");
-                    if(isrunning) { showfProgressDialog(); }
-                } else {
-                    System.out.println("not connected");
-                    hidefProgressDialog();
-                    if(isrunning) { Toast.makeText(getActivity(), getResources().getString(R.string.notconnected), Toast.LENGTH_SHORT).show(); }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
+        mAdapter = new ApproveRxAdapter(Collections.<BlogPostEntity>emptyList(), _rxBus);
+        getApproveSubscriber = new ApproveListFragment.GetApproveSubscriber();
 
         DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
         gettimestramp.addValueEventListener(new ValueEventListener() {
@@ -159,142 +207,39 @@ public abstract class ApproveListFragment extends Fragment {
 
         // Set up FirebaseRecyclerAdapter with the Query
         Query absencesQuery = getQuery(mDatabase);
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // the initial data has been loaded, hide the progress bar
-                hidefProgressDialog();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-
-                hidefProgressDialog();
-            }
-        });
-
-
-
-        mAdapter = new FirebaseRecyclerAdapter<Attendance, ApproveViewHolder>(Attendance.class, R.layout.item_approve,
-                ApproveViewHolder.class, absencesQuery) {
-
-            @Override
-            protected void populateViewHolder(final ApproveViewHolder viewHolder, final Attendance model, final int position) {
-
-                final DatabaseReference absRef = getRef(position);
-
-                // Set click listener for the whole post view
-                final String absKey = absRef.getKey();
-                absxy = absRef.getKey();
-
-
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Launch PostDetailActivity
-                        Log.d(TAG, "onclick" + " listener");
-
-                        //Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-                        //intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, absKey);
-
-                            Toast.makeText(getActivity(), "Onclick " + absKey, Toast.LENGTH_SHORT).show();
-
-                        //startActivity(intent);
-                        }
-
-
-                });
-
-                viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-
-                        final String datsx = model.getDatsString();
-                        //Log.d(TAG, "datsx " + datsx);
-
-                        gettimestramp.setValue(ServerValue.TIMESTAMP);
-                        //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
-
-                        long timestampl = Long.parseLong(timestampx);
-                        long datsl = Long.parseLong(datsx);
-                        long rozdiel = timestampl - datsl;
-                        //Log.d(TAG, "rozdiel " + rozdiel);
-
-                        Toast.makeText(getActivity(), "Longclick " + absKey,Toast.LENGTH_SHORT).show();
-
-                        abskeydel = absKey;
-
-                        getDialog(abskeydel, model);
-
-
-                        return true;
-                    }
-
-
-                });
-
-
-                // Bind Abstype to ViewHolder
-                viewHolder.bindToApprove(model, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View starView) {
-                        // Need to write to both places the post is stored
-                        DatabaseReference globalPostRef = mDatabase.child("posts").child(absRef.getKey());
-
-                        // Run two transactions
-                        onStarClicked(globalPostRef);
-
-                    }
-                });
-            }
-
-        };
 
         mRecycler.setAdapter(mAdapter);
+        mRecycler.setItemAnimator(new FadeInRightAnimator());
+        mRecycler.getItemAnimator().setAddDuration(300);
+        mRecycler.getItemAnimator().setRemoveDuration(300);
+        loadAbsencesForApproving();
 
+
+
+
+    }//end of onActivityCreated
+
+    private void loadAbsencesForApproving() {
+
+        Query fbQuery = firebaseRef.child("fireblog");
+        //showProgress(true);
+        RxFirebaseDatabase.getInstance().observeValueEvent(fbQuery).subscribe(getApproveSubscriber);
     }
 
-    // [START post_stars_transaction]
-    private void onStarClicked(DatabaseReference postRef) {
-        postRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                Post p = mutableData.getValue(Post.class);
-                if (p == null) {
-                    return Transaction.success(mutableData);
-                }
-
-                if (p.stars.containsKey(getUid())) {
-                    // Unstar the post and remove self from stars
-                    p.starCount = p.starCount - 1;
-                    p.stars.remove(getUid());
-                } else {
-                    // Star the post and add self to stars
-                    p.starCount = p.starCount + 1;
-                    p.stars.put(getUid(), true);
-                }
-
-                // Set value and report transaction success
-                mutableData.setValue(p);
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b,
-                                   DataSnapshot dataSnapshot) {
-                // Transaction completed
-                Log.d(TAG, "postTransaction:onComplete:" + databaseError);
-            }
-        });
+    private void renderApproveList(List<BlogPostEntity> blogPostEntities) {
+        //showProgress(false);
+        mAdapter.setData(blogPostEntities);
+        //Log.d("blogPostEntities", blogPostEntities.get(0).getTitle());
+        //Log.d("blogPostEntities", blogPostEntities.get(1).getTitle());
     }
-    // [END post_stars_transaction]
+
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mAdapter != null) {
-            mAdapter.cleanup();
-        }
+
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
@@ -309,7 +254,7 @@ public abstract class ApproveListFragment extends Fragment {
     public abstract Query getQuery(DatabaseReference databaseReference);
 
     // [START deletefan_out]
-    private void approvePost(String postkey, int anodaj, Attendance model) {
+    private void approveAbsenceToServer(String postkey, int anodaj, Attendance model) {
 
         final String datsx = model.getDatsString();
         Log.d(TAG, "datsx " + datsx);
@@ -364,10 +309,10 @@ public abstract class ApproveListFragment extends Fragment {
 
                         if(contributor.saved == 1 ) {
                             snext = getResources().getString(R.string.abs_saved) + snextx;
-                            approveFBPost(abskeydel, contributor.anodaj, model);
+                            approveAbsenceToFB(abskeydel, contributor.anodaj, model);
                         }else{
                             snext = getResources().getString(R.string.abs_savednot);
-                            approveFBPost(abskeydel, contributor.anodaj, model);
+                            approveAbsenceToFB(abskeydel, contributor.anodaj, model);
                         }
 
 
@@ -403,9 +348,9 @@ public abstract class ApproveListFragment extends Fragment {
             public void onClick(View v) {
                 dialog.dismiss();
                 if(savetofiri>0){
-                    approvePost(abskeydel, 1, model);
+                    approveAbsenceToServer(abskeydel, 1, model);
                 }else{
-                    approveFBPost(abskeydel, 1, model);
+                    approveAbsenceToFB(abskeydel, 1, model);
                 }
             }
         });
@@ -416,9 +361,9 @@ public abstract class ApproveListFragment extends Fragment {
             public void onClick(View v) {
                 dialog.dismiss();
                 if(savetofiri>0){
-                    approvePost(abskeydel, 0, model);
+                    approveAbsenceToServer(abskeydel, 0, model);
                 }else{
-                    approveFBPost(abskeydel, 0, model);
+                    approveAbsenceToFB(abskeydel, 0, model);
                 }
 
 
@@ -428,7 +373,7 @@ public abstract class ApproveListFragment extends Fragment {
 
     }//end getdialog
 
-    private void approveFBPost(String postkey, int anodaj, Attendance model) {
+    private void approveAbsenceToFB(String postkey, int anodaj, Attendance model) {
 
         //set appr at firebase child
         String apprx="1";
@@ -498,19 +443,6 @@ public abstract class ApproveListFragment extends Fragment {
         }
     }
 
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        isrunning=true;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        isrunning=false;
-    }
 
     public class FirebaseRxApproveMessaging {
 
@@ -594,5 +526,39 @@ public abstract class ApproveListFragment extends Fragment {
         }
 
     }//end of FirebaseRxApproveMessaging
+
+
+    /**
+     * Subscriber for {@link //RxFirebaseDatabase} query
+     */
+    private final class GetApproveSubscriber extends Subscriber<DataSnapshot> {
+        @Override public void onCompleted() {
+            //showProgress(false);
+            //getPostsSubscriber.unsubscribe();
+        }
+
+        @Override public void onError(Throwable e) {
+            //showProgress(false);
+            //showError(e.getMessage());
+            //getPostsSubscriber.unsubscribe();
+        }
+
+        @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
+            List<BlogPostEntity> blogPostEntities = new ArrayList<>();
+            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                String keys = childDataSnapshot.getKey();
+                Log.d("keys ", keys);
+                BlogPostEntity resultx = childDataSnapshot.getValue(BlogPostEntity.class);
+                resultx.setAuthor(keys);
+                blogPostEntities.add(resultx);
+            }
+            renderApproveList(blogPostEntities);
+
+        }
+    }//end of GetPostsSubscriber
+
+    public static class TapEvent {}
+
+
 
 }
