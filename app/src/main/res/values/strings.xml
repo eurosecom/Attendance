@@ -147,6 +147,7 @@
     </array>
 
     <string name="descimg">descimg</string>
+    <string name="empty">empty</string>
     <string name="action_myemployee">My employees</string>
     <string name="action_mycompany">My company</string>
     <string name="action_approve">Approve the Absences</string>

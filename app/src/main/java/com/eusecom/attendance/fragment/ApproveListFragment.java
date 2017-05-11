@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.FbmessClient;
-import com.eusecom.attendance.PostsFragment;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.animators.BaseItemAnimator;
 import com.eusecom.attendance.animators.FadeInAnimator;
@@ -38,7 +37,6 @@ import com.eusecom.attendance.retrofit.RfEtestService;
 import com.eusecom.attendance.retrofit.RfUser;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
-import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,7 +55,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -69,7 +66,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import static android.text.TextUtils.isEmpty;
 
-public abstract class ApproveListFragment extends Fragment {
+public class ApproveListFragment extends Fragment {
 
     private static final String TAG = "ApproveListFragment";
 
@@ -132,14 +129,10 @@ public abstract class ApproveListFragment extends Fragment {
                     if (event instanceof ApproveListFragment.TapEvent) {
                         ///_showTapText();
                     }
-                    if (event instanceof BlogPostEntity) {
-                        //saveAbsServer(((Attendance) event).daod + " / " + ((Attendance) event).dado, ((Attendance) event));
-                        String keys = ((BlogPostEntity) event).getAuthor();
-
-                        //showProgress(true);
-                        Log.d("In FRGM shortClick", keys);
-                        BlogPostEntity postx = new BlogPostEntity(null, null, null);
-                        //delBlogPostRx(postx,1, keys);
+                    if (event instanceof Attendance) {
+                        String keys = ((Attendance) event).getRok();
+                        Log.d("In FRGM longClick", keys);
+                        getApproveDialog( keys, (Attendance) event);
 
                     }
                 }));
@@ -182,7 +175,7 @@ public abstract class ApproveListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ApproveRxAdapter(Collections.<BlogPostEntity>emptyList(), _rxBus);
+        mAdapter = new ApproveRxAdapter(Collections.<Attendance>emptyList(), _rxBus);
         getApproveSubscriber = new ApproveListFragment.GetApproveSubscriber();
 
         DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
@@ -204,11 +197,6 @@ public abstract class ApproveListFragment extends Fragment {
         mManager.setReverseLayout(true);
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
-
-        // Set up FirebaseRecyclerAdapter with the Query
-        Query absencesQuery = getQuery(mDatabase);
-
-
         mRecycler.setAdapter(mAdapter);
         mRecycler.setItemAnimator(new FadeInRightAnimator());
         mRecycler.getItemAnimator().setAddDuration(300);
@@ -222,13 +210,18 @@ public abstract class ApproveListFragment extends Fragment {
 
     private void loadAbsencesForApproving() {
 
-        Query fbQuery = firebaseRef.child("fireblog");
+        final String companyIco = SettingsActivity.getUsIco(getActivity());
+        Query recentAbsencesQuery = firebaseRef.child("company-absences").child(companyIco).orderByChild("aprv").equalTo("0")
+                .limitToFirst(200);
+
         //showProgress(true);
-        RxFirebaseDatabase.getInstance().observeValueEvent(fbQuery).subscribe(getApproveSubscriber);
+        showfProgressDialog();
+        RxFirebaseDatabase.getInstance().observeValueEvent(recentAbsencesQuery).subscribe(getApproveSubscriber);
     }
 
-    private void renderApproveList(List<BlogPostEntity> blogPostEntities) {
+    private void renderApproveList(List<Attendance> blogPostEntities) {
         //showProgress(false);
+        hidefProgressDialog();
         mAdapter.setData(blogPostEntities);
         //Log.d("blogPostEntities", blogPostEntities.get(0).getTitle());
         //Log.d("blogPostEntities", blogPostEntities.get(1).getTitle());
@@ -244,14 +237,16 @@ public abstract class ApproveListFragment extends Fragment {
             subscription.unsubscribe();
         }
         _disposables.dispose();
+        if (getApproveSubscriber != null && !getApproveSubscriber.isUnsubscribed()) {
+            getApproveSubscriber.unsubscribe();
+        }
+
     }
 
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-
-    public abstract Query getQuery(DatabaseReference databaseReference);
 
     // [START deletefan_out]
     private void approveAbsenceToServer(String postkey, int anodaj, Attendance model) {
@@ -324,7 +319,7 @@ public abstract class ApproveListFragment extends Fragment {
     }
     // [END delete_fan_out]
 
-    private void getDialog(String postkey, Attendance model) {
+    private void getApproveDialog(String postkey, Attendance model) {
 
         //if savetofir > 0 then save to server
         String savetofir =  SettingsActivity.getFir(getActivity());
@@ -335,7 +330,7 @@ public abstract class ApproveListFragment extends Fragment {
         dialog.setContentView(R.layout.approve_dialog);
         dialog.setTitle(R.string.item);
         // set the custom dialog components - text, image and button
-        String textx = getString(R.string.item) + " " + abskeydel;
+        String textx = getString(R.string.item) + " " + postkey;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
@@ -534,31 +529,32 @@ public abstract class ApproveListFragment extends Fragment {
     private final class GetApproveSubscriber extends Subscriber<DataSnapshot> {
         @Override public void onCompleted() {
             //showProgress(false);
-            //getPostsSubscriber.unsubscribe();
+            hidefProgressDialog();
+            getApproveSubscriber.unsubscribe();
         }
 
         @Override public void onError(Throwable e) {
             //showProgress(false);
             //showError(e.getMessage());
-            //getPostsSubscriber.unsubscribe();
+            hidefProgressDialog();
+            getApproveSubscriber.unsubscribe();
         }
 
         @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
-            List<BlogPostEntity> blogPostEntities = new ArrayList<>();
+            List<Attendance> blogPostEntities = new ArrayList<>();
             for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                 String keys = childDataSnapshot.getKey();
                 Log.d("keys ", keys);
-                BlogPostEntity resultx = childDataSnapshot.getValue(BlogPostEntity.class);
-                resultx.setAuthor(keys);
+                Attendance resultx = childDataSnapshot.getValue(Attendance.class);
+                resultx.setRok(keys);
                 blogPostEntities.add(resultx);
             }
             renderApproveList(blogPostEntities);
 
         }
-    }//end of GetPostsSubscriber
+    }//end of getApproveSubscriber
 
     public static class TapEvent {}
-
 
 
 }

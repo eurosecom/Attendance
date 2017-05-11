@@ -212,7 +212,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
     writeAbsenceServerToFB(icox, userIDX, model.ume, model.dmxa, model.dmna, daods, dados, model.dnixa,
             model.hodxb, gpslon, gpslat, datms, model.usosc,
-            mDatabase, key, cplxb );
+            mDatabase, key, cplxb, model.usname );
 
     writeKeyfToServer(icox, userIDX, model.ume, model.dmxa, model.dmna, daods, dados, model.dnixa,
             model.hodxb, gpslon, gpslat, datms, model.usosc,
@@ -256,10 +256,10 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
   private void writeAbsenceServerToFB(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
                             String hodxb, String longi, String lati, String datm, String usosc,
-                                  DatabaseReference mDatabase, String key, String cplxb ) {
+                                  DatabaseReference mDatabase, String key, String cplxb, String usname ) {
 
 
-    Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, longi, lati, datm, usosc );
+    Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, longi, lati, datm, usosc, usname );
     attendance.setCplxb(cplxb);
 
     Map<String, Object> attValues = attendance.toMap();

@@ -94,14 +94,15 @@ public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
     final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String icox = SettingsActivity.getUsIco(AbsServerBaseSearchActivity.this);
     String oscx = SettingsActivity.getUsOsc(AbsServerBaseSearchActivity.this);
+    String usnx = SettingsActivity.getUsname(AbsServerBaseSearchActivity.this);
     Long tsLong = System.currentTimeMillis() / 1000;
     String ts = tsLong.toString();
 
-    Attendance attendance = new Attendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx );
+    Attendance attendance = new Attendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx, usnx );
     listabsserver.add(attendance);
-    attendance = new Attendance(icox, userId, "0", "2","Outcoming work", ts, ts, "0", "0", "0", "0", ts, oscx );
+    attendance = new Attendance(icox, userId, "0", "2","Outcoming work", ts, ts, "0", "0", "0", "0", ts, oscx, usnx );
     listabsserver.add(attendance);
-    attendance = new Attendance(icox, userId, "0", "506","Holliday", ts, ts, "0", "0", "0", "0", ts, oscx );
+    attendance = new Attendance(icox, userId, "0", "506","Holliday", ts, ts, "0", "0", "0", "0", ts, oscx, usnx );
     listabsserver.add(attendance);
 
     return listabsserver;

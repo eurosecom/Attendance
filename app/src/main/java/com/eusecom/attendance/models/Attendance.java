@@ -27,6 +27,7 @@ public class Attendance {
     public String usosc;
     public String cplxb;
     public String rok;
+    public String usname;
 
     public Attendance() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -35,7 +36,7 @@ public class Attendance {
 
 
     public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                      String hodxb, String longi, String lati, String datm, String usosc, String aprv) {
+                      String hodxb, String longi, String lati, String datm, String usosc, String usname, String aprv) {
         this.usico = usico;
         this.usid = usid;
         this.ume = ume;
@@ -57,10 +58,11 @@ public class Attendance {
         this.usosc = usosc;
         this.cplxb = "0";
         this.rok = "2017";
+        this.usname = usname;
     }
 
     public Attendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                      String hodxb, String longi, String lati, String datm, String usosc ) {
+                      String hodxb, String longi, String lati, String datm, String usosc, String usname ) {
         this.usico = usico;
         this.usid = usid;
         this.ume = ume;
@@ -82,6 +84,7 @@ public class Attendance {
         this.usosc = usosc;
         this.cplxb = "0";
         this.rok = "2017";
+        this.usname = usname;
     }
 
     public String getUsico() {
@@ -114,6 +117,7 @@ public class Attendance {
         result.put("datm", datm);
         result.put("dats", dats);
         result.put("usosc", usosc);
+        result.put("usname", usname);
         result.put("aprv", aprv);
         result.put("cplxb", cplxb);
         result.put("rok", rok);
@@ -161,6 +165,12 @@ public class Attendance {
     }
 
     @Exclude
+    public  void setDmna(String dmna) {
+
+        this.dmna = dmna;
+    }
+
+    @Exclude
     public String getDaod() {
 
         return daod;
@@ -178,5 +188,16 @@ public class Attendance {
         this.rok = rok;
     }
 
+    @Exclude
+    public String getRok() {
+
+        return rok;
+    }
+
+    @Exclude
+    public String getUsname() {
+
+        return usname;
+    }
 }
 // [END blog_user_class]

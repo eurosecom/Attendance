@@ -337,10 +337,11 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
                             // Write new absence
                             String icox = SettingsActivity.getUsIco(NewAbsenceActivity.this);
                             String oscx = SettingsActivity.getUsOsc(NewAbsenceActivity.this);
+                            String usnx = SettingsActivity.getUsname(NewAbsenceActivity.this);
                             Long tsLong = System.currentTimeMillis() / 1000;
                             String ts = tsLong.toString();
 
-                            writeAbsence(icox, userId, "0", dmaxx, dmnxx, dateodlx, datedolx, "0", hodinyx, "0", "0", ts, oscx);
+                            writeAbsence(icox, userId, "0", dmaxx, dmnxx, dateodlx, datedolx, "0", hodinyx, "0", "0", ts, oscx, usnx);
 
                         }
 
@@ -361,7 +362,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
 
     // [START basic_write]
     private void writeAbsence(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
-                                 String hodxb, String longi, String lati, String datm, String usosc) {
+                                 String hodxb, String longi, String lati, String datm, String usosc, String usname) {
 
         String userIDX = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String key = mDatabase.child("absences").push().getKey();
@@ -381,7 +382,7 @@ public class NewAbsenceActivity extends BaseDatabaseActivity {
             mGPS.showSettingsAlert();
         }
 
-        Attendance attendance = new Attendance(usico, userIDX, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm, usosc );
+        Attendance attendance = new Attendance(usico, userIDX, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm, usosc, usname );
 
         Map<String, Object> attValues = attendance.toMap();
 
