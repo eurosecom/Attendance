@@ -27,9 +27,6 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
     public TextView dateto;
     public TextView hodxb;
     public TextView datm;
-    FirebaseUser user;
-    private FirebaseAuth mAuth;
-    String usemail = "";
     Context mContext;
 
     public AbsenceViewHolder(View itemView) {
@@ -45,11 +42,6 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
         datm = (TextView) itemView.findViewById(R.id.datm);
         mContext = itemView.getContext();
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        if (user != null) {
-            usemail = user.getEmail();
-        }
 
     }
 
@@ -91,7 +83,7 @@ public class AbsenceViewHolder extends RecyclerView.ViewHolder  {
 
         //long timestampm = Long.parseLong(attendance.datm) * 1000L;
         long timestampm = attendance.getDatsLong();
-        datm.setText(usemail + " " + getDateTime(timestampm ));
+        datm.setText(attendance.usname + " " + getDateTime(timestampm ));
 
         starView.setOnClickListener(starClickListener);
 

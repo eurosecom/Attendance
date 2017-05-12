@@ -109,7 +109,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
 
       holder.hodxb.setText(mListabsserver.get(position).hodxb);
 
-      holder.datm.setText(mListabsserver.get(position).lati + " " + mListabsserver.get(position).datm);
+      holder.datm.setText(mListabsserver.get(position).usname + " " + mListabsserver.get(position).datm);
 
 
 
@@ -155,9 +155,6 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
       public TextView datm;
       private ClickListener clickListener;
       Context mContext;
-      FirebaseUser user;
-      private FirebaseAuth mAuth;
-      String usemail = "";
 
     public AbsServerAsViewHolder(View itemView) {
         super(itemView);
@@ -174,11 +171,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        if (user != null) {
-            usemail = user.getEmail();
-        }
+
     }
       /* Interface for handling clicks - both normal and long ones. */
       public interface ClickListener {
@@ -252,7 +245,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
         dialog.setContentView(R.layout.absserver_dialog);
         dialog.setTitle(R.string.item);
         // set the custom dialog components - text, image and button
-        String textx = mContext.getString(R.string.item) + " " + postkey + ". " + model.lati + ". " + model.dmna + " " + model.daod + " / " + model.dado;
+        String textx = mContext.getString(R.string.item) + " " + postkey + ". " + model.usname + ". " + model.dmna + " " + model.daod + " / " + model.dado;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);

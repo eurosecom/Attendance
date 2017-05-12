@@ -28,7 +28,7 @@ public class ApproveRxViewHolder extends RecyclerView.ViewHolder implements View
   public TextView datm;
   private ClickListener clickListener;
   Context mContext;
-  String usemail = "";
+
 
   public ApproveRxViewHolder(View itemView) {
     super(itemView);
@@ -88,7 +88,7 @@ public class ApproveRxViewHolder extends RecyclerView.ViewHolder implements View
 
     //long timestampm = Long.parseLong(attendance.datm) * 1000L;
     long timestampm = attendance.getDatsLong();
-    datm.setText(usemail + " " + getDateTime(timestampm ));
+    datm.setText(attendance.usname + " " + getDateTime(timestampm ));
   }
 
   /* Interface for handling clicks - both normal and long ones. */

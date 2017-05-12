@@ -330,7 +330,13 @@ public class ApproveListFragment extends Fragment {
         dialog.setContentView(R.layout.approve_dialog);
         dialog.setTitle(R.string.item);
         // set the custom dialog components - text, image and button
-        String textx = getString(R.string.item) + " " + postkey;
+        long timestampod = Long.parseLong(model.daod) * 1000L;
+        String dateods = getDate(timestampod );
+
+        long timestampdo = Long.parseLong(model.dado) * 1000L;
+        String datedos = getDate(timestampdo );
+
+        String textx = model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods + " / " + datedos;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
