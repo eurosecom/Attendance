@@ -28,10 +28,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.eusecom.attendance.fragment.AbsTypesFragment;
+import com.eusecom.attendance.fragment.AbsTypesListRxFragment;
 import com.eusecom.attendance.fragment.AbsenceListRxFragment;
-import com.eusecom.attendance.fragment.MyAttendanceFragment;
+import com.eusecom.attendance.fragment.AttendanceListRxFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -57,8 +56,8 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     new AbsenceListRxFragment(),
-                    new MyAttendanceFragment(),
-                    new AbsTypesFragment()
+                    new AttendanceListRxFragment(),
+                    new AbsTypesListRxFragment()
             };
             private final String[] mFragmentNames = new String[] {
                     getString(R.string.absences),
