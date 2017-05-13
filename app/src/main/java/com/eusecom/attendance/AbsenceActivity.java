@@ -28,17 +28,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.eusecom.attendance.fragment.AbsTypesFragment;
-import com.eusecom.attendance.fragment.ContactFragment;
-import com.eusecom.attendance.fragment.LiveFragment;
-import com.eusecom.attendance.fragment.MyAbsenceFragment;
+import com.eusecom.attendance.fragment.AbsenceListRxFragment;
 import com.eusecom.attendance.fragment.MyAttendanceFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragment.OnFragmentInteractionListener {
+public class  AbsenceActivity extends BaseDatabaseActivity {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -59,7 +56,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new MyAbsenceFragment(),
+                    new AbsenceListRxFragment(),
                     new MyAttendanceFragment(),
                     new AbsTypesFragment()
             };
@@ -165,9 +162,5 @@ public class  AbsenceActivity extends BaseDatabaseActivity implements LiveFragme
         }
     }
 
-    @Override
-    public void onFragmentInteraction (Uri uri){
-        //only for LiveFragment
-    }
 
 }

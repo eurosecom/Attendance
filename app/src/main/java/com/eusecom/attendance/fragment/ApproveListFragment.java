@@ -334,7 +334,7 @@ public class ApproveListFragment extends Fragment {
         long timestampdo = Long.parseLong(model.dado) * 1000L;
         String datedos = getDate(timestampdo );
 
-        String textx = postkey + model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods + " / " + datedos;
+        String textx = model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods + " / " + datedos;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
