@@ -2,6 +2,7 @@ package com.eusecom.attendance.retrofit;
 
 import android.support.annotation.NonNull;
 
+import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.models.Attendance;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -18,14 +19,13 @@ import com.eusecom.attendance.models.Attendance;
  */
 public class AbsServerClient {
 
-    //https://api.github.com/users/arriolac/starred
-    //private static final String ABSSERVER_BASE_URL = "https://api.github.com/";
-    private static final String ABSSERVER_BASE_URL = "http://www.eshoptest.sk";
 
     private static AbsServerClient instance;
     private AbsServerService absServerService;
 
-    private AbsServerClient() {
+    private AbsServerClient(String urlx) {
+
+        final String ABSSERVER_BASE_URL = urlx;
         final Gson gson =
             new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         final Retrofit retrofit = new Retrofit.Builder().baseUrl(ABSSERVER_BASE_URL)
@@ -35,9 +35,9 @@ public class AbsServerClient {
         absServerService = retrofit.create(AbsServerService.class);
     }
 
-    public static AbsServerClient getInstance() {
+    public static AbsServerClient getInstance(String urlx) {
         if (instance == null) {
-            instance = new AbsServerClient();
+            instance = new AbsServerClient(urlx);
         }
         return instance;
     }

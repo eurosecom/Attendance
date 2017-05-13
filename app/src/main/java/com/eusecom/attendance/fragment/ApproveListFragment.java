@@ -75,13 +75,11 @@ public class ApproveListFragment extends Fragment {
     // [END define_database_reference]
 
     public ApproveListFragment() {}
-    String absxy;
-    String abskeydel=null;
     private ProgressDialog fProgressDialog;
-    boolean isCancelable, isrunning;
+    boolean isCancelable;
     String timestampx;
 
-    private RfEtestApi _githubService;
+    private RfEtestApi _rfetestService;
     private CompositeDisposable _disposables;
 
     private Subscription subscription;
@@ -116,7 +114,7 @@ public class ApproveListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         String githubToken = Constants.ETEST_API_KEY;
         String urlx = SettingsActivity.getServerName(getActivity());
-        _githubService = RfEtestService.createGithubService(githubToken, urlx);
+        _rfetestService = RfEtestService.createGithubService(githubToken, urlx);
 
         _disposables = new CompositeDisposable();
 
@@ -263,10 +261,10 @@ public class ApproveListFragment extends Fragment {
         String savetofir =  SettingsActivity.getFir(getActivity());
         String whoapprove =  SettingsActivity.getUsOsc(getActivity());
 
-        _disposables.add(_githubService.contributors(savetofir, postkey, whoapprove, approveabs_json, anodaj)
+        _disposables.add(_rfetestService.contributors(savetofir, postkey, whoapprove, approveabs_json, anodaj)
                 .flatMap(Observable::fromIterable)
                 .flatMap(contributor -> {
-                    Observable<RfUser> _userObservable = _githubService.user(savetofir, postkey, whoapprove, approveabs_json, anodaj, contributor.login)
+                    Observable<RfUser> _userObservable = _rfetestService.user(savetofir, postkey, whoapprove, approveabs_json, anodaj, contributor.login)
                             .filter(user -> !isEmpty(user.name) && !isEmpty(user.email));
 
                     return Observable.zip(_userObservable,
@@ -304,10 +302,10 @@ public class ApproveListFragment extends Fragment {
 
                         if(contributor.saved == 1 ) {
                             snext = getResources().getString(R.string.abs_saved) + snextx;
-                            approveAbsenceToFB(abskeydel, contributor.anodaj, model);
+                            approveAbsenceToFB(postkey, contributor.anodaj, model);
                         }else{
                             snext = getResources().getString(R.string.abs_savednot);
-                            approveAbsenceToFB(abskeydel, contributor.anodaj, model);
+                            approveAbsenceToFB(postkey, contributor.anodaj, model);
                         }
 
 
@@ -336,7 +334,7 @@ public class ApproveListFragment extends Fragment {
         long timestampdo = Long.parseLong(model.dado) * 1000L;
         String datedos = getDate(timestampdo );
 
-        String textx = model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods + " / " + datedos;
+        String textx = postkey + model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods + " / " + datedos;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
@@ -349,9 +347,9 @@ public class ApproveListFragment extends Fragment {
             public void onClick(View v) {
                 dialog.dismiss();
                 if(savetofiri>0){
-                    approveAbsenceToServer(abskeydel, 1, model);
+                    approveAbsenceToServer(postkey, 1, model);
                 }else{
-                    approveAbsenceToFB(abskeydel, 1, model);
+                    approveAbsenceToFB(postkey, 1, model);
                 }
             }
         });
@@ -362,9 +360,9 @@ public class ApproveListFragment extends Fragment {
             public void onClick(View v) {
                 dialog.dismiss();
                 if(savetofiri>0){
-                    approveAbsenceToServer(abskeydel, 0, model);
+                    approveAbsenceToServer(postkey, 0, model);
                 }else{
-                    approveAbsenceToFB(abskeydel, 0, model);
+                    approveAbsenceToFB(postkey, 0, model);
                 }
 
 

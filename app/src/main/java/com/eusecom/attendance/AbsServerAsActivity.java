@@ -198,7 +198,8 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   private void getAbsServer(String fromfir) {
     showProgressBar();
-    subscription = AbsServerClient.getInstance()
+      String urlx = SettingsActivity.getServerName(AbsServerAsActivity.this);
+    subscription = AbsServerClient.getInstance(urlx)
             .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())
             .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())

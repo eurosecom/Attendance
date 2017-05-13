@@ -225,7 +225,8 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
                                       DatabaseReference mDatabase, String keyf, String cplxb ) {
 
     String getfromfir =  SettingsActivity.getFir(AbsServerAsBaseSearchActivity.this);
-    subscription = AbsServerClient.getInstance()
+    String urlx = SettingsActivity.getServerName(AbsServerAsBaseSearchActivity.this);
+    subscription = AbsServerClient.getInstance(urlx)
             .setKeyAndgetAbsServer(getfromfir, keyf, cplxb)
             .subscribeOn(rx.schedulers.Schedulers.io())
             .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())

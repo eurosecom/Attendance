@@ -25,7 +25,6 @@ import rx.Observable;
 public class FbmessClient {
 
     private static final String FCM_BASE_URL = "https://fcm.googleapis.com";
-    private static final String GITHUB_BASE_URL = "https://api.github.com/";
 
     private static FbmessClient instance;
     private FbmessService fbmessService;
