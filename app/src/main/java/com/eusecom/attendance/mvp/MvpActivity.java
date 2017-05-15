@@ -16,6 +16,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+//by https://github.com/tinmegali/Tutorial-Android-Model-View-Presenter-MVP/blob/master/MainModel.java
+
 public class MvpActivity extends AppCompatActivity
         implements MainMVP.RequiredViewOps {
 
@@ -38,8 +40,8 @@ public class MvpActivity extends AppCompatActivity
         startMVPOps();
         setContentView(R.layout.activity_mvp);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener((View v) -> {
