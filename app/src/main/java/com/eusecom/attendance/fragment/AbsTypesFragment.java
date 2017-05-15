@@ -71,28 +71,28 @@ public class AbsTypesFragment extends AbsTypesListFragment {
 
                     mDatabase = FirebaseDatabase.getInstance().getReference();
                     String key = mDatabase.child("absencetypes").push().getKey();
-                    Abstype abstype = new Abstype("506","Holliday");
+                    Abstype abstype = new Abstype("506","Holliday", "2017");
                     Map<String, Object> intValues = abstype.toMap();
                     Map<String, Object> childUpdates = new HashMap<>();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("absencetypes").push().getKey();
-                    abstype = new Abstype("510","Bank holliday");
+                    abstype = new Abstype("510","Bank holliday", "2017");
                     intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("absencetypes").push().getKey();
-                    abstype = new Abstype("518","Visit Doctor");
+                    abstype = new Abstype("518","Visit Doctor", "2017");
                     intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("absencetypes").push().getKey();
-                    abstype = new Abstype("520","Other");
+                    abstype = new Abstype("520","Other", "2017");
                     intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 
                     key = mDatabase.child("absencetypes").push().getKey();
-                    abstype = new Abstype("801","Illness");
+                    abstype = new Abstype("801","Illness", "2017");
                     intValues = abstype.toMap();
                     childUpdates.put("/absencetypes/" + key, intValues);
 

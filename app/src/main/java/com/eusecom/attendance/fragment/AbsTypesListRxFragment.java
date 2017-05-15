@@ -24,6 +24,7 @@ import com.eusecom.attendance.animators.FadeInRightAnimator;
 import com.eusecom.attendance.animators.FadeInUpAnimator;
 import com.eusecom.attendance.models.Abstype;
 import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.MyList;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +41,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -106,7 +109,7 @@ public class AbsTypesListRxFragment extends Fragment {
                         ///_showTapText();
                     }
                     if (event instanceof Abstype) {
-                        String keys = "zzzz";
+                        String keys = ((Abstype) event).getRok();
                         Log.d("In FRGM longClick", keys);
                         getAbsTypesDialog( keys, (Abstype) event);
 
@@ -121,7 +124,9 @@ public class AbsTypesListRxFragment extends Fragment {
                         }));
 
         _disposables.add(tapEventEmitter.connect());
-    }
+
+
+    }//end of oncreate
 
     public RxBus getRxBusSingleton() {
         if (_rxBus == null) {
@@ -184,6 +189,54 @@ public class AbsTypesListRxFragment extends Fragment {
 
     private void loadAbsTypes() {
 
+        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+
+                if (snapshot.hasChild("absencetypes")) {
+                    // run some code
+                }else{
+                    Log.d("table interrupts ", "does not exist");
+
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+                    String key = mDatabase.child("absencetypes").push().getKey();
+                    Abstype abstype = new Abstype("506","Holliday", "2017");
+                    Map<String, Object> intValues = abstype.toMap();
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put("/absencetypes/" + key, intValues);
+
+                    key = mDatabase.child("absencetypes").push().getKey();
+                    abstype = new Abstype("510","Bank holliday", "2017");
+                    intValues = abstype.toMap();
+                    childUpdates.put("/absencetypes/" + key, intValues);
+
+                    key = mDatabase.child("absencetypes").push().getKey();
+                    abstype = new Abstype("518","Visit Doctor", "2017");
+                    intValues = abstype.toMap();
+                    childUpdates.put("/absencetypes/" + key, intValues);
+
+                    key = mDatabase.child("absencetypes").push().getKey();
+                    abstype = new Abstype("520","Other", "2017");
+                    intValues = abstype.toMap();
+                    childUpdates.put("/absencetypes/" + key, intValues);
+
+                    key = mDatabase.child("absencetypes").push().getKey();
+                    abstype = new Abstype("801","Illness", "2017");
+                    intValues = abstype.toMap();
+                    childUpdates.put("/absencetypes/" + key, intValues);
+
+                    mDatabase.updateChildren(childUpdates);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         Query recentAbsencesQuery = firebaseRef.child("absencetypes").limitToFirst(200);
 
         showfProgressDialog();
@@ -241,6 +294,8 @@ public class AbsTypesListRxFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
+
+                Toast.makeText(getActivity(), getResources().getString(R.string.cantdelitem), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -316,7 +371,7 @@ public class AbsTypesListRxFragment extends Fragment {
                 String keys = childDataSnapshot.getKey();
                 Log.d("keys ", keys);
                 Abstype resultx = childDataSnapshot.getValue(Abstype.class);
-                //resultx.setRok(keys);
+                resultx.setRok(keys);
                 blogPostEntities.add(resultx);
             }
             renderAbsTypesList(blogPostEntities);

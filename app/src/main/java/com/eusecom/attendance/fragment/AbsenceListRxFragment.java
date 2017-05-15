@@ -2,15 +2,11 @@ package com.eusecom.attendance.fragment;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.animators.BaseItemAnimator;
@@ -28,7 +23,7 @@ import com.eusecom.attendance.animators.FadeInLeftAnimator;
 import com.eusecom.attendance.animators.FadeInRightAnimator;
 import com.eusecom.attendance.animators.FadeInUpAnimator;
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.retrofit.RfEtestService;
+import com.eusecom.attendance.models.DeletedAbs;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +40,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -99,6 +96,19 @@ public class AbsenceListRxFragment extends Fragment {
         String githubToken = Constants.ETEST_API_KEY;
         String urlx = SettingsActivity.getServerName(getActivity());
 
+        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
+        gettimestramp.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //System.out.println(dataSnapshot.getValue());
+                timestampx=dataSnapshot.getValue().toString();
+                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
+
+            }
+
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+        gettimestramp.setValue(ServerValue.TIMESTAMP);
+
         _disposables = new CompositeDisposable();
 
         _rxBus = getRxBusSingleton();
@@ -113,7 +123,31 @@ public class AbsenceListRxFragment extends Fragment {
                     if (event instanceof Attendance) {
                         String keys = ((Attendance) event).getRok();
                         Log.d("In FRGM longClick", keys);
-                        getAbsenceDialog( keys, (Attendance) event);
+
+                        Attendance model= (Attendance) event;
+                        final String datsx = model.getDatsString();
+                        //Log.d(TAG, "datsx " + datsx);
+
+                        gettimestramp.setValue(ServerValue.TIMESTAMP);
+                        //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
+
+                        long timestampl = Long.parseLong(timestampx);
+                        long datsl = Long.parseLong(datsx);
+                        long rozdiel = timestampl - datsl;
+                        //Log.d(TAG, "rozdiel " + rozdiel);
+
+                        Toast.makeText(getActivity(), "Longclick " + keys,Toast.LENGTH_SHORT).show();
+
+                        if( model.aprv.equals("2")) {
+                            rozdiel=1;
+                        }
+
+                        if( rozdiel < 180000 ) {
+                            getAbsenceDialog( keys, (Attendance) event);
+                        }else{
+                            Toast.makeText(getActivity(), getResources().getString(R.string.cantdel),Toast.LENGTH_SHORT).show();
+                        }
+
 
                     }
                 }));
@@ -126,7 +160,9 @@ public class AbsenceListRxFragment extends Fragment {
                         }));
 
         _disposables.add(tapEventEmitter.connect());
-    }
+
+
+    }//end of oncreate
 
     public RxBus getRxBusSingleton() {
         if (_rxBus == null) {
@@ -253,6 +289,7 @@ public class AbsenceListRxFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
+                deletePost(postkey);
 
             }
         });
@@ -271,7 +308,31 @@ public class AbsenceListRxFragment extends Fragment {
 
     }//end getdialog
 
+    // [START deletefan_out]
+    private void deletePost(String postkey) {
 
+        // delete post key from /posts and user-posts/$userid simultaneously
+        String userId = getUid();
+        String key = postkey;
+        String usicox = SettingsActivity.getUsIco(getActivity());
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/absences/" + key, null);
+        childUpdates.put("/user-absences/" + userId + "/" + key, null);
+        childUpdates.put("/company-absences/" + usicox + "/" + key, null);
+        mDatabase.updateChildren(childUpdates);
+
+
+        String keydel = mDatabase.child("deleted-absences").push().getKey();
+        DeletedAbs deletedabs = new DeletedAbs(usicox, userId, postkey );
+        Log.d(TAG, "postkey " + postkey);
+        Map<String, Object> delValues = deletedabs.toMap();
+        Map<String, Object> childDelUpdates = new HashMap<>();
+        childDelUpdates.put("/deleted-absences/" + keydel, delValues);
+        mDatabase.updateChildren(childDelUpdates);
+
+    }
+    // [END delete_fan_out]
 
     private String getDate(long timeStamp){
 

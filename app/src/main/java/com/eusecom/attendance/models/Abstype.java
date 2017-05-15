@@ -13,6 +13,7 @@ public class Abstype {
 
     public String idm;
     public String iname;
+    public String rok;
     private HashMap<String, Object> dats;
 
 
@@ -20,9 +21,10 @@ public class Abstype {
         // Default constructor required for calls to DataSnapshot.getValue(interrupt.class)
     }
 
-    public Abstype(String idm, String iname) {
+    public Abstype(String idm, String iname, String rok) {
         this.idm = idm;
         this.iname = iname;
+        this.rok = rok;
 
         HashMap<String, Object> datsObj = new HashMap<String, Object>();
         datsObj.put("date", ServerValue.TIMESTAMP);
@@ -36,6 +38,7 @@ public class Abstype {
         HashMap<String, Object> result = new HashMap<>();
         result.put("idm", idm);
         result.put("iname", iname);
+        result.put("rok", rok);
         result.put("dats", dats);
 
         return result;
@@ -67,6 +70,18 @@ public class Abstype {
         String datss = datsl + "";
 
         return datss;
+    }
+
+    @Exclude
+    public  void setRok(String rok) {
+
+        this.rok = rok;
+    }
+
+    @Exclude
+    public String getRok() {
+
+        return rok;
     }
 
 }

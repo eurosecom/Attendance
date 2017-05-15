@@ -80,6 +80,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
 
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -54,12 +54,8 @@ public class AttendanceRxViewHolder extends RecyclerView.ViewHolder implements V
       Picasso.with(mContext).load(R.drawable.outsidework).resize(120, 120).into(absence_photo);
     }
     numStarsView.setText(attendance.aprv);
-    if( attendance.aprv.equals("1")) {
       Picasso.with(mContext).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(starView);
-    }
-    if( attendance.aprv.equals("2")) {
-      Picasso.with(mContext).load(R.drawable.ic_remove_circle_black_24dp).resize(120, 120).into(starView);
-    }
+
 
 
     //long timestampm = Long.parseLong(attendance.datm) * 1000L;

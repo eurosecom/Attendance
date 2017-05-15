@@ -37,7 +37,7 @@ class AbsTypesRxAdapter extends RecyclerView.Adapter<AbsTypesRxViewHolder> {
     holder.setClickListener(new AbsTypesRxViewHolder.ClickListener() {
       public void onClick(View v, int pos, boolean isLongClick) {
 
-        String keys = "xxxxxxxx";
+        String keys = blogPostEntity.getRok();
         if (isLongClick) {
 
           Log.d("longClick", pos + " " + keys);

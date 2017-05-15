@@ -177,12 +177,12 @@ public class AttendanceListRxFragment extends Fragment {
         mRecycler.setItemAnimator(new FadeInRightAnimator());
         mRecycler.getItemAnimator().setAddDuration(300);
         mRecycler.getItemAnimator().setRemoveDuration(300);
-        loadAbsences();
+        loadAttendances();
 
 
     }//end of onActivityCreated
 
-    private void loadAbsences() {
+    private void loadAttendances() {
 
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Query recentAbsencesQuery = firebaseRef.child("user-attendances").child(userId).orderByChild("datm");
@@ -233,10 +233,7 @@ public class AttendanceListRxFragment extends Fragment {
         long timestampod = Long.parseLong(model.daod) * 1000L;
         String dateods = getDate(timestampod );
 
-        long timestampdo = Long.parseLong(model.dado) * 1000L;
-        String datedos = getDate(timestampdo );
-
-        String textx = model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods + " / " + datedos;
+        String textx = model.usname + " " + model.dmxa +  " " + model.dmna + " " + dateods;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
@@ -248,6 +245,8 @@ public class AttendanceListRxFragment extends Fragment {
 
             public void onClick(View v) {
                 dialog.dismiss();
+
+                Toast.makeText(getActivity(), getResources().getString(R.string.cantdelitem), Toast.LENGTH_SHORT).show();
 
             }
         });

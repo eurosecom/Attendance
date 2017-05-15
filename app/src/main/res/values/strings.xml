@@ -87,7 +87,7 @@
     <string name="kontnic">Back</string>
     <string name="next">Next</string>
     <string name="delitem">Delete item</string>
-    <string name="cantdel">You can not delete items older than 3 min.</string>
+    <string name="cantdel">You can not delete or edit items older than 3 min.</string>
     <string name="kontedit">Edit</string>
     <string name="edititem">Edit item</string>
     <string name="item">Item</string>
@@ -205,6 +205,7 @@
     <string name="textno">No</string>
     <string name="textok">OK</string>
     <string name="cantedititem">You can not edit the items.</string>
+    <string name="cantdelitem">You can not delete the items.</string>
     <string name="notconnected">Not connected.</string>
 
     <!-- end for firebase messaging and iid service-->

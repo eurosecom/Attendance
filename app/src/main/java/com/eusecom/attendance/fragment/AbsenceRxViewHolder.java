@@ -68,6 +68,7 @@ public class AbsenceRxViewHolder extends RecyclerView.ViewHolder implements View
       Picasso.with(mContext).load(R.drawable.abs801).resize(120, 120).into(absence_photo);
     }
     numStarsView.setText(attendance.aprv);
+    Picasso.with(mContext).load(R.drawable.ic_help_black_24dp).resize(120, 120).into(starView);
     if( attendance.aprv.equals("1")) {
       Picasso.with(mContext).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(starView);
     }
