@@ -28,7 +28,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.eusecom.attendance.fragment.AbsTypesFragment;
 import com.eusecom.attendance.fragment.ApproveListFragment;
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.fragment.LiveFragment;
