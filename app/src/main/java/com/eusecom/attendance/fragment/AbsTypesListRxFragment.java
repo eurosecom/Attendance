@@ -50,6 +50,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
 import rx.Subscriber;
 
+//by https://github.com/ezhome/Android-RxFirebase
 
 public class AbsTypesListRxFragment extends Fragment {
 

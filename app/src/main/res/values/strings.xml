@@ -126,8 +126,8 @@
         <item >Google Maps</item>
         <item >Settings</item>
         <item >Free</item>
+        <item >Free</item>
         <item >Demo Rx MvpActivity</item>
-        <item >DEMO Rx Firebase</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
