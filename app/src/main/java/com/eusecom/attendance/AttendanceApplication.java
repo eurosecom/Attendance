@@ -23,10 +23,14 @@ public class AttendanceApplication extends Application {
         return mDataModel;
     }
 
-
     @NonNull
     public ISchedulerProvider getSchedulerProvider() {
         return SchedulerProvider.getInstance();
+    }
+
+    @NonNull
+    public MainViewModel getViewModel() {
+        return new MainViewModel(getDataModel(), getSchedulerProvider());
     }
 
 }
