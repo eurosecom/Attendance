@@ -30,7 +30,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private CompositeSubscription mSubscription;
 
     @NonNull
-    private MainViewModel mViewModel;
+    private EmployeeMvvmViewModel mViewModel;
 
     @Nullable
     private TextView mGreetingView;
@@ -46,7 +46,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvvm_employees);
 
-        mViewModel = getViewModel();
+        mViewModel = getEmployeeMvvmViewModel();
         setupViews();
     }
 
@@ -115,8 +115,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private MainViewModel getViewModel() {
-        return ((AttendanceApplication) getApplication()).getViewModel();
+    private EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
+        return ((AttendanceApplication) getApplication()).getEmployeeMvvmViewModel();
     }
 
     private void itemSelected(final int position) {

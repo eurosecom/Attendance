@@ -33,4 +33,9 @@ public class AttendanceApplication extends Application {
         return new MainViewModel(getDataModel(), getSchedulerProvider());
     }
 
+    @NonNull
+    public EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
+        return new EmployeeMvvmViewModel(getDataModel(), getSchedulerProvider());
+    }
+
 }
