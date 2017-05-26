@@ -534,6 +534,12 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.myemployees) {
+
+            Intent is = new Intent(getApplicationContext(), EmployeeMvvmActivity.class);
+            startActivity(is);
+            return true;
+        }
 
 
         return super.onOptionsItemSelected(item);
