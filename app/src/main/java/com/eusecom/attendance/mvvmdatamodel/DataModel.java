@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import rx.Observable;
-import rx.Subscriber;
-
-import com.eusecom.attendance.EmployeeMvvmActivity;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
@@ -22,12 +19,10 @@ import static com.eusecom.attendance.mvvmmodel.Language.LanguageCode;
 
 public class DataModel implements IDataModel {
 
-    public GetFBusersEmployeeSubscriber getfbusersEmployeeSubscriber;
 
     @NonNull
     @Override
     public Observable<List<Employee>> getObservableFBusersEmployee() {
-    getfbusersEmployeeSubscriber = new GetFBusersEmployeeSubscriber();
     final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
     Query usersQuery = firebaseRef.child("users");
 
@@ -106,28 +101,6 @@ public class DataModel implements IDataModel {
         }
     }
 
-    private final class GetFBusersEmployeeSubscriber extends Subscriber<DataSnapshot> {
-        @Override public void onCompleted() {
-
-        }
-
-        @Override public void onError(Throwable e) {
-
-        }
-
-        @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
-            List<Employee> blogPostEntities = new ArrayList<>();
-            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                String keys = childDataSnapshot.getKey();
-                Log.d("keys ", keys);
-                Employee resultx = childDataSnapshot.getValue(Employee.class);
-                resultx.setUsatw(keys);
-                blogPostEntities.add(resultx);
-            }
-            //setEmployees(blogPostEntities);
-
-        }
-    }//end of getAbsenceSubscriber
 
 
 }
