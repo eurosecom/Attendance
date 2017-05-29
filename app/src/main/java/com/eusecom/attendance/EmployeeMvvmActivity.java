@@ -29,7 +29,6 @@ import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.ServerValue;
 
 //github https://github.com/florina-muntenescu/DroidconMVVM
 //by https://medium.com/upday-devs/android-architecture-patterns-part-3-model-view-viewmodel-e7eeee76b73b
@@ -51,7 +50,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private LinearLayoutManager mManager;
     private EmployeesRxAdapter mAdapter;
     private RxBus _rxBus;
-    public GetFBusersSubscriber getfbusersSubscriber;
     private CompositeDisposable _disposables;
 
     @Nullable
@@ -105,11 +103,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         _disposables.add(tapEventEmitter.connect());
 
         setupViews();
-        getfbusersSubscriber = new GetFBusersSubscriber();
-        //mViewModel.getObservableEmployees();
-        //mViewModel.getObservableFBusers() get DataSnapshot, it is not lot of success
-        //mViewModel.getObservableFBusers();
-        //mViewModel.getObservableFBusersEmployee get List<Employee>
         mViewModel.getObservableFBusersEmployee();
     }
 
@@ -175,16 +168,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::setLanguages));
 
-        //mSubscription.add(mViewModel.getObservableEmployees()
-        //        .subscribeOn(Schedulers.computation())
-        //        .observeOn(AndroidSchedulers.mainThread())
-        //        .subscribe(this::setEmployees));
-
-        //mSubscription.add(mViewModel.getObservableFBusers()
-        //        .subscribeOn(Schedulers.computation())
-        //        .observeOn(AndroidSchedulers.mainThread())
-        //        .subscribe(getfbusersSubscriber));
-
         mSubscription.add(mViewModel.getObservableFBusersEmployee()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -193,7 +176,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     private void unBind() {
         mSubscription.unsubscribe();
-        getfbusersSubscriber.unsubscribe();
         _disposables.dispose();
     }
 
@@ -241,27 +223,5 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     public static class TapEvent {}
 
-    private final class GetFBusersSubscriber extends Subscriber<DataSnapshot> {
-        @Override public void onCompleted() {
-
-        }
-
-        @Override public void onError(Throwable e) {
-
-        }
-
-        @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
-            List<Employee> blogPostEntities = new ArrayList<>();
-            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                String keys = childDataSnapshot.getKey();
-                Log.d("keys ", keys);
-                Employee resultx = childDataSnapshot.getValue(Employee.class);
-                resultx.setUsatw(keys);
-                blogPostEntities.add(resultx);
-            }
-            setEmployees(blogPostEntities);
-
-        }
-    }//end of getAbsenceSubscriber
 
 }
