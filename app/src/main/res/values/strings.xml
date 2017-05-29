@@ -229,6 +229,13 @@
     <string name="nothing_found">No items found</string>
     <string name="search">search</string>
 
+    <!-- my employees-->
+    <string name="osc">empId</string>
+    <string name="firma">compId</string>
+    <string name="type">type</string>
+    <string name="email">email</string>
+
+
 
 
 

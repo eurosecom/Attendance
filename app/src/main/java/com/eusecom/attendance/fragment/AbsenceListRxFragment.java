@@ -371,31 +371,31 @@ public class AbsenceListRxFragment extends Fragment {
      * Subscriber for {@link //RxFirebaseDatabase} query
      */
     private final class GetAbsenceSubscriber extends Subscriber<DataSnapshot> {
-        @Override public void onCompleted() {
-            //showProgress(false);
-            hidefProgressDialog();
-            getAbsenceSubscriber.unsubscribe();
-        }
-
-        @Override public void onError(Throwable e) {
-            //showProgress(false);
-            //showError(e.getMessage());
-            hidefProgressDialog();
-            getAbsenceSubscriber.unsubscribe();
-        }
-
-        @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
-            List<Attendance> blogPostEntities = new ArrayList<>();
-            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                String keys = childDataSnapshot.getKey();
-                Log.d("keys ", keys);
-                Attendance resultx = childDataSnapshot.getValue(Attendance.class);
-                resultx.setRok(keys);
-                blogPostEntities.add(resultx);
+            @Override public void onCompleted() {
+                //showProgress(false);
+                hidefProgressDialog();
+                getAbsenceSubscriber.unsubscribe();
             }
-            renderAbsenceList(blogPostEntities);
 
-        }
+            @Override public void onError(Throwable e) {
+                //showProgress(false);
+                //showError(e.getMessage());
+                hidefProgressDialog();
+                getAbsenceSubscriber.unsubscribe();
+            }
+
+            @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
+                List<Attendance> blogPostEntities = new ArrayList<>();
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    String keys = childDataSnapshot.getKey();
+                    Log.d("keys ", keys);
+                    Attendance resultx = childDataSnapshot.getValue(Attendance.class);
+                    resultx.setRok(keys);
+                    blogPostEntities.add(resultx);
+                }
+                renderAbsenceList(blogPostEntities);
+
+            }
     }//end of getAbsenceSubscriber
 
     public static class TapEvent {}

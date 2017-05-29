@@ -4,18 +4,35 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import com.eusecom.attendance.mvvmdatamodel.IDataModel;
+
+import com.eusecom.attendance.fragment.AbsenceListRxFragment;
+import com.eusecom.attendance.models.Attendance;
+import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
+import com.eusecom.attendance.rxbus.RxBus;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ServerValue;
 
 //github https://github.com/florina-muntenescu/DroidconMVVM
 //by https://medium.com/upday-devs/android-architecture-patterns-part-3-model-view-viewmodel-e7eeee76b73b
@@ -33,6 +50,14 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private EmployeeMvvmViewModel mViewModel;
 
     @Nullable
+    private RecyclerView mRecycler;
+    private LinearLayoutManager mManager;
+    private EmployeesRxAdapter mAdapter;
+    private RxBus _rxBus;
+    public GetFBusersSubscriber getfbusersSubscriber;
+    private CompositeDisposable _disposables;
+
+    @Nullable
     private TextView mGreetingView;
 
     @Nullable
@@ -41,16 +66,75 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     @Nullable
     private LanguageMvvmSpinnerAdapter mLanguageSpinnerAdapter;
 
+    Toolbar mActionBarToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvvm_employees);
 
+        mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(mActionBarToolbar);
+        getSupportActionBar().setTitle(getString(R.string.action_myemployee));
+
         mViewModel = getEmployeeMvvmViewModel();
+
+        _rxBus = getRxBusSingleton();
+        _disposables = new CompositeDisposable();
+        ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
+        _disposables
+                .add(tapEventEmitter.subscribe(event -> {
+                    if (event instanceof EmployeeMvvmActivity.TapEvent) {
+                        ///_showTapText();
+                    }
+                    if (event instanceof Employee) {
+                        String keys = ((Employee) event).getUsatw();
+                        Log.d("In FRGM longClick", keys);
+
+                        Employee model= (Employee) event;
+
+                        Toast.makeText(this, "Longclick " + keys,Toast.LENGTH_SHORT).show();
+
+                    }
+                }));
+
+        _disposables
+                .add(tapEventEmitter.publish(stream ->
+                        stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
+                        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(taps -> {
+                            ///_showTapCount(taps.size()); OK
+                        }));
+
+        _disposables.add(tapEventEmitter.connect());
+
         setupViews();
+        getfbusersSubscriber = new GetFBusersSubscriber();
+        //mViewModel.getObservableEmployees();
+        //mViewModel.getObservableFBusers() get DataSnapshot, it is not lot of success
+        //mViewModel.getObservableFBusers();
+        //mViewModel.getObservableFBusersEmployee get List<Employee>
+        mViewModel.getObservableFBusersEmployee();
+    }
+
+    public RxBus getRxBusSingleton() {
+        if (_rxBus == null) {
+            _rxBus = new RxBus();
+        }
+
+        return _rxBus;
     }
 
     private void setupViews() {
+
+        mRecycler = (RecyclerView) findViewById(R.id.employees_list);
+        mRecycler.setHasFixedSize(true);
+        mManager = new LinearLayoutManager(this);
+        mManager.setReverseLayout(true);
+        mManager.setStackFromEnd(true);
+        mRecycler.setLayoutManager(mManager);
+        mAdapter = new EmployeesRxAdapter(Collections.<Employee>emptyList(), _rxBus);
+        mRecycler.setAdapter(mAdapter);
+
         mGreetingView = (TextView) findViewById(R.id.greeting);
 
         mLanguagesSpinner = (Spinner) findViewById(R.id.languages);
@@ -93,12 +177,43 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                                     .subscribeOn(Schedulers.computation())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::setLanguages));
+
+        //mSubscription.add(mViewModel.getObservableEmployees()
+        //        .subscribeOn(Schedulers.computation())
+        //        .observeOn(AndroidSchedulers.mainThread())
+        //        .subscribe(this::setEmployees));
+
+        //mSubscription.add(mViewModel.getObservableFBusers()
+        //        .subscribeOn(Schedulers.computation())
+        //        .observeOn(AndroidSchedulers.mainThread())
+        //        .subscribe(getfbusersSubscriber));
+
+        mSubscription.add(mViewModel.getObservableFBusersEmployee()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::setEmployees));
     }
 
     private void unBind() {
         mSubscription.unsubscribe();
+        getfbusersSubscriber.unsubscribe();
+        _disposables.dispose();
     }
 
+    //employees methods
+
+    private void setEmployees(@NonNull final List<Employee> employees) {
+
+        assert mRecycler != null;
+        mAdapter.setData(employees);
+
+
+    }
+
+
+
+
+    //languages methods
     private void setGreeting(@NonNull final String greeting) {
         assert mGreetingView != null;
 
@@ -109,7 +224,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         assert mLanguagesSpinner != null;
 
         mLanguageSpinnerAdapter = new LanguageMvvmSpinnerAdapter(this,
-                                                             R.layout.employee_mvvm_item,
+                                                             R.layout.employee_mvvm_spinner_item,
                                                              languages);
         mLanguagesSpinner.setAdapter(mLanguageSpinnerAdapter);
     }
@@ -124,5 +239,32 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
         Language languageSelected = mLanguageSpinnerAdapter.getItem(position);
         mViewModel.emitlanguageSelected(languageSelected);
+
     }
+
+    public static class TapEvent {}
+
+    private final class GetFBusersSubscriber extends Subscriber<DataSnapshot> {
+        @Override public void onCompleted() {
+
+        }
+
+        @Override public void onError(Throwable e) {
+
+        }
+
+        @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
+            List<Employee> blogPostEntities = new ArrayList<>();
+            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                String keys = childDataSnapshot.getKey();
+                Log.d("keys ", keys);
+                Employee resultx = childDataSnapshot.getValue(Employee.class);
+                resultx.setUsatw(keys);
+                blogPostEntities.add(resultx);
+            }
+            setEmployees(blogPostEntities);
+
+        }
+    }//end of getAbsenceSubscriber
+
 }
