@@ -35,6 +35,8 @@ public class EmployeeMvvmActivityAndroidTest {
     @Rule
     public ActivityTestRule<EmployeeMvvmActivity> rule  = new  ActivityTestRule<>(EmployeeMvvmActivity.class);
 
+    //instrumentation tests for recyclerview
+
     @Test
     public void testRecyclerviewer() throws Exception {
         EmployeeMvvmActivity activity = rule.getActivity();
@@ -46,6 +48,8 @@ public class EmployeeMvvmActivityAndroidTest {
 
 
     }
+
+    //instrumentation tests for spinner
 
     @Test
     public void testSpinner() throws Exception {

@@ -96,7 +96,7 @@ public class EmployeeMvvmActivityAndroidUiTest extends ActivityInstrumentationTe
      */
     public EmployeeMvvmActivityAndroidUiTest() {
 
-        super("upday.droidconmvvm", EmployeeMvvmActivity.class);
+        super("com.eusecom.attendance", EmployeeMvvmActivity.class);
     }
 
     /*
