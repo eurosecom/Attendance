@@ -12,15 +12,19 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import rx.Observable;
 import rx.observers.TestSubscriber;
+
+import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.IDataModel;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.mvvmschedulers.ImmediateSchedulerProvider;
+import com.google.firebase.database.DataSnapshot;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -48,6 +52,40 @@ public class EmployeeMvvmViewModelTest {
 
     }
 
+    //recyclerviewtests
+    @Test
+    public void testRecyclerview_getObservableFBusersEmployee() {
+
+        List<Employee> mockEmployees =  Arrays
+                .asList(new Employee("andrejd", "1"),
+                        new Employee("petere", "2"),
+                        new Employee("pavols", "3"));
+
+        Observable<List<Employee>> mockObservable = Observable.just(mockEmployees);
+        doReturn(mockObservable).when(mDataModel).getObservableFBusersEmployee();
+
+        TestSubscriber<List<Employee>> testSubscriber = new TestSubscriber<>();
+
+        mMainViewModel.getObservableFBusersEmployee().subscribe(testSubscriber);
+
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertUnsubscribed();
+        testSubscriber.assertTerminalEvent();
+        String threadname = testSubscriber.getLastSeenThread().getName();
+        System.out.println("threadname " + threadname);
+
+        List<List<Employee>> listlistresult = testSubscriber.getOnNextEvents();
+        List<Employee> listresult = listlistresult.get(0);
+        System.out.println("listresult0 " + listresult.get(0).getUsername());
+        System.out.println("listresult1 " + listresult.get(1).getUsername());
+
+        assertEquals(mockEmployees.get(0).getUsername(), listresult.get(0).getUsername());
+
+        assertThat(listresult, hasSize(3));
+
+    }
+
+    //spinner tests
     //test works ok
     @Test
     public void testGetSupportedLanguages_emitsCorrectLanguages() {

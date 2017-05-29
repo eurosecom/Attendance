@@ -25,9 +25,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import com.eusecom.attendance.fragment.AbsenceListRxFragment;
-import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxbus.RxBus;

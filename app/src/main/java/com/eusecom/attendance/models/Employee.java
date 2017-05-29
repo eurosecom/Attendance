@@ -48,5 +48,10 @@ public class Employee {
         return usatw;
     }
 
+    @Exclude
+    public String getUsername() {
+
+        return username;
+    }
 }
 // [END blog_employee_class]
