@@ -1,34 +1,32 @@
 package com.eusecom.attendance;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxbus.RxBus;
-import com.google.firebase.database.DataSnapshot;
 
 //github https://github.com/florina-muntenescu/DroidconMVVM
 //by https://medium.com/upday-devs/android-architecture-patterns-part-3-model-view-viewmodel-e7eeee76b73b
@@ -84,11 +82,12 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                     }
                     if (event instanceof Employee) {
                         String keys = ((Employee) event).getUsatw();
-                        Log.d("In FRGM longClick", keys);
+                        //Log.d("In FRGM longClick", keys);
 
                         Employee model= (Employee) event;
 
-                        Toast.makeText(this, "Longclick " + keys,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "Longclick " + keys,Toast.LENGTH_SHORT).show();
+                        getEditEmloyeeDialog(model);
 
                     }
                 }));
@@ -175,21 +174,63 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     }
 
     private void unBind() {
+        mAdapter.setData(Collections.<Employee>emptyList());
         mSubscription.unsubscribe();
         _disposables.dispose();
     }
 
     //employees methods
 
+
+    private void getEditEmloyeeDialog(@NonNull final Employee employee) {
+
+        String keys = employee.getUsatw();
+        Log.d("In editDialog ", keys);
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final View textenter = inflater.inflate(R.layout.employee_edit_dialog, null);
+        final EditText namex = (EditText) textenter.findViewById(R.id.namex);
+        namex.setText(employee.username);
+        final EditText oscx = (EditText) textenter.findViewById(R.id.oscx);
+        oscx.setText(employee.usosc);
+        final EditText icox = (EditText) textenter.findViewById(R.id.icox);
+        icox.setText(employee.usico);
+        final EditText typx = (EditText) textenter.findViewById(R.id.typx);
+        typx.setText(employee.ustype);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(textenter).setTitle(employee.email);
+        builder.setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+                String namexx =  namex.getText().toString();
+                String oscxx =  oscx.getText().toString();
+                String icoxx =  icox.getText().toString();
+                String typxx =  typx.getText().toString();
+
+                mViewModel.saveEditEmloyee(employee, namexx, oscxx, icoxx, typxx);
+
+            }
+        })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        builder.show();
+
+
+    }
+
     private void setEmployees(@NonNull final List<Employee> employees) {
 
         assert mRecycler != null;
         mAdapter.setData(employees);
 
-
     }
-
-
 
 
     //languages methods

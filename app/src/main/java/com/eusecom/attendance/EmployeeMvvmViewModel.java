@@ -1,6 +1,8 @@
 package com.eusecom.attendance;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import java.util.List;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -47,6 +49,12 @@ public class EmployeeMvvmViewModel {
     //mViewModel.getObservableFBusersEmployee get List<Employee>
     public Observable<List<Employee>> getObservableFBusersEmployee() {
         return mDataModel.getObservableFBusersEmployee();
+    }
+
+    public void saveEditEmloyee(@NonNull final Employee employee, String namexx, String oscxx, String icoxx, String typxx) {
+
+        String keys = employee.getUsatw();
+        Log.d("In saveEditEmployee ", keys);
     }
 
     //spinner method
