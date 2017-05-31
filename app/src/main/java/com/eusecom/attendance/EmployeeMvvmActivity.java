@@ -162,6 +162,11 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::setGreeting));
 
+        mSubscription.add(mViewModel.getObservableKeyEditedEmployee()
+                                    .subscribeOn(Schedulers.computation())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(this::setGreeting));
+
         mSubscription.add(mViewModel.getObservableSupportedLanguages()
                                     .subscribeOn(Schedulers.computation())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -171,6 +176,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::setEmployees));
+
+
     }
 
     private void unBind() {
@@ -197,6 +204,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         icox.setText(employee.usico);
         final EditText typx = (EditText) textenter.findViewById(R.id.typx);
         typx.setText(employee.ustype);
+        final EditText uswx = (EditText) textenter.findViewById(R.id.uswx);
+        uswx.setText("0");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(textenter).setTitle(employee.email);
         builder.setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
@@ -208,8 +217,9 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                 String oscxx =  oscx.getText().toString();
                 String icoxx =  icox.getText().toString();
                 String typxx =  typx.getText().toString();
+                String uswxx =  uswx.getText().toString();
 
-                mViewModel.saveEditEmloyee(employee, namexx, oscxx, icoxx, typxx);
+                mViewModel.saveEditEmloyee(employee, namexx, oscxx, icoxx, typxx, uswxx);
 
             }
         })

@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.datatype.Duration;
@@ -118,7 +119,7 @@ public class RxFirebaseDatabase {
    *
    * @param firebaseRef {@link Query} this is reference of a Firebase Query and key
    * @param object {@link Object} null object we want to delete
-   * @return an {@link rx.Observable} of the gdeleted key after
+   * @return an {@link rx.Observable} of the deleted key after
    * the object persistence
    */
   public Observable<String> observeDelValuePush(final DatabaseReference firebaseRef,
@@ -140,6 +141,7 @@ public class RxFirebaseDatabase {
       }
     }).compose(this.<String>applyScheduler());
   }
+
 
   /**
    * This methods observes a firebase query and returns back
@@ -364,7 +366,7 @@ public class RxFirebaseDatabase {
         if (observeOnScheduler != null) {
           return observable.observeOn(observeOnScheduler);
         }
-        System.out.println("Observable thread: " + Thread.currentThread().getName());
+        //System.out.println("Observable thread: " + Thread.currentThread().getName());
         return observable;
       }
     };

@@ -3,6 +3,9 @@ package com.eusecom.attendance.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
 // [START blog_employee_class]
 @IgnoreExtraProperties
 public class Employee {
@@ -13,6 +16,7 @@ public class Employee {
     public String usico;
     public String usosc;
     public String usatw;
+    public String keyf;
 
     public Employee() {
         // Default constructor required for calls to DataSnapshot.getValue(Employee.class)
@@ -25,6 +29,7 @@ public class Employee {
         this.usico = usico;
         this.usosc = "0";
         this.usatw = usatw;
+        this.keyf = "0";
     }
 
     public Employee(String username, String usosc ) {
@@ -34,6 +39,13 @@ public class Employee {
         this.usico = "";
         this.usosc = usosc;
         this.usatw = "0";
+        this.keyf = "0";
+    }
+
+    @Exclude
+    public String getEmail() {
+
+        return email;
     }
 
     @Exclude
@@ -49,9 +61,78 @@ public class Employee {
     }
 
     @Exclude
+    public  void setUsername(String username) {
+
+        this.username = username;
+    }
+
+    @Exclude
     public String getUsername() {
 
         return username;
     }
+
+    @Exclude
+    public  void setUsosc(String usosc) {
+
+        this.usosc = usosc;
+    }
+
+    @Exclude
+    public String getUsosc() {
+
+        return usosc;
+    }
+
+    @Exclude
+    public  void setUsico(String usico) {
+
+        this.usico = usico;
+    }
+
+    @Exclude
+    public String getUsico() {
+
+        return usico;
+    }
+
+    @Exclude
+    public  void setUstype(String ustype) {
+
+        this.ustype = ustype;
+    }
+
+    @Exclude
+    public String getUstype() {
+
+        return ustype;
+    }
+
+    @Exclude
+    public  void setKeyf(String keyf) {
+
+        this.keyf = keyf;
+    }
+
+    @Exclude
+    public String getKeyf() {
+
+        return keyf;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("email", email);
+        result.put("username", username);
+        result.put("usosc", usosc);
+        result.put("usico", usico);
+        result.put("ustype", ustype);
+        result.put("usatw", usatw);
+        result.put("keyf", keyf);
+
+        return result;
+    }
+
 }
 // [END blog_employee_class]

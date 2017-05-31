@@ -36,7 +36,7 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
     holder.setClickListener(new EmployeesRxViewHolder.ClickListener() {
       public void onClick(View v, int pos, boolean isLongClick) {
 
-        String keys = blogPostEntity.getUsatw();
+        String keys = blogPostEntity.getKeyf();
         if (isLongClick) {
 
           Log.d("longClick", pos + " " + keys);

@@ -5,7 +5,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import rx.Observable;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
@@ -19,6 +22,25 @@ import static com.eusecom.attendance.mvvmmodel.Language.LanguageCode;
 
 public class DataModel implements IDataModel {
 
+    //recyclerview datamodel
+
+    @NonNull
+    @Override
+    public Observable<String> getObservableKeyFBeditUser(@NonNull final Employee employee) {
+
+        String keys = employee.getKeyf();
+        String observedstring = "" + employee.getEmail();
+        final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        Employee editemp = employee;
+        Map<String, Object> attValues = editemp.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(keys, attValues);
+
+        firebaseRef.updateChildren(childUpdates);
+        return Observable.just(observedstring);
+
+    }
 
     @NonNull
     @Override
@@ -33,7 +55,7 @@ public class DataModel implements IDataModel {
                 String keys = childDataSnapshot.getKey();
                 Log.d("keys ", keys);
                 Employee resultx = childDataSnapshot.getValue(Employee.class);
-                resultx.setUsatw(keys);
+                resultx.setKeyf(keys);
                 blogPostEntities.add(resultx);
             }
              return Observable.just(blogPostEntities);
@@ -71,6 +93,9 @@ public class DataModel implements IDataModel {
                 .asList(new Employee("andrejd", "1"),
                         new Employee("petere", "2"));
     }
+
+
+    //spinner datamodel
 
     @NonNull
     @Override

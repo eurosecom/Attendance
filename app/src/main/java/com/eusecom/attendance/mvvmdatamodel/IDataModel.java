@@ -13,6 +13,9 @@ import static com.eusecom.attendance.mvvmmodel.Language.LanguageCode;
 public interface IDataModel {
 
     @NonNull
+    Observable<String> getObservableKeyFBeditUser(@NonNull final Employee employee);
+
+    @NonNull
     Observable<List<Employee>> getObservableFBusersEmployee();
 
     @NonNull

@@ -22,8 +22,6 @@ public class EmployeeMvvmViewModel {
     @NonNull
     private final ISchedulerProvider mSchedulerProvider;
 
-    @NonNull
-    private final BehaviorSubject<Language> mObservableSelectedLanguage = BehaviorSubject.create();
 
     public EmployeeMvvmViewModel(@NonNull final IDataModel dataModel,
                          @NonNull final ISchedulerProvider schedulerProvider) {
@@ -51,13 +49,35 @@ public class EmployeeMvvmViewModel {
         return mDataModel.getObservableFBusersEmployee();
     }
 
-    public void saveEditEmloyee(@NonNull final Employee employee, String namexx, String oscxx, String icoxx, String typxx) {
+    @NonNull
+    private final BehaviorSubject<Employee> mObservableEditedEmployee = BehaviorSubject.create();
 
-        String keys = employee.getUsatw();
-        Log.d("In saveEditEmployee ", keys);
+    public void saveEditEmloyee(@NonNull final Employee employee, String namexx, String oscxx,
+                                              String icoxx, String typxx, String uswxx) {
+
+        Employee editEmployee = employee;
+        editEmployee.setUsername(namexx);
+        editEmployee.setUsosc(oscxx);
+        editEmployee.setUsico(icoxx);
+        editEmployee.setUstype(typxx);
+        editEmployee.setUsatw(uswxx);
+        mObservableEditedEmployee.onNext(editEmployee);
     }
 
+    @NonNull
+    public Observable<String> getObservableKeyEditedEmployee() {
+        //return Observable.just("xxx");
+        return mObservableEditedEmployee
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(employee -> { return mDataModel.getObservableKeyFBeditUser(employee); }
+                );
+    }
+
+
     //spinner method
+
+    @NonNull
+    private final BehaviorSubject<Language> mObservableSelectedLanguage = BehaviorSubject.create();
 
     @NonNull
     public Observable<String> getObservableGreeting() {
