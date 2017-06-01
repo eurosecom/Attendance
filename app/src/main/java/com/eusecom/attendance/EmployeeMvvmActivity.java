@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,9 @@ import rx.subscriptions.CompositeSubscription;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxbus.RxBus;
+import android.support.design.widget.CoordinatorLayout;
+
+import static android.support.design.R.styleable.CoordinatorLayout;
 
 //github https://github.com/florina-muntenescu/DroidconMVVM
 //by https://medium.com/upday-devs/android-architecture-patterns-part-3-model-view-viewmodel-e7eeee76b73b
@@ -64,11 +68,15 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private LanguageMvvmSpinnerAdapter mLanguageSpinnerAdapter;
 
     Toolbar mActionBarToolbar;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvvm_employees);
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                .coordinatorLayout);
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
@@ -184,7 +192,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         mSubscription.add(mViewModel.getObservableKeyEditedEmployee()
                                     .subscribeOn(Schedulers.computation())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(this::setGreeting));
+                                    .subscribe(this::setMessage));
 
         mSubscription.add(mViewModel.getObservableFob()
                 .subscribeOn(Schedulers.computation())
@@ -268,7 +276,11 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     private void setMessage(@NonNull final String message) {
         Log.i("setMessage ", "method ");
-        field_title.setText(message);
+        //field_title.setText(message);
+        Snackbar snackbar = Snackbar
+            .make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
+
+        snackbar.show();
     }
 
 
