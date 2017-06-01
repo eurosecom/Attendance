@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
-
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
   }
 
   @Override public int getItemCount() {
-    Log.d("getItemCount", mBlogPostEntities.size() + "");
+    //Log.d("getItemCount", mBlogPostEntities.size() + "");
     return mBlogPostEntities.size();
   }
 

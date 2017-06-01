@@ -29,6 +29,25 @@ public class EmployeeMvvmViewModel {
         mSchedulerProvider = schedulerProvider;
     }
 
+    //fab methods
+    @NonNull
+    private final BehaviorSubject<String> mObservableEmitFob = BehaviorSubject.create();
+
+    public void saveRxFBemployee() {
+        Log.d("mViewModel ", "saveRxFBemployee() ");
+        mObservableEmitFob.onNext("fob Clicked");
+    }
+
+    @NonNull
+    public Observable<String> getObservableFob() {
+        //return Observable.just("xxx");
+        return mObservableEmitFob
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(emitString -> { return mDataModel.getSavedRxFBemployee(emitString); }
+                );
+    }
+
+
     //recyclerview method
 
     public Observable<List<Employee>> getObservableEmployees() {

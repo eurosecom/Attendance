@@ -209,7 +209,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         userosc = userx.getUsosc();
                         myuserid = user.getUid();
                         Log.d("usertype", usertype);
-                        username = userx.getUsname();
+                        username = userx.getUsername();
 
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         SharedPreferences.Editor editor = prefs.edit();
@@ -281,6 +281,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         //String ustypex = SettingsActivity.getUsType(this);
         User user = new User(name, email, usertypex, usericox, useroscx, useratwx);
         Log.d("setvalue", usertypex);
+        Log.d("setvalue", user.toString());
         //User user = new User(name, email);
         mDatabase.child("users").child(userId).setValue(user);
 

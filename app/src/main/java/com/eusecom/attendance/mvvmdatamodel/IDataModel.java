@@ -12,6 +12,12 @@ import static com.eusecom.attendance.mvvmmodel.Language.LanguageCode;
 
 public interface IDataModel {
 
+    //fab methods
+
+    @NonNull
+    Observable<String> getSavedRxFBemployee(String emitedstring);
+
+    //recyclerview methods
     @NonNull
     Observable<String> getObservableKeyFBeditUser(@NonNull final Employee employee);
 
@@ -26,6 +32,8 @@ public interface IDataModel {
 
     @NonNull
     Observable<List<Employee>> getObservableEmployees();
+
+    //spinner methods
 
     @NonNull
     Observable<List<Language>> getObservableSupportedLanguages();

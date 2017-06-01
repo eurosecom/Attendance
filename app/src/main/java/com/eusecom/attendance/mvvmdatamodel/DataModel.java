@@ -3,8 +3,10 @@ package com.eusecom.attendance.mvvmdatamodel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +15,40 @@ import rx.Observable;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
+import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-
 import static com.eusecom.attendance.mvvmmodel.Language.LanguageCode;
 
 public class DataModel implements IDataModel {
+
+    //fab methods
+
+
+    //for testing new Push child and edit existing key child
+    @NonNull
+    @Override
+    public Observable<String> getSavedRxFBemployee(String emitedstring) {
+
+        Log.d("mDataModel ", "getSavedRxFBemployee() ");
+        String observedstring = emitedstring + " some Text";
+        String keys = "-Kjg6--6kFS6r9Kv6h7g";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String millisInString  = dateFormat.format(new Date());
+        BlogPostEntity editemp2 = new BlogPostEntity("aut2", "tit2 " + millisInString );
+        Map<String, Object> attValues2 = editemp2.toMap();
+
+        //push new child
+        //final DatabaseReference firebaseRef4 = FirebaseDatabase.getInstance().getReference().child("fireblog");
+        //return RxFirebaseDatabase.getInstance().observeSetValuePush(firebaseRef4,attValues2,0 );
+
+        //edit keys child
+        final DatabaseReference firebaseRef5 = FirebaseDatabase.getInstance().getReference().child("fireblog").child(keys);
+        return RxFirebaseDatabase.getInstance().observeEditValue(firebaseRef5,attValues2,0 );
+
+    }
 
     //recyclerview datamodel
 
@@ -30,15 +58,18 @@ public class DataModel implements IDataModel {
 
         String keys = employee.getKeyf();
         String observedstring = "" + employee.getEmail();
-        final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("users");
+        final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference().child("users").child(keys);
 
         Employee editemp = employee;
         Map<String, Object> attValues = editemp.toMap();
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(keys, attValues);
 
-        firebaseRef.updateChildren(childUpdates);
-        return Observable.just(observedstring);
+        return RxFirebaseDatabase.getInstance().observeEditValue(firebaseRef,attValues,0 );
+
+        //classic firebase
+        //Map<String, Object> childUpdates = new HashMap<>();
+        //childUpdates.put(keys, attValues);
+        //firebaseRef.updateChildren(childUpdates);
+        //return Observable.just(observedstring);
 
     }
 

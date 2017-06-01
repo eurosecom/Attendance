@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,7 +52,10 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private CompositeDisposable _disposables;
 
     @Nullable
-    private TextView mGreetingView;
+    private TextView mGreetingView, mMessageView;
+
+    @Nullable
+    private EditText field_title;
 
     @Nullable
     private Spinner mLanguagesSpinner;
@@ -77,8 +81,12 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
+
+                    Log.d("rxBus ", "tapEventEmitter");
+
                     if (event instanceof EmployeeMvvmActivity.TapEvent) {
                         ///_showTapText();
+                        Log.d("rxBus ", "EmployeeMvvmActivity.TapEvent ");
                     }
                     if (event instanceof Employee) {
                         String keys = ((Employee) event).getUsatw();
@@ -124,7 +132,18 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         mAdapter = new EmployeesRxAdapter(Collections.<Employee>emptyList(), _rxBus);
         mRecycler.setAdapter(mAdapter);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("fab ", "onclick ");
+                mViewModel.saveRxFBemployee();
+            }
+        });
+        mMessageView = (TextView) findViewById(R.id.message);
+
         mGreetingView = (TextView) findViewById(R.id.greeting);
+
+        field_title = (EditText) findViewById(R.id.field_title);
 
         mLanguagesSpinner = (Spinner) findViewById(R.id.languages);
         assert mLanguagesSpinner != null;
@@ -167,6 +186,12 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::setGreeting));
 
+        mSubscription.add(mViewModel.getObservableFob()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::setMessage));
+
+
         mSubscription.add(mViewModel.getObservableSupportedLanguages()
                                     .subscribeOn(Schedulers.computation())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -186,8 +211,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         _disposables.dispose();
     }
 
-    //employees methods
-
+    //recyclerview methods
 
     private void getEditEmloyeeDialog(@NonNull final Employee employee) {
 
@@ -242,8 +266,13 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     }
 
+    private void setMessage(@NonNull final String message) {
+        Log.i("setMessage ", "method ");
+        field_title.setText(message);
+    }
 
-    //languages methods
+
+    //spinner methods
     private void setGreeting(@NonNull final String greeting) {
         assert mGreetingView != null;
 

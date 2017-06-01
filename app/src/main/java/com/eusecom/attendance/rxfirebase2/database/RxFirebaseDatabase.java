@@ -15,6 +15,8 @@
  */
 package com.eusecom.attendance.rxfirebase2.database;
 
+import android.util.Log;
+
 import com.eusecom.attendance.rxfirebase2.FirebaseChildEvent;
 import com.eusecom.attendance.rxfirebase2.FirebaseChildEvent.EventType;
 import com.google.firebase.database.ChildEventListener;
@@ -89,7 +91,7 @@ public class RxFirebaseDatabase {
    * This methods observes data saving with push in order to generate the key
    * automatically according to Firebase hashing key rules.
    *
-   * @param firebaseRef {@link Query} this is reference of a Firebase Query
+   * @param firebaseRef this is reference of a Firebase
    * @param object {@link Object} whatever object we want to save
    * @return an {@link rx.Observable} of the generated key after
    * the object persistence
@@ -101,6 +103,36 @@ public class RxFirebaseDatabase {
         final DatabaseReference ref = firebaseRef.push();
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
           @Override public void onDataChange(DataSnapshot dataSnapshot) {
+            Log.d("ListenerRx ", "new Push ForSingleValueEvent ");
+            subscriber.onNext(ref.getKey());
+            subscriber.onCompleted();
+          }
+
+          @Override public void onCancelled(DatabaseError error) {
+            FirebaseDatabaseErrorFactory.buildError(subscriber, error);
+          }
+        });
+        ref.setValue(object);
+      }
+    }).compose(this.<String>applyScheduler());
+  }
+
+  /**
+   * This methods observes key of edited data .
+   *
+   * @param firebaseRef this is reference of a Firebase
+   * @param object {@link Object} whatever object we want to save
+   * @return an {@link rx.Observable} of the generated key after
+   * the object persistence
+   */
+  public Observable<String> observeEditValue(final DatabaseReference firebaseRef,
+                                                final Object object, final int del) {
+    return Observable.create(new Observable.OnSubscribe<String>() {
+      @Override public void call(final Subscriber<? super String> subscriber) {
+        final DatabaseReference ref = firebaseRef;
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+          @Override public void onDataChange(DataSnapshot dataSnapshot) {
+            Log.d("ListenerRx ", "Edit ForSingleValueEvent ");
             subscriber.onNext(ref.getKey());
             subscriber.onCompleted();
           }
