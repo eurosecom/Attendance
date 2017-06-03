@@ -215,7 +215,9 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     private void unBind() {
         mAdapter.setData(Collections.<Employee>emptyList());
-        mSubscription.unsubscribe();
+        //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
+        //mSubscription.unsubscribe();
+        mSubscription.clear();
         _disposables.dispose();
     }
 
@@ -276,9 +278,10 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     private void setMessage(@NonNull final String message) {
         Log.i("setMessage ", "method ");
+        final String messagex = getString(R.string.saved) + " " + message;
         //field_title.setText(message);
         Snackbar snackbar = Snackbar
-            .make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
+            .make(coordinatorLayout, messagex, Snackbar.LENGTH_LONG);
 
         snackbar.show();
     }
