@@ -54,6 +54,28 @@ public class EmployeeMvvmViewModelTest {
 
     //recyclerviewtests
     @Test
+    public void testRecyclerview_getObservableKeyEditedEmployee() {
+
+        Employee editedEmployee =  new Employee( "eurosecom3", "eurosecom3@gmail.com", "0", "12345678", "0");
+
+        String mockKeyf =  "K6u6ay4ghKbXRh7ZJTAEBoKLazm3";
+        Observable<String> mockObservable = Observable.just(mockKeyf);
+        doReturn(mockObservable).when(mDataModel).getObservableKeyFBeditUser(editedEmployee);
+
+        mMainViewModel.saveEditEmloyee(editedEmployee, "eurosecom3", "3", "12345678", "99", "0");
+
+        TestSubscriber<String> testSubscriber = new TestSubscriber<>();
+
+        mMainViewModel.getObservableKeyEditedEmployee().subscribe(testSubscriber);
+
+        testSubscriber.assertNoErrors();
+        List<String> liststring = testSubscriber.getOnNextEvents();
+        String obserdedkeyf = liststring.get(0).toString();
+        System.out.println("editedkeyf " + liststring.get(0).toString());
+        junit.framework.Assert.assertEquals(obserdedkeyf, mockKeyf);
+    }
+
+    @Test
     public void testRecyclerview_getObservableFBusersEmployee() {
 
         List<Employee> mockEmployees =  Arrays
