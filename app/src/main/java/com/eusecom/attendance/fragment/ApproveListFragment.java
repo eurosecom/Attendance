@@ -129,7 +129,7 @@ public class ApproveListFragment extends Fragment {
                     }
                     if (event instanceof Attendance) {
                         String keys = ((Attendance) event).getRok();
-                        Log.d("In FRGM longClick", keys);
+                        //Log.d("In FRGM longClick", keys);
                         getApproveDialog( keys, (Attendance) event);
 
                     }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,7 @@ public class AbsTypesListRxFragment extends Fragment {
                     }
                     if (event instanceof Abstype) {
                         String keys = ((Abstype) event).getRok();
-                        Log.d("In FRGM longClick", keys);
+                        //Log.d("In FRGM longClick", keys);
                         getAbsTypesDialog( keys, (Abstype) event);
 
                     }
@@ -198,7 +197,7 @@ public class AbsTypesListRxFragment extends Fragment {
                 if (snapshot.hasChild("absencetypes")) {
                     // run some code
                 }else{
-                    Log.d("table interrupts ", "does not exist");
+                    //Log.d("table interrupts ", "does not exist");
 
                     mDatabase = FirebaseDatabase.getInstance().getReference();
                     String key = mDatabase.child("absencetypes").push().getKey();
@@ -370,7 +369,7 @@ public class AbsTypesListRxFragment extends Fragment {
             List<Abstype> blogPostEntities = new ArrayList<>();
             for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                 String keys = childDataSnapshot.getKey();
-                Log.d("keys ", keys);
+                //Log.d("keys ", keys);
                 Abstype resultx = childDataSnapshot.getValue(Abstype.class);
                 resultx.setRok(keys);
                 blogPostEntities.add(resultx);

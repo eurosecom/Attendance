@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +122,7 @@ public class AbsenceListRxFragment extends Fragment {
                     }
                     if (event instanceof Attendance) {
                         String keys = ((Attendance) event).getRok();
-                        Log.d("In FRGM longClick", keys);
+                        //Log.d("In FRGM longClick", keys);
 
                         Attendance model= (Attendance) event;
                         final String datsx = model.getDatsString();
@@ -326,7 +325,7 @@ public class AbsenceListRxFragment extends Fragment {
 
         String keydel = mDatabase.child("deleted-absences").push().getKey();
         DeletedAbs deletedabs = new DeletedAbs(usicox, userId, postkey );
-        Log.d(TAG, "postkey " + postkey);
+        //Log.d(TAG, "postkey " + postkey);
         Map<String, Object> delValues = deletedabs.toMap();
         Map<String, Object> childDelUpdates = new HashMap<>();
         childDelUpdates.put("/deleted-absences/" + keydel, delValues);
@@ -388,7 +387,7 @@ public class AbsenceListRxFragment extends Fragment {
                 List<Attendance> blogPostEntities = new ArrayList<>();
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String keys = childDataSnapshot.getKey();
-                    Log.d("keys ", keys);
+                    //Log.d("keys ", keys);
                     Attendance resultx = childDataSnapshot.getValue(Attendance.class);
                     resultx.setRok(keys);
                     blogPostEntities.add(resultx);

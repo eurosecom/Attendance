@@ -31,7 +31,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -179,7 +178,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
     Toast.makeText(AbsServerAsBaseSearchActivity.this, texttoast,
             Toast.LENGTH_LONG).show();
-    Log.d("_showTapTextToast", model.datm);
+    //Log.d("_showTapTextToast", model.datm);
 
     // [START declare_database_ref]
     DatabaseReference  mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -207,7 +206,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     String daods = daodl + "";
     String dados = dadol + "";
     String datms = datml + "";
-    Log.d("_showTapTextToast", datms);
+    //Log.d("_showTapTextToast", datms);
     String cplxb = model.longi;
 
     writeAbsenceServerToFB(icox, userIDX, model.ume, model.dmxa, model.dmna, daods, dados, model.dnixa,
@@ -233,13 +232,13 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
             .subscribe(new rx.Observer<List<Attendance>>() {
               @Override public void onCompleted() {
                 hideProgressBar();
-                Log.d("", "setKEYF onCompleted()");
+                //Log.d("", "setKEYF onCompleted()");
               }
 
               @Override public void onError(Throwable e) {
                 e.printStackTrace();
                 hideProgressBar();
-                Log.d("", "In onError()");
+                //Log.d("", "In onError()");
               }
 
               @Override public void onNext(List<Attendance> absserverRepos) {
