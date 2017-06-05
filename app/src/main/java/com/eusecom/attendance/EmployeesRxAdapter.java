@@ -1,7 +1,6 @@
 package com.eusecom.attendance;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
         String keys = blogPostEntity.getKeyf();
         if (isLongClick) {
 
-          Log.d("longClick", pos + " " + keys);
+          //Log.d("longClick", pos + " " + keys);
           //remove(position);
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
@@ -47,7 +46,7 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
 
         } else {
 
-          Log.d("shortClick", pos + " " + keys);
+          //Log.d("shortClick", pos + " " + keys);
 
         }
       }
@@ -84,6 +83,10 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
     //Log.d("AdapterSetData", mBlogPostEntities.get(0).getTitle());
     //Log.d("AdapterSetData", mBlogPostEntities.get(1).getTitle());
     this.notifyDataSetChanged();
+  }
+
+  public Employee getItemAtPosition(int position) {
+    return mBlogPostEntities.get(position);
   }
 
   /**

@@ -1,8 +1,6 @@
 package com.eusecom.attendance.mvvmdatamodel;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import rx.Observable;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
@@ -32,7 +29,7 @@ public class DataModel implements IDataModel {
     @Override
     public Observable<String> getSavedRxFBemployee(String emitedstring) {
 
-        Log.d("mDataModel ", "getSavedRxFBemployee() ");
+        //Log.d("mDataModel ", "getSavedRxFBemployee() ");
         String observedstring = emitedstring + " some Text";
         String keys = "-Kjg6--6kFS6r9Kv6h7g";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -84,7 +81,7 @@ public class DataModel implements IDataModel {
                 List<Employee> blogPostEntities = new ArrayList<>();
             for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                 String keys = childDataSnapshot.getKey();
-                Log.d("keys ", keys);
+                //System.out.println("keys " + keys);
                 Employee resultx = childDataSnapshot.getValue(Employee.class);
                 resultx.setKeyf(keys);
                 blogPostEntities.add(resultx);

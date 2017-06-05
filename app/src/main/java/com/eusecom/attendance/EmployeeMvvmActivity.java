@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -90,11 +89,11 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
 
-                    Log.d("rxBus ", "tapEventEmitter");
+                    //Log.d("rxBus ", "tapEventEmitter");
 
                     if (event instanceof EmployeeMvvmActivity.TapEvent) {
                         ///_showTapText();
-                        Log.d("rxBus ", "EmployeeMvvmActivity.TapEvent ");
+                        //Log.d("rxBus ", "EmployeeMvvmActivity.TapEvent ");
                     }
                     if (event instanceof Employee) {
                         String keys = ((Employee) event).getUsatw();
@@ -143,7 +142,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("fab ", "onclick ");
+                //Log.d("fab ", "onclick ");
                 mViewModel.saveRxFBemployee();
             }
         });
@@ -226,7 +225,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private void getEditEmloyeeDialog(@NonNull final Employee employee) {
 
         String keys = employee.getUsatw();
-        Log.d("In editDialog ", keys);
+        //Log.d("In editDialog ", keys);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         final View textenter = inflater.inflate(R.layout.employee_edit_dialog, null);
@@ -277,7 +276,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     }
 
     private void setMessage(@NonNull final String message) {
-        Log.i("setMessage ", "method ");
+        //Log.i("setMessage ", "method ");
         final String messagex = getString(R.string.saved) + " " + message;
         //field_title.setText(message);
         Snackbar snackbar = Snackbar

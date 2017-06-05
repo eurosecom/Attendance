@@ -1,8 +1,6 @@
 package com.eusecom.attendance;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.util.List;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -34,7 +32,7 @@ public class EmployeeMvvmViewModel {
     private final BehaviorSubject<String> mObservableEmitFob = BehaviorSubject.create();
 
     public void saveRxFBemployee() {
-        Log.d("mViewModel ", "saveRxFBemployee() ");
+        //Log.d("mViewModel ", "saveRxFBemployee() ");
         mObservableEmitFob.onNext("fob Clicked");
     }
 
