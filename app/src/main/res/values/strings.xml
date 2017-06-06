@@ -150,6 +150,7 @@
     <string name="empty">empty</string>
     <string name="action_myemployee">My employees</string>
     <string name="action_mycompany">My company</string>
+    <string name="action_mycompanies">My companies</string>
     <string name="action_approve">Approve the Absences</string>
     <string name="action_absmysql">Get Server Absences</string>
 

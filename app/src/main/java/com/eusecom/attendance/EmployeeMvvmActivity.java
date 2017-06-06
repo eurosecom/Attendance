@@ -302,11 +302,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         mLanguagesSpinner.setAdapter(mLanguageSpinnerAdapter);
     }
 
-    @NonNull
-    private EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
-        return ((AttendanceApplication) getApplication()).getEmployeeMvvmViewModel();
-    }
-
     private void itemSelected(final int position) {
         assert mLanguageSpinnerAdapter != null;
 
@@ -316,6 +311,11 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     }
 
     public static class TapEvent {}
+
+    @NonNull
+    private EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
+        return ((AttendanceApplication) getApplication()).getEmployeeMvvmViewModel();
+    }
 
 
 }

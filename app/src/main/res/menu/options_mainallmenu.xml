@@ -17,8 +17,8 @@
     </item>
 
     <item
-        android:id="@+id/mycompany"
-        android:title="@string/action_mycompany">
+        android:id="@+id/mycompanies"
+        android:title="@string/action_mycompanies">
     </item>
 
     <item
