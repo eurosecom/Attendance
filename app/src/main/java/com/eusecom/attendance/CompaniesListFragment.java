@@ -34,13 +34,13 @@ public class CompaniesListFragment extends Fragment {
     private CompositeSubscription mSubscription;
 
     @NonNull
-    private EmployeeMvvmViewModel mViewModel;
+    private CompaniesMvvmViewModel mViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = getEmployeeMvvmViewModel();
+        mViewModel = getCompaniesMvvmViewModel();
 
         _disposables = new CompositeDisposable();
 
@@ -135,7 +135,7 @@ public class CompaniesListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(mViewModel.getObservableFBusersEmployee()
+        mSubscription.add(mViewModel.getObservableFBcompanies()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setEmployees));
@@ -161,8 +161,8 @@ public class CompaniesListFragment extends Fragment {
     public static class TapEvent {}
 
     @NonNull
-    private EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
-        return ((AttendanceApplication) getActivity().getApplication()).getEmployeeMvvmViewModel();
+    private CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
+        return ((AttendanceApplication) getActivity().getApplication()).getCompaniesMvvmViewModel();
     }
 
 

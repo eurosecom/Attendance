@@ -40,15 +40,10 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
     int whatispage=0;
     Toolbar mActionBarToolbar;
 
-    @NonNull
-    private EmployeeMvvmViewModel mViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_approve);
-
-        mViewModel = getEmployeeMvvmViewModel();
+        setContentView(R.layout.activity_companies);
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
@@ -124,28 +119,24 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_logout:
+
+        int id = item.getItemId();
+
+            if (id == R.id.action_logout) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, EmailPasswordActivity.class));
                 finish();
                 return true;
-
-            case R.id.action_settings:
-                FirebaseAuth.getInstance().signOut();
+            }
+            if (id == R.id.action_settings) {
                 startActivity(new Intent(this, SettingsActivity.class));
                 finish();
                 return true;
+            }
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            return super.onOptionsItemSelected(item);
     }
 
 
-    @NonNull
-    private EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
-        return ((AttendanceApplication) getApplication()).getEmployeeMvvmViewModel();
-    }
 
 }

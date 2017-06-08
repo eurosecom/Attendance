@@ -24,7 +24,7 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
   }
 
   @Override public CompaniesRxViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.employee_item, viewGroup, false);
+    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.company_item, viewGroup, false);
     return new CompaniesRxViewHolder(view);
   }
 
