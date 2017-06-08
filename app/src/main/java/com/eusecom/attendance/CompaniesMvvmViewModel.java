@@ -6,10 +6,7 @@ import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
-import com.eusecom.attendance.mvvmdatamodel.IDataModel;
-import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
-import com.google.firebase.database.DataSnapshot;
 
 /**
  * View model for the CompaniesMvvmActivity.

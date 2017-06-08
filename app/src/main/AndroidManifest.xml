@@ -50,7 +50,6 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".mvp.MvpActivity"/>
-        <activity android:name=".MainMvvmActivity"/>
         <activity android:name=".EmployeeMvvmActivity"/>
         <activity android:name=".CompaniesMvvmActivity"/>
 
