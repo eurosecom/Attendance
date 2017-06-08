@@ -5,6 +5,7 @@ import java.util.List;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import com.eusecom.attendance.models.Employee;
+import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.IDataModel;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
@@ -16,12 +17,12 @@ import com.google.firebase.database.DataSnapshot;
 public class EmployeeMvvmViewModel {
 
     @NonNull
-    private final IDataModel mDataModel;
+    private final EmployeeIDataModel mDataModel;
     @NonNull
     private final ISchedulerProvider mSchedulerProvider;
 
 
-    public EmployeeMvvmViewModel(@NonNull final IDataModel dataModel,
+    public EmployeeMvvmViewModel(@NonNull final EmployeeIDataModel dataModel,
                          @NonNull final ISchedulerProvider schedulerProvider) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;

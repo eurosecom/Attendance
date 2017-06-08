@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.eusecom.attendance.models.Employee;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -52,6 +53,9 @@ public class EmployeesRxViewHolder extends RecyclerView.ViewHolder implements Vi
     icox.setText(employee.usico);
     typx.setText(employee.ustype);
     emailx.setText(employee.email);
+    if( employee.username.equals("andrejd")) {
+      Picasso.with(mContext).load(R.drawable.ic_remove_circle_black_24dp).resize(120, 120).into(starView);
+    }
 
   }
 

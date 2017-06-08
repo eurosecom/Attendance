@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.DataModel;
+import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
+import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.IDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.mvvmschedulers.SchedulerProvider;
@@ -23,15 +25,26 @@ public class AttendanceApplication extends Application {
     @NonNull
     private final CompaniesIDataModel mCompaniesDataModel;
 
+    @NonNull
+    private final EmployeeIDataModel mEmployeeDataModel;
+
+
+    private static AttendanceApplication instance;
+
     public AttendanceApplication() {
 
-        myAppInstance = this;
         mDataModel = new DataModel();
         mCompaniesDataModel = new CompaniesDataModel();
+        mEmployeeDataModel = new EmployeeDataModel();
     }
 
     public static AttendanceApplication getInstance() {
-        return myAppInstance;
+        if (instance== null) {
+            instance = new AttendanceApplication();
+            }
+        // Return the instance
+        return instance;
+
     }
 
     public RxBus getRxBusSingleton() {
@@ -53,6 +66,11 @@ public class AttendanceApplication extends Application {
     }
 
     @NonNull
+    public EmployeeIDataModel getEmployeeDataModel() {
+        return mEmployeeDataModel;
+    }
+
+    @NonNull
     public ISchedulerProvider getSchedulerProvider() {
         return SchedulerProvider.getInstance();
     }
@@ -64,12 +82,13 @@ public class AttendanceApplication extends Application {
 
     @NonNull
     public EmployeeMvvmViewModel getEmployeeMvvmViewModel() {
-        return new EmployeeMvvmViewModel(getDataModel(), getSchedulerProvider());
+        return new EmployeeMvvmViewModel(getEmployeeDataModel(), getSchedulerProvider());
     }
 
     @NonNull
     public CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
     }
+
 
 }
