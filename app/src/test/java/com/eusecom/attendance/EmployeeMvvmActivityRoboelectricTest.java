@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.eusecom.attendance.models.Employee;
-import com.eusecom.attendance.mvvmdatamodel.IDataModel;
+import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ImmediateSchedulerProvider;
 import com.eusecom.attendance.rxbus.RxBus;
 import junit.framework.Assert;
@@ -50,7 +50,7 @@ public class EmployeeMvvmActivityRoboelectricTest {
     private EmployeeMvvmActivity activity;
 
     @Mock
-    private IDataModel mDataModel;
+    private EmployeeIDataModel mDataModel;
 
     private EmployeeMvvmViewModel mMainViewModel;
 

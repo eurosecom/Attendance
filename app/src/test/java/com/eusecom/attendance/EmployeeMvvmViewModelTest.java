@@ -1,42 +1,28 @@
 package com.eusecom.attendance;
 
-import android.util.Log;
-
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import rx.Observable;
 import rx.observers.TestSubscriber;
-
 import com.eusecom.attendance.models.Employee;
-import com.eusecom.attendance.mvvmdatamodel.IDataModel;
+import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.mvvmschedulers.ImmediateSchedulerProvider;
-import com.google.firebase.database.DataSnapshot;
-
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static com.eusecom.attendance.mvvmmodel.Language.LanguageCode;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class EmployeeMvvmViewModelTest {
 
     @Mock
-    private IDataModel mDataModel;
+    private EmployeeIDataModel mDataModel;
 
     private EmployeeMvvmViewModel mMainViewModel;
 
