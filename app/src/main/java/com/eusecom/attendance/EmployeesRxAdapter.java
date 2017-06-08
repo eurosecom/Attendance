@@ -20,6 +20,7 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
   public EmployeesRxAdapter(List<Employee> blogPostEntities, RxBus bus) {
     mBlogPostEntities = blogPostEntities;
     _rxBus = bus;
+    //_rxBus = AttendanceApplication.getInstance().getRxBusSingleton();
   }
 
   @Override public EmployeesRxViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {

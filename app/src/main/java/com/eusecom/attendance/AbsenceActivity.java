@@ -152,7 +152,6 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
                 return true;
 
             case R.id.action_settings:
-                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, SettingsActivity.class));
                 finish();
                 return true;

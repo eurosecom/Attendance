@@ -83,7 +83,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
         mViewModel = getEmployeeMvvmViewModel();
 
-        _rxBus = getRxBusSingleton();
+        _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
+
         _disposables = new CompositeDisposable();
         ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
         _disposables
@@ -117,15 +118,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         _disposables.add(tapEventEmitter.connect());
 
         setupViews();
-        mViewModel.getObservableFBusersEmployee();
-    }
 
-    public RxBus getRxBusSingleton() {
-        if (_rxBus == null) {
-            _rxBus = new RxBus();
-        }
-
-        return _rxBus;
     }
 
     private void setupViews() {
