@@ -37,7 +37,7 @@ public class CompaniesListFragment extends Fragment {
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private RxBus _rxBus = null;
-    AlertDialog  dialog = null;
+    AlertDialog dialog = null;
     AlertDialog.Builder builder = null;
 
     @NonNull
@@ -63,9 +63,9 @@ public class CompaniesListFragment extends Fragment {
                     if (event instanceof CompaniesListFragment.ClickFobEvent) {
                         Log.d("CompaniesActivity  ", " fobClick ");
 
-                        mSubscription.add(getNewCompanyDialog(getContext(), getString(R.string.fullfirma), getString(R.string.fullfirma))
+                        mSubscription.add(getNewCompanyDialog(getContext(), getString(R.string.newcompany), getString(R.string.fullfirma))
                                 .subscribeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                                .observeOn(Schedulers.computation())
                                 .subscribe(this::setBoolean)
                         );
                     }
@@ -126,6 +126,7 @@ public class CompaniesListFragment extends Fragment {
         try {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
+                dialog=null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,20 +182,22 @@ public class CompaniesListFragment extends Fragment {
 
     Observable<Boolean> getNewCompanyDialog(Context context, String title, String message) {
 
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        final View textenter = inflater.inflate(R.layout.companies_new_dialog, null);
-        final EditText namex = (EditText) textenter.findViewById(R.id.namex);
-        namex.setText("name");
-        final EditText icox = (EditText) textenter.findViewById(R.id.icox);
-        icox.setText("12345678");
-        final EditText cityx = (EditText) textenter.findViewById(R.id.cityx);
-        cityx.setText("city");
-
         return Observable.create((Subscriber<? super Boolean> subscriber) -> {
-            final AlertDialog ad = new AlertDialog.Builder(context)
+
+            LayoutInflater inflater = LayoutInflater.from(context);
+
+            View textenter = inflater.inflate(R.layout.companies_new_dialog, null);
+            EditText namex = (EditText) textenter.findViewById(R.id.namex);
+            namex.setText("name");
+            EditText icox = (EditText) textenter.findViewById(R.id.icox);
+            icox.setText("12345678");
+            EditText cityx = (EditText) textenter.findViewById(R.id.cityx);
+            cityx.setText("city");
+
+            dialog = new AlertDialog.Builder(context)
                     .setView(textenter)
                     .setTitle(title)
-                    .setMessage(message)
+                    //.setMessage(message)
                     .setPositiveButton(getString(R.string.save), (dialog, which) -> {
 
                         String namexx =  namex.getText().toString();
@@ -224,8 +227,8 @@ public class CompaniesListFragment extends Fragment {
                     })
                     .create();
             // cleaning up
-            subscriber.add(Subscriptions.create(ad::dismiss));
-            ad.show();
+            subscriber.add(Subscriptions.create(dialog::dismiss));
+            dialog.show();
         });
     }
 
@@ -234,6 +237,14 @@ public class CompaniesListFragment extends Fragment {
         //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
         //mSubscription.unsubscribe();
         mSubscription.clear();
+        try {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+                dialog=null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
