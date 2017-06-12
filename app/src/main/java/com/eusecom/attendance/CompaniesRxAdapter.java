@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.eusecom.attendance.rxfirebase2models.BlogPostEntity;
@@ -15,10 +17,10 @@ import java.util.List;
  */
 class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
 
-  private List<Employee> mBlogPostEntities;
+  private List<Company> mBlogPostEntities;
   private RxBus _rxBus;
 
-  public CompaniesRxAdapter(List<Employee> blogPostEntities, RxBus bus) {
+  public CompaniesRxAdapter(List<Company> blogPostEntities, RxBus bus) {
     mBlogPostEntities = blogPostEntities;
     _rxBus = bus;
   }
@@ -29,20 +31,19 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
   }
 
   @Override public void onBindViewHolder(CompaniesRxViewHolder holder, int position) {
-    Employee blogPostEntity = mBlogPostEntities.get(position);
+    Company blogPostEntity = mBlogPostEntities.get(position);
     holder.bindModel(blogPostEntity);
 
     holder.setClickListener(new CompaniesRxViewHolder.ClickListener() {
       public void onClick(View v, int pos, boolean isLongClick) {
 
-        String keys = blogPostEntity.getKeyf();
+        String icos = blogPostEntity.getCmico();
         if (isLongClick) {
 
-          Log.d("longClick", pos + " " + keys);
+          Log.d("longClick", pos + " " + icos);
           //remove(position);
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
-            _rxBus.send(new CompaniesListFragment.TapEvent());
           }
 
         } else {
@@ -68,7 +69,7 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
 
 
 
-  public void add(Employee addmodel, int position) {
+  public void add(Company addmodel, int position) {
     mBlogPostEntities.add(position, addmodel);
     notifyItemInserted(position);
   }
@@ -78,7 +79,7 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
    *
    * @param blogPost a {@link List} of {@link Employee}
    */
-  public void setData(List<Employee> blogPost) {
+  public void setData(List<Company> blogPost) {
     this.validateData(blogPost);
     mBlogPostEntities = blogPost;
     //Log.d("AdapterSetData", mBlogPostEntities.get(0).getTitle());
@@ -86,7 +87,7 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
     this.notifyDataSetChanged();
   }
 
-  public Employee getItemAtPosition(int position) {
+  public Company getItemAtPosition(int position) {
     return mBlogPostEntities.get(position);
   }
 
@@ -95,7 +96,7 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
    *
    * @param blogPostEntities a {@link List} of {@link Employee}
    */
-  public void validateData(List<Employee> blogPostEntities) {
+  public void validateData(List<Company> blogPostEntities) {
     if (blogPostEntities == null) {
       throw new IllegalArgumentException("The list cannot be null");
     }

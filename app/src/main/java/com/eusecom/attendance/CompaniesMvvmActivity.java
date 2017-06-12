@@ -16,6 +16,7 @@
 
 package com.eusecom.attendance;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.eusecom.attendance.fragment.EmptyFragment;
+import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -39,11 +41,19 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
     private FloatingActionButton fab;
     int whatispage=0;
     Toolbar mActionBarToolbar;
+    private RxBus _rxBus;
+
+    @NonNull
+    private CompaniesMvvmViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_companies);
+
+        mViewModel = getCompaniesMvvmViewModel();
+
+        _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
@@ -84,12 +94,12 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
             public void onPageSelected(int position) {
                 // Check if this is the page you want.
                 if(position == 0){
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.VISIBLE);
                     whatispage=0;
                 }
                 if(position == 1){
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.GONE);
                     whatispage=1;
                 }
@@ -101,15 +111,26 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-
+            _rxBus.send(new CompaniesListFragment.ClickFobEvent());
 
             }
         );
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mViewPager=null;
+        mPagerAdapter=null;
+        _rxBus = null;
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,6 +158,9 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
             return super.onOptionsItemSelected(item);
     }
 
-
+    @NonNull
+    private CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
+        return ((AttendanceApplication) getApplication()).getCompaniesMvvmViewModel();
+    }
 
 }

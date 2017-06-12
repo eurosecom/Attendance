@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 
 /**
@@ -42,15 +44,12 @@ public class CompaniesRxViewHolder extends RecyclerView.ViewHolder implements Vi
     itemView.setOnLongClickListener(this);
   }
 
-  public void bindModel(Employee employee) {
-    if (employee == null) {
+  public void bindModel(Company companiee) {
+    if (companiee == null) {
       throw new IllegalArgumentException("Entity cannot be null");
     }
-    employee_name.setText(employee.username);
-    oscx.setText(employee.usosc);
-    icox.setText(employee.usico);
-    typx.setText(employee.ustype);
-    emailx.setText(employee.email);
+    employee_name.setText(companiee.cmname);
+    icox.setText(companiee.cmico);
 
   }
 

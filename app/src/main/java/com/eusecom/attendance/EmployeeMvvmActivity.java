@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -135,8 +136,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Log.d("fab ", "onclick ");
-                mViewModel.saveRxFBemployee();
+                Log.d("fab ", "onclick ");
             }
         });
         mMessageView = (TextView) findViewById(R.id.message);
@@ -159,6 +159,12 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                 //nothing to do here
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        _disposables.dispose();
     }
 
     @Override
@@ -210,7 +216,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
         //mSubscription.unsubscribe();
         mSubscription.clear();
-        _disposables.dispose();
     }
 
     //recyclerview methods

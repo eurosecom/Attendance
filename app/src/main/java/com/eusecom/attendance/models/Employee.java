@@ -49,6 +49,12 @@ public class Employee {
     }
 
     @Exclude
+    public  void setEmail(String email) {
+
+        this.email = email;
+    }
+
+    @Exclude
     public  void setUsatw(String usatw) {
 
         this.usatw = usatw;

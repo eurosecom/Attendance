@@ -242,7 +242,9 @@
     <string name="saved">Saved</string>
     <string name="cancel">Cancel</string>
 
-
+    <!-- my companies-->
+    <string name="newcompany">New company</string>
+    <string name="city">City</string>
 
 
 
