@@ -23,9 +23,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
+import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import rx.subscriptions.Subscriptions;
+
+import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxbus.RxBus;
@@ -70,6 +75,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     Toolbar mActionBarToolbar;
     private CoordinatorLayout coordinatorLayout;
 
+    AlertDialog dialog = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +100,14 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
                     //Log.d("rxBus ", "tapEventEmitter");
 
-                    if (event instanceof EmployeeMvvmActivity.TapEvent) {
-                        ///_showTapText();
-                        //Log.d("rxBus ", "EmployeeMvvmActivity.TapEvent ");
+                    if (event instanceof EmployeeMvvmActivity.FobTapEvent) {
+                        Log.d("EmpoloyeeActivity  ", " fobClick ");
+
+                        mSubscription.add(getNewEmployeeDialog(getString(R.string.newcompany), getString(R.string.fullfirma))
+                                .subscribeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                                .observeOn(Schedulers.computation())
+                                .subscribe(this::setBoolean)
+                        );;
                     }
                     if (event instanceof Employee) {
                         String keys = ((Employee) event).getUsatw();
@@ -120,6 +132,14 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
         setupViews();
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                _rxBus.send(new EmployeeMvvmActivity.FobTapEvent());
+
+            }
+        });
+
     }
 
     private void setupViews() {
@@ -133,12 +153,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         mAdapter = new EmployeesRxAdapter(Collections.<Employee>emptyList(), _rxBus);
         mRecycler.setAdapter(mAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d("fab ", "onclick ");
-            }
-        });
+
         mMessageView = (TextView) findViewById(R.id.message);
 
         mGreetingView = (TextView) findViewById(R.id.greeting);
@@ -165,6 +180,14 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         _disposables.dispose();
+        try {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+                dialog=null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -218,7 +241,58 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         mSubscription.clear();
     }
 
-    //recyclerview methods
+    Observable<Boolean> getNewEmployeeDialog(String title, String message) {
+
+        return Observable.create((Subscriber<? super Boolean> subscriber) -> {
+
+            LayoutInflater inflater = this.getLayoutInflater();
+            View textenter = inflater.inflate(R.layout.companies_new_dialog, null);
+            final EditText namex = (EditText) textenter.findViewById(R.id.namex);
+            namex.setText("name");
+            final EditText icox = (EditText) textenter.findViewById(R.id.icox);
+            icox.setText("12345678");
+            final EditText cityx = (EditText) textenter.findViewById(R.id.cityx);
+            cityx.setText("city");
+
+            dialog = new AlertDialog.Builder(this)
+                    .setView(textenter)
+                    .setTitle(title)
+                    //.setMessage(message)
+                    .setPositiveButton(getString(R.string.save), (dialog, which) -> {
+
+                        String namexx =  namex.getText().toString();
+                        String icoxx =  icox.getText().toString();
+                        String cityxx =  cityx.getText().toString();
+
+                        Company newCompany = new Company(icoxx, namexx, " ", "0", cityxx);
+
+                        //mViewModel.saveNewCompany(newCompany);
+
+                        try {
+                            subscriber.onNext(true);
+                            subscriber.onCompleted();
+                        } catch (Exception e) {
+                            subscriber.onError(e);
+                            e.printStackTrace();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+                        try {
+                            subscriber.onNext(false);
+                            subscriber.onCompleted();
+                        } catch (Exception e) {
+                            subscriber.onError(e);
+                            e.printStackTrace();
+                        }
+                    })
+                    .create();
+            // cleaning up
+            subscriber.add(Subscriptions.create(dialog::dismiss));
+            //textenter = null;
+            dialog.show();
+
+        });
+    }
 
     private void getEditEmloyeeDialog(@NonNull final Employee employee) {
 
@@ -263,7 +337,14 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         builder.show();
 
+    }
 
+    private void setBoolean(@NonNull final Boolean booleanx) {
+        Log.i("setBoolean ", valueOf(booleanx));
+    }
+
+    public static String valueOf(Object obj) {
+        return (obj == null) ? "null" : obj.toString();
     }
 
     private void setEmployees(@NonNull final List<Employee> employees) {
@@ -308,7 +389,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
 
     }
 
-    public static class TapEvent {}
+    public static class FobTapEvent {}
 
     @NonNull
     private EmployeeMvvmViewModel getEmployeeMvvmViewModel() {

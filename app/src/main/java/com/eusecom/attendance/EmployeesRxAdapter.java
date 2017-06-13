@@ -42,7 +42,7 @@ class EmployeesRxAdapter extends RecyclerView.Adapter<EmployeesRxViewHolder> {
           //remove(position);
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
-            _rxBus.send(new EmployeeMvvmActivity.TapEvent());
+            //_rxBus.send(new EmployeeMvvmActivity.TapEvent());
           }
 
         } else {
