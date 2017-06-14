@@ -15,6 +15,17 @@ public class Company {
     public String cmcity;
     public String cmdom;
     public String cmfir;
+    public String cmakt;
+
+    public String getCmakt() {
+        return cmakt;
+    }
+
+    public void setCmakt(String cmakt) {
+        this.cmakt = cmakt;
+    }
+
+
 
     public Company() {
         // Default constructor required for calls to DataSnapshot.getValue(Company.class)
@@ -26,6 +37,7 @@ public class Company {
         this.cmcity = cmcity;
         this.cmdom = cmdom;
         this.cmfir = cmfir;
+        this.cmakt = "0";
     }
 
     @Exclude
@@ -36,7 +48,7 @@ public class Company {
         result.put("cmcity", cmcity);
         result.put("cmdom", cmdom);
         result.put("cmfir", cmfir);
-
+        result.put("cmakt", cmakt);
         return result;
     }
 
