@@ -186,15 +186,8 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                                 break;
 
+
                             case 2:
-
-                                // View v at position pos is clicked.
-                                Intent i2 = new Intent(mContext, AbsenceActivity.class);
-                                v.getContext().startActivity(i2);
-
-                                break;
-
-                            case 3:
 
                                 // View v at position pos is clicked.
                                 Intent i3 = new Intent(mContext, MapActivity.class);
@@ -202,7 +195,7 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                                 break;
 
-                            case 4:
+                            case 3:
 
                                 // View v at position pos is clicked.
                                 Intent i4 = new Intent(mContext, SettingsActivity.class);
@@ -210,7 +203,7 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                                 break;
 
-                            case 5:
+                            case 4:
 
                                 // View v at position pos is clicked.
                                 //Intent i5 = new Intent(mContext, RxbusActivity.class);
@@ -218,14 +211,14 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                                 break;
 
-                            case 6:
+                            case 5:
 
                                 //Intent i6 = new Intent(mContext, MainMvvmActivity.class);
                                 //v.getContext().startActivity(i6);
 
                                 break;
 
-                            case 7:
+                            case 6:
 
                                 // View v at position pos is clicked.
                                 Intent i7 = new Intent(mContext, MvpActivity.class);
@@ -273,5 +266,7 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
     private boolean isPositionHeader(int position) {
         return position == 0;
     }
+
+
  
 }

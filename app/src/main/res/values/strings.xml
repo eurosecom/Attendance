@@ -124,7 +124,6 @@
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Login/Logout</item>
-        <item >Absence</item>
         <item >Google Maps</item>
         <item >Settings</item>
         <item >Free</item>
@@ -156,6 +155,8 @@
     <string name="action_approve">Approve the Absences</string>
     <string name="action_absmysql">Get Server Absences</string>
 
+    <string name="noico">No company ID</string>
+    <string name="qico">Can you choose your company ID ?</string>
     <string name="incoming">Incoming work</string>
     <string name="leaving">Leaving work</string>
     <string name="qincoming">Do you want to income to work ?</string>

@@ -58,8 +58,10 @@ public class MainActivity extends ActionBarActivity {
     //This Icons And Titles Are holded in an Array as you can see
 
     private String[] navMenuTitles;
-    int ICONS[] = {R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit,
-            R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit,R.drawable.ic_image_edit};
+    int ICONS[] = {R.drawable.ic_image_edit,
+            R.drawable.ic_image_edit, R.drawable.ic_image_edit,
+            R.drawable.ic_image_edit, R.drawable.ic_image_edit,
+            R.drawable.ic_image_edit };
 
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
@@ -113,21 +115,21 @@ public class MainActivity extends ActionBarActivity {
         mText3 = (TextView) findViewById(R.id.text3);
 
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        String TITLES[] = {navMenuTitles[0],navMenuTitles[1],navMenuTitles[2],navMenuTitles[3],navMenuTitles[4],navMenuTitles[5],navMenuTitles[6]};
+        String TITLES[] = {navMenuTitles[0], navMenuTitles[1], navMenuTitles[2], navMenuTitles[3], navMenuTitles[4], navMenuTitles[5]};
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new MainDrawerAdapter(this, TITLES,ICONS,NAME,EMAIL,PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        mAdapter = new MainDrawerAdapter(this, TITLES, ICONS, NAME, EMAIL, PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
         // And passing the titles,icons,header view name, header view email,
         // and header view profile picture
         mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
 
 
         Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);        // Drawer object Assigned to the view
-        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer,toolbar,R.string.drawer_open,R.string.drawer_close){
+        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.drawer_open, R.string.drawer_close) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -141,7 +143,6 @@ public class MainActivity extends ActionBarActivity {
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
             }
-
 
 
         }; // Drawer Toggle Object Made
@@ -178,52 +179,58 @@ public class MainActivity extends ActionBarActivity {
 
         invalidateOptionsMenu();
 
-        intowork =(ImageButton)findViewById(R.id.intowork);
-        intowork.setOnClickListener(new View.OnClickListener()   {
-            public void onClick(View v)  {
+        intowork = (ImageButton) findViewById(R.id.intowork);
+        intowork.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
                 if (user != null) {
 
-                    String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
-                    if( usatwx.equals("0")) {
 
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(getString(R.string.incoming))
-                                .setMessage(getString(R.string.qincoming))
-                                .setPositiveButton(R.string.textyes,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,
-                                                                int whichButton) {
+                    if (SettingsActivity.getUsIco(MainActivity.this).equals("0")) {
+                        getNoIcoAlert();
+                    } else {
 
-                                                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                String icox = SettingsActivity.getUsIco(MainActivity.this);
-                                                String oscx = SettingsActivity.getUsOsc(MainActivity.this);
-                                                String usnx = SettingsActivity.getUsname(MainActivity.this);
-                                                Long tsLong = System.currentTimeMillis() / 1000;
-                                                String ts = tsLong.toString();
+                        String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
+                        if (usatwx.equals("0")) {
 
-                                                writeAttendance(icox, userId, "0", "1","Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx, usnx);
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle(getString(R.string.incoming))
+                                    .setMessage(getString(R.string.qincoming))
+                                    .setPositiveButton(R.string.textyes,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog,
+                                                                    int whichButton) {
 
-                                            }
-                                        })
-                                .setNegativeButton(R.string.textno,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,
-                                                                int whichButton) {
-                                                // ignore, just dismiss
+                                                    final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                    String icox = SettingsActivity.getUsIco(MainActivity.this);
+                                                    String oscx = SettingsActivity.getUsOsc(MainActivity.this);
+                                                    String usnx = SettingsActivity.getUsname(MainActivity.this);
+                                                    Long tsLong = System.currentTimeMillis() / 1000;
+                                                    String ts = tsLong.toString();
 
-                                            }
-                                        })
-                                .show();
+                                                    writeAttendance(icox, userId, "0", "1", "Incoming work", ts, ts, "0", "0", "0", "0", ts, oscx, usnx);
 
-                    }else{
-                        Toast.makeText(MainActivity.this, "You are at work now.",
-                                Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                    .setNegativeButton(R.string.textno,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog,
+                                                                    int whichButton) {
+                                                    // ignore, just dismiss
+
+                                                }
+                                            })
+                                    .show();
+
+                        } else {
+                            Toast.makeText(MainActivity.this, "You are at work now.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
 
-
-                }else{
+                } else {
 
                     Toast.makeText(MainActivity.this, "Login to Firebase.",
                             Toast.LENGTH_SHORT).show();
@@ -232,50 +239,55 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        outsidework =(ImageButton)findViewById(R.id.outsidework);
-        outsidework.setOnClickListener(new View.OnClickListener()   {
-            public void onClick(View v)  {
+        outsidework = (ImageButton) findViewById(R.id.outsidework);
+        outsidework.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
                 if (user != null) {
 
-                    String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
-                    if( usatwx.equals("1")) {
+                    if (SettingsActivity.getUsIco(MainActivity.this).equals("0")) {
+                        getNoIcoAlert();
+                    } else {
 
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(getString(R.string.leaving))
-                                .setMessage(getString(R.string.qleaving))
-                                .setPositiveButton(R.string.textyes,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,
-                                                                int whichButton) {
+                        String usatwx = SettingsActivity.getUsAtw(MainActivity.this);
+                        if (usatwx.equals("1")) {
 
-                                                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                String icox = SettingsActivity.getUsIco(MainActivity.this);
-                                                String oscx = SettingsActivity.getUsOsc(MainActivity.this);
-                                                String usnx = SettingsActivity.getUsname(MainActivity.this);
-                                                Long tsLong = System.currentTimeMillis()/1000;
-                                                String ts = tsLong.toString();
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle(getString(R.string.leaving))
+                                    .setMessage(getString(R.string.qleaving))
+                                    .setPositiveButton(R.string.textyes,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog,
+                                                                    int whichButton) {
 
-                                                writeAttendance(icox,userId,"0","2","Leaving work",ts,ts,"0","0","0","0", ts, oscx, usnx );
+                                                    final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                    String icox = SettingsActivity.getUsIco(MainActivity.this);
+                                                    String oscx = SettingsActivity.getUsOsc(MainActivity.this);
+                                                    String usnx = SettingsActivity.getUsname(MainActivity.this);
+                                                    Long tsLong = System.currentTimeMillis() / 1000;
+                                                    String ts = tsLong.toString();
 
-                                            }
-                                        })
-                                .setNegativeButton(R.string.textno,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,
-                                                                int whichButton) {
-                                                // ignore, just dismiss
+                                                    writeAttendance(icox, userId, "0", "2", "Leaving work", ts, ts, "0", "0", "0", "0", ts, oscx, usnx);
 
-                                            }
-                                        })
-                                .show();
+                                                }
+                                            })
+                                    .setNegativeButton(R.string.textno,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog,
+                                                                    int whichButton) {
+                                                    // ignore, just dismiss
 
-                    }else{
-                        Toast.makeText(MainActivity.this, "You are out of work now.",
-                                Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                    .show();
+
+                        } else {
+                            Toast.makeText(MainActivity.this, "You are out of work now.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                }else{
+                } else {
 
                     Toast.makeText(MainActivity.this, "Login to Firebase.",
                             Toast.LENGTH_SHORT).show();
@@ -283,9 +295,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        imglogin =(ImageButton)findViewById(R.id.imglogin);
-        imglogin.setOnClickListener(new View.OnClickListener()   {
-            public void onClick(View v)  {
+        imglogin = (ImageButton) findViewById(R.id.imglogin);
+        imglogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
                 connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
                 connlist = new ValueEventListener() {
@@ -314,13 +326,20 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        imgnepritomnost =(ImageButton)findViewById(R.id.imgnepritomnost);
-        imgnepritomnost.setOnClickListener(new View.OnClickListener()   {
-            public void onClick(View v)  {
+        imgnepritomnost = (ImageButton) findViewById(R.id.imgnepritomnost);
+        imgnepritomnost.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
                 if (user != null) {
-                    Intent i = new Intent(getApplicationContext(), AbsenceActivity.class);
-                    startActivity(i);
+
+                    if (SettingsActivity.getUsIco(MainActivity.this).equals("0")) {
+                        getNoIcoAlert();
+                    } else {
+
+                        Intent i = new Intent(getApplicationContext(), AbsenceActivity.class);
+                        startActivity(i);
+
+                    }
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -343,20 +362,21 @@ public class MainActivity extends ActionBarActivity {
         String gpslat;
         String gpslon;
         GPSTracker mGPS = new GPSTracker(MainActivity.this);
-        gpslat="0"; gpslon="0";
+        gpslat = "0";
+        gpslon = "0";
 
-        if(mGPS.canGetLocation ){
+        if (mGPS.canGetLocation) {
             mGPS.getLocation();
-            gpslat=""+mGPS.getLatitude();
-            gpslon=""+mGPS.getLongitude();
-        }else{
+            gpslat = "" + mGPS.getLatitude();
+            gpslon = "" + mGPS.getLongitude();
+        } else {
             // can't get location
             // GPS or Network is not enabled
             // Ask user to enable GPS/network in settings
             mGPS.showSettingsAlert();
         }
 
-        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm, usosc, usname );
+        Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm, usosc, usname);
 
         Map<String, Object> attValues = attendance.toMap();
 
@@ -368,11 +388,11 @@ public class MainActivity extends ActionBarActivity {
 
         mDatabase.updateChildren(childUpdates);
 
-        String usatwx="0";
-        if( dmxa.equals("1")) {
-            usatwx="1";
-        }else{
-            usatwx="0";
+        String usatwx = "0";
+        if (dmxa.equals("1")) {
+            usatwx = "1";
+        } else {
+            usatwx = "0";
         }
 
         mDatabase.child("users").child(userIDX).child("usatw").setValue(usatwx);
@@ -380,7 +400,7 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = prefs.edit();
 
-            editor.putString("usatw", usatwx).apply();
+        editor.putString("usatw", usatwx).apply();
 
         editor.commit();
 
@@ -396,13 +416,13 @@ public class MainActivity extends ActionBarActivity {
 
             String usatwx = SettingsActivity.getUsAtw(this);
 
-            if( usatwx.equals("1")) {
+            if (usatwx.equals("1")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
                 } else {
                     mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
                 }
-            }else{
+            } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.clock, getApplicationContext().getTheme()));
                 } else {
@@ -484,6 +504,33 @@ public class MainActivity extends ActionBarActivity {
             super.onBackPressed();
         }
     }
+
+
+    public void getNoIcoAlert(){
+
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(getString(R.string.noico))
+                .setMessage(getString(R.string.qico))
+                .setPositiveButton(R.string.textyes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .setNegativeButton(R.string.textno,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                // ignore, just dismiss
+
+                            }
+                        })
+                .show();
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
