@@ -1,6 +1,5 @@
 package com.eusecom.attendance;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +25,7 @@ import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import rx.subscriptions.Subscriptions;
+
 
 public class CompaniesListFragment extends Fragment {
 
@@ -63,11 +63,14 @@ public class CompaniesListFragment extends Fragment {
                     if (event instanceof CompaniesListFragment.ClickFobEvent) {
                         Log.d("CompaniesActivity  ", " fobClick ");
 
-                        mSubscription.add(getNewCompanyDialog(getContext(), getString(R.string.newcompany), getString(R.string.fullfirma))
+                        mSubscription.add(getNewCompanyDialog(getString(R.string.newcompany), getString(R.string.fullfirma))
                                 .subscribeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                                 .observeOn(Schedulers.computation())
                                 .subscribe(this::setBoolean)
                         );
+
+
+
                     }
                     if (event instanceof Company) {
                         String icos = ((Company) event).getCmico();
@@ -75,7 +78,6 @@ public class CompaniesListFragment extends Fragment {
 
                         Log.d("CompaniesListFragment ", icos);
                         getEditCompanyDialog(model);
-                        //getWrapedNewCompanyDialog();
 
                     }
 
@@ -180,21 +182,20 @@ public class CompaniesListFragment extends Fragment {
         return (obj == null) ? "null" : obj.toString();
     }
 
-    Observable<Boolean> getNewCompanyDialog(Context context, String title, String message) {
+    Observable<Boolean> getNewCompanyDialog(String title, String message) {
 
         return Observable.create((Subscriber<? super Boolean> subscriber) -> {
 
-            LayoutInflater inflater = LayoutInflater.from(context);
-
+            LayoutInflater inflater = getActivity().getLayoutInflater();
             View textenter = inflater.inflate(R.layout.companies_new_dialog, null);
-            EditText namex = (EditText) textenter.findViewById(R.id.namex);
+            final EditText namex = (EditText) textenter.findViewById(R.id.namex);
             namex.setText("name");
-            EditText icox = (EditText) textenter.findViewById(R.id.icox);
+            final EditText icox = (EditText) textenter.findViewById(R.id.icox);
             icox.setText("12345678");
-            EditText cityx = (EditText) textenter.findViewById(R.id.cityx);
+            final EditText cityx = (EditText) textenter.findViewById(R.id.cityx);
             cityx.setText("city");
 
-            dialog = new AlertDialog.Builder(context)
+            dialog = new AlertDialog.Builder(getActivity())
                     .setView(textenter)
                     .setTitle(title)
                     //.setMessage(message)
@@ -228,7 +229,9 @@ public class CompaniesListFragment extends Fragment {
                     .create();
             // cleaning up
             subscriber.add(Subscriptions.create(dialog::dismiss));
+            //textenter = null;
             dialog.show();
+
         });
     }
 
@@ -263,7 +266,7 @@ public class CompaniesListFragment extends Fragment {
     private void getEditCompanyDialog(@NonNull final Company editcompany) {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        final View textenter = inflater.inflate(R.layout.companies_edit_dialog, null);
+        final View textenter = inflater.inflate(R.layout.companies_edit_dialog, null, true);
 
         final EditText namex = (EditText) textenter.findViewById(R.id.namex);
         namex.setText(editcompany.cmname);
@@ -271,7 +274,9 @@ public class CompaniesListFragment extends Fragment {
         cityx.setText(editcompany.cmcity);
 
         builder = new AlertDialog.Builder(getActivity());
-        builder.setView(textenter).setTitle(getString(R.string.fullfirma) + " " + editcompany.cmico);
+        builder.setTitle(getString(R.string.fullfirma) + " " + editcompany.cmico);
+        builder.setView(textenter);
+
         builder.setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
 
             @Override

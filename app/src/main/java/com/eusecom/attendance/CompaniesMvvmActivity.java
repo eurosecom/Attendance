@@ -43,15 +43,11 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
     Toolbar mActionBarToolbar;
     private RxBus _rxBus;
 
-    @NonNull
-    private CompaniesMvvmViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_companies);
-
-        mViewModel = getCompaniesMvvmViewModel();
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 
@@ -158,9 +154,5 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
             return super.onOptionsItemSelected(item);
     }
 
-    @NonNull
-    private CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
-        return ((AttendanceApplication) getApplication()).getCompaniesMvvmViewModel();
-    }
 
 }
