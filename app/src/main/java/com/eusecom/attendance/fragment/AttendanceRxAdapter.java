@@ -58,7 +58,7 @@ class AttendanceRxAdapter extends RecyclerView.Adapter<AttendanceRxViewHolder> {
   }
 
   @Override public int getItemCount() {
-    Log.d("getItemCount", mBlogPostEntities.size() + "");
+    //Log.d("getItemCount", mBlogPostEntities.size() + "");
     return mBlogPostEntities.size();
   }
 

@@ -78,9 +78,6 @@ public class MainActivity extends ActionBarActivity {
     DrawerLayout Drawer;                                  // Declaring DrawerLayout
 
     ActionBarDrawerToggle mDrawerToggle;                  // Declaring Action Bar Drawer Toggle
-
-    String incomplet;
-
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -299,29 +296,8 @@ public class MainActivity extends ActionBarActivity {
         imglogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-                connlist = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        boolean connected = snapshot.getValue(Boolean.class);
-                        if (connected) {
-                            System.out.println("connected");
                             Intent i = new Intent(getApplicationContext(), EmailPasswordActivity.class);
                             startActivity(i);
-                        } else {
-                            System.out.println("not connected");
-                            Toast.makeText(MainActivity.this, getResources().getString(R.string.notconnected), Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        System.err.println("Listener was cancelled");
-                    }
-                };
-                connectedRef.addValueEventListener(connlist);
-
 
             }
         });

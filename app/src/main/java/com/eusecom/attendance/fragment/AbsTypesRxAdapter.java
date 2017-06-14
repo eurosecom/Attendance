@@ -58,7 +58,7 @@ class AbsTypesRxAdapter extends RecyclerView.Adapter<AbsTypesRxViewHolder> {
   }
 
   @Override public int getItemCount() {
-    Log.d("getItemCount", mBlogPostEntities.size() + "");
+    //Log.d("getItemCount", mBlogPostEntities.size() + "");
     return mBlogPostEntities.size();
   }
 

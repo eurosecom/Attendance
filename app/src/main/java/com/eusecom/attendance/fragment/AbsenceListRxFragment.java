@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,8 @@ public class AbsenceListRxFragment extends Fragment {
     private LinearLayoutManager mManager;
     public GetAbsenceSubscriber getAbsenceSubscriber;
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference gettimestramp = null;
+    ValueEventListener getTimeListener = null;
     private RxBus _rxBus;
 
     @Override
@@ -96,17 +99,16 @@ public class AbsenceListRxFragment extends Fragment {
         String githubToken = Constants.ETEST_API_KEY;
         String urlx = SettingsActivity.getServerName(getActivity());
 
-        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
-        gettimestramp.addValueEventListener(new ValueEventListener() {
+        gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
+        getTimeListener = new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //System.out.println(dataSnapshot.getValue());
                 timestampx=dataSnapshot.getValue().toString();
-                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
-
+                Log.d(TAG, "ServerValue.TIMESTAMP oncreate " + timestampx);
             }
-
             public void onCancelled(DatabaseError databaseError) { }
-        });
+        };
+
+        gettimestramp.addValueEventListener(getTimeListener);
         gettimestramp.setValue(ServerValue.TIMESTAMP);
 
         _disposables = new CompositeDisposable();
@@ -136,7 +138,7 @@ public class AbsenceListRxFragment extends Fragment {
                         long rozdiel = timestampl - datsl;
                         //Log.d(TAG, "rozdiel " + rozdiel);
 
-                        Toast.makeText(getActivity(), "Longclick " + keys,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Longclick " + keys,Toast.LENGTH_SHORT).show();
 
                         if( model.aprv.equals("2")) {
                             rozdiel=1;
@@ -195,20 +197,6 @@ public class AbsenceListRxFragment extends Fragment {
         mAdapter = new AbsenceRxAdapter(Collections.<Attendance>emptyList(), _rxBus);
         getAbsenceSubscriber = new GetAbsenceSubscriber();
 
-        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
-        gettimestramp.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //System.out.println(dataSnapshot.getValue());
-                timestampx=dataSnapshot.getValue().toString();
-                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
-
-            }
-
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-        gettimestramp.setValue(ServerValue.TIMESTAMP);
-
-
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -246,10 +234,12 @@ public class AbsenceListRxFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
+        gettimestramp.removeEventListener(getTimeListener);
         _disposables.dispose();
         if (getAbsenceSubscriber != null && !getAbsenceSubscriber.isUnsubscribed()) {
             getAbsenceSubscriber.unsubscribe();
         }
+
 
     }
 

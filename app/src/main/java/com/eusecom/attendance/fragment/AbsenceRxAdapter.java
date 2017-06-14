@@ -1,7 +1,6 @@
 package com.eusecom.attendance.fragment;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ class AbsenceRxAdapter extends RecyclerView.Adapter<AbsenceRxViewHolder> {
         String keys = blogPostEntity.getRok();
         if (isLongClick) {
 
-          Log.d("longClick", pos + " " + keys);
+          //Log.d("longClick", pos + " " + keys);
           //remove(position);
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
@@ -49,7 +48,7 @@ class AbsenceRxAdapter extends RecyclerView.Adapter<AbsenceRxViewHolder> {
 
         } else {
 
-          Log.d("shortClick", pos + " " + keys);
+          //Log.d("shortClick", pos + " " + keys);
 
         }
       }
@@ -58,7 +57,7 @@ class AbsenceRxAdapter extends RecyclerView.Adapter<AbsenceRxViewHolder> {
   }
 
   @Override public int getItemCount() {
-    Log.d("getItemCount", mBlogPostEntities.size() + "");
+    //Log.d("getItemCount", mBlogPostEntities.size() + "");
     return mBlogPostEntities.size();
   }
 
