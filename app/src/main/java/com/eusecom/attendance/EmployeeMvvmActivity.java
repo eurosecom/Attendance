@@ -103,11 +103,12 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                     if (event instanceof EmployeeMvvmActivity.FobTapEvent) {
                         Log.d("EmpoloyeeActivity  ", " fobClick ");
 
-                        mSubscription.add(getNewEmployeeDialog(getString(R.string.newcompany), getString(R.string.fullfirma))
-                                .subscribeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                                .observeOn(Schedulers.computation())
-                                .subscribe(this::setBoolean)
-                        );;
+                        //attention - activity leaked
+                        //mSubscription.add(getNewEmployeeDialog(getString(R.string.newcompany), getString(R.string.fullfirma))
+                        //        .subscribeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                        //        .observeOn(Schedulers.computation())
+                        //        .subscribe(this::setBoolean)
+                        //);;
                     }
                     if (event instanceof Employee) {
                         String keys = ((Employee) event).getUsatw();
@@ -135,7 +136,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                _rxBus.send(new EmployeeMvvmActivity.FobTapEvent());
+                //do not create new employee, only by create user
+                //_rxBus.send(new EmployeeMvvmActivity.FobTapEvent());
 
             }
         });
@@ -242,7 +244,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     }
 
     Observable<Boolean> getNewEmployeeDialog(String title, String message) {
-
+        //attention - activity leaked by use observab;e getNewEmployeeDialog
         return Observable.create((Subscriber<? super Boolean> subscriber) -> {
 
             LayoutInflater inflater = this.getLayoutInflater();

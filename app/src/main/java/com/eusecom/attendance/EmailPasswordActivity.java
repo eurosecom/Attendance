@@ -62,7 +62,7 @@ public class EmailPasswordActivity extends BaseActivity implements
     private FirebaseAuth.AuthStateListener mAuthListener;
     // [END declare_auth_listener]
 
-    String usertype="0", userico="0", myuserid="", username="", userosc="0";
+    String usertype="0", userico="0", myuserid="", username="", userosc="0", usadmin="0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -205,6 +205,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         // Get user information
                         User userx = dataSnapshot.getValue(User.class);
                         usertype = userx.getUstype();
+                        usadmin = userx.getAdmin();
                         userico = userx.getUsico();
                         userosc = userx.getUsosc();
                         myuserid = user.getUid();
@@ -215,6 +216,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         SharedPreferences.Editor editor = prefs.edit();
 
                         editor.putString("ustype", usertype).apply();
+                        editor.putString("usadmin", usadmin).apply();
                         editor.putString("usico", userico).apply();
                         editor.putString("usosc", userosc).apply();
                         editor.putString("usname", username).apply();
@@ -238,6 +240,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         SharedPreferences.Editor editor = prefs.edit();
 
                         editor.putString("ustype", "0").apply();
+                        editor.putString("usadmin", "0").apply();
                         editor.putString("usico", "0").apply();
                         editor.putString("usosc", "0").apply();
                         editor.putString("usatw", "0").apply();
@@ -254,6 +257,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putString("ustype", "0").apply();
+        editor.putString("usadmin", "0").apply();
         editor.putString("usico", "0").apply();
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
@@ -293,6 +297,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ustype", "0").apply();
+        editor.putString("usadmin", "0").apply();
         editor.putString("usico", "0").apply();
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();

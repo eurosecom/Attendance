@@ -17,6 +17,7 @@ public class Employee {
     public String usosc;
     public String usatw;
     public String keyf;
+    public String admin;
 
     public Employee() {
         // Default constructor required for calls to DataSnapshot.getValue(Employee.class)
@@ -30,6 +31,7 @@ public class Employee {
         this.usosc = "0";
         this.usatw = usatw;
         this.keyf = "0";
+        this.admin = "0";
     }
 
     public Employee(String username, String usosc ) {
@@ -40,6 +42,7 @@ public class Employee {
         this.usosc = usosc;
         this.usatw = "0";
         this.keyf = "0";
+        this.admin = "0";
     }
 
     @Exclude
@@ -136,6 +139,7 @@ public class Employee {
         result.put("ustype", ustype);
         result.put("usatw", usatw);
         result.put("keyf", keyf);
+        result.put("admin", admin);
 
         return result;
     }

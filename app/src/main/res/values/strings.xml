@@ -104,6 +104,8 @@
     <string name="rok_summary">Accounting year for attendance.</string>
     <string name="ustype_title">Type of User.</string>
     <string name="ustype_summary">Set App by login. Admin, common user....</string>
+    <string name="usadmin_title">User is admin.</string>
+    <string name="usadmin_summary">0=no, 1=yes</string>
     <string name="usico_title">Company of User.</string>
     <string name="usico_summary">ID of Company where user work.</string>
     <string name="usosc_title">ID number of User.</string>

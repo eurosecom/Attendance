@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout for one item of absence at RcViewer AbsenceListFragmentjava with AbsenceViewHolder.java -->
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp">
-
-    <RelativeLayout
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:background="@drawable/selector_medium_high"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,6 +97,4 @@
 
 
 
-    </RelativeLayout>
-
-</android.support.v7.widget.CardView>
+</RelativeLayout>

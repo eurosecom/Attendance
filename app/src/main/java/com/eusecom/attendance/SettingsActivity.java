@@ -20,6 +20,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String USER_ATW = "usatw";
 	public static final String USNAME = "usname";
 	public static final String ROK = "rok";
+	public static final String USER_ADMIN = "usadmin";
 
 
 	@Override
@@ -49,6 +50,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getUsType(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(USER_TYPE,"0");
+	}
+
+	public static String getUsAdmin(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(USER_ADMIN,"0");
 	}
 
 	public static String getUsIco(Context ctx){
