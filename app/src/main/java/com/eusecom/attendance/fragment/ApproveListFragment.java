@@ -107,6 +107,8 @@ public class ApproveListFragment extends Fragment {
     private LinearLayoutManager mManager;
     public ApproveListFragment.GetApproveSubscriber getApproveSubscriber;
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference gettimestramp = null;
+    ValueEventListener getTimeListener = null;
     private RxBus _rxBus;
 
     @Override
@@ -176,17 +178,16 @@ public class ApproveListFragment extends Fragment {
         mAdapter = new ApproveRxAdapter(Collections.<Attendance>emptyList(), _rxBus);
         getApproveSubscriber = new ApproveListFragment.GetApproveSubscriber();
 
-        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
-        gettimestramp.addValueEventListener(new ValueEventListener() {
+        gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
+        getTimeListener = new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //System.out.println(dataSnapshot.getValue());
                 timestampx=dataSnapshot.getValue().toString();
-                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
-
+                Log.d(TAG, "TIMESTAMP onActcreate " + timestampx);
             }
-
             public void onCancelled(DatabaseError databaseError) { }
-        });
+        };
+
+        gettimestramp.addValueEventListener(getTimeListener);
         gettimestramp.setValue(ServerValue.TIMESTAMP);
 
 
@@ -231,6 +232,7 @@ public class ApproveListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
+        gettimestramp.removeEventListener(getTimeListener);
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
