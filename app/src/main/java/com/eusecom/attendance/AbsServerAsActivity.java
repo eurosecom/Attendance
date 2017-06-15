@@ -55,6 +55,8 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   private Disposable mDisposable;
   private Subscription subscription;
+  private TextWatcher watcher = null;
+    private View.OnClickListener onclicklist = null;
 
   @Override
   protected void onStart() {
@@ -96,24 +98,38 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   }//end onstart
 
+   @Override
+   public void onDestroy() {
+        super.onDestroy();
+
+       onclicklist = null;
+       mQueryEditText.removeTextChangedListener(watcher);
+       mDisposable.dispose();
+       if (subscription != null && !subscription.isUnsubscribed()) {
+           subscription.unsubscribe();
+       }
+   }
+
   @Override
   protected void onStop() {
     super.onStop();
-    if (!mDisposable.isDisposed()) {
+
+      onclicklist = null;
+      mQueryEditText.removeTextChangedListener(watcher);
       mDisposable.dispose();
-    }
-    if (subscription != null && !subscription.isUnsubscribed()) {
-      subscription.unsubscribe();
-    }
+      if (subscription != null && !subscription.isUnsubscribed()) {
+          subscription.unsubscribe();
+      }
 
   }
 
 
   @Override
   public void onBackPressed() {
-
       super.onBackPressed();
-      hideProgressBar();
+
+      onclicklist = null;
+      mQueryEditText.removeTextChangedListener(watcher);
       if (subscription != null && !subscription.isUnsubscribed()) {
       subscription.unsubscribe();
       }
@@ -133,20 +149,21 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       @Override
       public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
         // 4
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            // 5
-            emitter.onNext(mQueryEditText.getText().toString());
-          }
-        });
+            onclicklist = new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  // 5
+                  emitter.onNext(mQueryEditText.getText().toString());
+              }
+            };
+            mSearchButton.setOnClickListener(onclicklist);
 
         // 6
         emitter.setCancellable(new Cancellable() {
           @Override
           public void cancel() throws Exception {
             // 7
-            mSearchButton.setOnClickListener(null);
+              onclicklist = null;
           }
         });
       }
@@ -160,7 +177,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       @Override
       public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
         //3
-        final TextWatcher watcher = new TextWatcher() {
+        watcher = new TextWatcher() {
           @Override
           public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 

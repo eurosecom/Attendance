@@ -132,14 +132,6 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     _disposables.add(tapEventEmitter.connect());
   }
 
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-
-    _disposables.clear();
-
-  }
-
   protected void showProgressBar() {
     mProgressBar.setVisibility(View.VISIBLE);
   }
