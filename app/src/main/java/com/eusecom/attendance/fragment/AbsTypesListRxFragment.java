@@ -159,20 +159,6 @@ public class AbsTypesListRxFragment extends Fragment {
         mAdapter = new AbsTypesRxAdapter(Collections.<Abstype>emptyList(), _rxBus);
         getAbsTypesSubscriber = new GetAbsTypesSubscriber();
 
-        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
-        gettimestramp.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //System.out.println(dataSnapshot.getValue());
-                timestampx=dataSnapshot.getValue().toString();
-                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
-
-            }
-
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-        gettimestramp.setValue(ServerValue.TIMESTAMP);
-
-
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,8 @@ public class AttendanceListRxFragment extends Fragment {
     private LinearLayoutManager mManager;
     public GetAttendanceSubscriber getAttendanceSubscriber;
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference gettimestramp = null;
+    ValueEventListener getTimeListener = null;
     private RxBus _rxBus;
 
     @Override
@@ -93,6 +96,19 @@ public class AttendanceListRxFragment extends Fragment {
         super.onCreate(savedInstanceState);
         String githubToken = Constants.ETEST_API_KEY;
         String urlx = SettingsActivity.getServerName(getActivity());
+
+        gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
+        getTimeListener = new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                timestampx=dataSnapshot.getValue().toString();
+                Log.d("Att TIMES oncreate ", timestampx);
+
+            }
+            public void onCancelled(DatabaseError databaseError) { }
+        };
+
+        gettimestramp.addValueEventListener(getTimeListener);
+        gettimestramp.setValue(ServerValue.TIMESTAMP);
 
         _disposables = new CompositeDisposable();
 
@@ -154,20 +170,6 @@ public class AttendanceListRxFragment extends Fragment {
         mAdapter = new AttendanceRxAdapter(Collections.<Attendance>emptyList(), _rxBus);
         getAttendanceSubscriber = new GetAttendanceSubscriber();
 
-        DatabaseReference gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
-        gettimestramp.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //System.out.println(dataSnapshot.getValue());
-                timestampx=dataSnapshot.getValue().toString();
-                //Log.d(TAG, "ServerValue.TIMESTAMP " + timestampx);
-
-            }
-
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-        gettimestramp.setValue(ServerValue.TIMESTAMP);
-
-
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -205,6 +207,7 @@ public class AttendanceListRxFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
+        gettimestramp.removeEventListener(getTimeListener);
         _disposables.dispose();
         if (getAttendanceSubscriber != null && !getAttendanceSubscriber.isUnsubscribed()) {
             getAttendanceSubscriber.unsubscribe();
