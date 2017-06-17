@@ -80,6 +80,9 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   private RfEtestApi _githubService;
   private Subscription subscription;
 
+  private View.OnClickListener onclicklistapprove = null;
+  private View.OnClickListener onclicklistrefuse = null;
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -164,6 +167,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
     return _rxBus;
   }
+
 
 
   private void saveAbsServer(String texttoast, Attendance model) {
@@ -282,26 +286,30 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
     Button buttonApprove = (Button) dialog.findViewById(R.id.buttonDownload);
     buttonApprove.setText(getString(R.string.approve));
-    buttonApprove.setOnClickListener(new View.OnClickListener() {
-
-      public void onClick(View v) {
+    onclicklistapprove = new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
         dialog.dismiss();
+        onclicklistapprove = null;
+        buttonApprove.setOnClickListener(null);
 
         Intent is = new Intent(getApplicationContext(), ApproveActivity.class);
         startActivity(is);
         finish();
-
       }
-    });
+    };
+    buttonApprove.setOnClickListener(onclicklistapprove);
+
     Button buttonRefuse = (Button) dialog.findViewById(R.id.buttonClose);
-    buttonRefuse.setOnClickListener(new View.OnClickListener() {
-
-      public void onClick(View v) {
+    onclicklistrefuse = new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
         dialog.dismiss();
-
-
+        onclicklistrefuse = null;
+        buttonRefuse.setOnClickListener(null);
       }
-    });
+    };
+    buttonRefuse.setOnClickListener(onclicklistrefuse);
     dialog.show();
 
   }//end getdialog

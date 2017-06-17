@@ -56,7 +56,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
   private Disposable mDisposable;
   private Subscription subscription;
   private TextWatcher watcher = null;
-    private View.OnClickListener onclicklist = null;
+  private View.OnClickListener onclicklist = null;
 
   @Override
   protected void onStart() {
@@ -103,6 +103,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
         super.onDestroy();
 
        onclicklist = null;
+       mSearchButton.setOnClickListener(null);
        mQueryEditText.removeTextChangedListener(watcher);
        mDisposable.dispose();
        if (subscription != null && !subscription.isUnsubscribed()) {
@@ -115,6 +116,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
     super.onStop();
 
       onclicklist = null;
+      mSearchButton.setOnClickListener(null);
       mQueryEditText.removeTextChangedListener(watcher);
       mDisposable.dispose();
       if (subscription != null && !subscription.isUnsubscribed()) {
@@ -129,6 +131,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       super.onBackPressed();
 
       onclicklist = null;
+      mSearchButton.setOnClickListener(null);
       mQueryEditText.removeTextChangedListener(watcher);
       if (subscription != null && !subscription.isUnsubscribed()) {
       subscription.unsubscribe();
@@ -164,6 +167,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
           public void cancel() throws Exception {
             // 7
               onclicklist = null;
+              mSearchButton.setOnClickListener(null);
           }
         });
       }
