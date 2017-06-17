@@ -79,6 +79,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
         .map(new Function<String, List<Attendance>>() {
           @Override
           public List<Attendance> apply(String query) {
+              // NullPointerException next row if i set search string and long click on item to dialog and then change orientation
             return mAbsServerSearchEngine.searchModel(query);
           }
         })
