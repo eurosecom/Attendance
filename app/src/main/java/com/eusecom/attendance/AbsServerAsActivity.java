@@ -64,7 +64,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
     String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
     getAbsServer(getfromfir);
-    //getObservableSearchText();
+    getObservableSearchText();
 
 
   }//end onstart
@@ -232,7 +232,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
               @Override public void onCompleted() {
                 hideProgressBar();
                 Log.d("", "In onCompleted()");
-                getObservableSearchText();
+                //getObservableSearchText();
               }
 
               @Override public void onError(Throwable e) {
