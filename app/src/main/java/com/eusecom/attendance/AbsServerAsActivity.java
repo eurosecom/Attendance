@@ -62,6 +62,9 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
   protected void onStart() {
     super.onStart();
 
+    String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
+    getAbsServer(getfromfir);
+
     Observable<String> buttonClickStream = createButtonClickObservable();
     Observable<String> textChangeStream = createTextChangeObservable();
 
@@ -91,11 +94,6 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
             showResultAs(result);
           }
         });
-
-      String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
-      getAbsServer(getfromfir);
-
-
 
   }//end onstart
 

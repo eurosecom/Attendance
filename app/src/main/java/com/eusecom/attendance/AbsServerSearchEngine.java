@@ -68,12 +68,6 @@ public class AbsServerSearchEngine {
     query = query.toLowerCase();
     Log.d("searchModel", query);
 
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
     List<Attendance> resultAs = new ArrayList<Attendance>();
 
     for (int i = 0; i < mListabsserverCount; i++) {
