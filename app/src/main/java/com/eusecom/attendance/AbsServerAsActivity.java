@@ -64,38 +64,43 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
     String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
     getAbsServer(getfromfir);
+    //getObservableSearchText();
 
-    Observable<String> buttonClickStream = createButtonClickObservable();
-    Observable<String> textChangeStream = createTextChangeObservable();
-
-    Observable<String> searchTextObservable = Observable.merge(textChangeStream, buttonClickStream);
-
-    mDisposable = searchTextObservable // change this line
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnNext(new Consumer<String>() {
-          @Override
-          public void accept(String s) {
-            showProgressBar();
-          }
-        })
-        .observeOn(Schedulers.io())
-        .map(new Function<String, List<Attendance>>() {
-          @Override
-          public List<Attendance> apply(String query) {
-              // NullPointerException next row if i set search string and long click on item to dialog and then change orientation
-            return mAbsServerSearchEngine.searchModel(query);
-          }
-        })
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Consumer<List<Attendance>>() {
-          @Override
-          public void accept(List<Attendance> result) {
-            hideProgressBar();
-            showResultAs(result);
-          }
-        });
 
   }//end onstart
+
+    private void getObservableSearchText() {
+
+        Observable<String> buttonClickStream = createButtonClickObservable();
+        Observable<String> textChangeStream = createTextChangeObservable();
+
+        Observable<String> searchTextObservable = Observable.merge(textChangeStream, buttonClickStream);
+
+        mDisposable = searchTextObservable // change this line
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) {
+                        showProgressBar();
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .map(new Function<String, List<Attendance>>() {
+                    @Override
+                    public List<Attendance> apply(String query) {
+                        // NullPointerException next row if i set search string and long click on item to dialog and then change orientation
+                        return mAbsServerSearchEngine.searchModel(query);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Attendance>>() {
+                    @Override
+                    public void accept(List<Attendance> result) {
+                        hideProgressBar();
+                        showResultAs(result);
+                    }
+                });
+    }
 
    @Override
    public void onDestroy() {
@@ -227,6 +232,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
               @Override public void onCompleted() {
                 hideProgressBar();
                 Log.d("", "In onCompleted()");
+                getObservableSearchText();
               }
 
               @Override public void onError(Throwable e) {
