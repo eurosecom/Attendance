@@ -66,7 +66,7 @@ public abstract class AbsServerBaseSearchActivity extends AppCompatActivity {
     List<String> cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses));
     List<Attendance> listabsserver = initListAbsServer();
 
-    mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses, listabsserver);
+    mAbsServerSearchEngine = new AbsServerSearchEngine(listabsserver);
   }
 
   protected void showProgressBar() {

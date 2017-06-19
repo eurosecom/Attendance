@@ -23,50 +23,30 @@
 package com.eusecom.attendance;
 
 import android.util.Log;
-
 import com.eusecom.attendance.models.Attendance;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AbsServerSearchEngine {
 
-  private final List<String> mCheeses;
   private final List<Attendance> mListabsserver;
   private final int mListabsserverCount;
-  private final int mCheesesCount;
 
-  public AbsServerSearchEngine(List<String> cheeses, List<Attendance> listabsserver) {
-    mCheeses = cheeses;
+  public AbsServerSearchEngine(List<Attendance> listabsserver) {
     mListabsserver = listabsserver;
-    mCheesesCount = mCheeses.size();
     mListabsserverCount = mListabsserver.size();
   }
 
-  public List<String> search(String query) {
+
+  public List<Attendance> searchModel(String query) {
     query = query.toLowerCase();
+    Log.d("searchModel", query);
 
     try {
       Thread.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-
-    List<String> result = new LinkedList<>();
-
-    for (int i = 0; i < mCheesesCount; i++) {
-      if (mCheeses.get(i).toLowerCase().contains(query)) {
-        result.add(mCheeses.get(i));
-      }
-    }
-
-    return result;
-  }
-
-  public List<Attendance> searchModel(String query) {
-    query = query.toLowerCase();
-    Log.d("searchModel", query);
 
     List<Attendance> resultAs = new ArrayList<Attendance>();
 

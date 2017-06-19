@@ -31,6 +31,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -156,7 +157,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   }
 
   protected void nastavResultAs(List<Attendance> resultAs) {
-      mAbsServerSearchEngine = new AbsServerSearchEngine(cheeses, resultAs);
+      mAbsServerSearchEngine = new AbsServerSearchEngine(resultAs);
   }
 
 
@@ -168,6 +169,17 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     return _rxBus;
   }
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    Log.d("ondestroy ", "absserverbasesearchactivity");
+    _disposables.clear();
+    if (subscription != null && !subscription.isUnsubscribed()) {
+      subscription.unsubscribe();
+    }
+
+  }
 
 
   private void saveAbsServer(String texttoast, Attendance model) {

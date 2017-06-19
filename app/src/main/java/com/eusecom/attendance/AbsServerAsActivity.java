@@ -54,65 +54,69 @@ import rx.Subscription;
 public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   private Disposable mDisposable;
-  private Subscription subscription;
+  private Subscription mSubscription;
   private TextWatcher watcher = null;
   private View.OnClickListener onclicklist = null;
+  Consumer<List<Attendance>> consumerListAttendance = null;
+  Consumer<String> consumerstring = null;
 
   @Override
   protected void onStart() {
     super.onStart();
 
-    String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
-    getAbsServer(getfromfir);
-    getObservableSearchText();
+      String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
+      getAbsServer(getfromfir);
+      //getSearchStringObservable();
+
 
 
   }//end onstart
 
-    private void getObservableSearchText() {
+   private void getSearchStringObservable() {
+       Observable<String> buttonClickStream = createButtonClickObservable();
+       Observable<String> textChangeStream = createTextChangeObservable();
 
-        Observable<String> buttonClickStream = createButtonClickObservable();
-        Observable<String> textChangeStream = createTextChangeObservable();
+       Observable<String> searchTextObservable = Observable.merge(textChangeStream, buttonClickStream);
 
-        Observable<String> searchTextObservable = Observable.merge(textChangeStream, buttonClickStream);
-
-        mDisposable = searchTextObservable // change this line
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) {
-                        showProgressBar();
-                    }
-                })
-                .observeOn(Schedulers.io())
-                .map(new Function<String, List<Attendance>>() {
-                    @Override
-                    public List<Attendance> apply(String query) {
-                        // NullPointerException next row if i set search string and long click on item to dialog and then change orientation
-                        return mAbsServerSearchEngine.searchModel(query);
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Attendance>>() {
-                    @Override
-                    public void accept(List<Attendance> result) {
-                        hideProgressBar();
-                        showResultAs(result);
-                    }
-                });
-    }
+       mDisposable = searchTextObservable // change this line
+               .observeOn(AndroidSchedulers.mainThread())
+               .doOnNext(new Consumer<String>() {
+                   @Override
+                   public void accept(String s) {
+                       showProgressBar();
+                   }
+               })
+               .observeOn(Schedulers.io())
+               .map(new Function<String, List<Attendance>>() {
+                   @Override
+                   public List<Attendance> apply(String query) {
+                       return mAbsServerSearchEngine.searchModel(query);
+                   }
+               })
+               .observeOn(AndroidSchedulers.mainThread())
+               .subscribe(new Consumer<List<Attendance>>() {
+                   @Override
+                   public void accept(List<Attendance> result) {
+                       hideProgressBar();
+                       showResultAs(result);
+                   }
+               });
+   }
 
    @Override
    public void onDestroy() {
         super.onDestroy();
 
+       Log.d("ondestroy ", "absserverasactivity");
        onclicklist = null;
        mSearchButton.setOnClickListener(null);
+       watcher = null;
        mQueryEditText.removeTextChangedListener(watcher);
-       mDisposable.dispose();
-       if (subscription != null && !subscription.isUnsubscribed()) {
-           subscription.unsubscribe();
+       //mDisposable.dispose();
+       if (mSubscription != null && !mSubscription.isUnsubscribed()) {
+           mSubscription.unsubscribe();
        }
+
    }
 
   @Override
@@ -121,10 +125,11 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       onclicklist = null;
       mSearchButton.setOnClickListener(null);
+      watcher = null;
       mQueryEditText.removeTextChangedListener(watcher);
-      mDisposable.dispose();
-      if (subscription != null && !subscription.isUnsubscribed()) {
-          subscription.unsubscribe();
+      //mDisposable.dispose();
+      if (mSubscription != null && !mSubscription.isUnsubscribed()) {
+          mSubscription.unsubscribe();
       }
 
   }
@@ -136,12 +141,11 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       onclicklist = null;
       mSearchButton.setOnClickListener(null);
+      watcher = null;
       mQueryEditText.removeTextChangedListener(watcher);
-      if (subscription != null && !subscription.isUnsubscribed()) {
-      subscription.unsubscribe();
-      }
-      if (!mDisposable.isDisposed()) {
-      mDisposable.dispose();
+      //mDisposable.dispose();
+      if (mSubscription != null && !mSubscription.isUnsubscribed()) {
+          mSubscription.unsubscribe();
       }
 
   }
@@ -224,7 +228,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
   private void getAbsServer(String fromfir) {
     showProgressBar();
       String urlx = SettingsActivity.getServerName(AbsServerAsActivity.this);
-    subscription = AbsServerClient.getInstance(urlx)
+    mSubscription = AbsServerClient.getInstance(urlx)
             .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())
             .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -232,7 +236,6 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
               @Override public void onCompleted() {
                 hideProgressBar();
                 Log.d("", "In onCompleted()");
-                //getObservableSearchText();
               }
 
               @Override public void onError(Throwable e) {
