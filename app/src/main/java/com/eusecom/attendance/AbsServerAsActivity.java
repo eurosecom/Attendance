@@ -66,13 +66,13 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
       getAbsServer(getfromfir);
-      //getSearchStringObservable();
+      //getObservableSearchText();
 
 
 
   }//end onstart
 
-   private void getSearchStringObservable() {
+   private void getObservableSearchText() {
        Observable<String> buttonClickStream = createButtonClickObservable();
        Observable<String> textChangeStream = createTextChangeObservable();
 
