@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eusecom.attendance.mvp.MvpActivity;
-
 /**
  * Created by hp1 on 28-12-2014.
  */

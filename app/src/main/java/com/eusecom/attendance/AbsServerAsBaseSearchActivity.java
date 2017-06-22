@@ -64,8 +64,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
 import rx.Subscription;
 
-import static com.eusecom.attendance.R.id.date;
-
 public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
   protected AbsServerSearchEngine mAbsServerSearchEngine;
