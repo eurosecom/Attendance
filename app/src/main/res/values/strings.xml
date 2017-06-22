@@ -128,7 +128,7 @@
         <item >Settings</item>
         <item >Free</item>
         <item >Free</item>
-        <item >Free</item>
+        <item >Demo Dagger ShoppingCart</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
@@ -250,6 +250,12 @@
     <string name="newcompany">New company</string>
     <string name="city">City</string>
 
+    <!-- dagger2 -->
+    <string name="daggerdemo">Demo dagger</string>
+    <string name="daggershow">Show cart</string>
+    <string name="daggerdel">Del item 1 from cart</string>
+    <string name="daggeradd">Add item 3 to cart</string>
+    <string name="daggerclear">Clear cart</string>
 
 
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+        
+        <item android:id="@+id/daggershow"
+                android:title="@string/daggershow"/>
+
+        <item android:id="@+id/daggeradd"
+            android:title="@string/daggeradd"/>
+
+        <item android:id="@+id/daggerdel"
+                android:title="@string/daggerdel"/>
+
+        <item android:id="@+id/daggerclear"
+                android:title="@string/daggerclear"/>
+
+
+</menu>

@@ -2,7 +2,6 @@ package com.eusecom.attendance;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
@@ -11,6 +10,11 @@ import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.mvvmschedulers.SchedulerProvider;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.squareup.leakcanary.LeakCanary;
+
+
+import com.eusecom.attendance.dagger.AppComponent;
+import com.eusecom.attendance.dagger.AppModule;
+import com.eusecom.attendance.dagger.DaggerAppComponent;
 
 
 public class AttendanceApplication extends Application {
@@ -34,6 +38,8 @@ public class AttendanceApplication extends Application {
         }
         LeakCanary.install(this);
         // Normal app init code...
+
+        getAppComponent();
     }
 
 
@@ -87,6 +93,18 @@ public class AttendanceApplication extends Application {
     @NonNull
     public CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
+    }
+
+    //dagger2 demo
+    private static AppComponent appComponent;
+
+    public AppComponent getAppComponent() {
+        if (appComponent == null){
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(this))
+                    .build();
+        }
+        return appComponent;
     }
 
 
