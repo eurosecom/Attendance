@@ -128,7 +128,7 @@
         <item >Settings</item>
         <item >Free</item>
         <item >Free</item>
-        <item >Demo Rx MvpActivity</item>
+        <item >Free</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
@@ -229,9 +229,10 @@
     <string name="isapproved">Approved absence </string>
     <string name="isrefused">Refused absence </string>
 
-    <!-- chees finder-->
+    <!-- search finder-->
     <string name="nothing_found">No items found</string>
     <string name="search">search</string>
+    <string name="searchstring">Search string</string>
 
     <!-- my employees-->
     <string name="osc">empId</string>

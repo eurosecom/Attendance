@@ -89,6 +89,9 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_absserver);
 
+    //ActivityAbsserverDbindBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_absserver_dbind);
+    //binding.setServerabs(new Attendance());
+
     mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
     setSupportActionBar(mActionBarToolbar);
     getSupportActionBar().setTitle(getString(R.string.action_absmysql));

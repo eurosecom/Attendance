@@ -66,7 +66,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
       getAbsServer(getfromfir);
-      //getObservableSearchText();
+      getObservableSearchText();
 
 
 
@@ -110,7 +110,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
        Log.d("ondestroy ", "absserverasactivity");
        onclicklist = null;
        mSearchButton.setOnClickListener(null);
-       watcher = null;
+       //watcher = null;
        mQueryEditText.removeTextChangedListener(watcher);
        //mDisposable.dispose();
        if (mSubscription != null && !mSubscription.isUnsubscribed()) {
@@ -125,7 +125,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       onclicklist = null;
       mSearchButton.setOnClickListener(null);
-      watcher = null;
+      //watcher = null;
       mQueryEditText.removeTextChangedListener(watcher);
       //mDisposable.dispose();
       if (mSubscription != null && !mSubscription.isUnsubscribed()) {
@@ -141,7 +141,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       onclicklist = null;
       mSearchButton.setOnClickListener(null);
-      watcher = null;
+      //watcher = null;
       mQueryEditText.removeTextChangedListener(watcher);
       //mDisposable.dispose();
       if (mSubscription != null && !mSubscription.isUnsubscribed()) {
