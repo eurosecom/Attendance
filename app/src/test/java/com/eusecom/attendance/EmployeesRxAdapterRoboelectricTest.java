@@ -53,7 +53,7 @@ public class EmployeesRxAdapterRoboelectricTest {
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
 
-                    if (event instanceof EmployeeMvvmActivity.TapEvent) {
+                    if (event instanceof EmployeeMvvmActivity.FobTapEvent) {
                         System.out.println("rxBus longClickOnItemOfAdapter");
                     }
                     if (event instanceof Employee) {

@@ -38,22 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/field_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/languages"
-        android:visibility="visible"
-        android:hint="Title"
-        android:maxLines="1" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/employees_list"
-        android:layout_below="@+id/field_title"
+        android:layout_below="@+id/languages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"

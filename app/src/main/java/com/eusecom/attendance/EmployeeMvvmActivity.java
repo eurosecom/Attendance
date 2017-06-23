@@ -64,9 +64,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
     private TextView mGreetingView, mMessageView;
 
     @Nullable
-    private EditText field_title;
-
-    @Nullable
     private Spinner mLanguagesSpinner;
 
     @Nullable
@@ -159,8 +156,6 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         mMessageView = (TextView) findViewById(R.id.message);
 
         mGreetingView = (TextView) findViewById(R.id.greeting);
-
-        field_title = (EditText) findViewById(R.id.field_title);
 
         mLanguagesSpinner = (Spinner) findViewById(R.id.languages);
         assert mLanguagesSpinner != null;
