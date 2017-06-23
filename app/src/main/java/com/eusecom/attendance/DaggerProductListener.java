@@ -1,7 +1,11 @@
 package com.eusecom.attendance;
 
+import android.util.Log;
+
 import com.eusecom.attendance.dagger.LineItem;
 import com.eusecom.attendance.dagger.Product;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,14 +33,20 @@ public class DaggerProductListener {
     public void onAddToCartButtonClicked(Product product) {
         //perform add to checkout button here
         LineItem item = new LineItem(product, 1);
+        Log.d("list onAdd ", item.getProductName());
         mCart.addItemToCart(item);
+        mCart.saveCartToPreference();
     }
 
     public void onClearButtonClicked() {
         mCart.clearShoppingCart();
     }
 
-    public void onDeleteItemButtonClicked(LineItem item) {
-        mCart.removeItemFromCart(item);
+    public List<LineItem> onShowButtonClicked() {
+        return mCart.getShoppingCart();
+    }
+
+    public void onDeleteItemButtonClicked(int pos) {
+        mCart.removeItemFromCart(pos);
     }
 }

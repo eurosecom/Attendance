@@ -15,9 +15,13 @@ import android.widget.Toast;
 import com.eusecom.attendance.dagger.LineItem;
 import com.eusecom.attendance.dagger.Product;
 
+import javax.inject.Inject;
+
 public class DaggerMainActivity extends AppCompatActivity {
 
+    @Inject SharedPreferences sharedPreferences;
     DaggerShoppingCart cart;
+    DaggerProductListener daggerProductListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,33 +31,15 @@ public class DaggerMainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.daggerdemo));
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        cart = new DaggerShoppingCart(prefs);
+        AttendanceApplication.getInstance().getAppComponent().inject(this);
+        //i do not need SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());, i take it from dagger
+        cart = new DaggerShoppingCart(sharedPreferences);
+        daggerProductListener = new DaggerProductListener();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Product product = new Product();
-                product.setId(1);
-                product.setProductName("Name1");
-                product.setDescription("Desc1");
-                LineItem item = new LineItem(product, 2);
-                cart.addItemToCart(item);
-
-                Product product2 = new Product();
-                product2.setId(2);
-                product2.setProductName("Name2");
-                product2.setDescription("Desc2");
-                LineItem item2 = new LineItem(product2, 5);
-
-                cart.addItemToCart(item2);
-                cart.saveCartToPreference();
-
-                String carts0 = cart.getShoppingCart().get(0).getProductName().toString();
-                String carts1 = cart.getShoppingCart().get(1).getProductName().toString();
-                Snackbar.make(view, "carts names " + carts0 + " " + carts1, Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
             }
         });
@@ -76,19 +62,34 @@ public class DaggerMainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.daggershow) {
 
-            String cartsx0="", cartsx1="";
+            String cartsx0="", cartsx1="", cartsx2="";
             try {
-                cartsx0 = cart.getShoppingCart().get(0).getProductName().toString() + " " +
-                        cart.getShoppingCart().get(0).getQuantity();
+                //cartsx0 = cart.getShoppingCart().get(0).getProductName().toString() + " " +
+                //        cart.getShoppingCart().get(0).getQuantity();
+
+                cartsx0 = daggerProductListener.onShowButtonClicked().get(0).getProductName().toString() + " " +
+                        daggerProductListener.onShowButtonClicked().get(0).getQuantity();
+
             }catch( IndexOutOfBoundsException e){ }
 
             try {
-                cartsx1 = cart.getShoppingCart().get(1).getProductName().toString() + " " +
-                    cart.getShoppingCart().get(1).getQuantity();
+                //cartsx1 = cart.getShoppingCart().get(1).getProductName().toString() + " " +
+                //    cart.getShoppingCart().get(1).getQuantity();
+
+                cartsx1 = daggerProductListener.onShowButtonClicked().get(1).getProductName().toString() + " " +
+                        daggerProductListener.onShowButtonClicked().get(1).getQuantity();
+
+            }catch( IndexOutOfBoundsException e){ }
+
+            try {
+
+                cartsx2 = daggerProductListener.onShowButtonClicked().get(2).getProductName().toString() + " " +
+                        daggerProductListener.onShowButtonClicked().get(2).getQuantity();
+
             }catch( IndexOutOfBoundsException e){ }
 
 
-            String toastx = "carts names " + cartsx0 + " " + cartsx1;
+            String toastx = "carts names " + cartsx0 + " " + cartsx1 + " " + cartsx2;
 
             Toast.makeText(this, toastx,Toast.LENGTH_LONG).show();
 
@@ -99,30 +100,64 @@ public class DaggerMainActivity extends AppCompatActivity {
         if (id == R.id.daggeradd) {
 
             Product product = new Product();
+            product.setId(1);
+            product.setProductName("Name1");
+            product.setDescription("Desc1");
+            LineItem itemdel = new LineItem(product, 7);
+
+            daggerProductListener.onAddToCartButtonClicked(product);
+
+            //cart.addItemToCart(itemdel);
+            //cart.saveCartToPreference();
+
+            return true;
+        }
+
+        if (id == R.id.daggeradd2) {
+
+            Product product = new Product();
+            product.setId(2);
+            product.setProductName("Name2");
+            product.setDescription("Desc2");
+            LineItem itemdel = new LineItem(product, 7);
+
+            daggerProductListener.onAddToCartButtonClicked(product);
+
+            //cart.addItemToCart(itemdel);
+            //cart.saveCartToPreference();
+
+            return true;
+        }
+
+        if (id == R.id.daggeradd3) {
+
+            Product product = new Product();
             product.setId(3);
             product.setProductName("Name3");
             product.setDescription("Desc3");
             LineItem itemdel = new LineItem(product, 7);
-            cart.addItemToCart(itemdel);
-            cart.saveCartToPreference();
+
+            daggerProductListener.onAddToCartButtonClicked(product);
+
+            //cart.addItemToCart(itemdel);
+            //cart.saveCartToPreference();
 
             return true;
         }
         if (id == R.id.daggerdel) {
 
-            Product product = new Product();
-            product.setId(1);
-            product.setProductName("Name1");
-            product.setDescription("Desc1");
-            LineItem itemdel = new LineItem(product, 2);
-            cart.removeItemFromCart(itemdel);
-            cart.saveCartToPreference();
+            daggerProductListener.onDeleteItemButtonClicked(0);
+
+            //cart.removeItemFromCart(0);
+            //cart.saveCartToPreference();
 
             return true;
         }
         if (id == R.id.daggerclear) {
 
-            cart.clearShoppingCart();
+            daggerProductListener.onClearButtonClicked();
+
+            //cart.clearShoppingCart();
 
             return true;
         }

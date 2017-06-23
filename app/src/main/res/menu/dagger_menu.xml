@@ -7,7 +7,13 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:title="@string/daggershow"/>
 
         <item android:id="@+id/daggeradd"
-            android:title="@string/daggeradd"/>
+                android:title="@string/daggeradd"/>
+
+        <item android:id="@+id/daggeradd2"
+            android:title="@string/daggeradd2"/>
+
+        <item android:id="@+id/daggeradd3"
+            android:title="@string/daggeradd3"/>
 
         <item android:id="@+id/daggerdel"
                 android:title="@string/daggerdel"/>

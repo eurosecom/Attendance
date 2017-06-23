@@ -253,8 +253,10 @@
     <!-- dagger2 -->
     <string name="daggerdemo">Demo dagger</string>
     <string name="daggershow">Show cart</string>
-    <string name="daggerdel">Del item 1 from cart</string>
-    <string name="daggeradd">Add item 3 to cart</string>
+    <string name="daggerdel">Del item 0 from cart</string>
+    <string name="daggeradd">Add item 1 to cart</string>
+    <string name="daggeradd2">Add item 2 to cart</string>
+    <string name="daggeradd3">Add item 3 to cart</string>
     <string name="daggerclear">Clear cart</string>
 
 

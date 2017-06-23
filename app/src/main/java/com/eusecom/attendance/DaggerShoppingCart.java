@@ -1,6 +1,7 @@
 package com.eusecom.attendance;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -52,6 +53,7 @@ public class DaggerShoppingCart {
     }
 
     public void addItemToCart(LineItem item){
+        Log.d("cart addItem ", item.getProductName());
         if (shoppingCart.contains(item)){
             int currentPosition = shoppingCart.indexOf(item);
             LineItem itemAlreadyInCart = shoppingCart.get(currentPosition);
@@ -71,8 +73,8 @@ public class DaggerShoppingCart {
         updateApp();
     }
 
-    public void removeItemFromCart(LineItem item){
-        shoppingCart.remove(item);
+    public void removeItemFromCart(int pos){
+        shoppingCart.remove(pos);
         updateApp();
     }
 
@@ -93,6 +95,7 @@ public class DaggerShoppingCart {
 
 
     public void saveCartToPreference(){
+        Log.d("cart save ", "cart");
         if (shoppingCart != null) {
             Gson gson = new Gson();
             String serializedItems = gson.toJson(shoppingCart);
