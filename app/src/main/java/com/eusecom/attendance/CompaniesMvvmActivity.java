@@ -130,6 +130,7 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_database, menu);
         return true;
     }
