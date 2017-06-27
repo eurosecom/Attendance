@@ -248,6 +248,7 @@
 
     <!-- my companies-->
     <string name="newcompany">New company</string>
+    <string name="choosecompany">Choose company</string>
     <string name="city">City</string>
 
     <!-- dagger2 -->

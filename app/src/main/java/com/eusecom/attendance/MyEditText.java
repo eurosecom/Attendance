@@ -12,7 +12,7 @@ import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 
 //by https://stackoverflow.com/questions/14069501/edittext-causing-memory-leak?rq=1
-//EditText leak activity on Samsung - it does not help
+//EditText leak activity on Samsung S4 - it does not help
 
 
 public class MyEditText extends EditText {

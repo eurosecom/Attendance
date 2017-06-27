@@ -22,6 +22,11 @@
     </item>
 
     <item
+        android:id="@+id/choosecompany"
+        android:title="@string/choosecompany">
+    </item>
+
+    <item
         android:id="@+id/settings"
         android:title="@string/action_settings">
     </item>

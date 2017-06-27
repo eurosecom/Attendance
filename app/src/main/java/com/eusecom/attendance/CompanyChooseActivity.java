@@ -22,55 +22,73 @@
 
 package com.eusecom.attendance;
 
-import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.retrofit.AbsServerClient;
+import com.eusecom.attendance.models.Company;
+import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.flowables.ConnectableFlowable;
 import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-
-import rx.Subscription;
+import rx.Subscriber;
 
 //by https://www.raywenderlich.com/141980/rxandroid-tutorial
 //to find over List<Attendance>
 
 //by https://www.toptal.com/android/functional-reactive-android-rxjava username=arriolac
 
-public class CompanyChooseActivity extends AbsServerAsBaseSearchActivity {
+public class CompanyChooseActivity extends CompanyChooseBaseSearchActivity {
 
   private Disposable mDisposable;
-  private Subscription mSubscription;
   private TextWatcher watcher = null;
   private View.OnClickListener onclicklist = null;
-  Consumer<List<Attendance>> consumerListAttendance = null;
-  Consumer<String> consumerstring = null;
+   public GetCompanySubscriber getCompanySubscriber;
+   private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
 
   @Override
   protected void onStart() {
     super.onStart();
 
-      String getfromfir =  SettingsActivity.getFir(CompanyChooseActivity.this);
-      getAbsServer(getfromfir);
+      getCompanySubscriber = new GetCompanySubscriber();
+      loadCompanies();
       getObservableSearchText();
 
-
-
   }//end onstart
+
+    private void loadCompanies() {
+
+        Query recentCompaniesQuery = firebaseRef.child("companies").orderByChild("cmico");
+
+        RxFirebaseDatabase.getInstance().observeValueEvent(recentCompaniesQuery).subscribe(getCompanySubscriber);
+    }
+
+
+    private void renderCompaniesList(List<Company> blogPostEntities) {
+
+        //mAdapter.setData(blogPostEntities);
+        Log.d("blogPostEntities", blogPostEntities.get(0).getCmname());
+        //Log.d("blogPostEntities", blogPostEntities.get(1).getTitle());
+        nastavResultCompany(blogPostEntities);
+        showResultCompany(blogPostEntities);
+    }
+
 
    private void getObservableSearchText() {
        Observable<String> buttonClickStream = createButtonClickObservable();
@@ -87,18 +105,18 @@ public class CompanyChooseActivity extends AbsServerAsBaseSearchActivity {
                    }
                })
                .observeOn(Schedulers.io())
-               .map(new Function<String, List<Attendance>>() {
+               .map(new Function<String, List<Company>>() {
                    @Override
-                   public List<Attendance> apply(String query) {
-                       return mAbsServerSearchEngine.searchModel(query);
+                   public List<Company> apply(String query) {
+                       return mCompanyChooseSearchEngine.searchModel(query);
                    }
                })
                .observeOn(AndroidSchedulers.mainThread())
-               .subscribe(new Consumer<List<Attendance>>() {
+               .subscribe(new Consumer<List<Company>>() {
                    @Override
-                   public void accept(List<Attendance> result) {
+                   public void accept(List<Company> result) {
                        hideProgressBar();
-                       showResultAs(result);
+                       showResultCompany(result);
                    }
                });
    }
@@ -110,12 +128,8 @@ public class CompanyChooseActivity extends AbsServerAsBaseSearchActivity {
        Log.d("ondestroy ", "absserverasactivity");
        onclicklist = null;
        mSearchButton.setOnClickListener(null);
-       //watcher = null;
        mQueryEditText.removeTextChangedListener(watcher);
-       //mDisposable.dispose();
-       if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-           mSubscription.unsubscribe();
-       }
+       getCompanySubscriber.unsubscribe();
 
    }
 
@@ -125,12 +139,8 @@ public class CompanyChooseActivity extends AbsServerAsBaseSearchActivity {
 
       onclicklist = null;
       mSearchButton.setOnClickListener(null);
-      //watcher = null;
       mQueryEditText.removeTextChangedListener(watcher);
-      //mDisposable.dispose();
-      if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-          mSubscription.unsubscribe();
-      }
+      getCompanySubscriber.unsubscribe();
 
   }
 
@@ -141,12 +151,8 @@ public class CompanyChooseActivity extends AbsServerAsBaseSearchActivity {
 
       onclicklist = null;
       mSearchButton.setOnClickListener(null);
-      //watcher = null;
       mQueryEditText.removeTextChangedListener(watcher);
-      //mDisposable.dispose();
-      if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-          mSubscription.unsubscribe();
-      }
+      getCompanySubscriber.unsubscribe();
 
   }
 
@@ -220,40 +226,36 @@ public class CompanyChooseActivity extends AbsServerAsBaseSearchActivity {
         .filter(new Predicate<String>() {
           @Override
           public boolean test(String query) throws Exception {
-            return query.length() >= 2;
+            return query.length() >= 3;
           }
         }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
   }
 
-  private void getAbsServer(String fromfir) {
-    showProgressBar();
-      String urlx = SettingsActivity.getServerName(CompanyChooseActivity.this);
-    mSubscription = AbsServerClient.getInstance(urlx)
-            .getAbsServer(fromfir)
-            .subscribeOn(rx.schedulers.Schedulers.io())
-            .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-            .subscribe(new rx.Observer<List<Attendance>>() {
-              @Override public void onCompleted() {
-                hideProgressBar();
-                Log.d("", "In onCompleted()");
-              }
 
-              @Override public void onError(Throwable e) {
-                e.printStackTrace();
-                hideProgressBar();
-                Log.d("", "In onError()");
-              }
+    private final class GetCompanySubscriber extends Subscriber<DataSnapshot> {
+        @Override public void onCompleted() {
 
-              @Override public void onNext(List<Attendance> absserverRepos) {
-                Log.d("Thread onNext", Thread.currentThread().getName());
-                //Log.d("absserverRepos", absserverRepos.get(0).getDmna());
-                nastavResultAs(absserverRepos);
-                showResultAs(absserverRepos);
+            getCompanySubscriber.unsubscribe();
+        }
 
-              }
-            });
-  }
+        @Override public void onError(Throwable e) {
 
+            getCompanySubscriber.unsubscribe();
+        }
+
+        @SuppressWarnings("unchecked") @Override public void onNext(DataSnapshot dataSnapshot) {
+            List<Company> blogPostEntities = new ArrayList<>();
+            for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                String keys = childDataSnapshot.getKey();
+                //Log.d("keys ", keys);
+                Company resultx = childDataSnapshot.getValue(Company.class);
+                //resultx.setRok(keys);
+                blogPostEntities.add(resultx);
+            }
+            renderCompaniesList(blogPostEntities);
+
+        }
+    }//end of getCompanySubscriber
 
 
 
