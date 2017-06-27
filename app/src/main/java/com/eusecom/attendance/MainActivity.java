@@ -89,6 +89,7 @@ public class MainActivity extends ActionBarActivity {
     private String userIDX = "";
     ValueEventListener connlist;
     DatabaseReference connectedRef;
+    AlertDialog dialognoico = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,6 +330,19 @@ public class MainActivity extends ActionBarActivity {
 
     }//end oncreate
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            if (dialognoico != null && dialognoico.isShowing()) {
+                dialognoico.dismiss();
+                dialognoico=null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // [START basic_write]
     private void writeAttendance(String usico, String usid, String ume, String dmxa, String dmna, String daod, String dado, String dnixa,
@@ -484,7 +498,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void getNoIcoAlert(){
 
-        new AlertDialog.Builder(MainActivity.this)
+        dialognoico = new AlertDialog.Builder(MainActivity.this)
                 .setTitle(getString(R.string.noico))
                 .setMessage(getString(R.string.qico))
                 .setPositiveButton(R.string.textyes,
@@ -492,6 +506,9 @@ public class MainActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
 
+                                Intent is = new Intent(getApplicationContext(), CompanyChooseActivity.class);
+                                startActivity(is);
+                                dialognoico.dismiss();
 
                             }
                         })
@@ -500,6 +517,7 @@ public class MainActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
                                 // ignore, just dismiss
+                                dialognoico.dismiss();
 
                             }
                         })

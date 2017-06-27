@@ -50,6 +50,7 @@
         <activity android:name=".MapActivity"/>
         <activity android:name=".EmployeeMvvmActivity"/>
         <activity android:name=".CompaniesMvvmActivity"/>
+        <activity android:name=".CompanyChooseActivity"/>
         <activity android:name=".DaggerMainActivity"/>
 
 
