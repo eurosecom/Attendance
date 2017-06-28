@@ -64,6 +64,8 @@ public class CompanyChooseAdapter extends RecyclerView.Adapter<CompanyChooseAdap
 
       holder.employee_name.setText(mListcompany.get(position).cmname);
       holder.icox.setText(mListcompany.get(position).cmico);
+      holder.actx.setText(mListcompany.get(position).cmakt);
+      holder.cityx.setText(mListcompany.get(position).cmcity);
 
       holder.setClickListener(new CompanyChooseAdapter.CompanyChooseViewHolder.ClickListener() {
           public void onClick(View v, int pos, boolean isLongClick) {
@@ -100,10 +102,10 @@ public class CompanyChooseAdapter extends RecyclerView.Adapter<CompanyChooseAdap
       public ImageView employee_photo;
       public ImageView starView;
       public TextView numStarsView;
-      public TextView oscx;
+      public TextView actx;
+      public TextView cityx;
       public TextView icox;
-      public TextView typx;
-      public TextView emailx;
+
       private ClickListener clickListener;
       Context mContext;
 
@@ -114,10 +116,9 @@ public class CompanyChooseAdapter extends RecyclerView.Adapter<CompanyChooseAdap
         employee_photo = (ImageView) itemView.findViewById(R.id.employee_photo);
         starView = (ImageView) itemView.findViewById(R.id.star);
         numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
-        oscx = (TextView) itemView.findViewById(R.id.oscx);
+        actx = (TextView) itemView.findViewById(R.id.actx);
         icox = (TextView) itemView.findViewById(R.id.icox);
-        typx = (TextView) itemView.findViewById(R.id.typx);
-        emailx = (TextView) itemView.findViewById(R.id.emailx);
+        cityx = (TextView) itemView.findViewById(R.id.cityx);
         mContext = itemView.getContext();
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
@@ -161,31 +162,6 @@ public class CompanyChooseAdapter extends RecyclerView.Adapter<CompanyChooseAdap
 
   }//end class viewholder
 
-    private String getDate(long timeStamp){
-
-        try{
-            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        }
-        catch(Exception ex){
-            return "xx";
-        }
-    }
-
-    private String getDateTime(long timeStamp){
-
-        try{
-            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        }
-        catch(Exception ex){
-            return "xx";
-        }
-    }
-
-
     private void getDialog(String postkey, Company model, Context mContext) {
 
         String fromfir =  SettingsActivity.getFir(mContext);
@@ -193,16 +169,16 @@ public class CompanyChooseAdapter extends RecyclerView.Adapter<CompanyChooseAdap
 
         // custom dialog
         final Dialog dialog = new Dialog(mContext);
-        dialog.setContentView(R.layout.absserver_dialog);
-        dialog.setTitle(R.string.item);
+        dialog.setContentView(R.layout.choosecompany_dialog);
+        dialog.setTitle(R.string.company);
         // set the custom dialog components - text, image and button
-        String textx = mContext.getString(R.string.item) + " " + postkey + ". " + model.cmname;
+        String textx = mContext.getString(R.string.fullfirma) + " " + postkey + " " + model.cmname;
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textx);
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
         image.setImageResource(R.drawable.ic_image_edit);
 
-        Button buttonDownload = (Button) dialog.findViewById(R.id.buttonDownload);
+        Button buttonDownload = (Button) dialog.findViewById(R.id.buttonSetup);
         // if button is clicked, close the custom dialog
         buttonDownload.setOnClickListener(new View.OnClickListener() {
 

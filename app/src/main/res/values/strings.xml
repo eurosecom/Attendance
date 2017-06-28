@@ -247,9 +247,12 @@
     <string name="cancel">Cancel</string>
 
     <!-- my companies-->
+    <string name="company">Company</string>
     <string name="newcompany">New company</string>
     <string name="choosecompany">Choose company</string>
     <string name="city">City</string>
+    <string name="active">Active</string>
+    <string name="setup">Set up</string>
 
     <!-- dagger2 -->
     <string name="daggerdemo">Demo dagger</string>

@@ -18,10 +18,9 @@ public class CompaniesRxViewHolder extends RecyclerView.ViewHolder implements Vi
   public ImageView employee_photo;
   public ImageView starView;
   public TextView numStarsView;
-  public TextView oscx;
+  public TextView actx;
+  public TextView cityx;
   public TextView icox;
-  public TextView typx;
-  public TextView emailx;
 
   private ClickListener clickListener;
   Context mContext;
@@ -34,10 +33,9 @@ public class CompaniesRxViewHolder extends RecyclerView.ViewHolder implements Vi
     employee_photo = (ImageView) itemView.findViewById(R.id.employee_photo);
     starView = (ImageView) itemView.findViewById(R.id.star);
     numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
-    oscx = (TextView) itemView.findViewById(R.id.oscx);
+    actx = (TextView) itemView.findViewById(R.id.actx);
     icox = (TextView) itemView.findViewById(R.id.icox);
-    typx = (TextView) itemView.findViewById(R.id.typx);
-    emailx = (TextView) itemView.findViewById(R.id.emailx);
+    cityx = (TextView) itemView.findViewById(R.id.cityx);
     mContext = itemView.getContext();
 
     itemView.setOnClickListener(this);
@@ -50,6 +48,8 @@ public class CompaniesRxViewHolder extends RecyclerView.ViewHolder implements Vi
     }
     employee_name.setText(companiee.cmname);
     icox.setText(companiee.cmico);
+    actx.setText(companiee.cmakt);
+    cityx.setText(companiee.cmcity);
 
   }
 

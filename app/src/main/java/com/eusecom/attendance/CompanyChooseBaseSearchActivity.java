@@ -24,7 +24,9 @@ package com.eusecom.attendance;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +48,7 @@ import com.eusecom.attendance.retrofit.RfEtestApi;
 import com.eusecom.attendance.retrofit.RfEtestService;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -76,9 +79,7 @@ public abstract class CompanyChooseBaseSearchActivity extends AppCompatActivity 
   List<String> cheeses;
   private RxBus _rxBus;
   private CompositeDisposable _disposables;
-
-  private RfEtestApi _githubService;
-  private Subscription subscription;
+  private DatabaseReference mDatabase;
 
   private View.OnClickListener onclicklistapprove = null;
   private View.OnClickListener onclicklistrefuse = null;
@@ -90,17 +91,11 @@ public abstract class CompanyChooseBaseSearchActivity extends AppCompatActivity 
 
     mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
     setSupportActionBar(mActionBarToolbar);
-    getSupportActionBar().setTitle(getString(R.string.action_absmysql));
+    getSupportActionBar().setTitle(getString(R.string.choosecompany));
 
     mQueryEditText = (EditText) findViewById(R.id.query_edit_text);
     mSearchButton = (Button) findViewById(R.id.search_button);
     mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-    String githubToken = Constants.ETEST_API_KEY;
-    String urlx = SettingsActivity.getServerName(this);
-    _githubService = RfEtestService.createGithubService(githubToken, urlx);
-
-    cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
 
     _rxBus = getRxBusSingleton();
 
@@ -117,9 +112,9 @@ public abstract class CompanyChooseBaseSearchActivity extends AppCompatActivity 
               if (event instanceof CompanyChooseBaseSearchActivity.OnItemClickEvent) {
 
               }
-              if (event instanceof Attendance) {
+              if (event instanceof Company) {
 
-                saveIcoId(((Attendance) event).daod + " / " + ((Attendance) event).dado, ((Attendance) event));
+                saveIcoId(((Company) event).cmico+ " " + ((Company) event).cmname, ((Company) event));
               }
             }));
 
@@ -173,17 +168,27 @@ public abstract class CompanyChooseBaseSearchActivity extends AppCompatActivity 
 
     Log.d("ondestroy ", "companychooseActivity");
     _disposables.clear();
-    if (subscription != null && !subscription.isUnsubscribed()) {
-      subscription.unsubscribe();
-    }
 
   }
 
 
-  private void saveIcoId(String texttoast, Attendance model) {
+  private void saveIcoId(String texttoast, Company model) {
+
+    mDatabase = FirebaseDatabase.getInstance().getReference();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+    mDatabase.child("users").child(user.getUid()).child("usico").setValue(model.cmico);
+
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putString("usico", model.cmico).apply();
+    editor.commit();
 
     Toast.makeText(CompanyChooseBaseSearchActivity.this, texttoast,
             Toast.LENGTH_LONG).show();
+
+
+    finish();
 
 
   }//end saveAbsServer

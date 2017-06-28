@@ -75,19 +75,19 @@
 
 
             <TextView
-                android:id="@+id/osct"
+                android:id="@+id/actt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/osc"
+                android:text="@string/active"
                 tools:text="7" />
 
             <TextView
-                android:id="@+id/oscx"
+                android:id="@+id/actx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/osct"
+                android:layout_toRightOf="@+id/actt"
                 tools:text="7" />
 
             <TextView
@@ -95,8 +95,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/firma"
-                android:layout_toRightOf="@+id/oscx"
+                android:text="@string/fullfirma"
+                android:layout_toRightOf="@+id/actx"
                 tools:text="7" />
 
             <TextView
@@ -107,22 +107,6 @@
                 android:layout_toRightOf="@+id/icot"
                 tools:text="7" />
 
-            <TextView
-                android:id="@+id/typt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="@string/type"
-                android:layout_toRightOf="@+id/icox"
-                tools:text="7" />
-
-            <TextView
-                android:id="@+id/typx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/typt"
-                tools:text="7" />
 
         </LinearLayout>
 
@@ -136,19 +120,19 @@
 
 
             <TextView
-                android:id="@+id/emailt"
+                android:id="@+id/cityt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/email"
+                android:text="@string/city"
                 tools:text="7" />
 
             <TextView
-                android:id="@+id/emailx"
+                android:id="@+id/cityx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/emailt"
+                android:layout_toRightOf="@+id/cityt"
                 tools:text="7" />
 
 
