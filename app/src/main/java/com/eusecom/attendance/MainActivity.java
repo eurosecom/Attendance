@@ -221,8 +221,10 @@ public class MainActivity extends ActionBarActivity {
                                     .show();
 
                         } else {
-                            Toast.makeText(MainActivity.this, "You are at work now.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            String texttoast = getString(R.string.atwork);
+                            Toast.makeText(MainActivity.this, texttoast, Toast.LENGTH_SHORT).show();
+
                         }
 
                     }
@@ -230,8 +232,8 @@ public class MainActivity extends ActionBarActivity {
 
                 } else {
 
-                    Toast.makeText(MainActivity.this, "Login to Firebase.",
-                            Toast.LENGTH_SHORT).show();
+                    String texttoast = getString(R.string.loginfb);
+                    Toast.makeText(MainActivity.this, texttoast, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -280,15 +282,16 @@ public class MainActivity extends ActionBarActivity {
                                     .show();
 
                         } else {
-                            Toast.makeText(MainActivity.this, "You are out of work now.",
-                                    Toast.LENGTH_SHORT).show();
+                            String texttoast = getString(R.string.outwork);
+                            Toast.makeText(MainActivity.this, texttoast, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                 } else {
 
-                    Toast.makeText(MainActivity.this, "Login to Firebase.",
-                            Toast.LENGTH_SHORT).show();
+                    String texttoast = getString(R.string.loginfb);
+                    Toast.makeText(MainActivity.this, texttoast, Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -584,8 +587,14 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.mycompanies) {
 
-            Intent is = new Intent(getApplicationContext(), CompaniesMvvmActivity.class);
-            startActivity(is);
+            if (SettingsActivity.getUsAdmin(MainActivity.this).equals("1")) {
+                Intent is = new Intent(getApplicationContext(), CompaniesMvvmActivity.class);
+                startActivity(is);
+            } else {
+                String texttoast = getString(R.string.allowedcompany);
+                Toast.makeText(MainActivity.this, texttoast, Toast.LENGTH_LONG).show();
+            }
+
             return true;
         }
 
