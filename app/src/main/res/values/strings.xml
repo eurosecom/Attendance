@@ -38,6 +38,9 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="loginfb">Login to Firebase.</string>
+    <string name="outwork">You are out of work now.</string>
+    <string name="atwork">You are at work now.</string>
 
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="firebase_user_management">Firebase User Management</string>
@@ -245,6 +248,7 @@
     <string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="cancel">Cancel</string>
+    <string name="createemployee">You can create new employee only by create new email account in LoginActivity.</string>
 
     <!-- my companies-->
     <string name="company">Company</string>
@@ -253,6 +257,10 @@
     <string name="city">City</string>
     <string name="active">Active</string>
     <string name="setup">Set up</string>
+    <string name="allowedcompany">Allowed only for Admin user.</string>
+    <string name="companycreated">New Company %s has created.</string>
+    <string name="companyexist">New Company did not create. Company %s already exist.</string>
+
 
     <!-- dagger2 -->
     <string name="daggerdemo">Demo dagger</string>
