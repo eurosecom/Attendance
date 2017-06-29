@@ -35,6 +35,7 @@ import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.rxbus.RxBus;
 import android.support.design.widget.CoordinatorLayout;
+import android.widget.Toast;
 
 import static android.support.design.R.styleable.CoordinatorLayout;
 
@@ -133,8 +134,8 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //do not create new employee, only by create user
-                //_rxBus.send(new EmployeeMvvmActivity.FobTapEvent());
+
+                Toast.makeText(EmployeeMvvmActivity.this, R.string.createemployee, Toast.LENGTH_LONG).show();
 
             }
         });
