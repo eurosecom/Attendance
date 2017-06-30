@@ -227,7 +227,11 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
   private void getAbsServer(String fromfir) {
     showProgressBar();
-      String urlx = SettingsActivity.getServerName(AbsServerAsActivity.this);
+      String urlx = "http:\\" + SettingsActivity.getServerName(AbsServerAsActivity.this);
+      String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
+      if( usicox.equals("44551142")) {
+          urlx = "http:\\www.edcom.sk";
+      }
     mSubscription = AbsServerClient.getInstance(urlx)
             .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())

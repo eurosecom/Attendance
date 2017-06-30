@@ -99,7 +99,11 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
     String githubToken = Constants.ETEST_API_KEY;
-    String urlx = SettingsActivity.getServerName(this);
+    String urlx = "http:\\" + SettingsActivity.getServerName(this);
+    String usicox = SettingsActivity.getUsIco(this);
+    if( usicox.equals("44551142")) {
+      urlx = "http:\\www.edcom.sk";
+    }
     _githubService = RfEtestService.createGithubService(githubToken, urlx);
 
     cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
@@ -233,7 +237,12 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
                                       DatabaseReference mDatabase, String keyf, String cplxb ) {
 
     String getfromfir =  SettingsActivity.getFir(AbsServerAsBaseSearchActivity.this);
-    String urlx = SettingsActivity.getServerName(AbsServerAsBaseSearchActivity.this);
+    //String urlx = SettingsActivity.getServerName(AbsServerAsBaseSearchActivity.this);
+    String urlx = "http:\\" + SettingsActivity.getServerName(this);
+    String usicox = SettingsActivity.getUsIco(this);
+    if( usicox.equals("44551142")) {
+      urlx = "http:\\www.edcom.sk";
+    }
     subscription = AbsServerClient.getInstance(urlx)
             .setKeyAndgetAbsServer(getfromfir, keyf, cplxb)
             .subscribeOn(rx.schedulers.Schedulers.io())

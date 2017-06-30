@@ -115,7 +115,11 @@ public class ApproveListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String githubToken = Constants.ETEST_API_KEY;
-        String urlx = SettingsActivity.getServerName(getActivity());
+        String urlx = "http:\\" + SettingsActivity.getServerName(getActivity());
+        String usicox = SettingsActivity.getUsIco(getActivity());
+        if( usicox.equals("44551142")) {
+            urlx = "http:\\www.edcom.sk";
+        }
         _rfetestService = RfEtestService.createGithubService(githubToken, urlx);
 
         _disposables = new CompositeDisposable();

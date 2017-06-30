@@ -96,7 +96,7 @@
     <string name="item">Item</string>
 
     <string name="servername_title">Server name.</string>
-    <string name="servername_summary">Server name to which you want to connect, for example www.edcom.sk</string>
+    <string name="servername_summary">Server name to which you want to connect, for example www.edcom.sk, without http:\\</string>
     <string name="username_title">Mail username.</string>
     <string name="username_summary">Mail - username for login to Firebase.</string>
     <string name="userpsw_title">User password.</string>

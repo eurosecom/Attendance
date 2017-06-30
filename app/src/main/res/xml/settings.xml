@@ -4,7 +4,7 @@
 
     <EditTextPreference
         android:key="servername"
-        android:defaultValue="http:\\www.eshoptest.sk"
+        android:defaultValue="www.eshoptest.sk"
         android:summary="@string/servername_summary"
         android:title="@string/servername_title" />
 
