@@ -282,8 +282,9 @@ public class ApproveListFragment extends Fragment {
                 .subscribeWith(new DisposableObserver<Pair<RfUser,RfContributor>>() {
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "Retrofit call 2 completed ");
-                        Toast.makeText(getActivity(), "Retrofit call 2 completed ", Toast.LENGTH_SHORT).show();
+                        //Log.d(TAG, "Retrofit call 2 completed ");
+                        //String texttoast = getString(R.string.absappandsavedtoserver);
+                        //Toast.makeText(getActivity(), texttoast, Toast.LENGTH_LONG).show();
 
                     }
 
@@ -308,15 +309,19 @@ public class ApproveListFragment extends Fragment {
 
                         if(contributor.saved == 1 ) {
                             snext = getResources().getString(R.string.abs_saved) + snextx;
+                            String texttoast = getString(R.string.absappandsavedtoserver);
+                            Toast.makeText(getActivity(), texttoast, Toast.LENGTH_LONG).show();
                             approveAbsenceToFB(postkey, contributor.anodaj, model);
                         }else{
                             snext = getResources().getString(R.string.abs_savednot);
+                            String texttoast = getString(R.string.absrefandsavedtoserver);
+                            Toast.makeText(getActivity(), texttoast, Toast.LENGTH_LONG).show();
                             approveAbsenceToFB(postkey, contributor.anodaj, model);
                         }
 
 
-                        Log.d(TAG, "onnext " + snext);
-                        Toast.makeText(getActivity(), snext, Toast.LENGTH_LONG).show();
+                        //Log.d(TAG, "onnext " + snext);
+
                     }
                 }));
 

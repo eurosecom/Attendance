@@ -231,6 +231,9 @@
     <string name="absapprovedok">Absence was approved.</string>
     <string name="isapproved">Approved absence </string>
     <string name="isrefused">Refused absence </string>
+    <string name="absappandsavedtoserver">Absence was approved and saved to Server.</string>
+    <string name="absrefandsavedtoserver">Absence was refused.</string>
+
 
     <!-- search finder-->
     <string name="nothing_found">No items found</string>
