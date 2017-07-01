@@ -53,17 +53,14 @@
         <activity android:name=".CompanyChooseActivity"/>
         <activity android:name=".DaggerMainActivity"/>
 
-
-
-        <!-- for googlemaps            -->
         <service android:name=".MyDownloadService" android:exported="false"/>
         <!-- Android N SDK has new restrictions around sharing file:// URIs https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition -->
         <provider android:name="android.support.v4.content.FileProvider" android:exported="false" android:grantUriPermissions="true" android:authorities="com.eusecom.attendancet.fileprovider">
         <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
         </provider>
+        <!-- for googlemaps            -->
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key" />
         <!-- end for googlemaps            -->
 
         <!-- for firebase iid service-->
