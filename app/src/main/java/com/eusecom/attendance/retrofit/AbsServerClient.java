@@ -26,8 +26,7 @@ public class AbsServerClient {
     private AbsServerClient(String urlx) {
 
         final String ABSSERVER_BASE_URL = urlx;
-        final Gson gson =
-            new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         final Retrofit retrofit = new Retrofit.Builder().baseUrl(ABSSERVER_BASE_URL)
                                                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                                                         .addConverterFactory(GsonConverterFactory.create(gson))

@@ -29,6 +29,19 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 		addPreferencesFromResource(R.xml.settings);
 	}
 
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		String usadmin = SettingsActivity.getUsAdmin(this);
+		if (usadmin.equals("1")) {
+			findPreference("ustype").setEnabled(true);
+			findPreference("usadmin").setEnabled(true);
+			findPreference("usosc").setEnabled(true);
+			findPreference("usico").setEnabled(true);
+		}
+	}
+
 	
 	public static String getServerName(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(SERVER_NAME, "");

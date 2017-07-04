@@ -26,19 +26,19 @@
 
     <EditTextPreference
         android:key="ustype"
-        android:enabled="true"
+        android:enabled="false"
         android:summary="@string/ustype_summary"
         android:title="@string/ustype_title" />
 
     <EditTextPreference
         android:key="usadmin"
-        android:enabled="true"
+        android:enabled="false"
         android:summary="@string/usadmin_summary"
         android:title="@string/usadmin_title" />
 
     <EditTextPreference
         android:key="usosc"
-        android:enabled="true"
+        android:enabled="false"
         android:summary="@string/usosc_summary"
         android:title="@string/usosc_title" />
 
@@ -50,7 +50,7 @@
 
     <EditTextPreference
         android:key="usico"
-        android:enabled="true"
+        android:enabled="false"
         android:summary="@string/usico_summary"
         android:title="@string/usico_title" />
 

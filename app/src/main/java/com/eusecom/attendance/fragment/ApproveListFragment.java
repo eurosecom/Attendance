@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.eusecom.attendance.AbsServerAsActivity;
 import com.eusecom.attendance.Constants;
 import com.eusecom.attendance.FbmessClient;
 import com.eusecom.attendance.SettingsActivity;
@@ -264,13 +266,20 @@ public class ApproveListFragment extends Fragment {
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String approveabs_json = gson.toJson(model);
-        String savetofir =  SettingsActivity.getFir(getActivity());
+        String savetofir =  null;
+        String usicox = SettingsActivity.getUsIco(getActivity());
+        if( usicox.equals("44551142")) {
+            savetofir = "37";
+        }else{
+            savetofir =  SettingsActivity.getFir(getActivity());
+        }
         String whoapprove =  SettingsActivity.getUsOsc(getActivity());
+        final String myfir = savetofir;
 
         _disposables.add(_rfetestService.contributors(savetofir, postkey, whoapprove, approveabs_json, anodaj)
                 .flatMap(Observable::fromIterable)
                 .flatMap(contributor -> {
-                    Observable<RfUser> _userObservable = _rfetestService.user(savetofir, postkey, whoapprove, approveabs_json, anodaj, contributor.login)
+                    Observable<RfUser> _userObservable = _rfetestService.user(myfir, postkey, whoapprove, approveabs_json, anodaj, contributor.login)
                             .filter(user -> !isEmpty(user.name) && !isEmpty(user.email));
 
                     return Observable.zip(_userObservable,
@@ -332,6 +341,10 @@ public class ApproveListFragment extends Fragment {
 
         //if savetofir > 0 then save to server
         String savetofir =  SettingsActivity.getFir(getActivity());
+        String usicox = SettingsActivity.getUsIco(getActivity());
+        if( usicox.equals("44551142")) {
+            savetofir = "37";
+        }
         int savetofiri = Integer.parseInt(savetofir);
 
         // custom dialog

@@ -65,6 +65,12 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
     super.onStart();
 
       String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
+      String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
+      if( usicox.equals("44551142")) {
+          getfromfir  = "37";
+
+      }
+      Log.d("getfromfir ", getfromfir);
       getAbsServer(getfromfir);
       getObservableSearchText();
 
@@ -232,6 +238,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       if( usicox.equals("44551142")) {
           urlx = "http:\\www.edcom.sk";
       }
+      Log.d("getfromurl ", urlx);
     mSubscription = AbsServerClient.getInstance(urlx)
             .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())
