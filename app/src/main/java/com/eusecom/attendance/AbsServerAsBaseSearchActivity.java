@@ -102,7 +102,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     String urlx = "http:\\" + SettingsActivity.getServerName(this);
     String usicox = SettingsActivity.getUsIco(this);
     if( usicox.equals("44551142")) {
-      urlx = "http:\\www.edcom.sk";
+      urlx = "http:\\" + Constants.EDCOM_url;
     }
     _githubService = RfEtestService.createGithubService(githubToken, urlx);
 
@@ -237,11 +237,13 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
                                       DatabaseReference mDatabase, String keyf, String cplxb ) {
 
     String getfromfir =  SettingsActivity.getFir(AbsServerAsBaseSearchActivity.this);
-    //String urlx = SettingsActivity.getServerName(AbsServerAsBaseSearchActivity.this);
-    String urlx = "http:\\" + SettingsActivity.getServerName(this);
-    String usicox = SettingsActivity.getUsIco(this);
+    String usicox = SettingsActivity.getUsIco(AbsServerAsBaseSearchActivity.this);
     if( usicox.equals("44551142")) {
-      urlx = "http:\\www.edcom.sk";
+      getfromfir  = Constants.EDCOM_fir;
+    }
+    String urlx = "http:\\" + SettingsActivity.getServerName(this);
+    if( usicox.equals("44551142")) {
+      urlx = "http:\\" + Constants.EDCOM_url;
     }
     subscription = AbsServerClient.getInstance(urlx)
             .setKeyAndgetAbsServer(getfromfir, keyf, cplxb)

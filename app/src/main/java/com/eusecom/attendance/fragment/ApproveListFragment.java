@@ -120,7 +120,7 @@ public class ApproveListFragment extends Fragment {
         String urlx = "http:\\" + SettingsActivity.getServerName(getActivity());
         String usicox = SettingsActivity.getUsIco(getActivity());
         if( usicox.equals("44551142")) {
-            urlx = "http:\\www.edcom.sk";
+            urlx = "http:\\" + Constants.EDCOM_url;
         }
         _rfetestService = RfEtestService.createGithubService(githubToken, urlx);
 
@@ -269,7 +269,7 @@ public class ApproveListFragment extends Fragment {
         String savetofir =  null;
         String usicox = SettingsActivity.getUsIco(getActivity());
         if( usicox.equals("44551142")) {
-            savetofir = "37";
+            savetofir = Constants.EDCOM_fir;
         }else{
             savetofir =  SettingsActivity.getFir(getActivity());
         }
@@ -343,7 +343,7 @@ public class ApproveListFragment extends Fragment {
         String savetofir =  SettingsActivity.getFir(getActivity());
         String usicox = SettingsActivity.getUsIco(getActivity());
         if( usicox.equals("44551142")) {
-            savetofir = "37";
+            savetofir = Constants.EDCOM_fir;
         }
         int savetofiri = Integer.parseInt(savetofir);
 

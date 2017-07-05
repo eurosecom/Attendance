@@ -67,7 +67,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
       String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
       if( usicox.equals("44551142")) {
-          getfromfir  = "37";
+          getfromfir  = Constants.EDCOM_fir;
 
       }
       Log.d("getfromfir ", getfromfir);
@@ -236,7 +236,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       String urlx = "http:\\" + SettingsActivity.getServerName(AbsServerAsActivity.this);
       String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
       if( usicox.equals("44551142")) {
-          urlx = "http:\\www.edcom.sk";
+          urlx = "http:\\" + Constants.EDCOM_url;
       }
       Log.d("getfromurl ", urlx);
     mSubscription = AbsServerClient.getInstance(urlx)
