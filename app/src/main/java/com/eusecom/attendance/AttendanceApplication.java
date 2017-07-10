@@ -2,6 +2,14 @@ package com.eusecom.attendance;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
+
+import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
+import com.eusecom.attendance.dagger.components.DaggerNetComponent;
+import com.eusecom.attendance.dagger.components.GitHubComponent;
+import com.eusecom.attendance.dagger.components.NetComponent;
+import com.eusecom.attendance.dagger.modules.ApplicationModule;
+import com.eusecom.attendance.dagger.modules.GitHubModule;
+import com.eusecom.attendance.dagger.modules.NetModule;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
@@ -39,7 +47,23 @@ public class AttendanceApplication extends Application {
         LeakCanary.install(this);
         // Normal app init code...
 
+        //dagger demo shopping cart
         getAppComponent();
+
+        //dagger demo retrofit
+        // specify the full namespace of the component
+        // Dagger_xxxx (where xxxx = component name)
+        mNetComponent = DaggerNetComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .netModule(new NetModule("https://api.github.com"))
+                .build();
+
+        mGitHubComponent = DaggerGitHubComponent.builder()
+                .netComponent(mNetComponent)
+                .gitHubModule(new GitHubModule())
+                .build();
+
+
     }
 
 
@@ -95,7 +119,7 @@ public class AttendanceApplication extends Application {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
     }
 
-    //dagger2 demo
+    //dagger2 demo shopping cart
     private static AppComponent appComponent;
 
     public AppComponent getAppComponent() {
@@ -105,6 +129,19 @@ public class AttendanceApplication extends Application {
                     .build();
         }
         return appComponent;
+    }
+
+    //dagger2 demo retrofit
+
+    private NetComponent mNetComponent;
+    private GitHubComponent mGitHubComponent;
+
+    public NetComponent getNetComponent() {
+        return mNetComponent;
+    }
+
+    public GitHubComponent getGitHubComponent() {
+        return mGitHubComponent;
     }
 
 

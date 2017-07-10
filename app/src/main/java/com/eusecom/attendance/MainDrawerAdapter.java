@@ -211,8 +211,8 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                             case 5:
 
-                                //Intent i6 = new Intent(mContext, MainMvvmActivity.class);
-                                //v.getContext().startActivity(i6);
+                                Intent i5 = new Intent(mContext, DemoDaggerActivity.class);
+                                v.getContext().startActivity(i5);
 
                                 break;
 
