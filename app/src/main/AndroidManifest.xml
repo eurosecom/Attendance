@@ -53,6 +53,7 @@
         <activity android:name=".CompanyChooseActivity"/>
         <activity android:name=".DaggerMainActivity"/>
         <activity android:name=".DemoDaggerActivity"/>
+        <activity android:name=".DemoDaggerRxActivity"/>
 
         <service android:name=".MyDownloadService" android:exported="false"/>
         <!-- Android N SDK has new restrictions around sharing file:// URIs https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition -->

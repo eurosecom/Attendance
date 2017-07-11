@@ -273,6 +273,7 @@
     <string name="daggeradd2">Add item 2 to cart</string>
     <string name="daggeradd3">Add item 3 to cart</string>
     <string name="daggerclear">Clear cart</string>
+    <string name="action_rxretrofit">Rx Retrofit</string>
 
 
 </resources>

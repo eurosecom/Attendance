@@ -2,30 +2,32 @@ package com.eusecom.attendance;
 
 import com.eusecom.attendance.models.Repository;
 import com.eusecom.attendance.retrofit.GitHubApiInterface;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import java.util.ArrayList;
+import org.reactivestreams.Subscription;
+import java.util.List;
 import javax.inject.Inject;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 //by https://github.com/codepath/dagger2-example
 //edited to retrofit2 and okhttp3
 
 
-public class DemoDaggerActivity extends AppCompatActivity {
+public class DemoDaggerRxActivity extends AppCompatActivity {
 
     @Inject
     SharedPreferences mSharedPreferences;
@@ -36,39 +38,37 @@ public class DemoDaggerActivity extends AppCompatActivity {
     @Inject
     GitHubApiInterface mGitHubApiInterface;
 
+    private Subscription mSubscription;
+    private Disposable searchDisposable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.daggertwoactivity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
+        setContentView(R.layout.daggertworxactivity_main);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
-                Call<ArrayList<Repository>> call = mGitHubApiInterface.getRepository("codepath");
-                call.enqueue(new Callback<ArrayList<Repository>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<Repository>> call, Response<ArrayList<Repository>> response) {
-
-                        Log.i("DEBUG", response.body().toString());
-                        Log.i("NAME 0", response.body().get(0).getName());
-
-                        Snackbar.make(view,"Retrieved 0 " + response.body().get(0).getName(), Snackbar.LENGTH_LONG)
-                                    .setAction("Action",null).show();
+                //public void onNext(List<Repository> repos)
 
 
-                    }
+                searchDisposable = mGitHubApiInterface.getRxRepository("codepath")
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<Repository>>() {
+                            @Override
+                            public void accept(List<Repository> result) {
+                                Log.i("NAME 0", result.get(1).getName());
+                                Snackbar.make(view,"Retrieved 1 " + result.get(1).getName(), Snackbar.LENGTH_LONG)
+                                        .setAction("Action",null).show();
+                            }
+                        });
 
-                    @Override
-                    public void onFailure(Call<ArrayList<Repository>> call, Throwable t) {
-                        Log.i("DEBUG ", "Failure");
-                    }
-                });
+
+
+
             }
 
 
@@ -76,6 +76,15 @@ public class DemoDaggerActivity extends AppCompatActivity {
             });
 
         ((AttendanceApplication) getApplication()).getGitHubComponent().inject(this);
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+
+
+        searchDisposable.dispose();
+
+
     }
 
     @Override
