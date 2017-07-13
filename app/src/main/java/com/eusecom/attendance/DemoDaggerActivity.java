@@ -16,13 +16,21 @@ import android.view.MenuItem;
 import android.view.View;
 import java.util.ArrayList;
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-//by https://github.com/codepath/dagger2-example
-//edited to retrofit2 and okhttp3
+/**
+ * by https://github.com/codepath/dagger2-example
+ * edited to retrofit2 and okhttp3
+ * scoped by https://guides.codepath.com/android/Dependency-Injection-with-Dagger-2
+ *
+ * You may see how Dagger do injection in generated class see in build/generated/source/apt/debug/com/...
+ */
 
 
 public class DemoDaggerActivity extends AppCompatActivity {

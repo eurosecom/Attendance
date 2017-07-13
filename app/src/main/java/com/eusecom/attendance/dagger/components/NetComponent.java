@@ -5,6 +5,8 @@ import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
 import okhttp3.OkHttpClient;
 import android.content.SharedPreferences;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Component;
 import retrofit2.Retrofit;
@@ -15,6 +17,7 @@ import retrofit2.Retrofit;
 public interface NetComponent {
     // downstream components need these exposed
     Retrofit retrofit();
-    OkHttpClient okHttpClient();
+    @Named("cached") OkHttpClient okHttpClient();
+    @Named("non_cached") OkHttpClient okHttpClientNonCached();
     SharedPreferences sharedPreferences();
 }

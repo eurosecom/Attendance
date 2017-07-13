@@ -8,6 +8,8 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
@@ -20,10 +22,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetModule {
 
-    String mBaseUrl;
+    String mBaseUrl, mBaseUrl2;
 
-    public NetModule(String baseUrl) {
+    public NetModule(String baseUrl, String baseUrl2) {
         this.mBaseUrl = baseUrl;
+        this.mBaseUrl2 = baseUrl2;
     }
 
     @Provides
@@ -49,7 +52,7 @@ public class NetModule {
         return gsonBuilder.create();
     }
 
-    @Provides
+    @Provides @Named("cached")
     @Singleton
     OkHttpClient provideOkHttpClient(Cache cache) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -58,9 +61,17 @@ public class NetModule {
         return okHttpClient;
     }
 
+    @Provides @Named("non_cached")
+    @Singleton
+    OkHttpClient provideOkHttpClientNonCached() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .build();
+        return okHttpClient;
+    }
+
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(Gson gson, @Named("cached") OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -69,4 +80,5 @@ public class NetModule {
                 .build();
         return retrofit;
     }
+
 }

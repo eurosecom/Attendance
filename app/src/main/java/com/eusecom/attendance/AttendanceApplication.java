@@ -55,7 +55,7 @@ public class AttendanceApplication extends Application {
         // Dagger_xxxx (where xxxx = component name)
         mNetComponent = DaggerNetComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .netModule(new NetModule("https://api.github.com"))
+                .netModule(new NetModule("https://api.github.com", "https://api.myserver.com"))
                 .build();
 
         mGitHubComponent = DaggerGitHubComponent.builder()

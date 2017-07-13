@@ -15,16 +15,22 @@ import android.view.View;
 import org.reactivestreams.Subscription;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-//by https://github.com/codepath/dagger2-example
-//edited to retrofit2 and okhttp3
+/**
+ * by https://github.com/codepath/dagger2-example
+ * edited to retrofit2 and okhttp3
+ * scoped by https://guides.codepath.com/android/Dependency-Injection-with-Dagger-2
+ */
 
 
 public class DemoDaggerRxActivity extends AppCompatActivity {
