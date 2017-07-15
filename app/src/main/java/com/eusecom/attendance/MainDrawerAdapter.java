@@ -188,24 +188,23 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
                             case 2:
 
                                 // View v at position pos is clicked.
-                                Intent i3 = new Intent(mContext, MapActivity.class);
-                                v.getContext().startActivity(i3);
+                                Intent i2 = new Intent(mContext, MapActivity.class);
+                                v.getContext().startActivity(i2);
 
                                 break;
 
+
                             case 3:
 
-                                // View v at position pos is clicked.
-                                Intent i4 = new Intent(mContext, SettingsActivity.class);
-                                v.getContext().startActivity(i4);
+                                Intent i3 = new Intent(mContext, AllEmpsAbsMvvmActivity.class);
+                                v.getContext().startActivity(i3);
 
                                 break;
 
                             case 4:
 
-                                // View v at position pos is clicked.
-                                //Intent i5 = new Intent(mContext, RxbusActivity.class);
-                                //v.getContext().startActivity(i5);
+                                //Intent i4 = new Intent(mContext, AllEmpsAbsMvvmActivity.class);
+                                //v.getContext().startActivity(i4);
 
                                 break;
 
@@ -219,7 +218,7 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
                             case 6:
 
                                 // View v at position pos is clicked.
-                                Intent i7 = new Intent(mContext, DaggerMainActivity.class);
+                                Intent i7 = new Intent(mContext, DemoDaggerSubActivity.class);
                                 v.getContext().startActivity(i7);
 
 

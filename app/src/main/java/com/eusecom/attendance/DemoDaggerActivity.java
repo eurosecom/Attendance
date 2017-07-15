@@ -50,7 +50,7 @@ public class DemoDaggerActivity extends AppCompatActivity {
         setContentView(R.layout.daggertwoactivity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle(getString(R.string.daggerdemo));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

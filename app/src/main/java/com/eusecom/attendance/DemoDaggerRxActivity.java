@@ -27,9 +27,14 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 /**
+ * Dagger2 demo Rx Retrofit with Dependent Component GitHubComponent ( is dependent on NetComponent )
+ * and with @Named @Provides @Named("cached") OkHttpClient okHttpClient(); and @Named("non_cached") OkHttpClient okHttpClientNonCached();
+ *
  * by https://github.com/codepath/dagger2-example
  * edited to retrofit2 and okhttp3
  * scoped by https://guides.codepath.com/android/Dependency-Injection-with-Dagger-2
+ *
+ * You may see how Dagger do injection in generated class see in build/generated/source/apt/debug/com/...
  */
 
 

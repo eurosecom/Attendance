@@ -3,6 +3,8 @@ package com.eusecom.attendance;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.eusecom.attendance.dagger.components.ApplicationComponent;
+import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
 import com.eusecom.attendance.dagger.components.DaggerNetComponent;
 import com.eusecom.attendance.dagger.components.GitHubComponent;
@@ -19,10 +21,6 @@ import com.eusecom.attendance.mvvmschedulers.SchedulerProvider;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.squareup.leakcanary.LeakCanary;
 
-
-import com.eusecom.attendance.dagger.AppComponent;
-import com.eusecom.attendance.dagger.AppModule;
-import com.eusecom.attendance.dagger.DaggerAppComponent;
 
 
 public class AttendanceApplication extends Application {
@@ -47,12 +45,11 @@ public class AttendanceApplication extends Application {
         LeakCanary.install(this);
         // Normal app init code...
 
-        //dagger demo shopping cart
-        getAppComponent();
 
         //dagger demo retrofit
         // specify the full namespace of the component
         // Dagger_xxxx (where xxxx = component name)
+
         mNetComponent = DaggerNetComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .netModule(new NetModule("https://api.github.com", "https://api.myserver.com"))
@@ -61,6 +58,10 @@ public class AttendanceApplication extends Application {
         mGitHubComponent = DaggerGitHubComponent.builder()
                 .netComponent(mNetComponent)
                 .gitHubModule(new GitHubModule())
+                .build();
+
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
                 .build();
 
 
@@ -119,22 +120,12 @@ public class AttendanceApplication extends Application {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
     }
 
-    //dagger2 demo shopping cart
-    private static AppComponent appComponent;
-
-    public AppComponent getAppComponent() {
-        if (appComponent == null){
-            appComponent = DaggerAppComponent.builder()
-                    .appModule(new AppModule(this))
-                    .build();
-        }
-        return appComponent;
-    }
 
     //dagger2 demo retrofit
 
     private NetComponent mNetComponent;
     private GitHubComponent mGitHubComponent;
+    private ApplicationComponent mApplicationComponent;
 
     public NetComponent getNetComponent() {
         return mNetComponent;
@@ -142,6 +133,10 @@ public class AttendanceApplication extends Application {
 
     public GitHubComponent getGitHubComponent() {
         return mGitHubComponent;
+    }
+
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
     }
 
 
