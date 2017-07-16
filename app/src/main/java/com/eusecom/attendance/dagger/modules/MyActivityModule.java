@@ -20,6 +20,7 @@ public class MyActivityModule {
     public MyActivityModule(DemoDaggerSubActivity activity) { this.activity = activity; }
 
     @Provides
+    // do not get @Singleton in subcomponent
     @MyActivityScope
     SharedPreferences providesSharedPreferences(Application application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
