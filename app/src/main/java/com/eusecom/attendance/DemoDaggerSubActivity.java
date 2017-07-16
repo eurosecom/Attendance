@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -55,6 +57,10 @@ public class DemoDaggerSubActivity extends ListActivity {
         mAdapter.add("aaa");
         mAdapter.add("bbb");
         mAdapter.notifyDataSetChanged();
+
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        Toast.makeText(DemoDaggerSubActivity.this, serverx, Toast.LENGTH_SHORT).show();
 
 
     }
