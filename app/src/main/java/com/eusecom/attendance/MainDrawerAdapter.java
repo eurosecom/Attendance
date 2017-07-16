@@ -178,8 +178,7 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                             case 1:
 
-                                // View v at position pos is clicked.
-                                Intent i = new Intent(mContext, EmailPasswordActivity.class);
+                                Intent i = new Intent(mContext, AllEmpsAbsMvvmActivity.class);
                                 v.getContext().startActivity(i);
 
                                 break;
@@ -187,7 +186,6 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                             case 2:
 
-                                // View v at position pos is clicked.
                                 Intent i2 = new Intent(mContext, MapActivity.class);
                                 v.getContext().startActivity(i2);
 
@@ -196,8 +194,8 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                             case 3:
 
-                                Intent i3 = new Intent(mContext, AllEmpsAbsMvvmActivity.class);
-                                v.getContext().startActivity(i3);
+                                //Intent i3 = new Intent(mContext, AllEmpsAbsMvvmActivity.class);
+                                //v.getContext().startActivity(i3);
 
                                 break;
 

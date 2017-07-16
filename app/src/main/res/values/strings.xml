@@ -126,12 +126,12 @@
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item >Login/Logout</item>
-        <item >Google Maps</item>
-        <item >Settings</item>
+        <item >All employees absences</item>
+        <item >Employees on Google Maps</item>
+        <item >Free</item>
         <item >Free</item>
         <item >Demo Dagger Retrofit</item>
-        <item >Demo Dagger ShoppingCart</item>
+        <item >Demo Dagger Subcomponent</item>
     </string-array>
 
     <string name="app_name1">Slider Menu 1</string>
@@ -267,6 +267,8 @@
 
     <!-- dagger2 -->
     <string name="daggerdemo">Demo dagger</string>
+    <string name="daggerdemorx">Demo dagger Rx</string>
+    <string name="daggerdemosub">Demo dagger SUB</string>
     <string name="daggershow">Show cart</string>
     <string name="daggerdel">Del item 0 from cart</string>
     <string name="daggeradd">Add item 1 to cart</string>
@@ -274,6 +276,11 @@
     <string name="daggeradd3">Add item 3 to cart</string>
     <string name="daggerclear">Clear cart</string>
     <string name="action_rxretrofit">Rx Retrofit</string>
+
+    <!-- AllEmpsAbsMvvmActivity -->
+    <string name="allempsabs">All employees absences</string>
+    <string name="list">List</string>
+    <string name="calendar">Calendar</string>
 
 
 </resources>
