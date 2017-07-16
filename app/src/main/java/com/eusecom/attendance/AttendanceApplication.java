@@ -12,6 +12,8 @@ import com.eusecom.attendance.dagger.components.NetComponent;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.GitHubModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
+import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsDataModel;
+import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
@@ -34,6 +36,9 @@ public class AttendanceApplication extends Application {
 
     @NonNull
     private final EmployeeIDataModel mEmployeeDataModel;
+
+    @NonNull
+    private final AllEmpsAbsIDataModel mAllEmpsAbsDataModel;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -74,6 +79,7 @@ public class AttendanceApplication extends Application {
 
         mCompaniesDataModel = new CompaniesDataModel();
         mEmployeeDataModel = new EmployeeDataModel();
+        mAllEmpsAbsDataModel = new AllEmpsAbsDataModel();
     }
 
     public static AttendanceApplication getInstance() {
@@ -105,6 +111,11 @@ public class AttendanceApplication extends Application {
     }
 
     @NonNull
+    public AllEmpsAbsIDataModel getAllEmpsAbsDataModel() {
+        return mAllEmpsAbsDataModel;
+    }
+
+    @NonNull
     public ISchedulerProvider getSchedulerProvider() {
         return SchedulerProvider.getInstance();
     }
@@ -118,6 +129,11 @@ public class AttendanceApplication extends Application {
     @NonNull
     public CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
+    }
+
+    @NonNull
+    public AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
+        return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsDataModel(), getSchedulerProvider());
     }
 
 

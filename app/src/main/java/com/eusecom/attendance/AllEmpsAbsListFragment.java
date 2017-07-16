@@ -44,13 +44,13 @@ public class AllEmpsAbsListFragment extends Fragment {
     private CompositeSubscription mSubscription;
 
     @NonNull
-    private CompaniesMvvmViewModel mViewModel;
+    private AllEmpsAbsMvvmViewModel mViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = getCompaniesMvvmViewModel();
+        mViewModel = getAllEmpsAbsMvvmViewModel();
 
         _disposables = new CompositeDisposable();
 
@@ -306,8 +306,8 @@ public class AllEmpsAbsListFragment extends Fragment {
     public static class ClickFobEvent {}
 
     @NonNull
-    private CompaniesMvvmViewModel getCompaniesMvvmViewModel() {
-        return ((AttendanceApplication) getActivity().getApplication()).getCompaniesMvvmViewModel();
+    private AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
+        return ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsMvvmViewModel();
     }
 
 
