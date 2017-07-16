@@ -16,7 +16,6 @@
 
 package com.eusecom.attendance;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -65,7 +64,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new CompaniesListFragment(),
+                    new AllEmpsAbsListFragment(),
                     new EmptyFragment()
             };
             private final String[] mFragmentNames = new String[] {
@@ -117,7 +116,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-            _rxBus.send(new CompaniesListFragment.ClickFobEvent());
+            _rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
 
             }
         );
