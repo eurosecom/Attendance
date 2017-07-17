@@ -1,6 +1,7 @@
 package com.eusecom.attendance;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
+import com.eusecom.attendance.dagger.modules.FirebaseModule;
 import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
@@ -45,6 +53,9 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     @NonNull
     private AllEmpsAbsMvvmViewModel mViewModel;
+
+    @Inject
+    SharedPreferences mSharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +120,8 @@ public class AllEmpsAbsListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ((AttendanceApplication) getActivity().getApplication()).getGitHubComponent().inject(this);
+
         mAdapter = new AllEmpsAbsRxAdapter(Collections.<Company>emptyList(), _rxBus);
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
@@ -116,6 +129,9 @@ public class AllEmpsAbsListFragment extends Fragment {
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
+
+        String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
+        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
     }//end of onActivityCreated
