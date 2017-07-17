@@ -17,6 +17,7 @@
 package com.eusecom.attendance;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -27,9 +28,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
+import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
+import com.eusecom.attendance.dagger.components.MyActivitySubComponent;
+import com.eusecom.attendance.dagger.modules.FirebaseModule;
+import com.eusecom.attendance.dagger.modules.MyActivityModule;
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Show calendar and list of all employees absences
@@ -49,11 +60,21 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
     Toolbar mActionBarToolbar;
     private RxBus _rxBus;
 
+    @Inject
+    SharedPreferences mSharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allempsabs);
+
+        FirebaseSubComponent.Builder builder = (FirebaseSubComponent.Builder)
+                ((AttendanceApplication) getApplication()).getApplicationComponent()
+                        .subcomponentBuilders()
+                        .get(FirebaseSubComponent.Builder.class)
+                        .get();
+        builder.activityModule(new FirebaseModule(this)).build().inject(this);
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 
@@ -120,6 +141,11 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
             }
         );
+
+
+        String serverx = mSharedPreferences.getString("servername", "");
+        Toast.makeText(AllEmpsAbsMvvmActivity.this, serverx, Toast.LENGTH_SHORT).show();
+
 
     }
 
