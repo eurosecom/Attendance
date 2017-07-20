@@ -28,19 +28,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
-import com.eusecom.attendance.dagger.components.MyActivitySubComponent;
 import com.eusecom.attendance.dagger.modules.FirebaseModule;
-import com.eusecom.attendance.dagger.modules.MyActivityModule;
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
-
 import javax.inject.Inject;
-import javax.inject.Named;
+
 
 /**
  * Show calendar and list of all employees absences

@@ -14,17 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
-import com.eusecom.attendance.dagger.modules.FirebaseModule;
 import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;

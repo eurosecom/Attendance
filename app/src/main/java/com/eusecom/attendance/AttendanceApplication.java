@@ -3,13 +3,19 @@ package com.eusecom.attendance;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.eusecom.attendance.dagger.components.AllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
+import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
+import com.eusecom.attendance.dagger.components.DaggerFirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
 import com.eusecom.attendance.dagger.components.DaggerNetComponent;
+import com.eusecom.attendance.dagger.components.FirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.GitHubComponent;
 import com.eusecom.attendance.dagger.components.NetComponent;
+import com.eusecom.attendance.dagger.modules.AllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
+import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.dagger.modules.GitHubModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsDataModel;
@@ -67,6 +73,16 @@ public class AttendanceApplication extends Application {
 
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .build();
+
+        mFirebaseDependentComponent = DaggerFirebaseDependentComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .firebaseDependentModule(new FirebaseDependentModule("https://api.github.com", "https://api.myserver.com"))
+                .build();
+
+        mAllEmpsAbsComponent = DaggerAllEmpsAbsComponent.builder()
+                .firebaseDependentComponent(mFirebaseDependentComponent)
+                .allEmpsAbsModule(new AllEmpsAbsModule())
                 .build();
 
 
@@ -142,6 +158,8 @@ public class AttendanceApplication extends Application {
     private NetComponent mNetComponent;
     private GitHubComponent mGitHubComponent;
     private ApplicationComponent mApplicationComponent;
+    private FirebaseDependentComponent mFirebaseDependentComponent;
+    private AllEmpsAbsComponent mAllEmpsAbsComponent;
 
     public NetComponent getNetComponent() {
         return mNetComponent;
@@ -153,6 +171,14 @@ public class AttendanceApplication extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
+    }
+
+    public FirebaseDependentComponent getFirebaseDependentComponent() {
+        return mFirebaseDependentComponent;
+    }
+
+    public AllEmpsAbsComponent getAllEmpsAbsComponent() {
+        return mAllEmpsAbsComponent;
     }
 
 
