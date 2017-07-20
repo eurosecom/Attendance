@@ -64,12 +64,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allempsabs);
 
-        FirebaseSubComponent.Builder builder = (FirebaseSubComponent.Builder)
-                ((AttendanceApplication) getApplication()).getApplicationComponent()
-                        .subcomponentBuilders()
-                        .get(FirebaseSubComponent.Builder.class)
-                        .get();
-        builder.activityModule(new FirebaseModule(this)).build().inject(this);
+        ((AttendanceApplication) getApplication()).getAllEmpsAbsComponent().inject(this);
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 

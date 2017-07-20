@@ -114,8 +114,8 @@ public class AllEmpsAbsListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        ((AttendanceApplication) getActivity().getApplication()).getGitHubComponent().inject(this);
+        
+        ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsComponent().inject(this);
 
         mAdapter = new AllEmpsAbsRxAdapter(Collections.<Company>emptyList(), _rxBus);
         // Set up Layout Manager, reverse layout

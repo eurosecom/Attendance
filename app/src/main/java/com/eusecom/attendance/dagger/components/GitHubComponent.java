@@ -12,5 +12,4 @@ import dagger.Component;
 public interface GitHubComponent {
     void inject(DemoDaggerActivity activity);
     void inject(DemoDaggerRxActivity activity);
-    void inject(AllEmpsAbsListFragment frg);
 }
