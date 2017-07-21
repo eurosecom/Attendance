@@ -29,8 +29,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
-import com.eusecom.attendance.dagger.modules.FirebaseModule;
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
