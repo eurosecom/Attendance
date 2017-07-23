@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout for one item of company at RcViewer CompaniesListFragmentjava with CompaniesRxViewHolder.java -->
+<!-- Layout for one item of absence at RcViewer AllEmpsAbsListFragmentjava with AllEmpsAbsiewHolder.java -->
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -75,19 +75,19 @@
 
 
             <TextView
-                android:id="@+id/actt"
+                android:id="@+id/osct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/active"
+                android:text="@string/osc"
                 tools:text="7" />
 
             <TextView
-                android:id="@+id/actx"
+                android:id="@+id/oscx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/actt"
+                android:layout_toRightOf="@+id/osct"
                 tools:text="7" />
 
             <TextView
@@ -95,8 +95,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/fullfirma"
-                android:layout_toRightOf="@+id/actx"
+                android:text="@string/firma"
+                android:layout_toRightOf="@+id/oscx"
                 tools:text="7" />
 
             <TextView
@@ -107,6 +107,22 @@
                 android:layout_toRightOf="@+id/icot"
                 tools:text="7" />
 
+            <TextView
+                android:id="@+id/typt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/type"
+                android:layout_toRightOf="@+id/icox"
+                tools:text="7" />
+
+            <TextView
+                android:id="@+id/typx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/typt"
+                tools:text="7" />
 
         </LinearLayout>
 
@@ -120,19 +136,19 @@
 
 
             <TextView
-                android:id="@+id/cityt"
+                android:id="@+id/emailt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/city"
+                android:text="@string/email"
                 tools:text="7" />
 
             <TextView
-                android:id="@+id/cityx"
+                android:id="@+id/emailx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/cityt"
+                android:layout_toRightOf="@+id/emailt"
                 tools:text="7" />
 
 

@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
+import com.squareup.picasso.Picasso;
+
 
 /**
  * The view holder for an item
@@ -18,9 +18,10 @@ public class AllEmpsAbsRxViewHolder extends RecyclerView.ViewHolder implements V
   public ImageView employee_photo;
   public ImageView starView;
   public TextView numStarsView;
-  public TextView actx;
-  public TextView cityx;
+  public TextView oscx;
   public TextView icox;
+  public TextView typx;
+  public TextView emailx;
 
   private ClickListener clickListener;
   Context mContext;
@@ -33,23 +34,28 @@ public class AllEmpsAbsRxViewHolder extends RecyclerView.ViewHolder implements V
     employee_photo = (ImageView) itemView.findViewById(R.id.employee_photo);
     starView = (ImageView) itemView.findViewById(R.id.star);
     numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
-    actx = (TextView) itemView.findViewById(R.id.actx);
+    oscx = (TextView) itemView.findViewById(R.id.oscx);
     icox = (TextView) itemView.findViewById(R.id.icox);
-    cityx = (TextView) itemView.findViewById(R.id.cityx);
+    typx = (TextView) itemView.findViewById(R.id.typx);
+    emailx = (TextView) itemView.findViewById(R.id.emailx);
     mContext = itemView.getContext();
 
     itemView.setOnClickListener(this);
     itemView.setOnLongClickListener(this);
   }
 
-  public void bindModel(Company companiee) {
-    if (companiee == null) {
+  public void bindModel(Employee employee) {
+    if (employee == null) {
       throw new IllegalArgumentException("Entity cannot be null");
     }
-    employee_name.setText(companiee.cmname);
-    icox.setText(companiee.cmico);
-    actx.setText(companiee.cmakt);
-    cityx.setText(companiee.cmcity);
+    employee_name.setText(employee.username);
+    oscx.setText(employee.usosc);
+    icox.setText(employee.usico);
+    typx.setText(employee.ustype);
+    emailx.setText(employee.email);
+    if( employee.username.equals("andrejd")) {
+      Picasso.with(mContext).load(R.drawable.ic_remove_circle_black_24dp).resize(120, 120).into(starView);
+    }
 
   }
 

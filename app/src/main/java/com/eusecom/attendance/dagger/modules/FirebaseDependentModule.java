@@ -3,6 +3,9 @@ package com.eusecom.attendance.dagger.modules;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.eusecom.attendance.AttendanceApplication;
+import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
+import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -79,5 +82,17 @@ public class FirebaseDependentModule {
     }
 
 
+    @Provides
+    @Singleton
+    public AllEmpsAbsIDataModel providesAllEmpsAbsIDataModel(Application application) {
+        return ((AttendanceApplication) application).getAllEmpsAbsDataModel();
+    }
+
+    @Provides
+    @Singleton
+    public ISchedulerProvider providesISchedulerProvider(Application application) {
+
+        return ((AttendanceApplication) application).getSchedulerProvider();
+    }
 
 }

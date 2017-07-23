@@ -13,15 +13,9 @@ public interface AllEmpsAbsIDataModel {
 
 
     //recyclerview methods
-
     @NonNull
-    Observable<List<Company>> getObservableFBXcompanies();
+    Observable<List<Employee>> getObservableFBusersEmployee();
 
-    @NonNull
-    Observable<String> getObservableKeyFBnewCompany(@NonNull final Company company);
-
-    @NonNull
-    Observable<String> getObservableKeyFBeditUser(@NonNull final Employee employee);
 
 
 

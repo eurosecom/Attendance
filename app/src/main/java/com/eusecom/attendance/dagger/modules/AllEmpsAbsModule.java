@@ -10,9 +10,12 @@ import retrofit2.Retrofit;
 @Module
 public class AllEmpsAbsModule {
 
+
     @Provides
     @FirebaseScope
     public GitHubApiInterface providesGitHubInterface(Retrofit retrofit) {
         return retrofit.create(GitHubApiInterface.class);
     }
+
+
 }

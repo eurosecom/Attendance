@@ -10,6 +10,8 @@ import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 
+import javax.inject.Inject;
+
 /**
  * View model for the CompaniesMvvmActivity.
  */
@@ -21,6 +23,7 @@ public class AllEmpsAbsMvvmViewModel {
     private final ISchedulerProvider mSchedulerProvider;
 
 
+    @Inject
     public AllEmpsAbsMvvmViewModel(@NonNull final AllEmpsAbsIDataModel dataModel,
                          @NonNull final ISchedulerProvider schedulerProvider) {
         mDataModel = dataModel;
@@ -29,56 +32,12 @@ public class AllEmpsAbsMvvmViewModel {
 
     //recyclerview method
 
-    //get list
-    public Observable<List<Company>> getObservableFBcompanies() {
-        return mDataModel.getObservableFBXcompanies();
+    //get employees list
+    public Observable<List<Employee>> getObservableFBusersEmployee() {
+        return mDataModel.getObservableFBusersEmployee();
     }
 
-    //edit child
-    @NonNull
-    private final BehaviorSubject<Employee> mObservableEditedEmployee = BehaviorSubject.create();
 
-    public void saveEditEmloyee(@NonNull final Employee employee, String namexx, String oscxx,
-                                String icoxx, String typxx, String uswxx) {
 
-        Log.d("mViewModel ", employee.getKeyf());
-
-        Employee editEmployee = employee;
-        editEmployee.setUsername(namexx);
-        editEmployee.setUsosc(oscxx);
-        editEmployee.setUsico(icoxx);
-        editEmployee.setUstype(typxx);
-        editEmployee.setUsatw(uswxx);
-        mObservableEditedEmployee.onNext(editEmployee);
-    }
-
-    @NonNull
-    public Observable<String> getObservableKeyEditedEmployee() {
-        //return Observable.just("xxx");
-        return mObservableEditedEmployee
-                .observeOn(mSchedulerProvider.computation())
-                .flatMap(employee -> { return mDataModel.getObservableKeyFBeditUser(employee); }
-                );
-    }
-
-    //new company child
-    @NonNull
-    private final BehaviorSubject<Company> mObservableNewCompany = BehaviorSubject.create();
-
-    public void saveNewCompany(@NonNull final Company newcompany) {
-
-        Log.d("mViewModel new ", newcompany.getCmico());
-
-        mObservableNewCompany.onNext(newcompany);
-    }
-
-    @NonNull
-    public Observable<String> getObservableKeyNewCompany() {
-        //return Observable.just("xxx");
-        return mObservableNewCompany
-                .observeOn(mSchedulerProvider.computation())
-                .flatMap(newcompany -> { return mDataModel.getObservableKeyFBnewCompany(newcompany); }
-                );
-    }
 
 }
