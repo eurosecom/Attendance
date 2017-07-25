@@ -3,6 +3,10 @@ package com.eusecom.attendance.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ServerValue;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +43,7 @@ public class Attendance {
                       String hodxb, String longi, String lati, String datm, String usosc, String usname, String aprv) {
         this.usico = usico;
         this.usid = usid;
-        this.ume = ume;
+        this.ume = getUme(daod);
         this.dmxa = dmxa;
         this.dmna = dmna;
         this.daod = daod;
@@ -65,7 +69,7 @@ public class Attendance {
                       String hodxb, String longi, String lati, String datm, String usosc, String usname ) {
         this.usico = usico;
         this.usid = usid;
-        this.ume = ume;
+        this.ume = getUme(daod);
         this.dmxa = dmxa;
         this.dmna = dmna;
         this.daod = daod;
@@ -199,5 +203,19 @@ public class Attendance {
 
         return usname;
     }
+
+    private String getUme(String timeString){
+
+        long timeStamp = 1000*Long.parseLong(timeString);
+        try{
+            DateFormat sdf = new SimpleDateFormat("MM.yyyy");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
+        }
+        catch(Exception ex){
+            return "01.2017";
+        }
+    }
+
 }
 // [END blog_user_class]
