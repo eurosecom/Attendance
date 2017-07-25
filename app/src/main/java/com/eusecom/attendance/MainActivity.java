@@ -368,6 +368,7 @@ public class MainActivity extends ActionBarActivity {
             // Ask user to enable GPS/network in settings
             mGPS.showSettingsAlert();
         }
+        mGPS.stopUsingGPS();
 
         Attendance attendance = new Attendance(usico, usid, ume, dmxa, dmna, daod, dado, dnixa, hodxb, gpslon, gpslat, datm, usosc, usname);
 
