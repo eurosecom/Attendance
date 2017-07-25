@@ -2,7 +2,6 @@ package com.eusecom.attendance;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-
 import com.eusecom.attendance.dagger.components.AllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
@@ -27,6 +26,8 @@ import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.mvvmschedulers.SchedulerProvider;
 import com.eusecom.attendance.rxbus.RxBus;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.leakcanary.LeakCanary;
 
 
@@ -34,8 +35,6 @@ import com.squareup.leakcanary.LeakCanary;
 public class AttendanceApplication extends Application {
 
     public RxBus _rxBus;
-    static AttendanceApplication myAppInstance;
-
 
     @NonNull
     private final CompaniesIDataModel mCompaniesDataModel;
@@ -44,7 +43,8 @@ public class AttendanceApplication extends Application {
     private final EmployeeIDataModel mEmployeeDataModel;
 
     @NonNull
-    private final AllEmpsAbsIDataModel mAllEmpsAbsDataModel;
+    private AllEmpsAbsIDataModel mAllEmpsAbsDataModel;
+    private DatabaseReference mDatabaseReference;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -56,6 +56,7 @@ public class AttendanceApplication extends Application {
         LeakCanary.install(this);
         // Normal app init code...
 
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         //dagger demo retrofit
         // specify the full namespace of the component
@@ -85,17 +86,15 @@ public class AttendanceApplication extends Application {
                 .allEmpsAbsModule(new AllEmpsAbsModule())
                 .build();
 
-
     }
 
 
     private static AttendanceApplication instance;
 
     public AttendanceApplication() {
-
         mCompaniesDataModel = new CompaniesDataModel();
         mEmployeeDataModel = new EmployeeDataModel();
-        mAllEmpsAbsDataModel = new AllEmpsAbsDataModel();
+
     }
 
     public static AttendanceApplication getInstance() {
@@ -107,11 +106,11 @@ public class AttendanceApplication extends Application {
 
     }
 
+
     public RxBus getRxBusSingleton() {
         if (_rxBus == null) {
             _rxBus = new RxBus();
         }
-
         return _rxBus;
     }
 
@@ -128,12 +127,18 @@ public class AttendanceApplication extends Application {
 
     @NonNull
     public AllEmpsAbsIDataModel getAllEmpsAbsDataModel() {
+        mAllEmpsAbsDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference());
         return mAllEmpsAbsDataModel;
     }
 
     @NonNull
     public ISchedulerProvider getSchedulerProvider() {
         return SchedulerProvider.getInstance();
+    }
+
+    @NonNull
+    public DatabaseReference getDatabaseFirebaseReference() {
+        return mDatabaseReference;
     }
 
 
@@ -147,6 +152,7 @@ public class AttendanceApplication extends Application {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
     }
 
+    //we use only for classic create mvvmviewmodel without dagger2
     @NonNull
     public AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
         return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsDataModel(), getSchedulerProvider());

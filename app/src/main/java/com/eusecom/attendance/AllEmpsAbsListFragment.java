@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.rxbus.RxBus;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -41,8 +43,6 @@ public class AllEmpsAbsListFragment extends Fragment {
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private RxBus _rxBus = null;
-    AlertDialog dialog = null;
-    AlertDialog.Builder builder = null;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -56,6 +56,8 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     @Inject
     AllEmpsAbsMvvmViewModel mViewModel;
+
+    AlertDialog dialog = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -196,19 +198,42 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     private void setEmployees(@NonNull final List<Employee> employees) {
 
-        assert mRecycler != null;
-        mAdapter.setData(employees);
+        int maxemp = 6;
+
+        if( employees.size() > maxemp ) {
+            getDialogLotOfEmp(employees.size());
+        }else {
+            assert mRecycler != null;
+            mAdapter.setData(employees);
+        }
 
     }
 
 
     public static class ClickFobEvent {}
 
-    //create mvvm without dagger2
+    //we use only for classic create mvvmviewmodel without dagger2
     @NonNull
     private AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
         return ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsMvvmViewModel();
     }
 
+
+    private void getDialogLotOfEmp(int size){
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.lotofemp))
+                .setMessage(getString(R.string.lotofempmes))
+                .setPositiveButton(R.string.textok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .show();
+
+    }
 
 }

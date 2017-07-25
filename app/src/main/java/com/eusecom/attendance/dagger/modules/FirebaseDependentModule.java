@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import com.eusecom.attendance.AttendanceApplication;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -84,7 +85,7 @@ public class FirebaseDependentModule {
 
     @Provides
     @Singleton
-    public AllEmpsAbsIDataModel providesAllEmpsAbsIDataModel(Application application) {
+    public AllEmpsAbsIDataModel providesAllEmpsAbsIDataModel(Application application, DatabaseReference databasereference) {
         return ((AttendanceApplication) application).getAllEmpsAbsDataModel();
     }
 
@@ -93,6 +94,13 @@ public class FirebaseDependentModule {
     public ISchedulerProvider providesISchedulerProvider(Application application) {
 
         return ((AttendanceApplication) application).getSchedulerProvider();
+    }
+
+    @Provides
+    @Singleton
+    public DatabaseReference providesDatabaseReference(Application application) {
+
+        return ((AttendanceApplication) application).getDatabaseFirebaseReference();
     }
 
 }

@@ -281,6 +281,8 @@
     <string name="allempsabs">All employees absences</string>
     <string name="list">List</string>
     <string name="calendar">Calendar</string>
+    <string name="lotofemp">Lot of Employees</string>
+    <string name="lotofempmes">You can hold 6 employees in App. For more write to andrejd@edcom.sk</string>
 
 
 </resources>

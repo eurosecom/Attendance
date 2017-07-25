@@ -1,14 +1,16 @@
 package com.eusecom.attendance;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import java.util.List;
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
-import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import javax.inject.Inject;
 
@@ -22,6 +24,9 @@ public class AllEmpsAbsMvvmViewModel {
     @NonNull
     private final ISchedulerProvider mSchedulerProvider;
 
+    @Inject
+    SharedPreferences mSharedPreferences;
+
 
     @Inject
     public AllEmpsAbsMvvmViewModel(@NonNull final AllEmpsAbsIDataModel dataModel,
@@ -34,7 +39,10 @@ public class AllEmpsAbsMvvmViewModel {
 
     //get employees list
     public Observable<List<Employee>> getObservableFBusersEmployee() {
-        return mDataModel.getObservableFBusersEmployee();
+
+        String usicox = mSharedPreferences.getString("usico", "");
+        Log.d("MvvmViewModel ", usicox);
+        return mDataModel.getObservableFBusersEmployee(usicox);
     }
 
 

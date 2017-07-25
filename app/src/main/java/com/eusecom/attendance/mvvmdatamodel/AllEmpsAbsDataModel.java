@@ -4,24 +4,33 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import rx.Observable;
-import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+
 public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
+
+    DatabaseReference mFirebaseDatabase;
+
+    public AllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference) {
+        mFirebaseDatabase = databaseReference;
+    }
+
 
     //recyclerview datamodel
     @NonNull
     @Override
-    public Observable<List<Employee>> getObservableFBusersEmployee() {
-        final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
-        Query usersQuery = firebaseRef.child("users");
+    public Observable<List<Employee>> getObservableFBusersEmployee(String usicox) {
+
+        //String usicox = mSharedPreferences.getString("usico", "");
+        Log.d("DataModel ", usicox);
+
+        //injected
+        Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
                 .flatMap(dataSnapshot ->{

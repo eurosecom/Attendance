@@ -5,6 +5,7 @@ import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.google.firebase.database.DatabaseReference;
 
 import android.content.SharedPreferences;
 
@@ -28,5 +29,6 @@ public interface FirebaseDependentComponent {
 
     AllEmpsAbsIDataModel allEmpsAbsIDataModell();
     ISchedulerProvider iSchedulerProvider();
+    DatabaseReference databaseReference();
 
 }
