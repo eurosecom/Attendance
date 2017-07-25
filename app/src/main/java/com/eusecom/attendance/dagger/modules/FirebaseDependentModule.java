@@ -86,7 +86,7 @@ public class FirebaseDependentModule {
     @Provides
     @Singleton
     public AllEmpsAbsIDataModel providesAllEmpsAbsIDataModel(Application application, DatabaseReference databasereference) {
-        return ((AttendanceApplication) application).getAllEmpsAbsDataModel();
+        return ((AttendanceApplication) application).getAllEmpsAbsIDataModel();
     }
 
     @Provides

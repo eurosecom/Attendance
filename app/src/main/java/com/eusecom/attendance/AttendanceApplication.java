@@ -43,7 +43,7 @@ public class AttendanceApplication extends Application {
     private final EmployeeIDataModel mEmployeeDataModel;
 
     @NonNull
-    private AllEmpsAbsIDataModel mAllEmpsAbsDataModel;
+    private AllEmpsAbsIDataModel mAllEmpsAbsIDataModel;
     private DatabaseReference mDatabaseReference;
 
     @Override public void onCreate() {
@@ -126,9 +126,9 @@ public class AttendanceApplication extends Application {
     }
 
     @NonNull
-    public AllEmpsAbsIDataModel getAllEmpsAbsDataModel() {
-        mAllEmpsAbsDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference());
-        return mAllEmpsAbsDataModel;
+    public AllEmpsAbsIDataModel getAllEmpsAbsIDataModel() {
+        mAllEmpsAbsIDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference());
+        return mAllEmpsAbsIDataModel;
     }
 
     @NonNull
@@ -155,7 +155,7 @@ public class AttendanceApplication extends Application {
     //we use only for classic create mvvmviewmodel without dagger2
     @NonNull
     public AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
-        return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsDataModel(), getSchedulerProvider());
+        return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsIDataModel(), getSchedulerProvider());
     }
 
 
