@@ -19,6 +19,8 @@ package com.eusecom.attendance;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +51,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
     private TextView mStatusTextView, usicoTextView, mText3;
     FirebaseUser user;
-    private ImageView mCompanyImage;
+    private ImageView mCompanyImage, mUserImage, mIntoworkImage;
     private ImageButton intowork, outsidework, imglogin, imgnepritomnost;
     private String userIDX = "";
     ValueEventListener connlist;
@@ -96,9 +100,23 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_attendance);
 
-    /* Assinging the toolbar object ot the view
-    and setting the the Action bar to our toolbar
-     */
+        //Create Folder
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            //File folder = new File("/storage/emulated/0/eusecom/attendance");
+            File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/attendance");
+            if(!folder.exists()) {
+                folder.mkdirs();
+            }
+
+        }else{
+
+            File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/attendance");
+            if(!folder.exists()) {
+                folder.mkdirs();
+            }
+        }
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
@@ -109,6 +127,8 @@ public class MainActivity extends ActionBarActivity {
         mStatusTextView = (TextView) findViewById(R.id.status);
         usicoTextView = (TextView) findViewById(R.id.usico);
         mCompanyImage = (ImageView) findViewById(R.id.mycompany);
+        mUserImage = (ImageView) findViewById(R.id.imglogin);
+        mIntoworkImage = (ImageView) findViewById(R.id.intowork);
 
         mText3 = (TextView) findViewById(R.id.text3);
 
@@ -408,13 +428,78 @@ public class MainActivity extends ActionBarActivity {
 
         if (user != null) {
 
+            String myID = user.getUid();
+            String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String imgUser = baseDir + File.separator + "/eusecom/attendance/photo" + myID + ".png";
+            File fileUser = new File(imgUser);
+            Log.d("imgUser  ", imgUser);
+
+            String myICO =  SettingsActivity.getUsIco(MainActivity.this);
+            String imgIco = baseDir + File.separator + "/eusecom/attendance/photo" + myICO + ".png";
+            File fileIco = new File(imgIco);
+            Log.d("imgIco  ", imgIco);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                if(fileUser.exists()){
+                    Bitmap bmp = BitmapFactory.decodeFile(imgUser);
+                    mUserImage.setImageBitmap(bmp);
+                }else{
+                    mUserImage.setImageDrawable(getResources().getDrawable(R.drawable.zamestnanec, getApplicationContext().getTheme()));
+                }
+
+                if(fileIco.exists()){
+                    Bitmap bmp2 = BitmapFactory.decodeFile(imgIco);
+                    mIntoworkImage.setImageBitmap(bmp2);
+                }else{
+                    mIntoworkImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
+                }
+
+
+            } else {
+
+                if(fileUser.exists()){
+                    Bitmap bmp = BitmapFactory.decodeFile(imgUser);
+                    mUserImage.setImageBitmap(bmp);
+                }else{
+                    mUserImage.setImageDrawable(getResources().getDrawable(R.drawable.zamestnanec));
+                }
+
+                if(fileIco.exists()){
+                    Bitmap bmp2 = BitmapFactory.decodeFile(imgIco);
+                    mIntoworkImage.setImageBitmap(bmp2);
+                }else{
+                    mIntoworkImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
+                }
+
+            }
+
             String usatwx = SettingsActivity.getUsAtw(this);
 
             if (usatwx.equals("1")) {
+
+                String baseDir3 = Environment.getExternalStorageDirectory().getAbsolutePath();
+                String myICO3 =  SettingsActivity.getUsIco(MainActivity.this);
+                String imgIco3 = baseDir3 + File.separator + "/eusecom/attendance/photo" + myICO3 + ".png";
+                File fileIco3 = new File(imgIco3);
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
+
+                    if(fileIco.exists()){
+                        Bitmap bmp3 = BitmapFactory.decodeFile(imgIco3);
+                        mCompanyImage.setImageBitmap(bmp3);
+                    }else{
+                        mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
+                    }
+
                 } else {
-                    mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
+
+                    if(fileIco.exists()){
+                        Bitmap bmp3 = BitmapFactory.decodeFile(imgIco3);
+                        mCompanyImage.setImageBitmap(bmp3);
+                    }else{
+                        mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
+                    }
                 }
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -426,6 +511,14 @@ public class MainActivity extends ActionBarActivity {
 
 
         } else {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mUserImage.setImageDrawable(getResources().getDrawable(R.drawable.login, getApplicationContext().getTheme()));
+                mIntoworkImage.setImageDrawable(getResources().getDrawable(R.drawable.intowork, getApplicationContext().getTheme()));
+            } else {
+                mUserImage.setImageDrawable(getResources().getDrawable(R.drawable.login));
+                mIntoworkImage.setImageDrawable(getResources().getDrawable(R.drawable.intowork));
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.clock, getApplicationContext().getTheme()));
@@ -562,6 +655,16 @@ public class MainActivity extends ActionBarActivity {
 
             Intent is = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(is);
+            return true;
+        }
+
+        if (id == R.id.setuserimage) {
+
+            return true;
+        }
+
+        if (id == R.id.seticoimage) {
+
             return true;
         }
 

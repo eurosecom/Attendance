@@ -31,6 +31,16 @@
         android:title="@string/action_settings">
     </item>
 
+    <item
+        android:id="@+id/setuserimage"
+        android:title="@string/action_setuserimage"
+        />
+
+    <item
+        android:id="@+id/seticoimage"
+        android:title="@string/action_seticoimage"
+         />
+
 
 
     
