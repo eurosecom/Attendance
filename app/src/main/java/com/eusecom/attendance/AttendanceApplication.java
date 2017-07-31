@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.leakcanary.LeakCanary;
 
+import io.realm.RealmConfiguration;
+import io.realm.Realm;
 
 
 public class AttendanceApplication extends Application {
@@ -57,6 +59,13 @@ public class AttendanceApplication extends Application {
         // Normal app init code...
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
         //dagger demo retrofit
         // specify the full namespace of the component

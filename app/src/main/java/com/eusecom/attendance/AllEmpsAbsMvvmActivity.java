@@ -32,8 +32,13 @@ import android.widget.Toast;
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
+import java.util.ArrayList;
 import javax.inject.Inject;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
+import com.eusecom.attendance.realm.RealmController;
+import com.eusecom.attendance.realm.RealmEmployee;
 
 /**
  * Show calendar and list of all employees absences
@@ -56,6 +61,8 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
     @Inject
     SharedPreferences mSharedPreferences;
 
+    Realm realm;
+    RealmController realmcontroller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,11 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         setContentView(R.layout.activity_allempsabs);
 
         ((AttendanceApplication) getApplication()).getAllEmpsAbsComponent().inject(this);
+
+        // Obtain realm instance
+        realmcontroller = RealmController.with(this);
+        realm = realmcontroller.getRealm();
+        //setRealmData();
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 
@@ -127,6 +139,16 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
             _rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
 
+            RealmController.with(this).refresh();
+
+            RealmResults<RealmEmployee> realmemployees = RealmController.with(this).getRealmEmployees();
+
+            RealmEmployee b = realmemployees.get(0);
+            String username = b.getUsername();
+
+            Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
+
+
             }
         );
 
@@ -173,6 +195,32 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
             }
 
             return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setRealmData() {
+
+        ArrayList<RealmEmployee> realmemployees = new ArrayList<>();
+
+        RealmEmployee realmemployee = new RealmEmployee();
+        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setEmail("Reto Meier");
+        realmemployees.add(realmemployee);
+
+        realmemployee = new RealmEmployee();
+        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setEmail("Reto Meier");
+        realmemployees.add(realmemployee);
+
+        realmcontroller.clearAll();
+        for (RealmEmployee b : realmemployees) {
+            // Persist your data easily
+            realm.beginTransaction();
+            realm.copyToRealm(b);
+            realm.commitTransaction();
+        }
+
+
     }
 
 

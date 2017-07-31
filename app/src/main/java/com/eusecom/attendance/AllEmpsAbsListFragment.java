@@ -12,13 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
-import com.eusecom.attendance.models.Company;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.rxbus.RxBus;
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,11 +22,8 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
-import rx.Observable;
-import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import rx.subscriptions.Subscriptions;
 
 
 public class AllEmpsAbsListFragment extends Fragment {
@@ -235,5 +228,9 @@ public class AllEmpsAbsListFragment extends Fragment {
                 .show();
 
     }
+
+
+
+
 
 }
