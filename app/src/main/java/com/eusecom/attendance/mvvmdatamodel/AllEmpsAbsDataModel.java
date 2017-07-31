@@ -4,8 +4,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
 import rx.Observable;
 import com.eusecom.attendance.models.Employee;
+import com.eusecom.attendance.mvvmmodel.Language;
+import com.eusecom.attendance.realm.RealmController;
+import com.eusecom.attendance.realm.RealmEmployee;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +54,46 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
 
 
+    @NonNull
+    @Override
+    public Observable<String> getObservableGreetingByLanguageCode(@NonNull final List<Employee> employees) {
 
+        //save to realm and get String OK or ERROR
+
+                return Observable.just("OK!");
+
+    }
+
+    Realm realm;
+    RealmController realmcontroller;
+
+    private void setRealmData(@NonNull final List<Employee> employees) {
+
+        //realmcontroller = RealmController.with(this);
+        realm = realmcontroller.getRealm();
+
+        ArrayList<RealmEmployee> realmemployees = new ArrayList<>();
+
+        RealmEmployee realmemployee = new RealmEmployee();
+        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setEmail("Reto Meier");
+        realmemployees.add(realmemployee);
+
+        realmemployee = new RealmEmployee();
+        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setEmail("Reto Meier");
+        realmemployees.add(realmemployee);
+
+        realmcontroller.clearAll();
+        for (RealmEmployee b : realmemployees) {
+            // Persist your data easily
+            realm.beginTransaction();
+            realm.copyToRealm(b);
+            realm.commitTransaction();
+        }
+
+
+    }
 
 
 

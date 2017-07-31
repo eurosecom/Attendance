@@ -168,6 +168,11 @@ public class AllEmpsAbsListFragment extends Fragment {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setEmployees));
 
+        mSubscription.add(mViewModel.getObservableGreeting()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::setGreeting));
+
 
     }
 
@@ -189,6 +194,10 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     }
 
+    private void setGreeting(@NonNull final String greeting) {
+        Toast.makeText(getActivity(), greeting, Toast.LENGTH_SHORT).show();
+    }
+
     private void setEmployees(@NonNull final List<Employee> employees) {
 
         int maxemp = 6;
@@ -198,6 +207,8 @@ public class AllEmpsAbsListFragment extends Fragment {
         }else {
             assert mRecycler != null;
             mAdapter.setData(employees);
+            //save employees to Realm
+            mViewModel.emitEmployeesToRealm(employees);
         }
 
     }

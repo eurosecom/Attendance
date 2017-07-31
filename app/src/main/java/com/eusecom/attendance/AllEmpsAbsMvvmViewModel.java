@@ -6,6 +6,8 @@ import android.util.Log;
 
 import java.util.List;
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
+
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
@@ -37,14 +39,30 @@ public class AllEmpsAbsMvvmViewModel {
 
     //recyclerview method
 
-    //get employees list
+    //get employees list from FB
     public Observable<List<Employee>> getObservableFBusersEmployee() {
 
         String usicox = mSharedPreferences.getString("usico", "");
         Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBusersEmployee(usicox);
     }
+    //end get employees list from FB
 
+    //save employees to realm
+    public void emitEmployeesToRealm(List<Employee> employees) {
+        mObservableSelectedLanguage.onNext(employees);
+    }
+
+    @NonNull
+    private final BehaviorSubject<List<Employee>> mObservableSelectedLanguage = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getObservableGreeting() {
+        return mObservableSelectedLanguage
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(mDataModel::getObservableGreetingByLanguageCode);
+    }
+    //end save employees to realm
 
 
 
