@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Component;
+import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -28,6 +29,7 @@ public interface FirebaseDependentComponent {
     @Named("non_cached") OkHttpClient okHttpClientNonCached();
     SharedPreferences sharedPreferences();
     RealmController realmController();
+    Realm realm();
 
     AllEmpsAbsIDataModel allEmpsAbsIDataModell();
     ISchedulerProvider iSchedulerProvider();

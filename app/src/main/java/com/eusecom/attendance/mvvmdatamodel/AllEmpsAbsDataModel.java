@@ -4,11 +4,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
-
 import io.realm.Realm;
 import rx.Observable;
 import com.eusecom.attendance.models.Employee;
-import com.eusecom.attendance.mvvmmodel.Language;
 import com.eusecom.attendance.realm.RealmController;
 import com.eusecom.attendance.realm.RealmEmployee;
 import com.eusecom.attendance.rxfirebase2.database.RxFirebaseDatabase;
@@ -56,35 +54,36 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<String> getObservableGreetingByLanguageCode(@NonNull final List<Employee> employees) {
+    public Observable<String> getObservableGreetingByLanguageCode(@NonNull final List<Employee> employees, Realm realm) {
 
         //save to realm and get String OK or ERROR
+        setRealmData( employees, realm);
 
-                return Observable.just("OK!");
+        return Observable.just("OK!");
 
     }
 
     Realm realm;
     RealmController realmcontroller;
 
-    private void setRealmData(@NonNull final List<Employee> employees) {
-
-        //realmcontroller = RealmController.with(this);
-        realm = realmcontroller.getRealm();
+    private void setRealmData(@NonNull final List<Employee> employees, Realm realm) {
 
         ArrayList<RealmEmployee> realmemployees = new ArrayList<>();
 
         RealmEmployee realmemployee = new RealmEmployee();
-        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setUsername("Name ffff " + System.currentTimeMillis());
         realmemployee.setEmail("Reto Meier");
         realmemployees.add(realmemployee);
 
         realmemployee = new RealmEmployee();
-        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setUsername("Name ffff " + System.currentTimeMillis());
         realmemployee.setEmail("Reto Meier");
         realmemployees.add(realmemployee);
 
-        realmcontroller.clearAll();
+        //realmcontroller.clearAll();
+        realm.beginTransaction();
+        realm.clear(RealmEmployee.class);
+        realm.commitTransaction();
         for (RealmEmployee b : realmemployees) {
             // Persist your data easily
             realm.beginTransaction();

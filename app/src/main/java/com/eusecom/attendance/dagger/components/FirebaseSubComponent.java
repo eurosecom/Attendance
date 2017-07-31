@@ -7,6 +7,7 @@ import com.eusecom.attendance.dagger.scopes.FirebaseScope;
 import com.eusecom.attendance.realm.RealmController;
 
 import dagger.Subcomponent;
+import io.realm.Realm;
 
 @FirebaseScope
 @Subcomponent(modules={ FirebaseSubModule.class })
@@ -16,6 +17,7 @@ public interface FirebaseSubComponent {
 
     SharedPreferences sharedPreferences();
     RealmController realmController();
+    Realm realm();
 
     @Subcomponent.Builder
     interface Builder extends SubcomponentBuilder<FirebaseSubComponent> {

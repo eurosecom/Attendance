@@ -61,6 +61,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
     @Inject
     SharedPreferences mSharedPreferences;
 
+    @Inject
     Realm realm;
     @Inject
     RealmController realmcontroller;
@@ -72,9 +73,9 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
         ((AttendanceApplication) getApplication()).getAllEmpsAbsComponent().inject(this);
 
-        // Obtain realmcontroller instance classic
+        // Obtain realm and realmcontroller instance classic
         //realmcontroller = RealmController.with(this);
-        realm = realmcontroller.getRealm();
+        //realm = realmcontroller.getRealm();
         //setRealmData();
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
@@ -204,12 +205,12 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         ArrayList<RealmEmployee> realmemployees = new ArrayList<>();
 
         RealmEmployee realmemployee = new RealmEmployee();
-        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setUsername("Name xxxx " + System.currentTimeMillis());
         realmemployee.setEmail("Reto Meier");
         realmemployees.add(realmemployee);
 
         realmemployee = new RealmEmployee();
-        realmemployee.setUsername("Name " + System.currentTimeMillis());
+        realmemployee.setUsername("Name xxxx " + System.currentTimeMillis());
         realmemployee.setEmail("Reto Meier");
         realmemployees.add(realmemployee);
 
@@ -217,7 +218,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         for (RealmEmployee b : realmemployees) {
             // Persist your data easily
             realm.beginTransaction();
-            realm.copyToRealm(b);
+            //realm.copyToRealm(b);
             realm.commitTransaction();
         }
 

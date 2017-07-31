@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 
 @Module
 public class FirebaseSubModule {
@@ -34,5 +35,11 @@ public class FirebaseSubModule {
         return new RealmController(application);
     }
 
+    @Provides
+    // do not get @Singleton in subcomponent
+    @FirebaseScope
+    Realm providesRealm(RealmController realmcontroller) {
+        return realmcontroller.getRealm();
+    }
     
 }

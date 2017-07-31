@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -35,6 +36,12 @@ public class FirebaseDependentModule {
     @Singleton
     RealmController providesRealmConroller(Application application) {
         return new RealmController(application);
+    }
+
+    @Provides
+    @Singleton
+    Realm providesRealm(RealmController realmcontroller) {
+        return realmcontroller.getRealm();
     }
 
     @Provides

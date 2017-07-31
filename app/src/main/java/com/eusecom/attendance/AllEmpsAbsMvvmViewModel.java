@@ -5,12 +5,15 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.List;
+
+import io.realm.Realm;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.attendance.realm.RealmController;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
@@ -28,6 +31,11 @@ public class AllEmpsAbsMvvmViewModel {
 
     @Inject
     SharedPreferences mSharedPreferences;
+
+    @Inject
+    Realm realm;
+    @Inject
+    RealmController realmcontroller;
 
 
     @Inject
@@ -59,8 +67,8 @@ public class AllEmpsAbsMvvmViewModel {
     @NonNull
     public Observable<String> getObservableGreeting() {
         return mObservableSelectedLanguage
-                .observeOn(mSchedulerProvider.computation())
-                .flatMap(mDataModel::getObservableGreetingByLanguageCode);
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getObservableGreetingByLanguageCode(list, realm));
     }
     //end save employees to realm
 
