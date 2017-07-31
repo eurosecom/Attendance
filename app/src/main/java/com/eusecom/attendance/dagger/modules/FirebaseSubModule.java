@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.eusecom.attendance.AllEmpsAbsMvvmActivity;
 import com.eusecom.attendance.dagger.scopes.FirebaseScope;
+import com.eusecom.attendance.realm.RealmController;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,7 +26,13 @@ public class FirebaseSubModule {
     SharedPreferences providesSharedPreferences(Application application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
     }
-   
+
+    @Provides
+    // do not get @Singleton in subcomponent
+    @FirebaseScope
+    RealmController providesRealmConroller(Application application) {
+        return new RealmController(application);
+    }
 
     
 }

@@ -62,6 +62,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
     SharedPreferences mSharedPreferences;
 
     Realm realm;
+    @Inject
     RealmController realmcontroller;
 
     @Override
@@ -71,8 +72,8 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
         ((AttendanceApplication) getApplication()).getAllEmpsAbsComponent().inject(this);
 
-        // Obtain realm instance
-        realmcontroller = RealmController.with(this);
+        // Obtain realmcontroller instance classic
+        //realmcontroller = RealmController.with(this);
         realm = realmcontroller.getRealm();
         //setRealmData();
 

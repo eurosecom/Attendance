@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import com.eusecom.attendance.AttendanceApplication;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.attendance.realm.RealmController;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -28,6 +29,12 @@ public class FirebaseDependentModule {
     public FirebaseDependentModule(String baseUrl, String baseUrl2) {
         this.mBaseUrl = baseUrl;
         this.mBaseUrl2 = baseUrl2;
+    }
+
+    @Provides
+    @Singleton
+    RealmController providesRealmConroller(Application application) {
+        return new RealmController(application);
     }
 
     @Provides

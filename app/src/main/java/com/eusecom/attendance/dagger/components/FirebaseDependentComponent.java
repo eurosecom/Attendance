@@ -5,6 +5,7 @@ import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.attendance.realm.RealmController;
 import com.google.firebase.database.DatabaseReference;
 
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ public interface FirebaseDependentComponent {
     OkHttpClient okHttpClient();
     @Named("non_cached") OkHttpClient okHttpClientNonCached();
     SharedPreferences sharedPreferences();
+    RealmController realmController();
 
     AllEmpsAbsIDataModel allEmpsAbsIDataModell();
     ISchedulerProvider iSchedulerProvider();

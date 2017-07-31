@@ -5,6 +5,8 @@ import com.eusecom.attendance.DemoDaggerSubActivity;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.MyActivityModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
+import com.eusecom.attendance.realm.RealmController;
+
 import okhttp3.OkHttpClient;
 import android.content.SharedPreferences;
 
