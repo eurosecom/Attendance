@@ -122,8 +122,8 @@ public class AllEmpsAbsListFragment extends Fragment {
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
 
-        String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
-        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
+        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
     }//end of onActivityCreated
@@ -142,6 +142,7 @@ public class AllEmpsAbsListFragment extends Fragment {
             e.printStackTrace();
         }
         _rxBus = null;
+        mSubscription.unsubscribe();
         mSubscription.clear();
 
 
@@ -168,10 +169,10 @@ public class AllEmpsAbsListFragment extends Fragment {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setEmployees));
 
-        mSubscription.add(mViewModel.getObservableGreeting()
+        mSubscription.add(mViewModel.getObservableDataSavedToRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::setGreeting));
+                .subscribe(this::dataSavedToRealm));
 
 
     }
@@ -181,7 +182,7 @@ public class AllEmpsAbsListFragment extends Fragment {
     private void unBind() {
         mAdapter.setData(Collections.<Employee>emptyList());
         //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
-        //mSubscription.unsubscribe();
+        mSubscription.unsubscribe();
         mSubscription.clear();
         try {
             if (dialog != null && dialog.isShowing()) {
@@ -194,7 +195,7 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     }
 
-    private void setGreeting(@NonNull final String greeting) {
+    private void dataSavedToRealm(@NonNull final String greeting) {
         Toast.makeText(getActivity(), greeting, Toast.LENGTH_SHORT).show();
     }
 

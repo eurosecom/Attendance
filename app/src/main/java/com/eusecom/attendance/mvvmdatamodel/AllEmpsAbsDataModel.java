@@ -54,12 +54,12 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<String> getObservableGreetingByLanguageCode(@NonNull final List<Employee> employees, Realm realm) {
+    public Observable<String> getObservableSavingToRealm(@NonNull final List<Employee> employees, Realm realm) {
 
         //save to realm and get String OK or ERROR
         setRealmData( employees, realm);
 
-        return Observable.just("OK!");
+        return Observable.just("Data saved to Realm");
 
     }
 
@@ -68,17 +68,17 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
     private void setRealmData(@NonNull final List<Employee> employees, Realm realm) {
 
+        //System.out.println("name " + employees.get(0).getUsername());
         ArrayList<RealmEmployee> realmemployees = new ArrayList<>();
 
-        RealmEmployee realmemployee = new RealmEmployee();
-        realmemployee.setUsername("Name ffff " + System.currentTimeMillis());
-        realmemployee.setEmail("Reto Meier");
-        realmemployees.add(realmemployee);
-
-        realmemployee = new RealmEmployee();
-        realmemployee.setUsername("Name ffff " + System.currentTimeMillis());
-        realmemployee.setEmail("Reto Meier");
-        realmemployees.add(realmemployee);
+        for (int i=0; i<employees.size(); i++) {
+            RealmEmployee realmemployee = new RealmEmployee();
+            realmemployee.setUsername(employees.get(i).getUsername());
+            realmemployee.setEmail(employees.get(i).getEmail());
+            realmemployee.setUsico(employees.get(i).getUsico());
+            realmemployee.setUstype(employees.get(i).getUstype());
+            realmemployees.add(realmemployee);
+        }
 
         //realmcontroller.clearAll();
         realm.beginTransaction();

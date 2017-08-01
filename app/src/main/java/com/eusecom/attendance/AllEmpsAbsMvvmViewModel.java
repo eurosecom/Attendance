@@ -14,8 +14,6 @@ import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 
 import javax.inject.Inject;
 
@@ -58,17 +56,17 @@ public class AllEmpsAbsMvvmViewModel {
 
     //save employees to realm
     public void emitEmployeesToRealm(List<Employee> employees) {
-        mObservableSelectedLanguage.onNext(employees);
+        mObservableSaveToRealm.onNext(employees);
     }
 
     @NonNull
-    private final BehaviorSubject<List<Employee>> mObservableSelectedLanguage = BehaviorSubject.create();
+    private final BehaviorSubject<List<Employee>> mObservableSaveToRealm = BehaviorSubject.create();
 
     @NonNull
-    public Observable<String> getObservableGreeting() {
-        return mObservableSelectedLanguage
+    public Observable<String> getObservableDataSavedToRealm() {
+        return mObservableSaveToRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(list -> mDataModel.getObservableGreetingByLanguageCode(list, realm));
+                .flatMap(list -> mDataModel.getObservableSavingToRealm(list, realm));
     }
     //end save employees to realm
 

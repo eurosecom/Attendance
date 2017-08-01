@@ -155,8 +155,8 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         );
 
 
-        String serverx = mSharedPreferences.getString("servername", "");
-        Toast.makeText(AllEmpsAbsMvvmActivity.this, serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = mSharedPreferences.getString("servername", "");
+        //Toast.makeText(AllEmpsAbsMvvmActivity.this, serverx, Toast.LENGTH_SHORT).show();
 
 
     }

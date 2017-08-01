@@ -13,7 +13,7 @@ public interface AllEmpsAbsIDataModel {
     Observable<List<Employee>> getObservableFBusersEmployee(String usicox);
 
     @NonNull
-    Observable<String> getObservableGreetingByLanguageCode(@NonNull final List<Employee> employees, Realm realm);
+    Observable<String> getObservableSavingToRealm(@NonNull final List<Employee> employees, Realm realm);
 
 
 
