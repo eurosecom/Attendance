@@ -15,6 +15,9 @@ public interface AllEmpsAbsIDataModel {
     @NonNull
     Observable<String> getObservableSavingToRealm(@NonNull final List<Employee> employees, Realm realm);
 
+    @NonNull
+    Observable<String> getObservableAbsenceForRealm(@NonNull final String umex, Realm realm);
+
 
 
 

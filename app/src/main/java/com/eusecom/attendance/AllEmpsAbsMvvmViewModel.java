@@ -10,6 +10,7 @@ import io.realm.Realm;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
+import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
@@ -69,6 +70,23 @@ public class AllEmpsAbsMvvmViewModel {
                 .flatMap(list -> mDataModel.getObservableSavingToRealm(list, realm));
     }
     //end save employees to realm
+
+    //update absences to realm
+    public void emitAbsencesToRealm(String umex) {
+        mObservableAbsencesToRealm.onNext(umex);
+    }
+
+    @NonNull
+    private final BehaviorSubject<String> mObservableAbsencesToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getObservableUpdateRealm() {
+        return mObservableAbsencesToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(umex -> mDataModel.getObservableAbsenceForRealm(umex, realm));
+    }
+
+    //end update absences to realm
 
 
 

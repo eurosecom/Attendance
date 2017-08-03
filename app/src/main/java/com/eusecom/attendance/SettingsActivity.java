@@ -20,6 +20,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String USER_ATW = "usatw";
 	public static final String USNAME = "usname";
 	public static final String ROK = "rok";
+	public static final String UME = "ume";
 	public static final String USER_ADMIN = "usadmin";
 
 
@@ -50,6 +51,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getFir(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIR, "0");
+	}
+
+	public static String getUme(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(UME, "1.2017");
 	}
 
 

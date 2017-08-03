@@ -107,6 +107,8 @@
     <string name="fir_summary">Number of company to which you want to connect.</string>
     <string name="rok_title">Accounting year.</string>
     <string name="rok_summary">Accounting year for attendance.</string>
+    <string name="ume_title">Accounting month.</string>
+    <string name="ume_summary">Accounting month for attendance.</string>
     <string name="ustype_title">Type of User.</string>
     <string name="ustype_summary">Set App by login. Admin, common user....</string>
     <string name="usadmin_title">User is admin.</string>

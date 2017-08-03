@@ -15,10 +15,12 @@ import java.util.List;
 class AllEmpsAbsRxAdapter extends RecyclerView.Adapter<AllEmpsAbsRxViewHolder> {
 
   private List<Employee> mBlogPostEntities;
+  private String ume;
   private RxBus _rxBus;
 
-  public AllEmpsAbsRxAdapter(List<Employee> blogPostEntities, RxBus bus) {
+  public AllEmpsAbsRxAdapter(List<Employee> blogPostEntities, RxBus bus, String ume) {
     mBlogPostEntities = blogPostEntities;
+    ume = ume;
     _rxBus = bus;
     //do not work _rxBus = AttendanceApplication.getInstance().getRxBusSingleton();
   }
@@ -30,7 +32,7 @@ class AllEmpsAbsRxAdapter extends RecyclerView.Adapter<AllEmpsAbsRxViewHolder> {
 
   @Override public void onBindViewHolder(AllEmpsAbsRxViewHolder holder, int position) {
     Employee blogPostEntity = mBlogPostEntities.get(position);
-    holder.bindModel(blogPostEntity);
+    holder.bindModel(blogPostEntity, ume);
 
     holder.setClickListener(new AllEmpsAbsRxViewHolder.ClickListener() {
       public void onClick(View v, int pos, boolean isLongClick) {

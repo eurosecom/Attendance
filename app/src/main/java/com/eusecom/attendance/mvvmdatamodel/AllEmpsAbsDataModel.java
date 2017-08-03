@@ -95,6 +95,18 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
     }
 
 
+    @NonNull
+    @Override
+    public Observable<String> getObservableAbsenceForRealm(@NonNull final String umex, Realm realm) {
+
+        //get absences for ico and umex
+
+
+        return Observable.just("Absences for Realm " + umex);
+
+    }
+
+
 
 
 }

@@ -114,7 +114,8 @@ public class AllEmpsAbsListFragment extends Fragment {
 
         ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsComponent().inject(this);
 
-        mAdapter = new AllEmpsAbsRxAdapter(Collections.<Employee>emptyList(), _rxBus);
+        String umex = mSharedPreferences.getString("ume", "");
+        mAdapter = new AllEmpsAbsRxAdapter(Collections.<Employee>emptyList(), _rxBus, umex);
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -132,7 +133,7 @@ public class AllEmpsAbsListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         _disposables.dispose();
-        mAdapter = new AllEmpsAbsRxAdapter(Collections.<Employee>emptyList(), null);
+        mAdapter = new AllEmpsAbsRxAdapter(Collections.<Employee>emptyList(), null, "01.2017");
         try {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
@@ -174,6 +175,11 @@ public class AllEmpsAbsListFragment extends Fragment {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::dataSavedToRealm));
 
+        mSubscription.add(mViewModel.getObservableUpdateRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::updatedRealm));
+
 
     }
 
@@ -195,8 +201,16 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     }
 
-    private void dataSavedToRealm(@NonNull final String greeting) {
-        Toast.makeText(getActivity(), greeting, Toast.LENGTH_SHORT).show();
+    private void dataSavedToRealm(@NonNull final String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        //update absences to Realm
+        String umex = mSharedPreferences.getString("ume", "");
+        mViewModel.emitAbsencesToRealm(umex);
+    }
+
+    private void updatedRealm(@NonNull final String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
     }
 
     private void setEmployees(@NonNull final List<Employee> employees) {

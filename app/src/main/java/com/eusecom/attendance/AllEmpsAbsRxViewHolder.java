@@ -2,11 +2,17 @@ package com.eusecom.attendance;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.eusecom.attendance.models.Employee;
 import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -44,7 +50,7 @@ public class AllEmpsAbsRxViewHolder extends RecyclerView.ViewHolder implements V
     itemView.setOnLongClickListener(this);
   }
 
-  public void bindModel(Employee employee) {
+  public void bindModel(Employee employee, String ume) {
     if (employee == null) {
       throw new IllegalArgumentException("Entity cannot be null");
     }
@@ -56,6 +62,9 @@ public class AllEmpsAbsRxViewHolder extends RecyclerView.ViewHolder implements V
     if( employee.username.equals("andrejd")) {
       Picasso.with(mContext).load(R.drawable.ic_remove_circle_black_24dp).resize(120, 120).into(starView);
     }
+    int nday = getDaysNumber("02-08-2017");
+    String sday = nday + "";
+    Log.d("sday  ", sday);
 
   }
 
@@ -94,5 +103,20 @@ public class AllEmpsAbsRxViewHolder extends RecyclerView.ViewHolder implements V
   }
 
 
+  private int getDaysNumber(String daydate){
+
+    try{
+      SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
+      Date date = inFormat.parse(daydate);
+      Calendar c = Calendar.getInstance();
+      c.setTime(date); // yourdate is an object of type Date
+      int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+      return dayOfWeek;
+
+    }
+    catch(Exception ex){
+      return 0;
+    }
+  }
 
 }
