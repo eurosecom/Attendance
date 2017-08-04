@@ -71,7 +71,7 @@
     <EditTextPreference
         android:key="ume"
         android:defaultValue="1.2017"
-        android:enabled="true"
+        android:enabled="false"
         android:summary="@string/ume_summary"
         android:title="@string/ume_title" />
         

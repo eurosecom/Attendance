@@ -35,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 import com.eusecom.attendance.realm.RealmController;
 import com.eusecom.attendance.realm.RealmEmployee;
@@ -82,7 +81,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
-        getSupportActionBar().setTitle(getString(R.string.allempsabs));
+        getSupportActionBar().setTitle(getString(R.string.allempsabs) + " " + mSharedPreferences.getString("ume", ""));
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -139,16 +138,15 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-            _rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
+            //_rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
 
-            RealmController.with(this).refresh();
+            Intent iz = new Intent(this, VyberUmeActivity.class);
+            Bundle extrasz = new Bundle();
+            extrasz.putString("odkial", "0");
 
-            RealmResults<RealmEmployee> realmemployees = RealmController.with(this).getRealmEmployees();
-
-            RealmEmployee b = realmemployees.get(0);
-            String username = b.getUsername();
-
-            Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
+            iz.putExtras(extrasz);
+            startActivity(iz);
+            finish();
 
 
             }
