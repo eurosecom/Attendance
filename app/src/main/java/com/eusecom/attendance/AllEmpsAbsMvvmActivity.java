@@ -35,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 import com.eusecom.attendance.realm.RealmController;
 import com.eusecom.attendance.realm.RealmEmployee;
@@ -81,7 +82,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
-        getSupportActionBar().setTitle(getString(R.string.allempsabs) + " " + mSharedPreferences.getString("ume", ""));
+        getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.allempsabs));
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -139,14 +140,28 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         fab.setOnClickListener(v -> {
 
             //_rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
+            int co = 1;
 
-            Intent iz = new Intent(this, VyberUmeActivity.class);
-            Bundle extrasz = new Bundle();
-            extrasz.putString("odkial", "0");
+            if( co == 0 ) {
+                Intent iz = new Intent(this, VyberUmeActivity.class);
+                Bundle extrasz = new Bundle();
+                extrasz.putString("odkial", "0");
 
-            iz.putExtras(extrasz);
-            startActivity(iz);
-            finish();
+                iz.putExtras(extrasz);
+                startActivity(iz);
+                finish();
+            }else{
+
+                RealmController.with(this).refresh();
+
+                RealmResults<RealmEmployee> realmemployees = RealmController.with(this).getRealmEmployees();
+
+                RealmEmployee b = realmemployees.get(0);
+                //String username = b.getUsername();
+                String username = b.getKeyf();
+
+                Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
+            }
 
 
             }

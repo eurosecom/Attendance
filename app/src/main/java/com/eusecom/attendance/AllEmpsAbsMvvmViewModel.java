@@ -15,6 +15,7 @@ import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
+import com.eusecom.attendance.realm.RealmEmployee;
 
 import javax.inject.Inject;
 
@@ -55,13 +56,22 @@ public class AllEmpsAbsMvvmViewModel {
     }
     //end get employees list from FB
 
+    //get realmemployees list from FB
+    public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee() {
+
+        String usicox = mSharedPreferences.getString("usico", "");
+        Log.d("MvvmViewModel ", usicox);
+        return mDataModel.getObservableFBusersRealmEmployee(usicox);
+    }
+    //end get realmemployees list from FB
+
     //save employees to realm
-    public void emitEmployeesToRealm(List<Employee> employees) {
+    public void emitRealmEmployeesToRealm(List<RealmEmployee> employees) {
         mObservableSaveToRealm.onNext(employees);
     }
 
     @NonNull
-    private final BehaviorSubject<List<Employee>> mObservableSaveToRealm = BehaviorSubject.create();
+    private final BehaviorSubject<List<RealmEmployee>> mObservableSaveToRealm = BehaviorSubject.create();
 
     @NonNull
     public Observable<String> getObservableDataSavedToRealm() {
@@ -71,22 +81,21 @@ public class AllEmpsAbsMvvmViewModel {
     }
     //end save employees to realm
 
-    //update absences to realm
-    public void emitAbsencesToRealm(String umex) {
-        mObservableAbsencesToRealm.onNext(umex);
-    }
+    //get absences from FB for update realm
+    public void emitAbsencesFromFBforRealm(String umex) { mObservableAbsencesFromFB.onNext(umex); }
 
     @NonNull
-    private final BehaviorSubject<String> mObservableAbsencesToRealm = BehaviorSubject.create();
+    private final BehaviorSubject<String> mObservableAbsencesFromFB = BehaviorSubject.create();
 
     @NonNull
-    public Observable<String> getObservableUpdateRealm() {
-        return mObservableAbsencesToRealm
+    public Observable<List<Attendance>> getObservableFromFBforRealm() {
+        String usicox = mSharedPreferences.getString("usico", "");
+        return mObservableAbsencesFromFB
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(umex -> mDataModel.getObservableAbsenceForRealm(umex, realm));
+                .flatMap(umex -> mDataModel.getObservableAbsencesFromFB(umex, usicox));
     }
 
-    //end update absences to realm
+    //end get absences from FB for update realm
 
 
 

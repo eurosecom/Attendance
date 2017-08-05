@@ -13,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.Employee;
+import com.eusecom.attendance.realm.RealmEmployee;
 import com.eusecom.attendance.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +35,7 @@ public class AllEmpsAbsListFragment extends Fragment {
 
     }
     private CompositeDisposable _disposables;
-    private AllEmpsAbsRxAdapter mAdapter;
+    private AllEmpsAbsRxRealmAdapter mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private RxBus _rxBus = null;
@@ -115,7 +118,7 @@ public class AllEmpsAbsListFragment extends Fragment {
         ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsComponent().inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
-        mAdapter = new AllEmpsAbsRxAdapter(Collections.<Employee>emptyList(), _rxBus, umex);
+        mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), _rxBus, umex);
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -133,7 +136,7 @@ public class AllEmpsAbsListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         _disposables.dispose();
-        mAdapter = new AllEmpsAbsRxAdapter(Collections.<Employee>emptyList(), null, "01.2017");
+        mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), null, "01.2017");
         try {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
@@ -165,20 +168,20 @@ public class AllEmpsAbsListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(mViewModel.getObservableFBusersEmployee()
+        mSubscription.add(mViewModel.getObservableFBusersRealmEmployee()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::setEmployees));
+                .subscribe(this::setRealmEmployees));
 
         mSubscription.add(mViewModel.getObservableDataSavedToRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::dataSavedToRealm));
 
-        mSubscription.add(mViewModel.getObservableUpdateRealm()
+        mSubscription.add(mViewModel.getObservableFromFBforRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::updatedRealm));
+                .subscribe(this::setAbsences));
 
 
     }
@@ -186,7 +189,7 @@ public class AllEmpsAbsListFragment extends Fragment {
 
 
     private void unBind() {
-        mAdapter.setData(Collections.<Employee>emptyList());
+        mAdapter.setRealmData(Collections.<RealmEmployee>emptyList());
         //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
         mSubscription.unsubscribe();
         mSubscription.clear();
@@ -205,26 +208,27 @@ public class AllEmpsAbsListFragment extends Fragment {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         //update absences to Realm
         String umex = mSharedPreferences.getString("ume", "");
-        mViewModel.emitAbsencesToRealm(umex);
+        mViewModel.emitAbsencesFromFBforRealm(umex);
     }
 
-    private void updatedRealm(@NonNull final String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-    }
-
-    private void setEmployees(@NonNull final List<Employee> employees) {
+    private void setRealmEmployees(@NonNull final List<RealmEmployee> realmemployees) {
 
         int maxemp = 6;
 
-        if( employees.size() > maxemp ) {
-            getDialogLotOfEmp(employees.size());
+        if( realmemployees.size() > maxemp ) {
+            getDialogLotOfEmp(realmemployees.size());
         }else {
             assert mRecycler != null;
-            mAdapter.setData(employees);
-            //save employees to Realm
-            mViewModel.emitEmployeesToRealm(employees);
+            mAdapter.setRealmData(realmemployees);
+            //save realmemployees to Realm
+            mViewModel.emitRealmEmployeesToRealm(realmemployees);
         }
+    }
+
+    private void setAbsences(@NonNull final List<Attendance> absences) {
+
+        System.out.println("name " + absences.get(0).getUsname());
 
     }
 
