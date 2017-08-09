@@ -88,11 +88,11 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     new AllEmpsAbsListFragment(),
-                    new EmptyFragment()
+                    new AllEmpsCompAbsListFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                    getString(R.string.list),
-                    getString(R.string.calendar)
+                    getString(R.string.action_myemployee),
+                    getString(R.string.action_mycompany)
             };
             @Override
             public Fragment getItem(int position) {
@@ -125,7 +125,8 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                    fab.setVisibility(View.GONE);
+                    //fab.setVisibility(View.GONE);
+                    fab.setVisibility(View.VISIBLE);
                     whatispage=1;
                 }
 
@@ -140,7 +141,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         fab.setOnClickListener(v -> {
 
             //_rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
-            int co = 1;
+            int co = 0;
 
             if( co == 0 ) {
                 Intent iz = new Intent(this, VyberUmeActivity.class);
@@ -156,9 +157,8 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
                 RealmResults<RealmEmployee> realmemployees = RealmController.with(this).getRealmEmployees();
 
-                RealmEmployee b = realmemployees.get(0);
-                //String username = b.getUsername();
-                String username = b.getKeyf();
+                RealmEmployee b = realmemployees.get(1);
+                String username = b.getEmail() + " " + b.getUsername() + " " + b.getKeyf() + " " + b.getDay06();
 
                 Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
             }

@@ -3,7 +3,7 @@ package com.eusecom.attendance.realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class RealmEmployee extends RealmObject {
+public class RealmCompany extends RealmObject {
 
     private String username;
     private String email;

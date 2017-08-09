@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.Employee;
+import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.realm.RealmEmployee;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public interface AllEmpsAbsIDataModel {
     @NonNull
     Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox);
 
+    @NonNull
+    Observable<String> getObservableUpdatedRealm(@NonNull final List<Attendance> absences, Realm realm);
 
+    @NonNull
+    Observable<List<RealmEmployee>> getObservableUpdatedListRealm(@NonNull final List<Attendance> absences, Realm realm);
+
+    @NonNull
+    Observable<List<RealmCompany>> getObservableFBmycompanyRealmEmployee(String usicox);
 
 }

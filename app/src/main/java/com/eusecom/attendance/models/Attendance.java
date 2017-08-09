@@ -103,6 +103,12 @@ public class Attendance {
 
     }
 
+    public String getUsid() {
+
+        return this.usid;
+
+    }
+
     // [START post_to_map]
     @Exclude
     public Map<String, Object> toMap() {
@@ -178,6 +184,12 @@ public class Attendance {
     public String getDaod() {
 
         return daod;
+    }
+
+    @Exclude
+    public String getDado() {
+
+        return dado;
     }
 
     @Exclude

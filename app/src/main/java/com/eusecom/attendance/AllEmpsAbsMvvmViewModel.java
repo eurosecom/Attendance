@@ -14,6 +14,7 @@ import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.realm.RealmController;
 import com.eusecom.attendance.realm.RealmEmployee;
 
@@ -96,6 +97,32 @@ public class AllEmpsAbsMvvmViewModel {
     }
 
     //end get absences from FB for update realm
+
+
+    //update realm from absences
+    public void emitUpdateRealmFromAbsences(List<Attendance> absences) {
+        mObservableUpdateRealm.onNext(absences);
+    }
+
+    @NonNull
+    private final BehaviorSubject<List<Attendance>> mObservableUpdateRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<RealmEmployee>> getObservableDataUpdatedRealm() {
+        return mObservableUpdateRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getObservableUpdatedListRealm(list, realm));
+    }
+    //end update realm from absences
+
+    //get realmemployees my company
+    public Observable<List<RealmCompany>> getObservableFBcompanyRealmEmployee() {
+
+        String usicox = mSharedPreferences.getString("usico", "");
+        Log.d("MvvmViewModel ", usicox);
+        return mDataModel.getObservableFBmycompanyRealmEmployee(usicox);
+    }
+    //end get realmemployees list from FB
 
 
 

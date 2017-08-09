@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.realm.RealmEmployee;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,7 +18,7 @@ import java.util.StringTokenizer;
 /**
  * The view holder for an item
  */
-public class AllEmpsAbsRxRealmViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public class AllEmpsCompAbsRxRealmViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
   public TextView employee_name;
   public ImageView employee_photo;
@@ -64,7 +66,7 @@ public class AllEmpsAbsRxRealmViewHolder extends RecyclerView.ViewHolder impleme
   Context mContext;
 
 
-  public AllEmpsAbsRxRealmViewHolder(View itemView) {
+  public AllEmpsCompAbsRxRealmViewHolder(View itemView) {
     super(itemView);
 
     employee_name = (TextView) itemView.findViewById(R.id.employee_name);
@@ -115,7 +117,7 @@ public class AllEmpsAbsRxRealmViewHolder extends RecyclerView.ViewHolder impleme
     itemView.setOnLongClickListener(this);
   }
 
-  public void bindModel(RealmEmployee employee, String ume) {
+  public void bindModel(RealmCompany employee, String ume) {
     if (employee == null) {
       throw new IllegalArgumentException("Entity cannot be null");
     }
