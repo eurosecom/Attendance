@@ -1,6 +1,7 @@
 package com.eusecom.attendance;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.models.Employee;
 import com.eusecom.attendance.realm.RealmEmployee;
 import com.eusecom.attendance.rxbus.RxBus;
 import java.util.Collections;
@@ -77,13 +76,20 @@ public class AllEmpsAbsListFragment extends Fragment {
 
 
                     }
-                    if (event instanceof Employee) {
-                        String icos = ((Employee) event).getUsername();
-                        Employee model= (Employee) event;
+                    if (event instanceof RealmEmployee) {
+                        String idemp = ((RealmEmployee) event).getKeyf();
+                        RealmEmployee model= (RealmEmployee) event;
 
-                        Log.d("AllEmpsAbsListFragment ", icos);
-                        String serverx = "AllEmpsAbsListFragment longclick";
-                        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+                        //Log.d("AllEmpsAbsListFragment ", icos);
+                        //String serverx = "AllEmpsAbsListFragment shortclick";
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent(getActivity(), AbsenceActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("fromact", "1");
+                        extras.putString("idemp", idemp);
+                        i.putExtras(extras);
+                        startActivity(i);
 
                     }
 

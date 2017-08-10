@@ -1,5 +1,6 @@
 package com.eusecom.attendance.mvvmdatamodel;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import java.text.DateFormat;
@@ -30,6 +31,8 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
     DatabaseReference mFirebaseDatabase;
     @Inject
     Realm mRealm;
+    @Inject
+    SharedPreferences mSharedPreferences;
 
     @Inject
     public AllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference, @NonNull final Realm realm) {
@@ -43,8 +46,8 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
     @Override
     public Observable<List<Employee>> getObservableFBusersEmployee(String usicox) {
 
-        //String usicox = mSharedPreferences.getString("usico", "");
-        Log.d("DataModel ", usicox);
+        //String usicoxx = mSharedPreferences.getString("usico", "");
+        //Log.d("DataModel ", usicoxx);
 
         //injected
         Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);

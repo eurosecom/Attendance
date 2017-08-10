@@ -41,16 +41,15 @@ class AllEmpsAbsRxRealmAdapter extends RecyclerView.Adapter<AllEmpsAbsRxRealmVie
         String keys = blogPostEntity.getKeyf();
         if (isLongClick) {
 
-          //Log.d("longClick", pos + " " + keys);
-          //remove(position);
-          if (_rxBus.hasObservers()) {
-            _rxBus.send(blogPostEntity);
-            //_rxBus.send(new EmployeeMvvmActivity.TapEvent());
-          }
+          //if (_rxBus.hasObservers()) {
+          //  _rxBus.send(blogPostEntity);
+          //}
 
         } else {
 
-          //Log.d("shortClick", pos + " " + keys);
+          if (_rxBus.hasObservers()) {
+            _rxBus.send(blogPostEntity);
+          }
 
         }
       }

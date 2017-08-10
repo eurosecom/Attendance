@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,12 +42,21 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
     private FloatingActionButton fab;
     int whatispage=0;
     Toolbar mActionBarToolbar;
+    String fromact, idemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absence);
         //showProgressDialog();
+
+        Intent i = getIntent();
+
+        Bundle extras = i.getExtras();
+        fromact = extras.getString("fromact");
+        idemp = extras.getString("idemp");
+
+        Log.d("idemp ", idemp);
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);

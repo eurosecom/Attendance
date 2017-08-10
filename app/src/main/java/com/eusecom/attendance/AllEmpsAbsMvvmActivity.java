@@ -144,7 +144,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
             //_rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
             int co = 1;
 
-            if( co == 0 ) {
+            if( co == 1 ) {
                 Intent iz = new Intent(this, VyberUmeActivity.class);
                 Bundle extrasz = new Bundle();
                 extrasz.putString("odkial", "0");

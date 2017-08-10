@@ -27,8 +27,8 @@ public class AllEmpsAbsMvvmViewModel {
 
     @Inject
     AllEmpsAbsIDataModel mDataModel;
-    @NonNull
-    private final ISchedulerProvider mSchedulerProvider;
+    @Inject
+    ISchedulerProvider mSchedulerProvider;
 
     @Inject
     SharedPreferences mSharedPreferences;

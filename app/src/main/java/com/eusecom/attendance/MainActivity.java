@@ -337,6 +337,10 @@ public class MainActivity extends ActionBarActivity {
                     } else {
 
                         Intent i = new Intent(getApplicationContext(), AbsenceActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("fromact", "0");
+                        extras.putString("idemp", "0");
+                        i.putExtras(extras);
                         startActivity(i);
 
                     }
