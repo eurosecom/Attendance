@@ -25,8 +25,8 @@ import javax.inject.Inject;
  */
 public class AllEmpsAbsMvvmViewModel {
 
-    @NonNull
-    private final AllEmpsAbsIDataModel mDataModel;
+    @Inject
+    AllEmpsAbsIDataModel mDataModel;
     @NonNull
     private final ISchedulerProvider mSchedulerProvider;
 

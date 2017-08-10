@@ -21,12 +21,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
+import javax.inject.Inject;
+
 
 public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
+    @Inject
     DatabaseReference mFirebaseDatabase;
+    @Inject
     Realm mRealm;
 
+    @Inject
     public AllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference, @NonNull final Realm realm) {
         mFirebaseDatabase = databaseReference;
         mRealm = realm;
