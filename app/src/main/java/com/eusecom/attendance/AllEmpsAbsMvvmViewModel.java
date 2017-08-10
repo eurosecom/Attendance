@@ -78,7 +78,7 @@ public class AllEmpsAbsMvvmViewModel {
     public Observable<String> getObservableDataSavedToRealm() {
         return mObservableSaveToRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(list -> mDataModel.getObservableSavingToRealm(list, realm));
+                .flatMap(list -> mDataModel.getObservableSavingToRealm(list));
     }
     //end save employees to realm
 
@@ -111,7 +111,7 @@ public class AllEmpsAbsMvvmViewModel {
     public Observable<List<RealmEmployee>> getObservableDataUpdatedRealm() {
         return mObservableUpdateRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(list -> mDataModel.getObservableUpdatedListRealm(list, realm));
+                .flatMap(list -> mDataModel.getObservableUpdatedListRealm(list));
     }
     //end update realm from absences
 
@@ -123,6 +123,39 @@ public class AllEmpsAbsMvvmViewModel {
         return mDataModel.getObservableFBmycompanyRealmEmployee(usicox);
     }
     //end get realmemployees list from FB
+
+
+    //save company to realm
+    public void emitRealmCompanyToRealm(List<RealmCompany> employees) {
+        mObservableCompanySaveToRealm.onNext(employees);
+    }
+
+    @NonNull
+    private final BehaviorSubject<List<RealmCompany>> mObservableCompanySaveToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getObservableCompanyDataSavedToRealm() {
+        return mObservableCompanySaveToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getObservableCompanySavingToRealm(list));
+    }
+    //end save company to realm
+
+    //update company realm from absences
+    public void emitUpdateCompanyRealmFromAbsences(List<Attendance> absences) {
+        mObservableUpdateCompanyRealm.onNext(absences);
+    }
+
+    @NonNull
+    private final BehaviorSubject<List<Attendance>> mObservableUpdateCompanyRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<RealmCompany>> getObservableDataUpdatedCompanyRealm() {
+        return mObservableUpdateCompanyRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getObservableUpdatedListCompanyRealm(list));
+    }
+    //end update company realm from absences
 
 
 

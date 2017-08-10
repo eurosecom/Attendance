@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.eusecom.attendance.fragment.EmptyFragment;
+import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
@@ -141,7 +142,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         fab.setOnClickListener(v -> {
 
             //_rxBus.send(new AllEmpsAbsListFragment.ClickFobEvent());
-            int co = 0;
+            int co = 1;
 
             if( co == 0 ) {
                 Intent iz = new Intent(this, VyberUmeActivity.class);
@@ -153,11 +154,14 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
                 finish();
             }else{
 
+                //RealmController.with(this).refresh();
+                //RealmResults<RealmEmployee> realmemployees = RealmController.with(this).getRealmEmployees();
+                //RealmEmployee b = realmemployees.get(1);
+
                 RealmController.with(this).refresh();
+                RealmResults<RealmCompany> realmemployees = RealmController.with(this).getRealmCompanies();
+                RealmCompany b = realmemployees.get(0);
 
-                RealmResults<RealmEmployee> realmemployees = RealmController.with(this).getRealmEmployees();
-
-                RealmEmployee b = realmemployees.get(1);
                 String username = b.getEmail() + " " + b.getUsername() + " " + b.getKeyf() + " " + b.getDay06();
 
                 Toast.makeText(this, username, Toast.LENGTH_SHORT).show();

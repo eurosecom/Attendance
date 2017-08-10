@@ -27,7 +27,7 @@ class AllEmpsCompAbsRxRealmAdapter extends RecyclerView.Adapter<AllEmpsCompAbsRx
   }
 
   @Override public AllEmpsCompAbsRxRealmViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.allempsabs_item, viewGroup, false);
+    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.allempscompabs_item, viewGroup, false);
     return new AllEmpsCompAbsRxRealmViewHolder(view);
   }
 

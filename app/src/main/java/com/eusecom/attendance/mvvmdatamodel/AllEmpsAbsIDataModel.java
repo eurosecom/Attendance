@@ -21,18 +21,24 @@ public interface AllEmpsAbsIDataModel {
     Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox);
 
     @NonNull
-    Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees, Realm realm);
+    Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees);
 
     @NonNull
     Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox);
 
     @NonNull
-    Observable<String> getObservableUpdatedRealm(@NonNull final List<Attendance> absences, Realm realm);
+    Observable<String> getObservableUpdatedRealm(@NonNull final List<Attendance> absences);
 
     @NonNull
-    Observable<List<RealmEmployee>> getObservableUpdatedListRealm(@NonNull final List<Attendance> absences, Realm realm);
+    Observable<List<RealmEmployee>> getObservableUpdatedListRealm(@NonNull final List<Attendance> absences);
 
     @NonNull
     Observable<List<RealmCompany>> getObservableFBmycompanyRealmEmployee(String usicox);
+
+    @NonNull
+    Observable<String> getObservableCompanySavingToRealm(@NonNull final List<RealmCompany> employees);
+
+    @NonNull
+    Observable<List<RealmCompany>> getObservableUpdatedListCompanyRealm(@NonNull final List<Attendance> absences);
 
 }

@@ -176,8 +176,20 @@ public class AllEmpsCompAbsListFragment extends Fragment {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setRealmCompany));
 
+        mSubscription.add(mViewModel.getObservableCompanyDataSavedToRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::dataCompanySavedToRealm));
 
+        mSubscription.add(mViewModel.getObservableFromFBforRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::setAbsences));
 
+        mSubscription.add(mViewModel.getObservableDataUpdatedCompanyRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::dataCompanyUpdatedToRealm));
 
 
     }
@@ -200,7 +212,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
 
     }
 
-    private void dataSavedToRealm(@NonNull final String message) {
+    private void dataCompanySavedToRealm(@NonNull final String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         //update absences to Realm
         String umex = mSharedPreferences.getString("ume", "");
@@ -218,31 +230,25 @@ public class AllEmpsCompAbsListFragment extends Fragment {
             assert mRecycler != null;
             mAdapter.setRealmData(realmcompany);
             //save realmemployees to Realm
-            //mViewModel.emitRealmEmployeesToRealm(realmemployees);
+            mViewModel.emitRealmCompanyToRealm(realmcompany);
         }
     }
 
     private void setAbsences(@NonNull final List<Attendance> absences) {
 
-        //System.out.println("name " + absences.get(0).getUsname());
-        mViewModel.emitUpdateRealmFromAbsences(absences);
+        System.out.println("company abs name " + absences.get(0).getUsname());
+        mViewModel.emitUpdateCompanyRealmFromAbsences(absences);
 
     }
 
-    private void dataUpdatedToRealm(@NonNull final List<RealmCompany> realmcompany) {
+    private void dataCompanyUpdatedToRealm(@NonNull final List<RealmCompany> realmcompany) {
 
         //String message = "name " + realmemployees.get(0).getUsername();
         //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         mAdapter.setRealmData(realmcompany);
     }
 
-    public static class ClickFobEvent {}
 
-    //we use only for classic create mvvmviewmodel without dagger2
-    @NonNull
-    private AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
-        return ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsMvvmViewModel();
-    }
 
 
     private void getDialogLotOfEmp(int size){

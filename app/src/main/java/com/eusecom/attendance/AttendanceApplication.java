@@ -47,6 +47,7 @@ public class AttendanceApplication extends Application {
     @NonNull
     private AllEmpsAbsIDataModel mAllEmpsAbsIDataModel;
     private DatabaseReference mDatabaseReference;
+    private Realm mRealm;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -123,6 +124,10 @@ public class AttendanceApplication extends Application {
         return _rxBus;
     }
 
+    @NonNull
+    public Realm getRealm() {
+        return Realm.getDefaultInstance();
+    }
 
     @NonNull
     public CompaniesIDataModel getCompaniesDataModel() {
@@ -136,7 +141,7 @@ public class AttendanceApplication extends Application {
 
     @NonNull
     public AllEmpsAbsIDataModel getAllEmpsAbsIDataModel() {
-        mAllEmpsAbsIDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference());
+        mAllEmpsAbsIDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference(), getRealm());
         return mAllEmpsAbsIDataModel;
     }
 
