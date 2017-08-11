@@ -217,7 +217,7 @@ public class AllEmpsAbsListFragment extends Fragment {
     }
 
     private void dataSavedToRealm(@NonNull final String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         //update absences to Realm
         String umex = mSharedPreferences.getString("ume", "");
         mViewModel.emitAbsencesFromFBforRealm(umex);

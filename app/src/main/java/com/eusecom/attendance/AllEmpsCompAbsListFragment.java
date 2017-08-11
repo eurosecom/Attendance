@@ -213,7 +213,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
     }
 
     private void dataCompanySavedToRealm(@NonNull final String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         //update absences to Realm
         String umex = mSharedPreferences.getString("ume", "");
         mViewModel.emitAbsencesFromFBforRealm(umex);
@@ -236,7 +236,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
 
     private void setAbsences(@NonNull final List<Attendance> absences) {
 
-        System.out.println("company abs name " + absences.get(0).getUsname());
+        //System.out.println("company abs name " + absences.get(0).getUsname());
         mViewModel.emitUpdateCompanyRealmFromAbsences(absences);
 
     }

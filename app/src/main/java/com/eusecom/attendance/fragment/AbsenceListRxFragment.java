@@ -92,12 +92,29 @@ public class AbsenceListRxFragment extends Fragment {
     private DatabaseReference gettimestramp = null;
     ValueEventListener getTimeListener = null;
     private RxBus _rxBus;
+    String fromact, idemp;
+
+    public static AbsenceListRxFragment newInstance(String fromactx, String idempx) {
+
+        AbsenceListRxFragment f = new AbsenceListRxFragment();
+        Bundle b = new Bundle();
+        b.putString("fromact", fromactx);
+        b.putString("idemp", idempx);
+        f.setArguments(b);
+
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String githubToken = Constants.ETEST_API_KEY;
         String urlx = SettingsActivity.getServerName(getActivity());
+
+        fromact = getArguments().getString("fromact");
+        Log.d("idemp inFrg fromact", fromact);
+        idemp = getArguments().getString("idemp");
+        Log.d("idemp inFrg idemp", idemp);
 
         gettimestramp = FirebaseDatabase.getInstance().getReference("gettimestamp");
         getTimeListener = new ValueEventListener() {

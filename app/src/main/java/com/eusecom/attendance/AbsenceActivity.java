@@ -17,7 +17,6 @@
 package com.eusecom.attendance;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -65,7 +64,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new AbsenceListRxFragment(),
+                    AbsenceListRxFragment.newInstance(fromact, idemp),
                     new AttendanceListRxFragment(),
                     new AbsTypesListRxFragment()
             };
@@ -87,6 +86,30 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
                 return mFragmentNames[position];
             }
         };
+
+        if( fromact.equals("1")) {
+            mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+                private final Fragment[] mFragments = new Fragment[] {
+                        AbsenceListRxFragment.newInstance(fromact, idemp)
+                };
+                private final String[] mFragmentNames = new String[] {
+                        getString(R.string.absences)
+                };
+                @Override
+                public Fragment getItem(int position) {
+                    return mFragments[position];
+                }
+                @Override
+                public int getCount() {
+                    return mFragments.length;
+                }
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return mFragmentNames[position];
+                }
+            };
+        }
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
@@ -99,7 +122,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
 
             public void onPageSelected(int position) {
                 // Check if this is the page you want.
-                if(position == 0){
+                if(position == 0 ){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
                     fab.setVisibility(View.VISIBLE);
                     whatispage=0;
@@ -114,6 +137,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
                     fab.setVisibility(View.GONE);
                     whatispage=2;
                 }
+
             }
         });
 
@@ -126,6 +150,8 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(fromact.equals("0")) {
 
                 Intent i=null;
                 if( whatispage == 0 ) {
@@ -140,6 +166,8 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
 
                 i.putExtras(extras);
                 startActivity(i);
+
+                }
 
             }
         });
