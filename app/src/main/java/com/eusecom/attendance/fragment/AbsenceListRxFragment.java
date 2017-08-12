@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.attendance.Constants;
+import com.eusecom.attendance.MainActivity;
 import com.eusecom.attendance.SettingsActivity;
 import com.eusecom.attendance.animators.BaseItemAnimator;
 import com.eusecom.attendance.animators.FadeInAnimator;
@@ -232,6 +233,10 @@ public class AbsenceListRxFragment extends Fragment {
 
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Query recentAbsencesQuery = firebaseRef.child("user-absences").child(userId).orderByChild("datm");
+        if( fromact.equals("1")) {
+            String umexx =  SettingsActivity.getUme(getActivity());
+            recentAbsencesQuery = firebaseRef.child("user-absences").child(idemp).orderByChild("ume").equalTo(umexx);;
+        }
 
         showfProgressDialog();
         RxFirebaseDatabase.getInstance().observeValueEvent(recentAbsencesQuery).subscribe(getAbsenceSubscriber);

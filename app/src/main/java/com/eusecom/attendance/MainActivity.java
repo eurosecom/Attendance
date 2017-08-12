@@ -358,6 +358,13 @@ public class MainActivity extends ActionBarActivity {
     }//end oncreate
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        //SystemRequirementsChecker.checkWithDefaultDialogs(this);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         try {

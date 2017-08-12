@@ -2,6 +2,8 @@ package com.eusecom.attendance;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDexApplication;
+
 import com.eusecom.attendance.dagger.components.AllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
@@ -29,12 +31,10 @@ import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.leakcanary.LeakCanary;
-
 import io.realm.RealmConfiguration;
 import io.realm.Realm;
 
-
-public class AttendanceApplication extends Application {
+public class AttendanceApplication extends MultiDexApplication {
 
     public RxBus _rxBus;
 
@@ -48,6 +48,7 @@ public class AttendanceApplication extends Application {
     private AllEmpsAbsIDataModel mAllEmpsAbsIDataModel;
     private DatabaseReference mDatabaseReference;
     private Realm mRealm;
+
 
     @Override public void onCreate() {
         super.onCreate();
@@ -95,6 +96,7 @@ public class AttendanceApplication extends Application {
                 .firebaseDependentComponent(mFirebaseDependentComponent)
                 .allEmpsAbsModule(new AllEmpsAbsModule())
                 .build();
+
 
     }
 

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Attendance</string>
+    <string name="hello_world">Hello world!</string>
 
     <string name="label_google_sign_in">Firebase + Google Sign In</string>
     <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
@@ -133,7 +134,7 @@
         <item >All employees absences</item>
         <item >Employees on Google Maps</item>
         <item >Free</item>
-        <item >Free</item>
+        <item >Beacon activity</item>
         <item >Demo Dagger Retrofit</item>
         <item >Demo Dagger Subcomponent</item>
     </string-array>
@@ -287,6 +288,9 @@
     <string name="calendar">Calendar</string>
     <string name="lotofemp">Lot of Employees</string>
     <string name="lotofempmes">You can hold 6 employees in App. For more write to andrejd@edcom.sk</string>
+
+    <!-- BeaconActivity -->
+
 
 
 </resources>

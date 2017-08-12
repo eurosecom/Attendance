@@ -59,7 +59,7 @@ public class  AbsenceActivity extends BaseDatabaseActivity {
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mActionBarToolbar);
-        getSupportActionBar().setTitle(getString(R.string.absence));
+        getSupportActionBar().setTitle(getString(R.string.absences));
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
