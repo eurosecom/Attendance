@@ -28,6 +28,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
 import com.eusecom.attendance.fragment.EmptyFragment;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
@@ -109,6 +111,8 @@ public class  CompaniesMvvmActivity extends BaseDatabaseActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
+            String texttoast = getString(R.string.createnewcompany);
+            Toast.makeText(CompaniesMvvmActivity.this, texttoast, Toast.LENGTH_SHORT).show();
             _rxBus.send(new CompaniesListFragment.ClickFobEvent());
 
             }

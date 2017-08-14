@@ -268,7 +268,7 @@
     <string name="allowedcompany">Allowed only for Admin user.</string>
     <string name="companycreated">New Company %s has created.</string>
     <string name="companyexist">New Company did not create. Company %s already exist.</string>
-
+    <string name="createnewcompany">Create new company.</string>
 
     <!-- dagger2 -->
     <string name="daggerdemo">Demo dagger</string>
@@ -290,6 +290,10 @@
     <string name="lotofempmes">You can hold 6 employees in App. For more write to andrejd@edcom.sk</string>
 
     <!-- BeaconActivity -->
+
+
+    <!-- Tests-->
+    <string name="myteststring">My test String</string>
 
 
 
