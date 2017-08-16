@@ -11,6 +11,8 @@ import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
 import com.estimote.coresdk.recognition.packets.Beacon;
 import com.estimote.coresdk.service.BeaconManager;
 
+import com.estimote.coresdk.observation.region.RegionUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,8 +68,10 @@ public class BeaconActivity extends AppCompatActivity {
                 if (!beacons.isEmpty()) {
                     Beacon nearestBeacon = beacons.get(0);
                     List<String> places = placesNearBeacon(nearestBeacon);
+                    double distancex = RegionUtils.computeAccuracy(nearestBeacon);
+
                     // TODO: update the UI here
-                    Log.d("Airport", "Nearest places: " + places);
+                    Log.d("Airport", "Nearest places: " + places + " " + distancex);
                 }
 
             }
