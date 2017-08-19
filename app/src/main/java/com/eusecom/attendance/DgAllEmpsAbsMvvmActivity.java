@@ -83,7 +83,7 @@ public class  DgAllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
                         .subcomponentBuilders()
                         .get(DgFirebaseSubComponent.Builder.class)
                         .get();
-        builder.activityModule(new DgFirebaseSubModule(this)).build().inject(this);
+        builder.activityModule(new DgFirebaseSubModule()).build().inject(this);
 
         // Obtain realm and realmcontroller instance classic
         //realmcontroller = RealmController.with(this);

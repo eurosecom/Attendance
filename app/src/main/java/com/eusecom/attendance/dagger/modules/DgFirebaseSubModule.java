@@ -3,21 +3,38 @@ package com.eusecom.attendance.dagger.modules;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.eusecom.attendance.AttendanceApplication;
+import com.eusecom.attendance.DgAllEmpsAbsListFragment;
 import com.eusecom.attendance.DgAllEmpsAbsMvvmActivity;
 import com.eusecom.attendance.dagger.scopes.DgFirebaseScope;
+import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
+import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
+import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
+import com.google.firebase.database.DatabaseReference;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class DgFirebaseSubModule {
-    private final DgAllEmpsAbsMvvmActivity activity;
+    //private final DgAllEmpsAbsMvvmActivity activity;
 
     //do not forget add to ApplicationBinders
     // must be instantiated with an activity
-    public DgFirebaseSubModule(DgAllEmpsAbsMvvmActivity activity) { this.activity = activity; }
+    //public DgFirebaseSubModule(DgAllEmpsAbsMvvmActivity activity) { this.activity = activity; }
+    public DgFirebaseSubModule() {  }
 
 
     @Provides
@@ -40,5 +57,29 @@ public class DgFirebaseSubModule {
     Realm providesRealm(RealmController realmcontroller) {
         return realmcontroller.getRealm();
     }
+
+
+    @Provides
+    @DgFirebaseScope
+    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(Application application, DatabaseReference databasereference, Realm realm) {
+        return ((AttendanceApplication) application).getDgAllEmpsAbsIDataModel();
+    }
+
+    @Provides
+    @DgFirebaseScope
+    public ISchedulerProvider providesISchedulerProvider(Application application) {
+
+        return ((AttendanceApplication) application).getSchedulerProvider();
+    }
+
+    @Provides
+    @DgFirebaseScope
+    public DatabaseReference providesDatabaseReference(Application application) {
+
+        return ((AttendanceApplication) application).getDatabaseFirebaseReference();
+    }
+
+
+
     
 }
