@@ -25,5 +25,4 @@ public abstract class ApplicationBinders {
     @IntoMap
     @SubcomponentKey(DgFirebaseSubComponent.Builder.class)
     public abstract SubcomponentBuilder dgfirebaseActivity(DgFirebaseSubComponent.Builder impl);
-
 }
