@@ -18,7 +18,6 @@ public class FirebaseSubModule {
     // must be instantiated with an activity
     public FirebaseSubModule(AllEmpsAbsMvvmActivity activity) { this.activity = activity; }
 
-
     @Provides
     // do not get @Singleton in subcomponent
     @FirebaseScope

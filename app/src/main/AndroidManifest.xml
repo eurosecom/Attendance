@@ -58,6 +58,7 @@
         <activity android:name=".AllEmpsAbsMvvmActivity"/>
         <activity android:name=".VyberUmeActivity"/>
         <activity android:name=".BeaconActivity"/>
+        <activity android:name=".DgAllEmpsAbsMvvmActivity"/>
 
 
         <service android:name=".MyDownloadService" android:exported="false"/>

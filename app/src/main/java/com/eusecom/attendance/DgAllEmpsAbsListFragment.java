@@ -1,5 +1,6 @@
 package com.eusecom.attendance;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
+import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.realm.RealmEmployee;
 import com.eusecom.attendance.rxbus.RxBus;
@@ -121,7 +125,14 @@ public class DgAllEmpsAbsListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((AttendanceApplication) getActivity().getApplication()).getDgAllEmpsAbsComponent().inject(this);
+        //((AttendanceApplication) getActivity().getApplication()).getDgAllEmpsAbsComponent().inject(this);
+
+        DgFirebaseSubComponent.Builder builder = (DgFirebaseSubComponent.Builder)
+                ((AttendanceApplication) getActivity().getApplication()).getApplicationComponent()
+                        .subcomponentBuilders()
+                        .get(DgFirebaseSubComponent.Builder.class)
+                        .get();
+        builder.activityModule(new DgFirebaseSubModule()).build().inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), _rxBus, umex);
@@ -132,8 +143,8 @@ public class DgAllEmpsAbsListFragment extends Fragment {
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
 
-        //String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
-        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
+        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
     }//end of onActivityCreated
