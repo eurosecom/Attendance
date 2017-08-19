@@ -4,6 +4,7 @@ package com.eusecom.attendance.dagger.components;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
+import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,7 @@ public interface FirebaseDependentComponent {
     Realm realm();
 
     AllEmpsAbsIDataModel allEmpsAbsIDataModell();
+    DgAllEmpsAbsIDataModel dgAllEmpsAbsIDataModell();
     ISchedulerProvider iSchedulerProvider();
     DatabaseReference databaseReference();
 

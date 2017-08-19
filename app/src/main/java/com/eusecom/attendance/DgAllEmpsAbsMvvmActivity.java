@@ -29,7 +29,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
 import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
+import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
 import com.eusecom.attendance.dagger.modules.FirebaseSubModule;
 import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.rxbus.RxBus;
@@ -51,7 +53,7 @@ import com.eusecom.attendance.realm.RealmEmployee;
  *
  */
 
-public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
+public class  DgAllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -73,14 +75,15 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allempsabs);
 
-        ((AttendanceApplication) getApplication()).getAllEmpsAbsComponent().inject(this);
+        //inject DgAllEmpsAbsComponent
+        //((AttendanceApplication) getApplication()).getDgAllEmpsAbsComponent().inject(this);
 
-        //FirebaseSubComponent.Builder builder = (FirebaseSubComponent.Builder)
-        //        ((AttendanceApplication) getApplication()).getApplicationComponent()
-        //                .subcomponentBuilders()
-        //                .get(FirebaseSubComponent.Builder.class)
-        //                .get();
-        //builder.activityModule(new FirebaseSubModule(this)).build().inject(this);
+        DgFirebaseSubComponent.Builder builder = (DgFirebaseSubComponent.Builder)
+                ((AttendanceApplication) getApplication()).getApplicationComponent()
+                        .subcomponentBuilders()
+                        .get(DgFirebaseSubComponent.Builder.class)
+                        .get();
+        builder.activityModule(new DgFirebaseSubModule(this)).build().inject(this);
 
         // Obtain realm and realmcontroller instance classic
         //realmcontroller = RealmController.with(this);
@@ -96,12 +99,10 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new AllEmpsAbsListFragment(),
-                    new AllEmpsCompAbsListFragment()
+                    new DgAllEmpsAbsListFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                    getString(R.string.action_myemployee),
-                    getString(R.string.action_mycompany)
+                    getString(R.string.action_myemployee)
             };
             @Override
             public Fragment getItem(int position) {
@@ -155,7 +156,7 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
             if( co == 1 ) {
                 Intent iz = new Intent(this, VyberUmeActivity.class);
                 Bundle extrasz = new Bundle();
-                extrasz.putString("odkial", "0");
+                extrasz.putString("odkial", "2");
 
                 iz.putExtras(extrasz);
                 startActivity(iz);
@@ -180,8 +181,8 @@ public class  AllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         );
 
 
-        //String serverx = mSharedPreferences.getString("servername", "");
-        //Toast.makeText(AllEmpsAbsMvvmActivity.this, serverx, Toast.LENGTH_SHORT).show();
+        String serverx = mSharedPreferences.getString("servername", "");
+        Toast.makeText(DgAllEmpsAbsMvvmActivity.this, serverx, Toast.LENGTH_SHORT).show();
 
 
     }

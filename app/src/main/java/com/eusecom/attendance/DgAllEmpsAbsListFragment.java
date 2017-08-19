@@ -1,6 +1,7 @@
 package com.eusecom.attendance;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,14 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.eusecom.attendance.models.Attendance;
-import com.eusecom.attendance.models.Employee;
-import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.realm.RealmEmployee;
 import com.eusecom.attendance.rxbus.RxBus;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,13 +28,13 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
-public class AllEmpsCompAbsListFragment extends Fragment {
+public class DgAllEmpsAbsListFragment extends Fragment {
 
-    public AllEmpsCompAbsListFragment() {
+    public DgAllEmpsAbsListFragment() {
 
     }
     private CompositeDisposable _disposables;
-    private AllEmpsCompAbsRxRealmAdapter mAdapter;
+    private AllEmpsAbsRxRealmAdapter mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private RxBus _rxBus = null;
@@ -54,7 +50,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
     //private AllEmpsAbsMvvmViewModel mViewModel;
 
     @Inject
-    AllEmpsAbsMvvmViewModel mViewModel;
+    DgAllEmpsAbsMvvmViewModel mViewModel;
 
     AlertDialog dialog = null;
 
@@ -73,20 +69,27 @@ public class AllEmpsCompAbsListFragment extends Fragment {
 
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
-                    if (event instanceof AllEmpsAbsListFragment.ClickFobEvent) {
-                        Log.d("AllEmpsCompAbsActivity", " fobClick ");
-                        String serverx = "AllEmpsCompAbsListFragment fobclick";
+                    if (event instanceof DgAllEmpsAbsListFragment.ClickFobEvent) {
+                        Log.d("DgAllEmpsAbsActivity  ", " fobClick ");
+                        String serverx = "DgAllEmpsAbsListFragment fobclick";
                         Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
                     }
-                    if (event instanceof Employee) {
-                        String icos = ((Employee) event).getUsername();
-                        Employee model= (Employee) event;
+                    if (event instanceof RealmEmployee) {
+                        String idemp = ((RealmEmployee) event).getKeyf();
+                        RealmEmployee model= (RealmEmployee) event;
 
-                        Log.d("AllEmpsAbsListFragment ", icos);
-                        String serverx = "AllEmpsAbsListFragment longclick";
-                        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+                        //Log.d("AllEmpsAbsListFragment ", icos);
+                        //String serverx = "AllEmpsAbsListFragment shortclick";
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent(getActivity(), AbsenceActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("fromact", "1");
+                        extras.putString("idemp", idemp);
+                        i.putExtras(extras);
+                        startActivity(i);
 
                     }
 
@@ -106,9 +109,9 @@ public class AllEmpsCompAbsListFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_allempscompabs, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_allempsabs, container, false);
 
-        mRecycler = (RecyclerView) rootView.findViewById(R.id.allempscompabs_list);
+        mRecycler = (RecyclerView) rootView.findViewById(R.id.allempsabs_list);
         mRecycler.setHasFixedSize(true);
 
         return rootView;
@@ -118,10 +121,10 @@ public class AllEmpsCompAbsListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((AttendanceApplication) getActivity().getApplication()).getAllEmpsAbsComponent().inject(this);
+        ((AttendanceApplication) getActivity().getApplication()).getDgAllEmpsAbsComponent().inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
-        mAdapter = new AllEmpsCompAbsRxRealmAdapter(Collections.<RealmCompany>emptyList(), _rxBus, umex);
+        mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), _rxBus, umex);
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -139,7 +142,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         _disposables.dispose();
-        mAdapter = new AllEmpsCompAbsRxRealmAdapter(Collections.<RealmCompany>emptyList(), null, "01.2017");
+        mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), null, "01.2017");
         try {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
@@ -171,25 +174,26 @@ public class AllEmpsCompAbsListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(mViewModel.getObservableFBcompanyRealmEmployee()
+        mSubscription.add(mViewModel.getObservableFBusersRealmEmployee()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::setRealmCompany));
+                .subscribe(this::setRealmEmployees));
 
-        mSubscription.add(mViewModel.getObservableCompanyDataSavedToRealm()
+        mSubscription.add(mViewModel.getObservableDataSavedToRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::dataCompanySavedToRealm));
+                .subscribe(this::dataSavedToRealm));
 
         mSubscription.add(mViewModel.getObservableFromFBforRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setAbsences));
 
-        mSubscription.add(mViewModel.getObservableDataUpdatedCompanyRealm()
+        mSubscription.add(mViewModel.getObservableDataUpdatedRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::dataCompanyUpdatedToRealm));
+                .subscribe(this::dataUpdatedToRealm));
+
 
 
     }
@@ -197,7 +201,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
 
 
     private void unBind() {
-        mAdapter.setRealmData(Collections.<RealmCompany>emptyList());
+        mAdapter.setRealmData(Collections.<RealmEmployee>emptyList());
         //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
         mSubscription.unsubscribe();
         mSubscription.clear();
@@ -212,7 +216,7 @@ public class AllEmpsCompAbsListFragment extends Fragment {
 
     }
 
-    private void dataCompanySavedToRealm(@NonNull final String message) {
+    private void dataSavedToRealm(@NonNull final String message) {
         //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         //update absences to Realm
         String umex = mSharedPreferences.getString("ume", "");
@@ -220,34 +224,35 @@ public class AllEmpsCompAbsListFragment extends Fragment {
     }
 
 
-    private void setRealmCompany(@NonNull final List<RealmCompany> realmcompany) {
-
+    private void setRealmEmployees(@NonNull final List<RealmEmployee> realmemployees) {
 
         int maxemp = 6;
-        if( realmcompany.size() > maxemp ) {
-            getDialogLotOfEmp(realmcompany.size());
+
+        if( realmemployees.size() > maxemp ) {
+            getDialogLotOfEmp(realmemployees.size());
         }else {
             assert mRecycler != null;
-            mAdapter.setRealmData(realmcompany);
+            mAdapter.setRealmData(realmemployees);
             //save realmemployees to Realm
-            mViewModel.emitRealmCompanyToRealm(realmcompany);
+            mViewModel.emitRealmEmployeesToRealm(realmemployees);
         }
     }
 
     private void setAbsences(@NonNull final List<Attendance> absences) {
 
-        //System.out.println("company abs name " + absences.get(0).getUsname());
-        mViewModel.emitUpdateCompanyRealmFromAbsences(absences);
+        //System.out.println("name " + absences.get(0).getUsname());
+        mViewModel.emitUpdateRealmFromAbsences(absences);
 
     }
 
-    private void dataCompanyUpdatedToRealm(@NonNull final List<RealmCompany> realmcompany) {
+    private void dataUpdatedToRealm(@NonNull final List<RealmEmployee> realmemployees) {
 
         //String message = "name " + realmemployees.get(0).getUsername();
         //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-        mAdapter.setRealmData(realmcompany);
+        mAdapter.setRealmData(realmemployees);
     }
 
+    public static class ClickFobEvent {}
 
 
 

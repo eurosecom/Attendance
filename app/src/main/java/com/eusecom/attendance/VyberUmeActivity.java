@@ -85,7 +85,14 @@ public class VyberUmeActivity extends ListActivity {
 
      	}
      	if( odkial.equals("2")) {
-     		
+
+			Intent i = new Intent(getApplicationContext(), DgAllEmpsAbsMvvmActivity.class);
+			Bundle extras = new Bundle();
+			extras.putString(TAG_PAGEX, "0");
+			extras.putString(TAG_POKLX, "0");
+			i.putExtras(extras);
+			startActivity(i);
+			finish();
 
      	}
 		

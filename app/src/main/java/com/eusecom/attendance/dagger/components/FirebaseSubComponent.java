@@ -13,6 +13,7 @@ import io.realm.Realm;
 @Subcomponent(modules={ FirebaseSubModule.class })
 public interface FirebaseSubComponent {
 
+    //do not forget add to ApplicationBinders
     void inject(AllEmpsAbsMvvmActivity activity);
 
     SharedPreferences sharedPreferences();

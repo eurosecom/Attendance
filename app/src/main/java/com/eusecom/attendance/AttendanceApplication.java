@@ -8,14 +8,17 @@ import com.eusecom.attendance.dagger.components.AllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
+import com.eusecom.attendance.dagger.components.DaggerDgAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerFirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
 import com.eusecom.attendance.dagger.components.DaggerNetComponent;
+import com.eusecom.attendance.dagger.components.DgAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.FirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.GitHubComponent;
 import com.eusecom.attendance.dagger.components.NetComponent;
 import com.eusecom.attendance.dagger.modules.AllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
+import com.eusecom.attendance.dagger.modules.DgAllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.dagger.modules.GitHubModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
@@ -23,6 +26,8 @@ import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsDataModel;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
+import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsDataModel;
+import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
@@ -46,6 +51,7 @@ public class AttendanceApplication extends MultiDexApplication {
 
     @NonNull
     private AllEmpsAbsIDataModel mAllEmpsAbsIDataModel;
+    private DgAllEmpsAbsIDataModel mDgAllEmpsAbsIDataModel;
     private DatabaseReference mDatabaseReference;
     private Realm mRealm;
 
@@ -95,6 +101,11 @@ public class AttendanceApplication extends MultiDexApplication {
         mAllEmpsAbsComponent = DaggerAllEmpsAbsComponent.builder()
                 .firebaseDependentComponent(mFirebaseDependentComponent)
                 .allEmpsAbsModule(new AllEmpsAbsModule())
+                .build();
+
+        mDgAllEmpsAbsComponent = DaggerDgAllEmpsAbsComponent.builder()
+                .firebaseDependentComponent(mFirebaseDependentComponent)
+                .dgAllEmpsAbsModule(new DgAllEmpsAbsModule())
                 .build();
 
 
@@ -148,6 +159,12 @@ public class AttendanceApplication extends MultiDexApplication {
     }
 
     @NonNull
+    public DgAllEmpsAbsIDataModel getDgAllEmpsAbsIDataModel() {
+        mDgAllEmpsAbsIDataModel = new DgAllEmpsAbsDataModel(getDatabaseFirebaseReference(), getRealm());
+        return mDgAllEmpsAbsIDataModel;
+    }
+
+    @NonNull
     public ISchedulerProvider getSchedulerProvider() {
         return SchedulerProvider.getInstance();
     }
@@ -182,6 +199,7 @@ public class AttendanceApplication extends MultiDexApplication {
     private ApplicationComponent mApplicationComponent;
     private FirebaseDependentComponent mFirebaseDependentComponent;
     private AllEmpsAbsComponent mAllEmpsAbsComponent;
+    private DgAllEmpsAbsComponent mDgAllEmpsAbsComponent;
 
     public NetComponent getNetComponent() {
         return mNetComponent;
@@ -201,6 +219,10 @@ public class AttendanceApplication extends MultiDexApplication {
 
     public AllEmpsAbsComponent getAllEmpsAbsComponent() {
         return mAllEmpsAbsComponent;
+    }
+
+    public DgAllEmpsAbsComponent getDgAllEmpsAbsComponent() {
+        return mDgAllEmpsAbsComponent;
     }
 
 
