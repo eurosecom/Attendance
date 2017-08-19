@@ -22,21 +22,15 @@ import javax.inject.Inject;
  */
 public class DgAllEmpsAbsMvvmViewModel {
 
-    @Inject
+    //@Inject
     DgAllEmpsAbsIDataModel mDataModel;
-    @Inject
+    //@Inject
     ISchedulerProvider mSchedulerProvider;
 
-    @Inject
-    SharedPreferences mSharedPreferences;
+    //@Inject
+    //SharedPreferences mSharedPreferences;
 
-    @Inject
-    Realm realm;
-    @Inject
-    RealmController realmcontroller;
-
-
-    @Inject
+    //@Inject
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
                          @NonNull final ISchedulerProvider schedulerProvider) {
         mDataModel = dataModel;
@@ -48,7 +42,8 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get employees list from FB
     public Observable<List<Employee>> getObservableFBusersEmployee() {
 
-        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = mSharedPreferences.getString("usico", "");
+        String usicox = "44551142";
         Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBusersEmployee(usicox);
     }
@@ -57,7 +52,8 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get realmemployees list from FB
     public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee() {
 
-        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = mSharedPreferences.getString("usico", "");
+        String usicox = "44551142";
         Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBusersRealmEmployee(usicox);
     }
@@ -87,7 +83,8 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     @NonNull
     public Observable<List<Attendance>> getObservableFromFBforRealm() {
-        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = mSharedPreferences.getString("usico", "");
+        String usicox = "44551142";
         return mObservableAbsencesFromFB
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(umex -> mDataModel.getObservableAbsencesFromFB(umex, usicox));
@@ -115,7 +112,8 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get realmemployees my company
     public Observable<List<RealmCompany>> getObservableFBcompanyRealmEmployee() {
 
-        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = mSharedPreferences.getString("usico", "");
+        String usicox = "44551142";
         Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBmycompanyRealmEmployee(usicox);
     }

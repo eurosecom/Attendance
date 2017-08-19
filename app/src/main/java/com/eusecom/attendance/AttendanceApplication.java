@@ -8,17 +8,14 @@ import com.eusecom.attendance.dagger.components.AllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
-import com.eusecom.attendance.dagger.components.DaggerDgAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerFirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
 import com.eusecom.attendance.dagger.components.DaggerNetComponent;
-import com.eusecom.attendance.dagger.components.DgAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.FirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.GitHubComponent;
 import com.eusecom.attendance.dagger.components.NetComponent;
 import com.eusecom.attendance.dagger.modules.AllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
-import com.eusecom.attendance.dagger.modules.DgAllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.dagger.modules.GitHubModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
@@ -103,10 +100,7 @@ public class AttendanceApplication extends MultiDexApplication {
                 .allEmpsAbsModule(new AllEmpsAbsModule())
                 .build();
 
-        mDgAllEmpsAbsComponent = DaggerDgAllEmpsAbsComponent.builder()
-                .firebaseDependentComponent(mFirebaseDependentComponent)
-                .dgAllEmpsAbsModule(new DgAllEmpsAbsModule())
-                .build();
+
 
 
     }
@@ -191,6 +185,11 @@ public class AttendanceApplication extends MultiDexApplication {
         return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsIDataModel(), getSchedulerProvider());
     }
 
+    @NonNull
+    public DgAllEmpsAbsMvvmViewModel getDgAllEmpsAbsMvvmViewModel() {
+        return new DgAllEmpsAbsMvvmViewModel(getDgAllEmpsAbsIDataModel(), getSchedulerProvider());
+    }
+
 
     //dagger2 demo retrofit
 
@@ -199,7 +198,6 @@ public class AttendanceApplication extends MultiDexApplication {
     private ApplicationComponent mApplicationComponent;
     private FirebaseDependentComponent mFirebaseDependentComponent;
     private AllEmpsAbsComponent mAllEmpsAbsComponent;
-    private DgAllEmpsAbsComponent mDgAllEmpsAbsComponent;
 
     public NetComponent getNetComponent() {
         return mNetComponent;
@@ -221,9 +219,6 @@ public class AttendanceApplication extends MultiDexApplication {
         return mAllEmpsAbsComponent;
     }
 
-    public DgAllEmpsAbsComponent getDgAllEmpsAbsComponent() {
-        return mDgAllEmpsAbsComponent;
-    }
 
 
 }

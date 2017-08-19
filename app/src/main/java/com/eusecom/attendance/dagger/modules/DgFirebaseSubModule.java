@@ -3,9 +3,12 @@ package com.eusecom.attendance.dagger.modules;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+
 import com.eusecom.attendance.AttendanceApplication;
 import com.eusecom.attendance.DgAllEmpsAbsListFragment;
 import com.eusecom.attendance.DgAllEmpsAbsMvvmActivity;
+import com.eusecom.attendance.DgAllEmpsAbsMvvmViewModel;
 import com.eusecom.attendance.dagger.scopes.DgFirebaseScope;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
@@ -32,7 +35,7 @@ public class DgFirebaseSubModule {
     //private final DgAllEmpsAbsMvvmActivity activity;
 
     //do not forget add to ApplicationBinders
-    // must be instantiated with an activity
+    //module does not must be instantiated with an activity
     //public DgFirebaseSubModule(DgAllEmpsAbsMvvmActivity activity) { this.activity = activity; }
     public DgFirebaseSubModule() {  }
 
@@ -77,6 +80,13 @@ public class DgFirebaseSubModule {
     public DatabaseReference providesDatabaseReference(Application application) {
 
         return ((AttendanceApplication) application).getDatabaseFirebaseReference();
+    }
+
+    //problem if i providesDgAllEmpsAbsMvvmViewModel do not get sharedpreferences in mvvmviemodel
+    @Provides
+    @DgFirebaseScope
+    public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(Application application, DgAllEmpsAbsIDataModel dataModel, ISchedulerProvider schedulerProvider) {
+        return ((AttendanceApplication) application).getDgAllEmpsAbsMvvmViewModel();
     }
 
 
