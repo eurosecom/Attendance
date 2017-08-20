@@ -11,6 +11,7 @@ import com.eusecom.attendance.DgAllEmpsAbsMvvmActivity;
 import com.eusecom.attendance.DgAllEmpsAbsMvvmViewModel;
 import com.eusecom.attendance.dagger.scopes.DgFirebaseScope;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
+import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
@@ -64,8 +65,8 @@ public class DgFirebaseSubModule {
 
     @Provides
     @DgFirebaseScope
-    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(Application application, DatabaseReference databasereference, Realm realm) {
-        return ((AttendanceApplication) application).getDgAllEmpsAbsIDataModel();
+    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference, Realm realm) {
+        return new DgAllEmpsAbsDataModel(databasereference, realm);
     }
 
     @Provides

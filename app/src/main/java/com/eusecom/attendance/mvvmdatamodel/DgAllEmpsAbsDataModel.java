@@ -27,14 +27,9 @@ import javax.inject.Inject;
 
 public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
-    @Inject
     DatabaseReference mFirebaseDatabase;
-    @Inject
     Realm mRealm;
-    @Inject
-    SharedPreferences mSharedPreferences;
 
-    @Inject
     public DgAllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference, @NonNull final Realm realm) {
         mFirebaseDatabase = databaseReference;
         mRealm = realm;
@@ -46,10 +41,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<Employee>> getObservableFBusersEmployee(String usicox) {
 
-        //String usicoxx = mSharedPreferences.getString("usico", "");
-        //Log.d("DataModel ", usicoxx);
-
-        //injected
         Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
@@ -71,10 +62,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox) {
 
-        //String usicox = mSharedPreferences.getString("usico", "");
-        Log.d("DataModel ", usicox);
-
-        //injected
         Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
@@ -200,10 +187,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox) {
 
-        //get absences for ico and umex
-
-        //injected
-        //Query usersQuery = mFirebaseDatabase.child("company-absences").child(usicox).orderByChild("ume").equalTo(umex);
         Query usersQuery = mFirebaseDatabase.child("company-absences").child(usicox).orderByChild("ume").equalTo(umex);
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
@@ -351,8 +334,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<RealmCompany>> getObservableFBmycompanyRealmEmployee(String usicox) {
 
-
-        //injected
         Query usersQuery = mFirebaseDatabase.child("companies").orderByChild("cmico").equalTo(usicox).limitToFirst(1);
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)

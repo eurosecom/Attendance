@@ -48,7 +48,6 @@ public class AttendanceApplication extends MultiDexApplication {
 
     @NonNull
     private AllEmpsAbsIDataModel mAllEmpsAbsIDataModel;
-    private DgAllEmpsAbsIDataModel mDgAllEmpsAbsIDataModel;
     private DatabaseReference mDatabaseReference;
     private Realm mRealm;
 
@@ -150,12 +149,6 @@ public class AttendanceApplication extends MultiDexApplication {
     public AllEmpsAbsIDataModel getAllEmpsAbsIDataModel() {
         mAllEmpsAbsIDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference(), getRealm());
         return mAllEmpsAbsIDataModel;
-    }
-
-    @NonNull
-    public DgAllEmpsAbsIDataModel getDgAllEmpsAbsIDataModel() {
-        mDgAllEmpsAbsIDataModel = new DgAllEmpsAbsDataModel(getDatabaseFirebaseReference(), getRealm());
-        return mDgAllEmpsAbsIDataModel;
     }
 
     @NonNull

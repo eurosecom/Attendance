@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.eusecom.attendance.AttendanceApplication;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
+import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
@@ -106,8 +107,9 @@ public class FirebaseDependentModule {
 
     @Provides
     @Singleton
-    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(Application application, DatabaseReference databasereference, Realm realm) {
-        return ((AttendanceApplication) application).getDgAllEmpsAbsIDataModel();
+    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference, Realm realm) {
+        //return ((AttendanceApplication) application).getDgAllEmpsAbsIDataModel();
+        return new DgAllEmpsAbsDataModel(databasereference, realm);
     }
 
     @Provides
