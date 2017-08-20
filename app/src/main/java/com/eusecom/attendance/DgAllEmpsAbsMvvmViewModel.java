@@ -22,19 +22,23 @@ import javax.inject.Inject;
  */
 public class DgAllEmpsAbsMvvmViewModel {
 
-    //@Inject
+    //@Inject only by Base constructor injection, then i have got all provided dependencies in module DgFirebaseSubModule
+    // injected in class DgAllEmpsAbsListFragment where i inject DgAllEmpsAbsMvvmViewModel
+    // If i provide dependency DgAllEmpsAbsMvvmViewModel in DgFirebaseSubModule then i have got in DgAllEmpsAbsMvvmViewMode only dependencies in constructor
     DgAllEmpsAbsIDataModel mDataModel;
-    //@Inject
+
+    //@Inject only by Base constructor injection
     ISchedulerProvider mSchedulerProvider;
 
-    //@Inject
-    //SharedPreferences mSharedPreferences;
+    //@Inject only by Base constructor injection
+    SharedPreferences mSharedPreferences;
 
-    //@Inject
+    //@Inject only by Base constructor injection
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
-                         @NonNull final ISchedulerProvider schedulerProvider) {
+                         @NonNull final ISchedulerProvider schedulerProvider, @NonNull final SharedPreferences sharedPreferences) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
+        mSharedPreferences = sharedPreferences;
     }
 
     //recyclerview method
@@ -42,9 +46,9 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get employees list from FB
     public Observable<List<Employee>> getObservableFBusersEmployee() {
 
-        //String usicox = mSharedPreferences.getString("usico", "");
-        String usicox = "44551142";
-        Log.d("MvvmViewModel ", usicox);
+        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = "44551142";
+        //Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBusersEmployee(usicox);
     }
     //end get employees list from FB
@@ -52,9 +56,9 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get realmemployees list from FB
     public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee() {
 
-        //String usicox = mSharedPreferences.getString("usico", "");
-        String usicox = "44551142";
-        Log.d("MvvmViewModel ", usicox);
+        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = "44551142";
+        //Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBusersRealmEmployee(usicox);
     }
     //end get realmemployees list from FB
@@ -83,8 +87,8 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     @NonNull
     public Observable<List<Attendance>> getObservableFromFBforRealm() {
-        //String usicox = mSharedPreferences.getString("usico", "");
-        String usicox = "44551142";
+        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = "44551142";
         return mObservableAbsencesFromFB
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(umex -> mDataModel.getObservableAbsencesFromFB(umex, usicox));
@@ -112,9 +116,9 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get realmemployees my company
     public Observable<List<RealmCompany>> getObservableFBcompanyRealmEmployee() {
 
-        //String usicox = mSharedPreferences.getString("usico", "");
-        String usicox = "44551142";
-        Log.d("MvvmViewModel ", usicox);
+        String usicox = mSharedPreferences.getString("usico", "");
+        //String usicox = "44551142";
+        //Log.d("MvvmViewModel ", usicox);
         return mDataModel.getObservableFBmycompanyRealmEmployee(usicox);
     }
     //end get realmemployees list from FB

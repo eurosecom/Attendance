@@ -85,8 +85,9 @@ public class DgFirebaseSubModule {
     //problem if i providesDgAllEmpsAbsMvvmViewModel do not get sharedpreferences in mvvmviemodel
     @Provides
     @DgFirebaseScope
-    public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(Application application, DgAllEmpsAbsIDataModel dataModel, ISchedulerProvider schedulerProvider) {
-        return ((AttendanceApplication) application).getDgAllEmpsAbsMvvmViewModel();
+    public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(DgAllEmpsAbsIDataModel dataModel,
+                                                                       ISchedulerProvider schedulerProvider, SharedPreferences sharedPreferences) {
+        return new DgAllEmpsAbsMvvmViewModel(dataModel, schedulerProvider, sharedPreferences);
     }
 
 

@@ -185,12 +185,6 @@ public class AttendanceApplication extends MultiDexApplication {
         return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsIDataModel(), getSchedulerProvider());
     }
 
-    @NonNull
-    public DgAllEmpsAbsMvvmViewModel getDgAllEmpsAbsMvvmViewModel() {
-        return new DgAllEmpsAbsMvvmViewModel(getDgAllEmpsAbsIDataModel(), getSchedulerProvider());
-    }
-
-
     //dagger2 demo retrofit
 
     private NetComponent mNetComponent;
