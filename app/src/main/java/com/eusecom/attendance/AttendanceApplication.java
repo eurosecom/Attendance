@@ -99,11 +99,7 @@ public class AttendanceApplication extends MultiDexApplication {
                 .allEmpsAbsModule(new AllEmpsAbsModule())
                 .build();
 
-
-
-
     }
-
 
     private static AttendanceApplication instance;
 

@@ -15,11 +15,14 @@ import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.attendance.realm.RealmController;
+import com.eusecom.attendance.realm.RealmEmployee;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import java.util.List;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -30,6 +33,7 @@ import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 
 @Module
 public class DgFirebaseSubModule {
@@ -89,6 +93,12 @@ public class DgFirebaseSubModule {
     public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(DgAllEmpsAbsIDataModel dataModel,
                                                                        ISchedulerProvider schedulerProvider, SharedPreferences sharedPreferences) {
         return new DgAllEmpsAbsMvvmViewModel(dataModel, schedulerProvider, sharedPreferences);
+    }
+
+    @Provides
+    @DgFirebaseScope
+    public Observable<List<RealmEmployee>> providesViewModelGetObservableFBusersRealmEmployee(DgAllEmpsAbsMvvmViewModel dgAllEmpsAbsMvvmViewModel) {
+        return dgAllEmpsAbsMvvmViewModel.getObservableFBusersRealmEmployee();
     }
 
 

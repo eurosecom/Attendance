@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -49,12 +50,12 @@ public class DgAllEmpsAbsListFragment extends Fragment {
     @Inject
     SharedPreferences mSharedPreferences;
 
-    //create mvvm without dagger2
-    //@NonNull
-    //private AllEmpsAbsMvvmViewModel mViewModel;
-
     @Inject
     DgAllEmpsAbsMvvmViewModel mViewModel;
+
+    //inject mViewModel.getObservableFBusersRealmEmployee() provided in DgFirebaseSubModul
+    @Inject
+    Observable<List<RealmEmployee>> emViewModelgetObservableFBusersRealmEmployee;
 
     AlertDialog dialog = null;
 
@@ -185,7 +186,7 @@ public class DgAllEmpsAbsListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(mViewModel.getObservableFBusersRealmEmployee()
+        mSubscription.add(emViewModelgetObservableFBusersRealmEmployee
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setRealmEmployees));
