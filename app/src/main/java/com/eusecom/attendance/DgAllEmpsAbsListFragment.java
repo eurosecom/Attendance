@@ -54,8 +54,8 @@ public class DgAllEmpsAbsListFragment extends Fragment {
     DgAllEmpsAbsMvvmViewModel mViewModel;
 
     //inject mViewModel.getObservableFBusersRealmEmployee() provided in DgFirebaseSubModul
-    @Inject
-    Observable<List<RealmEmployee>> emViewModelgetObservableFBusersRealmEmployee;
+    //@Inject
+    //Observable<List<RealmEmployee>> emViewModelgetObservableFBusersRealmEmployee;
 
     AlertDialog dialog = null;
 
@@ -133,7 +133,8 @@ public class DgAllEmpsAbsListFragment extends Fragment {
                         .subcomponentBuilders()
                         .get(DgFirebaseSubComponent.Builder.class)
                         .get();
-        builder.activityModule(new DgFirebaseSubModule()).build().inject(this);
+        DgFirebaseSubComponent dgFirebaseSubComponent = builder.activityModule(new DgFirebaseSubModule()).build();
+        dgFirebaseSubComponent.inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), _rxBus, umex);
@@ -186,7 +187,7 @@ public class DgAllEmpsAbsListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(emViewModelgetObservableFBusersRealmEmployee
+        mSubscription.add(mViewModel.getObservableFBusersRealmEmployee()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::setRealmEmployees));
