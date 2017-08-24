@@ -11,11 +11,13 @@ import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerFirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
 import com.eusecom.attendance.dagger.components.DaggerNetComponent;
+import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
 import com.eusecom.attendance.dagger.components.FirebaseDependentComponent;
 import com.eusecom.attendance.dagger.components.GitHubComponent;
 import com.eusecom.attendance.dagger.components.NetComponent;
 import com.eusecom.attendance.dagger.modules.AllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
+import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
 import com.eusecom.attendance.dagger.modules.GitHubModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
@@ -99,6 +101,9 @@ public class AttendanceApplication extends MultiDexApplication {
                 .allEmpsAbsModule(new AllEmpsAbsModule())
                 .build();
 
+        mDgFirebaseSubComponent = createDgFirebaseSubComponent();
+
+
     }
 
     private static AttendanceApplication instance;
@@ -174,32 +179,47 @@ public class AttendanceApplication extends MultiDexApplication {
         return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsIDataModel(), getSchedulerProvider());
     }
 
-    //dagger2 demo retrofit
+    //dagger2 get components created in onCreate method
 
     private NetComponent mNetComponent;
-    private GitHubComponent mGitHubComponent;
-    private ApplicationComponent mApplicationComponent;
-    private FirebaseDependentComponent mFirebaseDependentComponent;
-    private AllEmpsAbsComponent mAllEmpsAbsComponent;
-
     public NetComponent getNetComponent() {
         return mNetComponent;
     }
 
+    private GitHubComponent mGitHubComponent;
     public GitHubComponent getGitHubComponent() {
         return mGitHubComponent;
     }
 
+    private ApplicationComponent mApplicationComponent;
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
     }
 
+    private FirebaseDependentComponent mFirebaseDependentComponent;
     public FirebaseDependentComponent getFirebaseDependentComponent() {
         return mFirebaseDependentComponent;
     }
 
+    private AllEmpsAbsComponent mAllEmpsAbsComponent;
     public AllEmpsAbsComponent getAllEmpsAbsComponent() {
         return mAllEmpsAbsComponent;
+    }
+
+    public DgFirebaseSubComponent mDgFirebaseSubComponent;
+    public DgFirebaseSubComponent getDgFirebaseSubComponent() {
+        return mDgFirebaseSubComponent;
+    }
+    public DgFirebaseSubComponent createDgFirebaseSubComponent(){
+
+        DgFirebaseSubComponent.Builder builder = (DgFirebaseSubComponent.Builder)
+            this.getApplicationComponent()
+                    .subcomponentBuilders()
+                    .get(DgFirebaseSubComponent.Builder.class)
+                    .get();
+        mDgFirebaseSubComponent = builder.activityModule(new DgFirebaseSubModule()).build();
+        return mDgFirebaseSubComponent;
+
     }
 
 

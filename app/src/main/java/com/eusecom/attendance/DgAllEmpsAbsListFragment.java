@@ -126,15 +126,17 @@ public class DgAllEmpsAbsListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //((AttendanceApplication) getActivity().getApplication()).getDgAllEmpsAbsComponent().inject(this);
+        //create component in AttendanceApplication
+        ((AttendanceApplication) getActivity().getApplication()).getDgFirebaseSubComponent().inject(this);
 
-        DgFirebaseSubComponent.Builder builder = (DgFirebaseSubComponent.Builder)
-                ((AttendanceApplication) getActivity().getApplication()).getApplicationComponent()
-                        .subcomponentBuilders()
-                        .get(DgFirebaseSubComponent.Builder.class)
-                        .get();
-        DgFirebaseSubComponent dgFirebaseSubComponent = builder.activityModule(new DgFirebaseSubModule()).build();
-        dgFirebaseSubComponent.inject(this);
+        //create component direct in class where it is injecting
+        //DgFirebaseSubComponent.Builder builder = (DgFirebaseSubComponent.Builder)
+        //        ((AttendanceApplication) getActivity().getApplication()).getApplicationComponent()
+        //                .subcomponentBuilders()
+        //                .get(DgFirebaseSubComponent.Builder.class)
+        //                .get();
+        //DgFirebaseSubComponent dgFirebaseSubComponent = builder.activityModule(new DgFirebaseSubModule()).build();
+        //dgFirebaseSubComponent.inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<RealmEmployee>emptyList(), _rxBus, umex);
