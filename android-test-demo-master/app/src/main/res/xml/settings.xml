@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings" >
+
+    <EditTextPreference
+        android:key="servername"
+        android:defaultValue="www.eshoptest.sk"
+        android:summary="@string/servername_summary"
+        android:title="@string/servername_title" />
+
+    <EditTextPreference
+        android:key="username"
+        android:summary="@string/username_summary"
+        android:title="@string/username_title" />
+
+    <EditTextPreference
+        android:key="userpsw"
+        android:summary="@string/userpsw_summary"
+        android:title="@string/userpsw_title" />
+
+    <EditTextPreference
+        android:key="usname"
+        android:enabled="true"
+        android:summary="@string/usname_summary"
+        android:title="@string/usname_title" />
+
+    <EditTextPreference
+        android:key="ustype"
+        android:enabled="false"
+        android:summary="@string/ustype_summary"
+        android:title="@string/ustype_title" />
+
+    <EditTextPreference
+        android:key="usadmin"
+        android:enabled="false"
+        android:summary="@string/usadmin_summary"
+        android:title="@string/usadmin_title" />
+
+    <EditTextPreference
+        android:key="usosc"
+        android:enabled="false"
+        android:summary="@string/usosc_summary"
+        android:title="@string/usosc_title" />
+
+    <EditTextPreference
+        android:key="usatw"
+        android:enabled="true"
+        android:summary="@string/usatw_summary"
+        android:title="@string/usatw_title" />
+
+    <EditTextPreference
+        android:key="usico"
+        android:enabled="false"
+        android:summary="@string/usico_summary"
+        android:title="@string/usico_title" />
+
+    <EditTextPreference
+        android:key="fir"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/fir_summary"
+        android:title="@string/fir_title" />
+
+    <EditTextPreference
+        android:key="rok"
+        android:defaultValue="2017"
+        android:enabled="true"
+        android:summary="@string/rok_summary"
+        android:title="@string/rok_title" />
+
+    <EditTextPreference
+        android:key="ume"
+        android:defaultValue="1.2017"
+        android:enabled="false"
+        android:summary="@string/ume_summary"
+        android:title="@string/ume_title" />
+        
+</PreferenceScreen>

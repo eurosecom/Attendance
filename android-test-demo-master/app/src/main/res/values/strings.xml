@@ -1,0 +1,33 @@
+<resources>
+  <string name="app_name">Test Demo</string>
+  <string name="date">Date</string>
+
+
+  //settings
+  <string name="action_settings">Settings</string>
+  <string name="servername_title">Server name.</string>
+  <string name="servername_summary">Server name to which you want to connect, for example www.edcom.sk, without http:\\</string>
+  <string name="username_title">Mail username.</string>
+  <string name="username_summary">Mail - username for login to Firebase.</string>
+  <string name="userpsw_title">User password.</string>
+  <string name="userpsw_summary">Password for login to Firebase.</string>
+  <string name="fir_title">Number of company.</string>
+  <string name="fir_summary">Number of company to which you want to connect.</string>
+  <string name="rok_title">Accounting year.</string>
+  <string name="rok_summary">Accounting year for attendance.</string>
+  <string name="ume_title">Accounting month.</string>
+  <string name="ume_summary">Accounting month for attendance. You can change in All Eployees Absences activity</string>
+  <string name="ustype_title">Type of User.</string>
+  <string name="ustype_summary">Set App by login. Admin, common user....</string>
+  <string name="usadmin_title">User is admin.</string>
+  <string name="usadmin_summary">0=no, 1=yes</string>
+  <string name="usico_title">Company of User.</string>
+  <string name="usico_summary">ID of Company where user work.</string>
+  <string name="usosc_title">ID number of User.</string>
+  <string name="usosc_summary">ID number of User at Company where user work.</string>
+  <string name="usatw_title">User at work.</string>
+  <string name="usatw_summary">1-user at work, 0-user leav work.</string>
+  <string name="usname_title">Name of user.</string>
+  <string name="usname_summary">Name of logged user.</string>
+
+</resources>
