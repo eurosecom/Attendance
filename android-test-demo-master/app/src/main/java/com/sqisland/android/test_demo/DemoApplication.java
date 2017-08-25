@@ -14,7 +14,7 @@ public class DemoApplication extends Application {
   protected DemoComponent createComponent() {
     return DaggerDemoComponent.builder()
             .applicationModule(new ApplicationModule(this))
-            .clockModule(new ClockModule()).build();
+            .build();
   }
 
   public DemoComponent component() {
