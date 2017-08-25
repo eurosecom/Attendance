@@ -14,9 +14,6 @@ import dagger.Component;
 @Component( modules = { ApplicationModule.class, ApplicationBinders.class })
 public interface ApplicationComponent {
 
-    //do not inject activity for subcomponent
-    //void inject(DemoDaggerOtherActivity activity);
-
 
     // Returns a map with all the builders mapped by their class.
     Map<Class<?>, Provider<SubcomponentBuilder>> subcomponentBuilders();

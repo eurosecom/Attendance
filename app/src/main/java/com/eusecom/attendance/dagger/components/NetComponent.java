@@ -1,9 +1,6 @@
 package com.eusecom.attendance.dagger.components;
 
-
-import com.eusecom.attendance.DemoDaggerSubActivity;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
-import com.eusecom.attendance.dagger.modules.MyActivityModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
 import com.eusecom.attendance.realm.RealmController;
 

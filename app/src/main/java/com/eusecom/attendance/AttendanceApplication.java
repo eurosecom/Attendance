@@ -9,17 +9,14 @@ import com.eusecom.attendance.dagger.components.ApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerFirebaseDependentComponent;
-import com.eusecom.attendance.dagger.components.DaggerGitHubComponent;
 import com.eusecom.attendance.dagger.components.DaggerNetComponent;
 import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
 import com.eusecom.attendance.dagger.components.FirebaseDependentComponent;
-import com.eusecom.attendance.dagger.components.GitHubComponent;
 import com.eusecom.attendance.dagger.components.NetComponent;
 import com.eusecom.attendance.dagger.modules.AllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
 import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
-import com.eusecom.attendance.dagger.modules.GitHubModule;
 import com.eusecom.attendance.dagger.modules.NetModule;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsDataModel;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
@@ -80,11 +77,6 @@ public class AttendanceApplication extends MultiDexApplication {
         mNetComponent = DaggerNetComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .netModule(new NetModule("https://api.github.com", "https://api.myserver.com"))
-                .build();
-
-        mGitHubComponent = DaggerGitHubComponent.builder()
-                .netComponent(mNetComponent)
-                .gitHubModule(new GitHubModule())
                 .build();
 
         mApplicationComponent = DaggerApplicationComponent.builder()
@@ -184,11 +176,6 @@ public class AttendanceApplication extends MultiDexApplication {
     private NetComponent mNetComponent;
     public NetComponent getNetComponent() {
         return mNetComponent;
-    }
-
-    private GitHubComponent mGitHubComponent;
-    public GitHubComponent getGitHubComponent() {
-        return mGitHubComponent;
     }
 
     private ApplicationComponent mApplicationComponent;
