@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     String datetimes = clock.getNow().toString();
     todayView.setText(datetimes);
 
-    String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
+    String serverx = "From MainActivity " + mSharedPreferences.getString("servername", "");
     Toast.makeText(MainActivity.this, serverx, Toast.LENGTH_SHORT).show();
 
 
@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
 
+
+      case R.id.action_dgmyemployee:
+        startActivity(new Intent(this, DgAllEmpsAbsMvvmActivity.class));
+        //finish();
+        return true;
 
       case R.id.action_settings:
         startActivity(new Intent(this, SettingsActivity.class));

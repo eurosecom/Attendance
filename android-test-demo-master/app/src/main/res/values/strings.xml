@@ -30,4 +30,10 @@
   <string name="usname_title">Name of user.</string>
   <string name="usname_summary">Name of logged user.</string>
 
+  //dgallempsabs
+  <string name="descimg">descimg</string>
+  <string name="empty">empty</string>
+  <string name="action_dgmyemployee">Dg My employees</string>
+
+
 </resources>
