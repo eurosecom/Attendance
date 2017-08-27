@@ -29,6 +29,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
+import io.realm.Realm;
+
 
 public class  DgAllEmpsAbsMvvmActivity extends AppCompatActivity {
 
@@ -38,7 +42,11 @@ public class  DgAllEmpsAbsMvvmActivity extends AppCompatActivity {
     int whatispage=0;
     Toolbar mActionBarToolbar;
 
+    //@Inject
     SharedPreferences mSharedPreferences;
+
+    //@Inject
+    Realm realm;
 
 
     @Override

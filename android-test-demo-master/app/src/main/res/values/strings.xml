@@ -26,7 +26,7 @@
   <string name="usosc_title">ID number of User.</string>
   <string name="usosc_summary">ID number of User at Company where user work.</string>
   <string name="usatw_title">User at work.</string>
-  <string name="usatw_summary">1-user at work, 0-user leav work.</string>
+  <string name="usatw_summary">1-user at work, 0-user leave work.</string>
   <string name="usname_title">Name of user.</string>
   <string name="usname_summary">Name of logged user.</string>
 
