@@ -10,6 +10,7 @@ import com.eusecom.attendance.realm.RealmEmployee;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 
@@ -241,9 +242,42 @@ public class AllEmpsAbsRxRealmViewHolder extends RecyclerView.ViewHolder impleme
 
       if( employee.getDay31().equals("1") ) { day31.setBackgroundColor(mContext.getResources().getColor(R.color.material_red_A200)); }
 
-
-
     }
+
+      day29.setVisibility(View.VISIBLE); day30.setVisibility(View.VISIBLE); day31.setVisibility(View.VISIBLE);
+
+      //Number of days in particular month of particular year
+      int iYear = Integer.parseInt(rok);
+      int mesiaci = Integer.parseInt(mesiac);
+      // 1 (months begin with 0)
+
+      mesiaci = mesiaci - 1;
+      int iMonth = Calendar.JANUARY;
+      if( mesiaci == 1 ) { iMonth = Calendar.FEBRUARY; }
+      if( mesiaci == 2 ) { iMonth = Calendar.MARCH; }
+      if( mesiaci == 3 ) { iMonth = Calendar.APRIL; }
+      if( mesiaci == 4 ) { iMonth = Calendar.MAY; }
+      if( mesiaci == 5 ) { iMonth = Calendar.JUNE; }
+      if( mesiaci == 6 ) { iMonth = Calendar.JULY; }
+      if( mesiaci == 7 ) { iMonth = Calendar.AUGUST; }
+      if( mesiaci == 8 ) { iMonth = Calendar.SEPTEMBER; }
+      if( mesiaci == 9 ) { iMonth = Calendar.OCTOBER; }
+      if( mesiaci == 10 ) { iMonth = Calendar.NOVEMBER; }
+      if( mesiaci == 11 ) { iMonth = Calendar.DECEMBER; }
+
+      int iDay = 1;
+
+      // Create a calendar object and set year and month
+      Calendar mycal = new GregorianCalendar(iYear, iMonth, iDay);
+
+      // Get the number of days in that month
+      int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+      Log.d("daysInMonth ", daysInMonth + "");
+
+      if( daysInMonth < 29 ) { day29.setVisibility(View.INVISIBLE); }
+      if( daysInMonth < 30 ) { day30.setVisibility(View.INVISIBLE); }
+      if( daysInMonth < 31 ) { day31.setVisibility(View.INVISIBLE); }
 
   }
 

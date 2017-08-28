@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.models.Company;
@@ -247,6 +248,9 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
     private List<RealmEmployee> updateRealmAbsencesData(@NonNull final List<Attendance> absences) {
 
+
+        resetEmployeeRealmDate();
+
         //System.out.println("name " + employees.get(0).getUsername());
         ArrayList<RealmEmployee> realmemployees = new ArrayList<>();
 
@@ -452,6 +456,7 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
 
     private List<RealmCompany> updateCompanyRealmAbsencesData(@NonNull final List<Attendance> absences) {
 
+        resetCompanyRealmDate();
         //System.out.println("name " + employees.get(0).getUsername());
         ArrayList<RealmCompany> realmemployees = new ArrayList<>();
 
@@ -521,6 +526,111 @@ public class AllEmpsAbsDataModel implements AllEmpsAbsIDataModel {
         List<RealmCompany> results = mRealm.where(RealmCompany.class).findAll();
 
         return results;
+
+    }
+
+
+    private void resetEmployeeRealmDate() {
+
+        RealmResults<RealmEmployee> realmresults = mRealm.where(RealmEmployee.class)
+                .findAll();
+
+        mRealm.beginTransaction();
+        int size = realmresults.size();
+        for (int i = size-1; i >= 0; i--) {
+
+            realmresults.get(i).setDay01("0");
+            realmresults.get(i).setDay02("0");
+            realmresults.get(i).setDay03("0");
+            realmresults.get(i).setDay04("0");
+            realmresults.get(i).setDay05("0");
+            realmresults.get(i).setDay06("0");
+            realmresults.get(i).setDay07("0");
+            realmresults.get(i).setDay08("0");
+            realmresults.get(i).setDay09("0");
+            realmresults.get(i).setDay10("0");
+
+            realmresults.get(i).setDay11("0");
+            realmresults.get(i).setDay12("0");
+            realmresults.get(i).setDay13("0");
+            realmresults.get(i).setDay14("0");
+            realmresults.get(i).setDay15("0");
+            realmresults.get(i).setDay16("0");
+            realmresults.get(i).setDay17("0");
+            realmresults.get(i).setDay18("0");
+            realmresults.get(i).setDay19("0");
+            realmresults.get(i).setDay20("0");
+
+            realmresults.get(i).setDay21("0");
+            realmresults.get(i).setDay22("0");
+            realmresults.get(i).setDay23("0");
+            realmresults.get(i).setDay24("0");
+            realmresults.get(i).setDay25("0");
+            realmresults.get(i).setDay26("0");
+            realmresults.get(i).setDay27("0");
+            realmresults.get(i).setDay28("0");
+            realmresults.get(i).setDay29("0");
+            realmresults.get(i).setDay30("0");
+
+            realmresults.get(i).setDay31("0");
+
+
+
+
+        }
+        mRealm.commitTransaction();
+
+    }
+
+    private void resetCompanyRealmDate() {
+
+        RealmResults<RealmCompany> realmresults = mRealm.where(RealmCompany.class)
+                .findAll();
+
+        mRealm.beginTransaction();
+        int size = realmresults.size();
+        for (int i = size-1; i >= 0; i--) {
+
+            realmresults.get(i).setDay01("0");
+            realmresults.get(i).setDay02("0");
+            realmresults.get(i).setDay03("0");
+            realmresults.get(i).setDay04("0");
+            realmresults.get(i).setDay05("0");
+            realmresults.get(i).setDay06("0");
+            realmresults.get(i).setDay07("0");
+            realmresults.get(i).setDay08("0");
+            realmresults.get(i).setDay09("0");
+            realmresults.get(i).setDay10("0");
+
+            realmresults.get(i).setDay11("0");
+            realmresults.get(i).setDay12("0");
+            realmresults.get(i).setDay13("0");
+            realmresults.get(i).setDay14("0");
+            realmresults.get(i).setDay15("0");
+            realmresults.get(i).setDay16("0");
+            realmresults.get(i).setDay17("0");
+            realmresults.get(i).setDay18("0");
+            realmresults.get(i).setDay19("0");
+            realmresults.get(i).setDay20("0");
+
+            realmresults.get(i).setDay21("0");
+            realmresults.get(i).setDay22("0");
+            realmresults.get(i).setDay23("0");
+            realmresults.get(i).setDay24("0");
+            realmresults.get(i).setDay25("0");
+            realmresults.get(i).setDay26("0");
+            realmresults.get(i).setDay27("0");
+            realmresults.get(i).setDay28("0");
+            realmresults.get(i).setDay29("0");
+            realmresults.get(i).setDay30("0");
+
+            realmresults.get(i).setDay31("0");
+
+
+
+
+        }
+        mRealm.commitTransaction();
 
     }
 

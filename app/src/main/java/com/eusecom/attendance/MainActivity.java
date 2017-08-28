@@ -646,10 +646,15 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.clear();
         String ustypex = SettingsActivity.getUsType(this);
-        if( ustypex.equals("99")) {
-            getMenuInflater().inflate(R.menu.options_mainallmenu, menu);
-        }else{
-            getMenuInflater().inflate(R.menu.options_mainmenu, menu);
+
+        if (user == null) {
+            getMenuInflater().inflate(R.menu.options_mainnolog, menu);
+        }else {
+            if (ustypex.equals("99")) {
+                getMenuInflater().inflate(R.menu.options_mainallmenu, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.options_mainmenu, menu);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
