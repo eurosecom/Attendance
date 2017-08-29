@@ -59,10 +59,12 @@ public class  DgAllEmpsAbsMvvmActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
+                    new DgAllEmpsAbsListFragment(),
                     new EmptyFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                    getString(R.string.action_dgmyemployee)
+                    getString(R.string.action_dgmyemployee),
+                    getString(R.string.empty)
             };
             @Override
             public Fragment getItem(int position) {
