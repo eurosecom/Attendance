@@ -7,4 +7,12 @@ public class MockDemoApplication extends DemoApplication {
             .applicationModule(new ApplicationModule(this))
             .build();
   }
+
+  @Override
+  protected DemoComponent createDgComponent() {
+    return DaggerDgActivityTest_TestComponent.builder()
+            .applicationModule(new ApplicationModule(this))
+            .build();
+  }
+
 }

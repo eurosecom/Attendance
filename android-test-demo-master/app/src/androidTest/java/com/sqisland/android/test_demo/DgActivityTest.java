@@ -35,7 +35,7 @@ public class DgActivityTest {
 
   @Singleton
   @Component(modules = MockClockModule.class)
-  public interface DgTestComponent extends DemoComponent {
+  public interface TestComponent extends DemoComponent {
     void inject(DgActivityTest dgActivityTest);
   }
 
@@ -50,7 +50,7 @@ public class DgActivityTest {
     Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
     DemoApplication app
         = (DemoApplication) instrumentation.getTargetContext().getApplicationContext();
-    DgTestComponent component = (DgTestComponent) app.component();
+    TestComponent component = (TestComponent) app.dgcomponent();
     component.inject(this);
   }
 

@@ -16,6 +16,7 @@ public class DemoApplication extends Application {
 
 
   private final DemoComponent component = createComponent();
+  private final DemoComponent dgcomponent = createDgComponent();
   private Realm mRealm;
 
   @Override public void onCreate() {
@@ -38,6 +39,16 @@ public class DemoApplication extends Application {
 
   public DemoComponent component() {
     return component;
+  }
+
+  protected DemoComponent createDgComponent() {
+    return DaggerDemoComponent.builder()
+            .applicationModule(new ApplicationModule(this))
+            .build();
+  }
+
+  public DemoComponent dgcomponent() {
+    return dgcomponent;
   }
 
   @NonNull

@@ -18,7 +18,6 @@ android {
     versionName '1.0.0'
 
     testInstrumentationRunner 'com.sqisland.android.test_demo.MockTestRunner'
-    testInstrumentationRunner 'com.sqisland.android.test_demo.DgMockTestRunner'
   }
 
   buildTypes {
