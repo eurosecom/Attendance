@@ -1,17 +1,24 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
   compileSdkVersion 23
   buildToolsVersion '25.0.2'
 
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
   defaultConfig {
     applicationId 'com.sqisland.android.test_demo'
-    minSdkVersion 8
+    minSdkVersion 18
     targetSdkVersion 23
     versionCode 1
     versionName '1.0.0'
 
     testInstrumentationRunner 'com.sqisland.android.test_demo.MockTestRunner'
+    testInstrumentationRunner 'com.sqisland.android.test_demo.DgMockTestRunner'
   }
 
   buildTypes {
@@ -22,6 +29,8 @@ android {
 
   packagingOptions {
     exclude 'LICENSE.txt'
+    //duplicate files copied in apk meta-inf/rxjava
+    exclude 'META-INF/rxjava.properties'
   }
 }
 
@@ -39,6 +48,15 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
   provided 'javax.annotation:jsr250-api:1.0'
   compile 'joda-time:joda-time:2.9.9'
+
+  // Realm
+  compile 'io.realm:realm-android:0.82.1'
+
+  //rxjava
+  compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+  compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  compile 'io.reactivex:rxandroid:1.2.0'
+
 
   testCompile 'junit:junit:4.12'
   testCompile 'com.google.truth:truth:0.34'
