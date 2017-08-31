@@ -70,16 +70,7 @@ public class VyberUmeActivity extends ListActivity {
      	
      	editor.commit();
      	
-     	if( odkial.equals("0")) {
-     		
-     		Intent i = new Intent(getApplicationContext(), AllEmpsAbsMvvmActivity.class);
-            Bundle extras = new Bundle();
-            extras.putString(TAG_PAGEX, "0");
-            extras.putString(TAG_POKLX, "0");
-            i.putExtras(extras);
-            startActivity(i);
-            finish();
-     	}
+
      	if( odkial.equals("1")) {
      		
 

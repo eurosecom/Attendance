@@ -52,7 +52,6 @@
         <activity android:name=".EmployeeMvvmActivity"/>
         <activity android:name=".CompaniesMvvmActivity"/>
         <activity android:name=".CompanyChooseActivity"/>
-        <activity android:name=".AllEmpsAbsMvvmActivity"/>
         <activity android:name=".VyberUmeActivity"/>
         <activity android:name=".BeaconActivity"/>
         <activity android:name=".DgAllEmpsAbsMvvmActivity"/>

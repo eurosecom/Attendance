@@ -30,9 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
-import com.eusecom.attendance.dagger.components.FirebaseSubComponent;
 import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
-import com.eusecom.attendance.dagger.modules.FirebaseSubModule;
 import com.eusecom.attendance.realm.RealmCompany;
 import com.eusecom.attendance.rxbus.RxBus;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,8 +73,6 @@ public class  DgAllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allempsabs);
 
-        //inject DgAllEmpsAbsComponent
-        //((AttendanceApplication) getApplication()).getDgAllEmpsAbsComponent().inject(this);
 
         DgFirebaseSubComponent.Builder builder = (DgFirebaseSubComponent.Builder)
                 ((AttendanceApplication) getApplication()).getApplicationComponent()
@@ -85,10 +81,6 @@ public class  DgAllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
                         .get();
         builder.activityModule(new DgFirebaseSubModule()).build().inject(this);
 
-        // Obtain realm and realmcontroller instance classic
-        //realmcontroller = RealmController.with(this);
-        //realm = realmcontroller.getRealm();
-        //setRealmData();
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 
@@ -99,10 +91,12 @@ public class  DgAllEmpsAbsMvvmActivity extends BaseDatabaseActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new DgAllEmpsAbsListFragment()
+                    new DgAllEmpsAbsListFragment(),
+                    new DgAllEmpsCompAbsListFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                    getString(R.string.action_myemployee)
+                    getString(R.string.action_myemployee),
+                    getString(R.string.action_mycompany)
             };
             @Override
             public Fragment getItem(int position) {

@@ -1,29 +1,16 @@
 package com.eusecom.attendance;
 
-import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
-
-import com.eusecom.attendance.dagger.components.AllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
-import com.eusecom.attendance.dagger.components.DaggerAllEmpsAbsComponent;
 import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
-import com.eusecom.attendance.dagger.components.DaggerFirebaseDependentComponent;
-import com.eusecom.attendance.dagger.components.DaggerNetComponent;
 import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
-import com.eusecom.attendance.dagger.components.FirebaseDependentComponent;
-import com.eusecom.attendance.dagger.components.NetComponent;
-import com.eusecom.attendance.dagger.modules.AllEmpsAbsModule;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
-import com.eusecom.attendance.dagger.modules.FirebaseDependentModule;
-import com.eusecom.attendance.dagger.modules.NetModule;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsDataModel;
 import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
-import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsDataModel;
-import com.eusecom.attendance.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeIDataModel;
 import com.eusecom.attendance.mvvmschedulers.ISchedulerProvider;
@@ -74,24 +61,12 @@ public class AttendanceApplication extends MultiDexApplication {
         // specify the full namespace of the component
         // Dagger_xxxx (where xxxx = component name)
 
-        mNetComponent = DaggerNetComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .netModule(new NetModule("https://api.github.com", "https://api.myserver.com"))
-                .build();
 
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
 
-        mFirebaseDependentComponent = DaggerFirebaseDependentComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .firebaseDependentModule(new FirebaseDependentModule("https://api.github.com", "https://api.myserver.com"))
-                .build();
 
-        mAllEmpsAbsComponent = DaggerAllEmpsAbsComponent.builder()
-                .firebaseDependentComponent(mFirebaseDependentComponent)
-                .allEmpsAbsModule(new AllEmpsAbsModule())
-                .build();
 
         mDgFirebaseSubComponent = createDgFirebaseSubComponent();
 
@@ -165,32 +140,11 @@ public class AttendanceApplication extends MultiDexApplication {
         return new CompaniesMvvmViewModel(getCompaniesDataModel(), getSchedulerProvider());
     }
 
-    //we use only for classic create mvvmviewmodel without dagger2
-    @NonNull
-    public AllEmpsAbsMvvmViewModel getAllEmpsAbsMvvmViewModel() {
-        return new AllEmpsAbsMvvmViewModel(getAllEmpsAbsIDataModel(), getSchedulerProvider());
-    }
 
     //dagger2 get components created in onCreate method
-
-    private NetComponent mNetComponent;
-    public NetComponent getNetComponent() {
-        return mNetComponent;
-    }
-
     private ApplicationComponent mApplicationComponent;
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
-    }
-
-    private FirebaseDependentComponent mFirebaseDependentComponent;
-    public FirebaseDependentComponent getFirebaseDependentComponent() {
-        return mFirebaseDependentComponent;
-    }
-
-    private AllEmpsAbsComponent mAllEmpsAbsComponent;
-    public AllEmpsAbsComponent getAllEmpsAbsComponent() {
-        return mAllEmpsAbsComponent;
     }
 
     public DgFirebaseSubComponent mDgFirebaseSubComponent;

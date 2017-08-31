@@ -302,7 +302,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
         editor.commit();
-        
+
         String approvetopic = "approve" + userico;
         String mytopic = "mytopic" + myuserid;
 
