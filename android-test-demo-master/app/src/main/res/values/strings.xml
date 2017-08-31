@@ -33,7 +33,8 @@
   //dgallempsabs
   <string name="descimg">descimg</string>
   <string name="empty">empty</string>
-  <string name="action_dgmyemployee">Dg My employees</string>
+  <string name="action_dgmyemployee">Dg Frg My employees</string>
+  <string name="action_dgmyemployeeact">Dg Act My employees</string>
 
 
 

@@ -42,11 +42,6 @@ public class  DgAllEmpsAbsMvvmActivity extends AppCompatActivity {
     int whatispage=0;
     Toolbar mActionBarToolbar;
 
-    //@Inject
-    SharedPreferences mSharedPreferences;
-
-    //@Inject
-    Realm realm;
 
 
     @Override

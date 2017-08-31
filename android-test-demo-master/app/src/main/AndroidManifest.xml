@@ -16,5 +16,6 @@
     </activity>
     <activity android:name=".SettingsActivity"/>
     <activity android:name=".DgAllEmpsAbsMvvmActivity"/>
+    <activity android:name=".DgAeaActivity"/>
   </application>
 </manifest>

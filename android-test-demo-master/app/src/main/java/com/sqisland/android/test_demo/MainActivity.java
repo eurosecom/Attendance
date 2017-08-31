@@ -90,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         //finish();
         return true;
 
+      case R.id.action_dgaeaactivity:
+        startActivity(new Intent(this, DgAeaActivity.class));
+        //finish();
+        return true;
+
       case R.id.action_settings:
         startActivity(new Intent(this, SettingsActivity.class));
         //finish();

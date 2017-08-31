@@ -32,7 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class DgActivityTest {
+public class DgAeaActivityTest {
   @Inject
   Clock clock;
 
@@ -40,14 +40,14 @@ public class DgActivityTest {
   DgAllEmpsAbsMvvmViewModel mViewModel;
 
   @Singleton
-  @Component(modules = MockClockModule.class)
+  @Component(modules = MockDgAeaModule.class)
   public interface TestComponent extends DemoComponent {
-    void inject(DgActivityTest dgActivityTest);
+    void inject(DgAeaActivityTest dgAeaActivityTest);
   }
 
   @Rule
-  public ActivityTestRule<DgAllEmpsAbsMvvmActivity> activityRule = new ActivityTestRule<>(
-      DgAllEmpsAbsMvvmActivity.class,
+  public ActivityTestRule<DgAeaActivity> activityRule = new ActivityTestRule<>(
+      DgAeaActivity.class,
       true,     // initialTouchMode
       false);   // launchActivity. False so we can customize the intent per test method
 
@@ -57,14 +57,14 @@ public class DgActivityTest {
     Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
     DemoApplication app
         = (DemoApplication) instrumentation.getTargetContext().getApplicationContext();
-    TestComponent component = (TestComponent) app.dgcomponent();
+    TestComponent component = (TestComponent) app.dgaeacomponent();
     component.inject(this);
 
   }
 
   @Test
   public void today() {
-    
+
     Mockito.when(clock.getNow()).thenReturn(new DateTime(2008, 9, 23, 0, 0, 0));
     Observable<List<RealmEmployee>> obsr = getMockObservableEmployee();
     Mockito.when(mViewModel.getObservableFBusersRealmEmployee()).thenReturn(obsr);

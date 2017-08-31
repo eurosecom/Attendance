@@ -15,4 +15,11 @@ public class MockDemoApplication extends DemoApplication {
             .build();
   }
 
+  @Override
+  protected DemoComponent createDgAeaComponent() {
+    return DaggerDgAeaActivityTest_TestComponent.builder()
+            .applicationModule(new ApplicationModule(this))
+            .build();
+  }
+
 }

@@ -8,5 +8,6 @@ import dagger.Component;
 @Component(modules={ApplicationModule.class, ClockModule.class})
 public interface DemoComponent {
   void inject(MainActivity mainActivity);
+  void inject(DgAeaActivity dgaeaActivity);
   void inject(DgAllEmpsAbsListFragment fragment);
 }

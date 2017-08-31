@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import com.sqisland.android.test_demo.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.sqisland.android.test_demo.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.sqisland.android.test_demo.mvvmschedulers.ISchedulerProvider;
-import com.sqisland.android.test_demo.mvvmschedulers.ImmediateSchedulerProvider;
 import com.sqisland.android.test_demo.realm.RealmController;
 
 import org.mockito.Mockito;
@@ -19,12 +18,14 @@ import dagger.Provides;
 import io.realm.Realm;
 
 @Module(includes = {ApplicationModule.class} )
-public class MockClockModule {
+public class MockDgAeaModule {
+
   @Provides
   @Singleton
   Clock provideClock() {
     return Mockito.mock(Clock.class);
   }
+
 
   @Provides
   @Singleton
@@ -59,18 +60,8 @@ public class MockClockModule {
 
   @Provides
   @Singleton
-  public ImmediateSchedulerProvider providesImmediateSchedulerProvider(Application application) {
-
-    return new ImmediateSchedulerProvider();
-  }
-
-
-
-  @Provides
-  @Singleton
   public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(DgAllEmpsAbsIDataModel dataModel,
-                                                                     ImmediateSchedulerProvider immediateSchedulerProvider,
-                                                                     SharedPreferences sharedPreferences) {
+                                                                     ISchedulerProvider schedulerProvider, SharedPreferences sharedPreferences) {
     return Mockito.mock(DgAllEmpsAbsMvvmViewModel.class);
   }
 

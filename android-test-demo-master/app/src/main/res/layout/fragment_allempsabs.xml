@@ -12,6 +12,6 @@
         android:layout_alignParentTop="true"
         android:clipToPadding="false"
         android:padding="5dp"
-        tools:listitem="@layout/item_approve" />
+        />
 
 </FrameLayout>
