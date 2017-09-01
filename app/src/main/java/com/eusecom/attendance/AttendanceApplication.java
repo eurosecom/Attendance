@@ -4,11 +4,11 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import com.eusecom.attendance.dagger.components.ApplicationComponent;
 import com.eusecom.attendance.dagger.components.DaggerApplicationComponent;
+import com.eusecom.attendance.dagger.components.DaggerDemoComponent;
+import com.eusecom.attendance.dagger.components.DemoComponent;
 import com.eusecom.attendance.dagger.components.DgFirebaseSubComponent;
 import com.eusecom.attendance.dagger.modules.ApplicationModule;
 import com.eusecom.attendance.dagger.modules.DgFirebaseSubModule;
-import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsDataModel;
-import com.eusecom.attendance.mvvmdatamodel.AllEmpsAbsIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesDataModel;
 import com.eusecom.attendance.mvvmdatamodel.CompaniesIDataModel;
 import com.eusecom.attendance.mvvmdatamodel.EmployeeDataModel;
@@ -33,10 +33,8 @@ public class AttendanceApplication extends MultiDexApplication {
     private final EmployeeIDataModel mEmployeeDataModel;
 
     @NonNull
-    private AllEmpsAbsIDataModel mAllEmpsAbsIDataModel;
     private DatabaseReference mDatabaseReference;
     private Realm mRealm;
-
 
     @Override public void onCreate() {
         super.onCreate();
@@ -114,12 +112,6 @@ public class AttendanceApplication extends MultiDexApplication {
     }
 
     @NonNull
-    public AllEmpsAbsIDataModel getAllEmpsAbsIDataModel() {
-        mAllEmpsAbsIDataModel = new AllEmpsAbsDataModel(getDatabaseFirebaseReference(), getRealm());
-        return mAllEmpsAbsIDataModel;
-    }
-
-    @NonNull
     public ISchedulerProvider getSchedulerProvider() {
         return SchedulerProvider.getInstance();
     }
@@ -161,6 +153,18 @@ public class AttendanceApplication extends MultiDexApplication {
         mDgFirebaseSubComponent = builder.activityModule(new DgFirebaseSubModule()).build();
         return mDgFirebaseSubComponent;
 
+    }
+
+    private final DemoComponent dgaeacomponent = createDgAeaComponent();
+
+    protected DemoComponent createDgAeaComponent() {
+        return DaggerDemoComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+    }
+
+    public DemoComponent dgaeacomponent() {
+        return dgaeacomponent;
     }
 
 
