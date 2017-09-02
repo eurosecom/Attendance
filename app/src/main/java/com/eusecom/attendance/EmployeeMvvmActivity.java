@@ -224,7 +224,7 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(this::setLanguages));
 
-        mSubscription.add(mViewModel.getObservableFBusersEmployee()
+        mSubscription.add(mViewModel.getObservableFBusersEmployeeSpinner()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::setEmployees));
@@ -368,6 +368,14 @@ public class EmployeeMvvmActivity extends AppCompatActivity {
         assert mGreetingView != null;
 
         mGreetingView.setText(greeting);
+        String usicox = SettingsActivity.getUsIco(EmployeeMvvmActivity.this);
+
+        String[] conditionsx = {
+                greeting,
+                usicox
+        };
+
+        mViewModel.getBySpinnerEmloyee(conditionsx);
     }
 
     private void setLanguages(@NonNull final List<Language> languages) {

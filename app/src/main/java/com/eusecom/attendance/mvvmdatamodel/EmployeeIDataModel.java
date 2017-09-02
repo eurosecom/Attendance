@@ -19,6 +19,9 @@ public interface EmployeeIDataModel {
 
     //recyclerview methods
     @NonNull
+    Observable<List<Employee>> getObservableFBusersEmployeeSpinner(String[] conditionsx);
+
+    @NonNull
     Observable<String> getObservableKeyFBeditUser(@NonNull final Employee employee);
 
     @NonNull

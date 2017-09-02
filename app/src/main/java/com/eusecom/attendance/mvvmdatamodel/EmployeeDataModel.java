@@ -48,6 +48,37 @@ public class EmployeeDataModel implements EmployeeIDataModel {
     }
 
     //recyclerview datamodel
+    @NonNull
+    @Override
+    public Observable<List<Employee>> getObservableFBusersEmployeeSpinner(String[] conditionsx) {
+        final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
+
+        String spinnervalue = conditionsx[0];
+        String usicox = conditionsx[1];
+
+        Query usersQuery = firebaseRef.child("users");
+        if (spinnervalue.equals("Only my!")) {
+            usersQuery = firebaseRef.child("users").orderByChild("usico").equalTo(usicox);;
+        }
+        if (spinnervalue.equals("Only new!")) {
+            usersQuery = firebaseRef.child("users").orderByChild("usico").equalTo("0");;
+        }
+
+
+        return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
+                .flatMap(dataSnapshot ->{
+                    List<Employee> blogPostEntities = new ArrayList<>();
+                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                        String keys = childDataSnapshot.getKey();
+                        //System.out.println("keys " + keys);
+                        Employee resultx = childDataSnapshot.getValue(Employee.class);
+                        resultx.setKeyf(keys);
+                        blogPostEntities.add(resultx);
+                    }
+                    return Observable.just(blogPostEntities);
+                });
+
+    }
 
     @NonNull
     @Override
@@ -134,21 +165,21 @@ public class EmployeeDataModel implements EmployeeIDataModel {
     @NonNull
     private List<Language> getLanguages() {
         return Arrays
-                .asList(new Language("English", LanguageCode.EN),
-                        new Language("German", LanguageCode.DE),
-                        new Language("Slovakian", LanguageCode.HR));
+                .asList(new Language("My employees", LanguageCode.EN),
+                        new Language("New employees", LanguageCode.DE),
+                        new Language("All employees", LanguageCode.HR));
     }
 
     @NonNull
     @Override
     public Observable<String> getObservableGreetingByLanguageCode(@NonNull final LanguageCode code) {
         switch (code) {
-            case DE:
-                return Observable.just("Guten Tag!");
             case EN:
-                return Observable.just("Hello!");
+                return Observable.just("Only my!");
+            case DE:
+                return Observable.just("Only new!");
             case HR:
-                return Observable.just("Zdravo!");
+                return Observable.just("All!");
             default:
                 return Observable.empty();
         }

@@ -199,15 +199,15 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                             case 3:
 
-                                //Intent i3 = new Intent(mContext, DgAeaActivity.class);
-                                //v.getContext().startActivity(i3);
+                                Intent i3 = new Intent(mContext, BeaconActivity.class);
+                                v.getContext().startActivity(i3);
 
                                 break;
 
                             case 4:
 
-                                Intent i4 = new Intent(mContext, BeaconActivity.class);
-                                v.getContext().startActivity(i4);
+                                //Intent i4 = new Intent(mContext, DgAeaActivity.class);
+                                //v.getContext().startActivity(i4);
 
                                 break;
 

@@ -61,11 +61,32 @@ public class EmployeeMvvmViewModel {
         return mDataModel.getObservableFBusers();
     }
 
-    //mViewModel.getObservableFBusersEmployee get List<Employee>
+    //mViewModel.getObservableFBusersEmployee get List<Employee> without respect spinner value
     public Observable<List<Employee>> getObservableFBusersEmployee() {
         return mDataModel.getObservableFBusersEmployee();
     }
+    //mViewModel.getObservableFBusersEmployee get List<Employee> without respect spinner value
 
+    //List<Employee> to respect spinner value
+    @NonNull
+    private final BehaviorSubject<String[]> mObservableListdEmployeeBySpinner = BehaviorSubject.create();
+
+    public void getBySpinnerEmloyee(String[] conditionsx) {
+
+        mObservableListdEmployeeBySpinner.onNext(conditionsx);
+    }
+
+    @NonNull
+    public Observable<List<Employee>> getObservableFBusersEmployeeSpinner() {
+        return mObservableListdEmployeeBySpinner
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(conditionsx -> { return mDataModel.getObservableFBusersEmployeeSpinner(conditionsx); }
+                );
+    }
+
+    //List<Employee> to respect spinner value
+
+    //edited employee
     @NonNull
     private final BehaviorSubject<Employee> mObservableEditedEmployee = BehaviorSubject.create();
 
@@ -89,6 +110,7 @@ public class EmployeeMvvmViewModel {
                 .flatMap(employee -> { return mDataModel.getObservableKeyFBeditUser(employee); }
                 );
     }
+    //edited employee
 
 
     //spinner method

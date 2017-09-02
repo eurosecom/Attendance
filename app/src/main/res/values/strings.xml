@@ -133,8 +133,8 @@
     <string-array name="nav_drawer_items">
         <item >All employees absences</item>
         <item >Employees on Google Maps</item>
-        <item >Free</item>
         <item >Beacon activity</item>
+        <item >Free</item>
         <item >Free</item>
         <item >Free</item>
     </string-array>
