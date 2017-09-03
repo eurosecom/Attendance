@@ -18,6 +18,8 @@ public class Employee {
     public String usatw;
     public String keyf;
     public String admin;
+    public String lati;
+    public String longi;
 
     public Employee() {
         // Default constructor required for calls to DataSnapshot.getValue(Employee.class)
@@ -32,6 +34,8 @@ public class Employee {
         this.usatw = usatw;
         this.keyf = "0";
         this.admin = "0";
+        this.lati = "0";
+        this.longi = "0";
     }
 
     public Employee(String username, String usosc ) {
@@ -43,6 +47,8 @@ public class Employee {
         this.usatw = "0";
         this.keyf = "0";
         this.admin = "0";
+        this.lati = "0";
+        this.longi = "0";
     }
 
     @Exclude
@@ -129,6 +135,22 @@ public class Employee {
         return keyf;
     }
 
+    public String getLati() {
+        return lati;
+    }
+
+    public void setLati(String lati) {
+        this.lati = lati;
+    }
+
+    public String getLongi() {
+        return longi;
+    }
+
+    public void setLongi(String longi) {
+        this.longi = longi;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -140,6 +162,8 @@ public class Employee {
         result.put("usatw", usatw);
         result.put("keyf", keyf);
         result.put("admin", admin);
+        result.put("lati", lati);
+        result.put("longi", longi);
 
         return result;
     }

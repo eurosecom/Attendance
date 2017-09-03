@@ -421,6 +421,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
         mDatabase.child("users").child(userIDX).child("usatw").setValue(usatwx);
+        mDatabase.child("users").child(userIDX).child("lati").setValue(gpslat);
+        mDatabase.child("users").child(userIDX).child("longi").setValue(gpslon);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = prefs.edit();

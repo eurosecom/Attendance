@@ -14,6 +14,8 @@ public class User {
     public String usatw;
     public String keyf;
     public String admin;
+    public String lati;
+    public String longi;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -24,6 +26,8 @@ public class User {
         this.email = email;
         this.keyf = "0";
         this.admin = "0";
+        this.lati = "0";
+        this.longi = "0";
     }
 
     public User(String username, String email, String ustype, String usico, String usatw) {
@@ -35,6 +39,8 @@ public class User {
         this.usatw = usatw;
         this.keyf = "0";
         this.admin = "0";
+        this.lati = "0";
+        this.longi = "0";
     }
 
     public String getAdmin() {
@@ -54,6 +60,24 @@ public class User {
         this.usatw = usatw;
         this.keyf = "0";
         this.admin = "0";
+        this.lati = "0";
+        this.longi = "0";
+    }
+
+    public String getLati() {
+        return lati;
+    }
+
+    public void setLati(String lati) {
+        this.lati = lati;
+    }
+
+    public String getLongi() {
+        return longi;
+    }
+
+    public void setLongi(String longi) {
+        this.longi = longi;
     }
 
     public String getUstype() {
