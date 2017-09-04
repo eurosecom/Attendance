@@ -177,7 +177,6 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
                         switch (pos) {
 
                             case 1:
-
                                 String ustype = SettingsActivity.getUsType(mContext);
                                 if (ustype.equals("99")) {
                                     Intent i = new Intent(mContext, DgAeaActivity.class);
@@ -191,8 +190,13 @@ public class MainDrawerAdapter extends RecyclerView.Adapter<MainDrawerAdapter.Vi
 
                             case 2:
 
+                                String ustype2 = SettingsActivity.getUsType(mContext);
+                                if (ustype2.equals("99")) {
                                 Intent i2 = new Intent(mContext, MapActivity.class);
                                 v.getContext().startActivity(i2);
+                                }else{
+                                    Toast.makeText(mContext, "Only for user type 99 ", Toast.LENGTH_SHORT).show();
+                                }
 
                                 break;
 
