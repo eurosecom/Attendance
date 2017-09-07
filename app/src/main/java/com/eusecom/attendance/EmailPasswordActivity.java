@@ -62,7 +62,7 @@ public class EmailPasswordActivity extends BaseActivity implements
     private FirebaseAuth.AuthStateListener mAuthListener;
     // [END declare_auth_listener]
 
-    String usertype="0", userico="0", myuserid="", username="", userosc="0", usadmin="0";
+    String usertype="0", userico="0", myuserid="", username="", userosc="0", usadmin="0", usuid="0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -211,6 +211,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         myuserid = user.getUid();
                         Log.d("usertype", usertype);
                         username = userx.getUsername();
+                        usuid = user.getUid();
 
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         SharedPreferences.Editor editor = prefs.edit();
@@ -220,6 +221,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         editor.putString("usico", userico).apply();
                         editor.putString("usosc", userosc).apply();
                         editor.putString("usname", username).apply();
+                        editor.putString("usuid", usuid).apply();
 
                         editor.commit();
 
@@ -244,6 +246,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                         editor.putString("usico", "0").apply();
                         editor.putString("usosc", "0").apply();
                         editor.putString("usatw", "0").apply();
+                        editor.putString("usuid", "0").apply();
 
                         editor.commit();
                     }
@@ -261,6 +264,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         editor.putString("usico", "0").apply();
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
+        editor.putString("usuid", "0").apply();
 
         editor.commit();
 
@@ -301,6 +305,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         editor.putString("usico", "0").apply();
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
+        editor.putString("usuid", "0").apply();
         editor.commit();
 
         String approvetopic = "approve" + userico;
