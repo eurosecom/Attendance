@@ -1,0 +1,221 @@
+<resources>
+    <string name="app_name">Dochádzka</string>
+    <string name="hello_world">Ahoj Svet!</string>
+
+
+    <string name="hint_user_id">ID užívateľa</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Prihlásiť</string>
+    <string name="create_account">Vytvoriť účet</string>
+    <string name="sign_out">Odhlásiť</string>
+    <string name="disconnect">Odpojené</string>
+    <string name="loading">Načítavam dáta…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_out">Odhlásené</string>
+    <string name="hint_password">Heslo</string>
+    <string name="desc_firebase_lockup">Firebase logo a meno</string>
+    <string name="loginfb">Login do Firebase.</string>
+    <string name="outwork">Teraz nie ste v práci.</string>
+    <string name="atwork">Teraz ste v práci.</string>
+
+    <string name="emailpassword_status_fmt">Email User: %s</string>
+    <string name="emailpassword_usico_fmt">IČO firmy: %s</string>
+    <string name="emailpassword_title_text">Email a Heslo</string>
+    <string name="id_fmt">Užívateľ ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+
+    //storage
+    <string name="download">Stiahnuť</string>
+
+
+    //database
+    <string name="action_settings">Nastavenia</string>
+    <string name="action_setuserimage">Nastaviť môj obrázok</string>
+    <string name="action_seticoimage">Nastaviť obrázok firmy</string>
+    <string name="menu_login">Prihlásenie</string>
+    <string name="menu_logout">Odhlásenie</string>
+    <string name="menu_settings">Nastavenia</string>
+    <string name="login_label">Prihlásenie</string>
+    <string name="password_label">Heslo</string>
+    <string name="send_text">Poslať</string>
+    <string name="title_sign_in">Vitajte</string>
+    <string name="sign_up">Prihlásiťp</string>
+
+    <string name="kontzmaz">Zmazať</string>
+    <string name="kontadd">Pridať</string>
+    <string name="kontnic">Späť</string>
+    <string name="next">Ďalej</string>
+    <string name="delitem">Zmazať položku</string>
+    <string name="cantdel">Nemôžete mazať a upravovať položky staršie než 3 min.</string>
+    <string name="kontedit">Upraviť</string>
+    <string name="edititem">Upraviť položku</string>
+    <string name="item">Položka</string>
+
+    <string name="servername_title">Názov servera.</string>
+    <string name="servername_summary">Názov servera, ku ktorému sa chcete pripojiť napr. www.edcom.sk, bez http:\\</string>
+    <string name="username_title">Mail užívateľské meno.</string>
+    <string name="username_summary">Mail - užívateľs pre prihlásenie do Firebase.</string>
+    <string name="userpsw_title">Užívateľské heslo.</string>
+    <string name="userpsw_summary">Heslo pre prihlásenie do Firebase.</string>
+    <string name="fir_title">Číslo firmy.</string>
+    <string name="fir_summary">Číslo firmy na serveri, ktorú chcete pripojiť.</string>
+    <string name="rok_title">Účtovný rok.</string>
+    <string name="rok_summary">Účtovný rok.</string>
+    <string name="ume_title">Účtovný mesiac.</string>
+    <string name="ume_summary">Účtovný mesiac.</string>
+    <string name="ustype_title">Typ užívateľa.</string>
+    <string name="ustype_summary">Nastaví App pri prihlásení</string>
+    <string name="usuid_title">UID užívateľa.</string>
+    <string name="usuid_summary">Nastaví App pri prihlásení. UID užívateľa....</string>
+    <string name="usadmin_title">Užívateľ je admin.</string>
+    <string name="usadmin_summary">0=nie, 1=áno</string>
+    <string name="usico_title">IČO firmy uživateľa.</string>
+    <string name="usico_summary">IČO firmy kde užívateľ pracuje.</string>
+    <string name="usosc_title">Číslo užívateľa.</string>
+    <string name="usosc_summary">Osobné číslo užívateľa vo firme kde pracuje.</string>
+    <string name="usatw_title">Užívateľ v práci.</string>
+    <string name="usatw_summary">1-užívateľ v práci, 0-užívateľ nie je v práci.</string>
+    <string name="usname_title">Meno užívateľa.</string>
+    <string name="usname_summary">Meno prihláseného užívateľa.</string>
+
+    <!-- Nav Drawer -->
+    <string name="desc">Popis</string>
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Neprítomnosti zamestnancov</item>
+        <item >Zamestnanci na Google Mape</item>
+        <item >Beacon activita</item>
+        <item >Volné</item>
+        <item >Volné</item>
+        <item >Volné</item>
+    </string-array>
+    <string name="desc_list_item_icon">Ikona</string>
+
+
+    <string name="descimg">Popis</string>
+    <string name="empty">prázdne</string>
+    <string name="action_myemployee">Moji zamestnanci</string>
+    <string name="action_mycompany">Moja firma</string>
+    <string name="action_mycompanies">Moje firmy</string>
+    <string name="action_approve">Schváliť neprítomnosti</string>
+    <string name="action_absmysql">Neprítomnosti zo servera</string>
+
+    <string name="noico">Nie je IČO firmy</string>
+    <string name="qico">Chcete vybrať Ičo firmy ?</string>
+    <string name="incoming">Príchod do práce</string>
+    <string name="leaving">Odchod z práce</string>
+    <string name="qincoming">Chcete označiť príchod do práce ?</string>
+    <string name="qleaving">Chcete označiť odchod z práce ?</string>
+    <string name="login">Prihlásiť</string>
+    <string name="logout">Odhlásiť</string>
+    <string name="interruption">Prerušenie</string>
+    <string name="absence">Neprítomnosť</string>
+    <string name="newabsence">Nová neprítomnosť</string>
+    <string name="absences">Neprítomnosti</string>
+    <string name="attendances">Príchody/odchody</string>
+    <string name="approve">Schváliť</string>
+    <string name="refuse">Neschváliť</string>
+    <string name="close">Zatvoriť</string>
+
+    <string-array name="AbsenceSpinnerArray">
+        <item>506 Dovolenka</item>
+        <item>510 Sviatok</item>
+        <item>518 Lekár</item>
+        <item>520 Iné</item>
+        <item>801 Nemoc</item>
+    </string-array>
+    <string-array name="AbsenceSpinnerArrayIname">
+        <item>506 Dovolenka</item>
+        <item>510 Sviatok</item>
+        <item>518 Lekár</item>
+        <item>520 Iné</item>
+        <item>801 Nemoc</item>
+    </string-array>
+    <string name="select_absence">Vybrať neprítomnosť</string>
+
+    <string name="dateod">od dátumu</string>
+    <string name="datedo">do dátumu</string>
+    <string name="hodiny">hodiny v 1.dni, 0,nič = celý deň</string>
+    <string name="from">od</string>
+    <string name="to">do</string>
+    <string name="hodxb">hod.</string>
+    <string name="datm">poslané</string>
+    <string name="postedby">odoslal</string>
+
+    <string name="textyes">Áno</string>
+    <string name="textno">Nie</string>
+    <string name="textok">OK</string>
+    <string name="cantedititem">Nemôžete upravovať položky.</string>
+    <string name="cantdelitem">Nemôžete mazať položky.</string>
+    <string name="notconnected">Nepripojené.</string>
+
+    <!-- end for firebase messaging and iid service-->
+    <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the InstanceID token to logcat.</string>
+    <string name="subscribe_to_news">Subscribe To News</string>
+    <string name="log_token">Log Token</string>
+    <string name="msg_subscribed">Subscribed to news topic</string>
+    <string name="abssave">Neprítomnosť bola uložená.</string>
+    <string name="mesapprovesent">Neprítomnosť poslaná na schválenie.</string>
+    <string name="idliketoget">Žiadam o</string>
+    <string name="abs_saved">Neprítomnosť bola uložená na Server</string>
+    <string name="abs_savednot">Neprítomnosť nebola uložená na Server</string>
+    <string name="absapproved">Neprítomnosť schválená.</string>
+    <string name="absapprovedok">Neprítomnosť bola schválená.</string>
+    <string name="isapproved">Schválená neprítomnosť</string>
+    <string name="isrefused">Neschválená neprítomnosť</string>
+    <string name="absappandsavedtoserver">Neprítomnosť bola schválená a uložená na Server.</string>
+    <string name="absrefandsavedtoserver">Neprítomnosť nebola schválená.</string>
+
+
+    <!-- search finder-->
+    <string name="nothing_found">Žiadne položky</string>
+    <string name="search">hladať</string>
+    <string name="searchstring">Hladať text</string>
+
+    <!-- my employees-->
+    <string name="osc">zamestnanecId</string>
+    <string name="firma">compIčo</string>
+    <string name="fullosc">číslo zamestnanca</string>
+    <string name="fullfirma">Ičo firmy</string>
+    <string name="name">Meno</string>
+    <string name="type">typ</string>
+    <string name="email">email</string>
+    <string name="save">Uložiť</string>
+    <string name="saved">Uložené</string>
+    <string name="createemployee">Nového zamestnanca môžete vytvoriť len vytvorením email prihlasovacieho účtu v LoginAktivite.</string>
+
+    <!-- my companies-->
+    <string name="company">Firma</string>
+    <string name="newcompany">Nová firma</string>
+    <string name="choosecompany">Výbrať moju firmu</string>
+    <string name="city">Mesto</string>
+    <string name="active">Aktívne</string>
+    <string name="setup">Nastaviť</string>
+    <string name="allowedcompany">Prítupné len Adminovi.</string>
+    <string name="companycreated">Nová firma %s bola vytvorená.</string>
+    <string name="companyexist">Nová firma nebola vytvorená. Firma %s už existuje.</string>
+    <string name="createnewcompany">Vytvoriť novú firmu.</string>
+
+
+    <!-- AllEmpsAbsMvvmActivity -->
+    <string name="allempsabs">Neprítomnosť zamestnancov</string>
+    <string name="list">Zoznam</string>
+    <string name="calendar">kalendár</string>
+    <string name="lotofemp">Mnoho zamestnancov</string>
+    <string name="lotofempmes">Môžete mať max. 6 zamestnancov v aplikácii. Viac info na andrejd@edcom.sk</string>
+
+    <!-- Save image -->
+    <string name="saveicoimage" translatable="false">Uložiť obrázok firmy</string>
+    <string name="saveicoimagemsg" translatable="false">Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveuserimage" translatable="false">Uložiť obrázok užívateľa</string>
+    <string name="saveuserimagemsg" translatable="false">Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
+
+
+    <!-- Tests-->
+    <string name="myteststring">My test String</string>
+    <string name="abstypes">Druhy neprítomností</string>
+    <string name="cancel">Zrušiť</string>
+
+
+
+</resources>

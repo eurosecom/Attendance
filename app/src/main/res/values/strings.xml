@@ -1,94 +1,94 @@
 <resources>
     <string name="app_name">Attendance</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
 
-    <string name="label_google_sign_in">Firebase + Google Sign In</string>
-    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+    <string name="label_google_sign_in" translatable="false">Firebase + Google Sign In</string>
+    <string name="desc_google_sign_in" translatable="false">Use a Google Sign In credential to authenticate with Firebase.</string>
 
-    <string name="label_facebook_login">Firebase + Facebook Login</string>
-    <string name="desc_facebook_login">Use a Facebook Login credential to authenticate with Firebase.</string>
+    <string name="label_facebook_login" translatable="false">Firebase + Facebook Login</string>
+    <string name="desc_facebook_login" translatable="false">Use a Facebook Login credential to authenticate with Firebase.</string>
 
-    <string name="label_twitter_login">Firebase + Twitter Login</string>
-    <string name="desc_twitter_login">Use a Twitter Login credential to authenticate with Firebase.</string>
+    <string name="label_twitter_login" translatable="false">Firebase + Twitter Login</string>
+    <string name="desc_twitter_login" translatable="false">Use a Twitter Login credential to authenticate with Firebase.</string>
 
-    <string name="label_emailpassword">Login/Logout</string>
-    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+    <string name="label_emailpassword" translatable="false">Login/Logout</string>
+    <string name="desc_emailpassword" translatable="false">Use an email and password to authenticate with Firebase.</string>
 
-    <string name="label_anonymous_auth">Anonymous Authentication</string>
-    <string name="desc_anonymous_auth">Sign in anonymously and then later upgrade to a full Firebase Auth user..</string>
+    <string name="label_anonymous_auth" translatable="false">Anonymous Authentication</string>
+    <string name="desc_anonymous_auth" translatable="false">Sign in anonymously and then later upgrade to a full Firebase Auth user..</string>
 
-    <string name="label_custom_auth">Custom Authentication</string>
-    <string name="desc_custom_auth">Use a custom token signed by your own server to authenticate with Firebase.</string>
+    <string name="label_custom_auth" translatable="false">Custom Authentication</string>
+    <string name="desc_custom_auth" translatable="false">Use a custom token signed by your own server to authenticate with Firebase.</string>
 
-    <string name="label_storage">Storage</string>
-    <string name="desc_storage">Upload camera image to Firebase, download image from Firebase.</string>
+    <string name="label_storage" translatable="false">Storage</string>
+    <string name="desc_storage" translatable="false">Upload camera image to Firebase, download image from Firebase.</string>
 
-    <string name="label_database">Database</string>
-    <string name="desc_database">Database Firebase example.</string>
+    <string name="label_database" translatable="false">Database</string>
+    <string name="desc_database" translatable="false">Database Firebase example.</string>
 
     <string name="hint_user_id">User ID</string>
-    <string name="get_custom_token">Get Token</string>
-    <string name="sign_in">Sign In</string>
+    <string name="get_custom_token" translatable="false">Get Token</string>
+    <string name="sign_in" translatable="false">Sign In</string>
     <string name="create_account">Create Account</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="sign_out" translatable="false">Sign Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="loading">Loading…</string>
-    <string name="custom_token">Custom Token</string>
-    <string name="signed_out">Signed Out</string>
-    <string name="token_null">Token: null</string>
-    <string name="hint_email">Email</string>
+    <string name="custom_token" translatable="false">Custom Token</string>
+    <string name="signed_out" translatable="false">Signed Out</string>
+    <string name="token_null" translatable="false">Token: null</string>
+    <string name="hint_email" translatable="false">Email</string>
     <string name="hint_password">Password</string>
-    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="desc_firebase_lockup" translatable="false">Firebase logo and name</string>
     <string name="loginfb">Login to Firebase.</string>
     <string name="outwork">You are out of work now.</string>
     <string name="atwork">You are at work now.</string>
 
-    <string name="firebase_status_fmt">Firebase User: %s</string>
-    <string name="firebase_user_management">Firebase User Management</string>
+    <string name="firebase_status_fmt" translatable="false">Firebase User: %s</string>
+    <string name="firebase_user_management" translatable="false">Firebase User Management</string>
 
-    <string name="google_status_fmt">Google User: %s</string>
-    <string name="google_title_text">Google Sign In</string>
+    <string name="google_status_fmt" translatable="false">Google User: %s</string>
+    <string name="google_title_text" translatable="false">Google Sign In</string>
 
-    <string name="facebook_status_fmt">Facebook User: %s</string>
-    <string name="facebook_title_text">Facebook Login</string>
+    <string name="facebook_status_fmt" translatable="false">Facebook User: %s</string>
+    <string name="facebook_title_text" translatable="false">Facebook Login</string>
 
-    <string name="emailpassword_status_fmt">Email User: %s</string>
+    <string name="emailpassword_status_fmt" translatable="false">Email User: %s</string>
     <string name="emailpassword_usico_fmt">ID company: %s</string>
     <string name="emailpassword_title_text">Email and Password</string>
 
-    <string name="twitter_status_fmt">Twitter User: %s</string>
-    <string name="twitter_title_text">Twitter Login</string>
+    <string name="twitter_status_fmt" translatable="false">Twitter User: %s</string>
+    <string name="twitter_title_text" translatable="false">Twitter Login</string>
 
     <string name="id_fmt">User ID: %s</string>
-    <string name="email_fmt">Email: %s</string>
+    <string name="email_fmt" translatable="false">Email: %s</string>
 
     //storage
-    <string name="camera_button_text">Upload</string>
-    <string name="sign_in_prompt">Sign In to begin</string>
-    <string name="take_photo_prompt">Upload a Photo</string>
+    <string name="camera_button_text" translatable="false">Upload</string>
+    <string name="sign_in_prompt" translatable="false">Sign In to begin</string>
+    <string name="take_photo_prompt" translatable="false">Upload a Photo</string>
     <string name="download">Download</string>
-    <string name="sign_in_anonymously">Sign In</string>
-    <string name="rationale_storage">This sample reads images from your camera to demonstrate uploading.</string>
-    <string name="label_link">Link to Uploaded File</string>
-    <string name="label_download">Download File</string>
+    <string name="sign_in_anonymously" translatable="false">Sign In</string>
+    <string name="rationale_storage" translatable="false">This sample reads images from your camera to demonstrate uploading.</string>
+    <string name="label_link" translatable="false">Link to Uploaded File</string>
+    <string name="label_download" translatable="false">Download File</string>
 
     //database
     <string name="action_settings">Settings</string>
     <string name="action_setuserimage">Set my user image</string>
     <string name="action_seticoimage">Set my company image</string>
-    <string name="menu_login">Log in</string>
-    <string name="menu_logout">Log out</string>
+    <string name="menu_login" translatable="false">Log in</string>
+    <string name="menu_logout" translatable="false">Log out</string>
     <string name="menu_settings">Settings</string>
-    <string name="login_label">Log In</string>
-    <string name="email_label">Email</string>
+    <string name="login_label" translatable="false">Log In</string>
+    <string name="email_label" translatable="false">Email</string>
     <string name="password_label">Password</string>
     <string name="send_text">Send</string>
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec condimentum ante, quis mattis mi. Proin ut rhoncus libero, ac euismod neque. Ut suscipit, enim a facilisis consequat, orci lacus venenatis orci, at ultricies orci nulla sed ex. In condimentum viverra velit, eget feugiat libero imperdiet vel. Aenean pretium, lectus vitae bibendum bibendum, diam turpis convallis eros, quis tristique leo sapien at ipsum. Praesent eu odio id nulla lobortis auctor. Donec eget dolor eget nisl euismod commodo vel a lacus. Quisque ut justo vitae urna pharetra accumsan. Etiam dignissim neque iaculis mauris viverra, blandit rhoncus odio porttitor. Phasellus nibh arcu.</string>
+    <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec condimentum ante, quis mattis mi. Proin ut rhoncus libero, ac euismod neque. Ut suscipit, enim a facilisis consequat, orci lacus venenatis orci, at ultricies orci nulla sed ex. In condimentum viverra velit, eget feugiat libero imperdiet vel. Aenean pretium, lectus vitae bibendum bibendum, diam turpis convallis eros, quis tristique leo sapien at ipsum. Praesent eu odio id nulla lobortis auctor. Donec eget dolor eget nisl euismod commodo vel a lacus. Quisque ut justo vitae urna pharetra accumsan. Etiam dignissim neque iaculis mauris viverra, blandit rhoncus odio porttitor. Phasellus nibh arcu.</string>
     <string name="title_sign_in">Welcome</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up" translatable="false">Sign Up</string>
 
     <string name="kontzmaz">Delete</string>
-    <string name="randomdel">Random Delete</string>
+    <string name="randomdel" translatable="false">Random Delete</string>
     <string name="kontadd">Add</string>
     <string name="kontnic">Back</string>
     <string name="next">Next</string>
@@ -112,6 +112,8 @@
     <string name="ume_summary">Accounting month for attendance. You can change in All Eployees Absences activity</string>
     <string name="ustype_title">Type of User.</string>
     <string name="ustype_summary">Set App by login. Admin, common user....</string>
+    <string name="usuid_title">UID of User.</string>
+    <string name="usuid_summary">Set App by login. UID of user....</string>
     <string name="usadmin_title">User is admin.</string>
     <string name="usadmin_summary">0=no, 1=yes</string>
     <string name="usico_title">Company of User.</string>
@@ -124,10 +126,10 @@
     <string name="usname_summary">Name of logged user.</string>
 
     <!-- Nav Drawer -->
-    <string name="slider">Slider</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string>
-    <string name="desc">Desc</string>
+    <string name="slider" translatable="false">Slider</string>
+    <string name="drawer_open" translatable="false">Slider Menu Opened</string>
+    <string name="drawer_close" translatable="false">Slider Menu Closed</string>
+    <string name="desc" translatable="false">Desc</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
@@ -139,9 +141,9 @@
         <item >Free</item>
     </string-array>
 
-    <string name="app_name1">Slider Menu 1</string>
-    <string name="app_name2">Slider Menu 2</string>
-    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="app_name1" translatable="false">Slider Menu 1</string>
+    <string name="app_name2" translatable="false">Slider Menu 2</string>
+    <string name="desc_list_item_icon" translatable="false">Item Icon</string>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
@@ -155,7 +157,7 @@
         <item>@drawable/ic_image_edit</item>
     </array>
 
-    <string name="descimg">descimg</string>
+    <string name="descimg" translatable="false">descimg</string>
     <string name="empty">empty</string>
     <string name="action_myemployee">My employees</string>
     <string name="action_mycompany">My company</string>
@@ -169,7 +171,7 @@
     <string name="leaving">Leaving work</string>
     <string name="qincoming">Do you want to income to work ?</string>
     <string name="qleaving">Do you want to leave work ?</string>
-    <string name="login">Login</string>
+    <string name="login" translatable="false">Login</string>
     <string name="logout">Logout</string>
     <string name="interruption">Interruption</string>
     <string name="absence">Absence</string>
@@ -221,10 +223,10 @@
     <string name="notconnected">Not connected.</string>
 
     <!-- end for firebase messaging and iid service-->
-    <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the InstanceID token to logcat.</string>
-    <string name="subscribe_to_news">Subscribe To News</string>
-    <string name="log_token">Log Token</string>
-    <string name="msg_subscribed">Subscribed to news topic</string>
+    <string name="quickstart_message" translatable="false">Click the SUBSCRIBE TO NEWS button below to subscribe to the news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the InstanceID token to logcat.</string>
+    <string name="subscribe_to_news" translatable="false">Subscribe To News</string>
+    <string name="log_token" translatable="false">Log Token</string>
+    <string name="msg_subscribed" translatable="false">Subscribed to news topic</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
     <string name="abssave">Absence saved.</string>
@@ -252,7 +254,7 @@
     <string name="fullfirma">company Id</string>
     <string name="name">Name</string>
     <string name="type">type</string>
-    <string name="email">email</string>
+    <string name="email" translatable="false">email</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="cancel">Cancel</string>
@@ -271,16 +273,16 @@
     <string name="createnewcompany">Create new company.</string>
 
     <!-- dagger2 -->
-    <string name="daggerdemo">Demo dagger</string>
-    <string name="daggerdemorx">Demo dagger Rx</string>
-    <string name="daggerdemosub">Demo dagger SUB</string>
-    <string name="daggershow">Show cart</string>
-    <string name="daggerdel">Del item 0 from cart</string>
-    <string name="daggeradd">Add item 1 to cart</string>
-    <string name="daggeradd2">Add item 2 to cart</string>
-    <string name="daggeradd3">Add item 3 to cart</string>
-    <string name="daggerclear">Clear cart</string>
-    <string name="action_rxretrofit">Rx Retrofit</string>
+    <string name="daggerdemo" translatable="false">Demo dagger</string>
+    <string name="daggerdemorx" translatable="false">Demo dagger Rx</string>
+    <string name="daggerdemosub" translatable="false">Demo dagger SUB</string>
+    <string name="daggershow" translatable="false">Show cart</string>
+    <string name="daggerdel" translatable="false">Del item 0 from cart</string>
+    <string name="daggeradd" translatable="false">Add item 1 to cart</string>
+    <string name="daggeradd2" translatable="false">Add item 2 to cart</string>
+    <string name="daggeradd3" translatable="false">Add item 3 to cart</string>
+    <string name="daggerclear" translatable="false">Clear cart</string>
+    <string name="action_rxretrofit" translatable="false">Rx Retrofit</string>
 
     <!-- AllEmpsAbsMvvmActivity -->
     <string name="allempsabs">All employees absences</string>
@@ -289,12 +291,14 @@
     <string name="lotofemp">Lot of Employees</string>
     <string name="lotofempmes">You can hold 6 employees in App. For more write to andrejd@edcom.sk</string>
 
-    <!-- BeaconActivity -->
-
+    <!-- Save image -->
+    <string name="saveicoimage" translatable="false">Save Company Image</string>
+    <string name="saveicoimagemsg" translatable="false">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveuserimage" translatable="false">Save User Image</string>
+    <string name="saveuserimagemsg" translatable="false">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
 
     <!-- Tests-->
-    <string name="myteststring">My test String</string>
-
+    <string name="myteststring" translatable="false">My test String</string>
 
 
 </resources>
