@@ -13,6 +13,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String SERVER_NAME = "servername";
 	public static final String USER_PSW = "userpsw";
 	public static final String USER_NAME = "username";
+	public static final String USER_UID = "usuid";
 	public static final String FIR = "fir";
 	public static final String USER_TYPE = "ustype";
 	public static final String USER_ICO = "usico";
@@ -40,6 +41,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 			findPreference("usadmin").setEnabled(true);
 			findPreference("usosc").setEnabled(true);
 			findPreference("usico").setEnabled(true);
+			findPreference("usuid").setEnabled(true);
 		}
 	}
 
@@ -60,6 +62,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getUserName(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(USER_NAME, "");
+	}
+
+	public static String getUserUid(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(USER_UID, "");
 	}
 	
 	public static String getUserPsw(Context ctx){
