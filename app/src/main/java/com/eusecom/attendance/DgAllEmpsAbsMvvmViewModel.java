@@ -41,7 +41,21 @@ public class DgAllEmpsAbsMvvmViewModel {
         mSharedPreferences = sharedPreferences;
     }
 
-    //recyclerview method
+
+
+    //recyclerview method for MapActivity
+
+    //get realmemployees list from FB
+    public Observable<List<Employee>> getObservableFbEmployeeAtWork() {
+
+        String usicox = mSharedPreferences.getString("usico", "");
+        return mDataModel.getObservableEmployeeAtWork(usicox);
+    }
+    //end get realmemployees list from FB
+
+
+
+    //recyclerview method for DgAeaActivity
 
     //get employees list from FB
     public Observable<List<Employee>> getObservableFBusersEmployee() {
@@ -57,9 +71,15 @@ public class DgAllEmpsAbsMvvmViewModel {
     public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee() {
 
         String usicox = mSharedPreferences.getString("usico", "");
-        //String usicox = "44551142";
-        //Log.d("MvvmViewModel ", usicox);
-        return mDataModel.getObservableFBusersRealmEmployee(usicox);
+        String usermail = mSharedPreferences.getString("username", "");
+        int lenmoje=1;
+        String ustype = mSharedPreferences.getString("ustype", "");
+        if (ustype.equals("99")) {
+            lenmoje=0;
+        }else{
+
+        }
+        return mDataModel.getObservableFBusersRealmEmployee(usicox, usermail, lenmoje);
     }
     //end get realmemployees list from FB
 
@@ -88,10 +108,13 @@ public class DgAllEmpsAbsMvvmViewModel {
     @NonNull
     public Observable<List<Attendance>> getObservableFromFBforRealm() {
         String usicox = mSharedPreferences.getString("usico", "");
+        String usermail = mSharedPreferences.getString("username", "");
+        String ustype = mSharedPreferences.getString("ustype", "");
+
         //String usicox = "44551142";
         return mObservableAbsencesFromFB
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(umex -> mDataModel.getObservableAbsencesFromFB(umex, usicox));
+                .flatMap(umex -> mDataModel.getObservableAbsencesFromFB(umex, usicox, usermail, ustype));
     }
 
     //end get absences from FB for update realm

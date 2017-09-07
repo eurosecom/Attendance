@@ -68,6 +68,8 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
     @Inject
     RealmController realmcontroller;
 
+    int lenmoje=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,12 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
 
         ((AttendanceApplication) getApplication()).dgaeacomponent().inject(this);
 
+        String ustype = SettingsActivity.getUsType(this);
+        if (ustype.equals("99")) {
+            lenmoje=0;
+        }else{
+
+        }
 
         _rxBus = ((AttendanceApplication) getApplication()).getRxBusSingleton();
 
@@ -84,28 +92,59 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
         getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.allempsabs));
 
         // Create the adapter that will return a fragment for each section
-        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            private final Fragment[] mFragments = new Fragment[] {
-                    new DgAeaListFragment(),
-                    new DgAllEmpsCompAbsListFragment()
+        if( lenmoje == 0 ) {
+            mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+                private final Fragment[] mFragments = new Fragment[]{
+                        new DgAeaListFragment(),
+                        new DgAllEmpsCompAbsListFragment()
+                };
+                private final String[] mFragmentNames = new String[]{
+                        getString(R.string.action_myemployee),
+                        getString(R.string.action_mycompany)
+                };
+
+                @Override
+                public Fragment getItem(int position) {
+                    return mFragments[position];
+                }
+
+                @Override
+                public int getCount() {
+                    return mFragments.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return mFragmentNames[position];
+                }
             };
-            private final String[] mFragmentNames = new String[] {
-                    getString(R.string.action_myemployee),
-                    getString(R.string.action_mycompany)
+        }else{
+            mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+                private final Fragment[] mFragments = new Fragment[]{
+                        new DgAeaListFragment()
+                };
+                private final String[] mFragmentNames = new String[]{
+                        getString(R.string.action_myemployee)
+                };
+
+                @Override
+                public Fragment getItem(int position) {
+                    return mFragments[position];
+                }
+
+                @Override
+                public int getCount() {
+                    return mFragments.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return mFragmentNames[position];
+                }
             };
-            @Override
-            public Fragment getItem(int position) {
-                return mFragments[position];
-            }
-            @Override
-            public int getCount() {
-                return mFragments.length;
-            }
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mFragmentNames[position];
-            }
-        };
+        }
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
@@ -170,8 +209,8 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
         );
 
 
-        String serverx = mSharedPreferences.getString("servername", "");
-        Toast.makeText(DgAeaActivity.this, serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = mSharedPreferences.getString("servername", "");
+        //Toast.makeText(DgAeaActivity.this, serverx, Toast.LENGTH_SHORT).show();
 
 
     }

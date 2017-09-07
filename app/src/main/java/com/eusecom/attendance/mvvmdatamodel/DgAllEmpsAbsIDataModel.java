@@ -13,18 +13,22 @@ import rx.Observable;
 
 public interface DgAllEmpsAbsIDataModel {
 
-    //recyclerview methods
+    //recyclerview methods for MapActivity
+    @NonNull
+    Observable<List<Employee>> getObservableEmployeeAtWork(String usicox);
+
+    //recyclerview methods for DgAeaActivity
     @NonNull
     Observable<List<Employee>> getObservableFBusersEmployee(String usicox);
 
     @NonNull
-    Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox);
+    Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox, String usermail, int lenmoje);
 
     @NonNull
     Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees);
 
     @NonNull
-    Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox);
+    Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox, String usermail, String ustype);
 
     @NonNull
     Observable<String> getObservableUpdatedRealm(@NonNull final List<Attendance> absences);

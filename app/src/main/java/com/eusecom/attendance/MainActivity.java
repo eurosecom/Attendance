@@ -678,10 +678,37 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.setuserimage) {
 
+            String userxx = user.getUid();
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.saveuserimage))
+                    .setMessage(getString(R.string.saveuserimagemsg, userxx))
+                    .setNegativeButton(R.string.textok,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int whichButton) {
+                                    // ignore, just dismiss
+
+                                }
+                            })
+                    .show();
             return true;
         }
 
         if (id == R.id.seticoimage) {
+
+            String usicox = SettingsActivity.getUsIco(this);
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.saveicoimage))
+                    .setMessage(getString(R.string.saveicoimagemsg, usicox))
+                    .setNegativeButton(R.string.textok,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int whichButton) {
+                                    // ignore, just dismiss
+
+                                }
+                            })
+                    .show();
 
             return true;
         }
@@ -695,8 +722,23 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.absmysql) {
 
-            Intent is = new Intent(getApplicationContext(), AbsServerAsActivity.class);
-            startActivity(is);
+            String usfir = SettingsActivity.getFir(this);
+            int firx = 0;
+
+            try {
+                firx = Integer.parseInt(usfir);
+            } catch(NumberFormatException nfe) {
+                System.out.println("Could not parse " + nfe);
+            }
+            if (firx > 0 ) {
+                Intent is = new Intent(getApplicationContext(), AbsServerAsActivity.class);
+                startActivity(is);
+            }else{
+                String texttoast = getString(R.string.notconnected);
+                Toast.makeText(MainActivity.this, texttoast, Toast.LENGTH_LONG).show();
+            }
+
+
             return true;
         }
 

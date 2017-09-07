@@ -36,8 +36,29 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         mRealm = realm;
     }
 
+    //recyclerview datamodel for MapActivity
+    @NonNull
+    @Override
+    public Observable<List<Employee>> getObservableEmployeeAtWork(String usicox) {
 
-    //recyclerview datamodel
+        Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
+
+        return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
+                .flatMap(dataSnapshot ->{
+                    List<Employee> blogPostEntities = new ArrayList<>();
+                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                        String keys = childDataSnapshot.getKey();
+                        //System.out.println("keys " + keys);
+                        Employee resultx = childDataSnapshot.getValue(Employee.class);
+                        resultx.setKeyf(keys);
+                        blogPostEntities.add(resultx);
+                    }
+                    return Observable.just(blogPostEntities);
+                });
+
+    }
+
+    //recyclerview datamodel for DgAeaActivity
     @NonNull
     @Override
     public Observable<List<Employee>> getObservableFBusersEmployee(String usicox) {
@@ -61,9 +82,13 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox) {
+    public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox, String usermail, int lenmoje) {
 
         Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
+        if( lenmoje == 1 ){
+            usersQuery = mFirebaseDatabase.child("users").orderByChild("email").equalTo(usermail);
+            //System.out.println("condition " + usermail);
+        }
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
                 .flatMap(dataSnapshot ->{
@@ -186,9 +211,18 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox) {
+    public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox, String usermail, String ustype) {
 
+        int lenmoje=1;
+        if (ustype.equals("99")) {
+            lenmoje=0;
+        }else{
+
+        }
         Query usersQuery = mFirebaseDatabase.child("company-absences").child(usicox).orderByChild("ume").equalTo(umex);
+        if( lenmoje == 1 ){
+            usersQuery = mFirebaseDatabase.child("user-absences").child("K6u6ay4ghKbXRh7ZJTAEBoKLazm2").orderByChild("ume").equalTo(umex);
+        }
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
                 .flatMap(dataSnapshot ->{

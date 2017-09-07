@@ -137,8 +137,8 @@ public class DgAeaListFragment extends Fragment {
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
 
-        String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
-        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
+        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
     }//end of onActivityCreated
