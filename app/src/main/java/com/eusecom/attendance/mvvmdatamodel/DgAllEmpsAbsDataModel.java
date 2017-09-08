@@ -39,9 +39,18 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     //recyclerview datamodel for MapActivity
     @NonNull
     @Override
-    public Observable<List<Employee>> getObservableEmployeeAtWork(String usicox) {
+    public Observable<List<Employee>> getObservableEmployeeAtWork(String usicox, String usuid, String ustype) {
 
+        int lenmoje=1;
+        if (ustype.equals("99")) {
+            lenmoje=0;
+        }else{
+
+        }
         Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
+        if( lenmoje == 1 ){
+                usersQuery = mFirebaseDatabase.child("users").orderByChild("keyf").equalTo(usuid);
+        }
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
                 .flatMap(dataSnapshot ->{
@@ -82,11 +91,11 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox, String usermail, int lenmoje) {
+    public Observable<List<RealmEmployee>> getObservableFBusersRealmEmployee(String usicox, String usuid, int lenmoje) {
 
         Query usersQuery = mFirebaseDatabase.child("users").orderByChild("usico").equalTo(usicox);
         if( lenmoje == 1 ){
-            usersQuery = mFirebaseDatabase.child("users").orderByChild("email").equalTo(usermail);
+            usersQuery = mFirebaseDatabase.child("users").orderByChild("keyf").equalTo(usuid);
             //System.out.println("condition " + usermail);
         }
 
@@ -211,7 +220,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox, String usermail, String ustype) {
+    public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String umex, @NonNull final String usicox, String usuid, String ustype) {
 
         int lenmoje=1;
         if (ustype.equals("99")) {
@@ -221,7 +230,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         }
         Query usersQuery = mFirebaseDatabase.child("company-absences").child(usicox).orderByChild("ume").equalTo(umex);
         if( lenmoje == 1 ){
-            usersQuery = mFirebaseDatabase.child("user-absences").child("K6u6ay4ghKbXRh7ZJTAEBoKLazm2").orderByChild("ume").equalTo(umex);
+            usersQuery = mFirebaseDatabase.child("user-absences").child(usuid).orderByChild("ume").equalTo(umex);
         }
 
         return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
