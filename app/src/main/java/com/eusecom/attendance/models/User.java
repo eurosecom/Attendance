@@ -64,6 +64,19 @@ public class User {
         this.longi = "0";
     }
 
+    public User(String username, String email, String ustype, String usico, String usosc, String usatw, String keyf) {
+        this.username = username;
+        this.email = email;
+        this.ustype = ustype;
+        this.usico = usico;
+        this.usosc = usosc;
+        this.usatw = usatw;
+        this.keyf = keyf;
+        this.admin = "0";
+        this.lati = "0";
+        this.longi = "0";
+    }
+
     public String getLati() {
         return lati;
     }

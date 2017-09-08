@@ -287,7 +287,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         //save new user
         //String ustypex = SettingsActivity.getUsType(this);
-        User user = new User(name, email, usertypex, usericox, useroscx, useratwx);
+        User user = new User(name, email, usertypex, usericox, useroscx, useratwx, userId);
         Log.d("setvalue", usertypex);
         Log.d("setvalue", user.toString());
         //User user = new User(name, email);
