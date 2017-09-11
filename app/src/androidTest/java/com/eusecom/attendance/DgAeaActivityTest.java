@@ -9,6 +9,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.eusecom.attendance.dagger.components.DemoComponent;
+import com.eusecom.attendance.models.Attendance;
 import com.eusecom.attendance.realm.RealmEmployee;
 
 import org.junit.Before;
@@ -66,6 +67,17 @@ public class DgAeaActivityTest {
     Observable<List<RealmEmployee>> obsr = getMockObservableEmployee();
     Mockito.when(mViewModel.getObservableFBusersRealmEmployee()).thenReturn(obsr);
 
+    Observable<String> savedok = Observable.just("OK saved");
+    Mockito.when(mViewModel.getObservableDataSavedToRealm()).thenReturn(savedok);
+
+    List<Attendance> getatt = new ArrayList<>();
+    Observable<List<Attendance>> listatt = Observable.just(getatt);
+    Mockito.when(mViewModel.getObservableFromFBforRealm()).thenReturn(listatt);
+
+    Observable<List<RealmEmployee>> obsr2 = getMockObservableEmployee();
+    Mockito.when(mViewModel.getObservableDataUpdatedRealm()).thenReturn(obsr2);
+
+
     activityRule.launchActivity(new Intent());
 
     IdlingResource idlingResource = startTiming(3000);
@@ -76,11 +88,10 @@ public class DgAeaActivityTest {
 
 
     //click on fab
-    onView(allOf(withId(R.id.fab),isDisplayed()));
-    onView(withId(R.id.fab)).perform(click());
-    //onView(withId(R.id.date2)).check(matches(withText("2008-09-23T00:00:00.000+02:00")));
+    //onView(allOf(withId(R.id.fab),isDisplayed()));
+    //onView(withId(R.id.fab)).perform(click());
 
-    IdlingResource idlingResource2 = startTiming(3000);
+    IdlingResource idlingResource2 = startTiming(6000);
     onView(allOf(withId(R.id.fab),isDisplayed()));
     onView(withId(R.id.fab)).perform(click());
     stopTiming(idlingResource2);

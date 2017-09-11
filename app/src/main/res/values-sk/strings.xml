@@ -125,11 +125,11 @@
         <item>801 Nemoc</item>
     </string-array>
     <string-array name="AbsenceSpinnerArrayIname">
-        <item>506 Dovolenka</item>
-        <item>510 Sviatok</item>
-        <item>518 Lekár</item>
-        <item>520 Iné</item>
-        <item>801 Nemoc</item>
+        <item>Dovolenka</item>
+        <item>Sviatok</item>
+        <item>Lekár</item>
+        <item>Iné</item>
+        <item>Nemoc</item>
     </string-array>
     <string name="select_absence">Vybrať neprítomnosť</string>
 
