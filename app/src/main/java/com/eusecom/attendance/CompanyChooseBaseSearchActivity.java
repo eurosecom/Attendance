@@ -204,10 +204,12 @@ public abstract class CompanyChooseBaseSearchActivity extends AppCompatActivity 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
     mDatabase.child("users").child(user.getUid()).child("usico").setValue(model.cmico);
+    mDatabase.child("users").child(user.getUid()).child("ustype").setValue("0");
 
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     SharedPreferences.Editor editor = prefs.edit();
     editor.putString("usico", model.cmico).apply();
+    editor.putString("ustype", "0").apply();
     editor.commit();
 
     Toast.makeText(CompanyChooseBaseSearchActivity.this, texttoast,

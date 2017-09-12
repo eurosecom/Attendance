@@ -1,7 +1,6 @@
 package com.eusecom.attendance;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +39,7 @@ class CompaniesRxAdapter extends RecyclerView.Adapter<CompaniesRxViewHolder> {
         String icos = blogPostEntity.getCmico();
         if (isLongClick) {
 
-          Log.d("longClick", pos + " " + icos);
-          //remove(position);
+          //Log.d("longClick x", pos + " " + icos);
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
           }
