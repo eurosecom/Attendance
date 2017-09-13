@@ -144,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
 
-        if (!BuildConfig.RELEASEMODE) {
+        if (BuildConfig.RELEASEMODE) {
             String TITLES[] = {navMenuTitles[0], navMenuTitles[1]};
             mAdapter = new MainDrawerAdapter(this, TITLES, ICONS, NAME, EMAIL, PROFILE);
         }else{
