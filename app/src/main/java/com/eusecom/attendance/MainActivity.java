@@ -19,14 +19,19 @@ package com.eusecom.attendance;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -52,9 +57,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import android.Manifest;
+
+import static java.lang.System.out;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -94,6 +109,8 @@ public class MainActivity extends ActionBarActivity {
     ValueEventListener connlist;
     DatabaseReference connectedRef;
     AlertDialog dialognoico = null;
+    static final int REQUEST_IMAGE_OPENUSER = 1;
+    static final int REQUEST_IMAGE_OPENICO = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +120,19 @@ public class MainActivity extends ActionBarActivity {
         //Create Folder
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            //File folder = new File("/storage/emulated/0/eusecom/attendance");
-            File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/attendance");
-            if(!folder.exists()) {
-                folder.mkdirs();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1);
+            } else {
+                //File folder = new File("/storage/emulated/0/eusecom/attendance");
+                File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/attendance");
+                if(!folder.exists()) {
+                    folder.mkdirs();
+                }
             }
+
+
 
         }else{
 
@@ -699,6 +724,7 @@ public class MainActivity extends ActionBarActivity {
                                 public void onClick(DialogInterface dialog,
                                                     int whichButton) {
                                     // ignore, just dismiss
+                                    selectImage(1);
 
                                 }
                             })
@@ -717,6 +743,7 @@ public class MainActivity extends ActionBarActivity {
                                 public void onClick(DialogInterface dialog,
                                                     int whichButton) {
                                     // ignore, just dismiss
+                                    selectImage(2);
 
                                 }
                             })
@@ -740,7 +767,7 @@ public class MainActivity extends ActionBarActivity {
             try {
                 firx = Integer.parseInt(usfir);
             } catch(NumberFormatException nfe) {
-                System.out.println("Could not parse " + nfe);
+                out.println("Could not parse " + nfe);
             }
             if (firx > 0 ) {
                 Intent is = new Intent(getApplicationContext(), AbsServerAsActivity.class);
@@ -784,6 +811,99 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void selectImage(int ximage) {
+
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, ximage);
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE_OPENUSER) {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getPath(selectedImageUri);
+                //Toast.makeText(MainActivity.this, selectedImagePath, Toast.LENGTH_SHORT).show();
+                Log.d("selectedImagePath user", selectedImagePath);
+                savefile(selectedImagePath, 1);
+
+            }
+            if (requestCode == REQUEST_IMAGE_OPENICO) {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getPath(selectedImageUri);
+                //Toast.makeText(MainActivity.this, selectedImagePath, Toast.LENGTH_SHORT).show();
+                Log.d("selectedImagePath ico", selectedImagePath);
+                savefile(selectedImagePath, 2);
+
+            }
+        }
+    }
+
+    /**
+     * helper to retrieve the path of an image URI
+     */
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            // TODO perform some logging or show user feedback
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String path = cursor.getString(column_index);
+            return path;
+        }
+        cursor.close();
+        // this is our fallback here
+        return uri.getPath();
+    }
+
+
+    void savefile(String selectedImagePath, int ximage)
+    {
+
+        String sourceFilename= selectedImagePath;
+
+        String usuidx = SettingsActivity.getUserUid(this);
+        String destinationFilename = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usuidx + ".png";
+        if(ximage == 2 ){
+            String usicox = SettingsActivity.getUsIco(this);
+            destinationFilename = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usicox + ".png";
+        }
+        Log.d("selectedImagePath sour", sourceFilename);
+        Log.d("selectedImagePath dest", destinationFilename);
+
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+
+        try {
+            bis = new BufferedInputStream(new FileInputStream(sourceFilename));
+            bos = new BufferedOutputStream(new FileOutputStream(destinationFilename, false));
+            byte[] buf = new byte[1024];
+            bis.read(buf);
+            do {
+                bos.write(buf);
+                //Log.d("selectedImagePath buf", buf.toString());
+
+            } while(bis.read(buf) != -1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bis != null) bis.close();
+                if (bos != null) bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

@@ -72,7 +72,6 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
   private AbsServerAsAdapter mAdapter;
   private ProgressBar mProgressBar;
   Toolbar mActionBarToolbar;
-  List<String> cheeses;
   private RxBus _rxBus;
   private CompositeDisposable _disposables;
 
@@ -106,7 +105,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
     }
     _githubService = RfEtestService.createGithubService(githubToken, urlx);
 
-    cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
+    //cheeses = Arrays.asList(getResources().getStringArray(R.array.cheeses3));
 
     _rxBus = getRxBusSingleton();
 

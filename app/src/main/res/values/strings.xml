@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Attendance</string>
-    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="hello_world">Hello world!</string>
 
     <string name="label_google_sign_in" translatable="false">Firebase + Google Sign In</string>
     <string name="desc_google_sign_in" translatable="false">Use a Google Sign In credential to authenticate with Firebase.</string>
@@ -27,18 +27,18 @@
     <string name="desc_database" translatable="false">Database Firebase example.</string>
 
     <string name="hint_user_id">User ID</string>
-    <string name="get_custom_token" translatable="false">Get Token</string>
-    <string name="sign_in" translatable="false">Sign In</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Sign In</string>
     <string name="create_account">Create Account</string>
-    <string name="sign_out" translatable="false">Sign Out</string>
+    <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="loading">Loading…</string>
-    <string name="custom_token" translatable="false">Custom Token</string>
-    <string name="signed_out" translatable="false">Signed Out</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_out">Signed Out</string>
     <string name="token_null" translatable="false">Token: null</string>
     <string name="hint_email" translatable="false">Email</string>
     <string name="hint_password">Password</string>
-    <string name="desc_firebase_lockup" translatable="false">Firebase logo and name</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
     <string name="loginfb">Login to Firebase.</string>
     <string name="outwork">You are out of work now.</string>
     <string name="atwork">You are at work now.</string>
@@ -52,7 +52,7 @@
     <string name="facebook_status_fmt" translatable="false">Facebook User: %s</string>
     <string name="facebook_title_text" translatable="false">Facebook Login</string>
 
-    <string name="emailpassword_status_fmt" translatable="false">Email User: %s</string>
+    <string name="emailpassword_status_fmt">Email User: %s</string>
     <string name="emailpassword_usico_fmt">ID company: %s</string>
     <string name="emailpassword_title_text">Email and Password</string>
 
@@ -60,7 +60,7 @@
     <string name="twitter_title_text" translatable="false">Twitter Login</string>
 
     <string name="id_fmt">User ID: %s</string>
-    <string name="email_fmt" translatable="false">Email: %s</string>
+    <string name="email_fmt">Email: %s</string>
 
     //storage
     <string name="camera_button_text" translatable="false">Upload</string>
@@ -76,16 +76,16 @@
     <string name="action_settings">Settings</string>
     <string name="action_setuserimage">Set my user image</string>
     <string name="action_seticoimage">Set my company image</string>
-    <string name="menu_login" translatable="false">Log in</string>
-    <string name="menu_logout" translatable="false">Log out</string>
+    <string name="menu_login">Log in</string>
+    <string name="menu_logout">Log out</string>
     <string name="menu_settings">Settings</string>
-    <string name="login_label" translatable="false">Log In</string>
-    <string name="email_label" translatable="false">Email</string>
+    <string name="login_label">Log In</string>
+    <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="send_text">Send</string>
     <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec condimentum ante, quis mattis mi. Proin ut rhoncus libero, ac euismod neque. Ut suscipit, enim a facilisis consequat, orci lacus venenatis orci, at ultricies orci nulla sed ex. In condimentum viverra velit, eget feugiat libero imperdiet vel. Aenean pretium, lectus vitae bibendum bibendum, diam turpis convallis eros, quis tristique leo sapien at ipsum. Praesent eu odio id nulla lobortis auctor. Donec eget dolor eget nisl euismod commodo vel a lacus. Quisque ut justo vitae urna pharetra accumsan. Etiam dignissim neque iaculis mauris viverra, blandit rhoncus odio porttitor. Phasellus nibh arcu.</string>
     <string name="title_sign_in">Welcome</string>
-    <string name="sign_up" translatable="false">Sign Up</string>
+    <string name="sign_up">Sign Up</string>
 
     <string name="kontzmaz">Delete</string>
     <string name="randomdel" translatable="false">Random Delete</string>
@@ -129,7 +129,7 @@
     <string name="slider" translatable="false">Slider</string>
     <string name="drawer_open" translatable="false">Slider Menu Opened</string>
     <string name="drawer_close" translatable="false">Slider Menu Closed</string>
-    <string name="desc" translatable="false">Desc</string>
+    <string name="desc">Desc</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
@@ -143,7 +143,7 @@
 
     <string name="app_name1" translatable="false">Slider Menu 1</string>
     <string name="app_name2" translatable="false">Slider Menu 2</string>
-    <string name="desc_list_item_icon" translatable="false">Item Icon</string>
+    <string name="desc_list_item_icon">Item Icon</string>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
@@ -157,7 +157,7 @@
         <item>@drawable/ic_image_edit</item>
     </array>
 
-    <string name="descimg" translatable="false">descimg</string>
+    <string name="descimg">descimg</string>
     <string name="empty">empty</string>
     <string name="action_myemployee">My employees</string>
     <string name="action_mycompany">My company</string>
@@ -171,7 +171,7 @@
     <string name="leaving">Leaving work</string>
     <string name="qincoming">Do you want to income to work ?</string>
     <string name="qleaving">Do you want to leave work ?</string>
-    <string name="login" translatable="false">Login</string>
+    <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="interruption">Interruption</string>
     <string name="absence">Absence</string>
@@ -223,10 +223,10 @@
     <string name="notconnected">Not connected.</string>
 
     <!-- end for firebase messaging and iid service-->
-    <string name="quickstart_message" translatable="false">Click the SUBSCRIBE TO NEWS button below to subscribe to the news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the InstanceID token to logcat.</string>
-    <string name="subscribe_to_news" translatable="false">Subscribe To News</string>
-    <string name="log_token" translatable="false">Log Token</string>
-    <string name="msg_subscribed" translatable="false">Subscribed to news topic</string>
+    <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the InstanceID token to logcat.</string>
+    <string name="subscribe_to_news">Subscribe To News</string>
+    <string name="log_token">Log Token</string>
+    <string name="msg_subscribed">Subscribed to news topic</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
     <string name="abssave">Absence saved.</string>
@@ -254,7 +254,7 @@
     <string name="fullfirma">company Id</string>
     <string name="name">Name</string>
     <string name="type">type</string>
-    <string name="email" translatable="false">email</string>
+    <string name="email">email</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="cancel">Cancel</string>
@@ -292,13 +292,13 @@
     <string name="lotofempmes">You can hold 6 employees in App. For more write to andrejd@edcom.sk</string>
 
     <!-- Save image -->
-    <string name="saveicoimage" translatable="false">Save Company Image</string>
-    <string name="saveicoimagemsg" translatable="false">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
-    <string name="saveuserimage" translatable="false">Save User Image</string>
-    <string name="saveuserimagemsg" translatable="false">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveicoimage">Save Company Image</string>
+    <string name="saveicoimagemsg">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveuserimage">Save User Image</string>
+    <string name="saveuserimagemsg">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
 
     <!-- Tests-->
-    <string name="myteststring" translatable="false">My test String</string>
+    <string name="myteststring">My test String</string>
 
 
 </resources>

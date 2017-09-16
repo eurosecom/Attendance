@@ -10,7 +10,7 @@
     <string name="sign_out">Odhlásiť</string>
     <string name="disconnect">Odpojené</string>
     <string name="loading">Načítavam dáta…</string>
-    <string name="custom_token">Custom Token</string>
+    <string name="custom_token">Uživateľský token</string>
     <string name="signed_out">Odhlásené</string>
     <string name="hint_password">Heslo</string>
     <string name="desc_firebase_lockup">Firebase logo a meno</string>
@@ -124,6 +124,13 @@
         <item>520 Iné</item>
         <item>801 Nemoc</item>
     </string-array>
+    <string-array name="AbsenceSpinnerArrayIdm">
+        <item>506</item>
+        <item>510</item>
+        <item>518</item>
+        <item>520</item>
+        <item>801</item>
+    </string-array>
     <string-array name="AbsenceSpinnerArrayIname">
         <item>Dovolenka</item>
         <item>Sviatok</item>
@@ -205,16 +212,17 @@
     <string name="lotofempmes">Môžete mať max. 6 zamestnancov v aplikácii. Viac info na andrejd@edcom.sk</string>
 
     <!-- Save image -->
-    <string name="saveicoimage" translatable="false">Uložiť obrázok firmy</string>
-    <string name="saveicoimagemsg" translatable="false">Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
-    <string name="saveuserimage" translatable="false">Uložiť obrázok užívateľa</string>
-    <string name="saveuserimagemsg" translatable="false">Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveicoimage" >Uložiť obrázok firmy</string>
+    <string name="saveicoimagemsg" >Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveuserimage" >Uložiť obrázok užívateľa</string>
+    <string name="saveuserimagemsg" >Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
 
 
     <!-- Tests-->
-    <string name="myteststring">My test String</string>
+    <string name="myteststring">Test String</string>
     <string name="abstypes">Druhy neprítomností</string>
     <string name="cancel">Zrušiť</string>
+    <string name="email_label">Email</string>
 
 
 
