@@ -293,9 +293,9 @@
 
     <!-- Save image -->
     <string name="saveicoimage">Save Company Image</string>
-    <string name="saveicoimagemsg">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveicoimagemsg">You have to save PNG, JPG image to folder /sdcard/eusecom/attendance/photo%s.png[jpg]</string>
     <string name="saveuserimage">Save User Image</string>
-    <string name="saveuserimagemsg">You have to save PNG image max. 150kB to folder /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveuserimagemsg">You have to save PNG, JPG image to folder /sdcard/eusecom/attendance/photo%s.png[jpg]</string>
 
     <!-- Tests-->
     <string name="myteststring">My test String</string>

@@ -213,9 +213,9 @@
 
     <!-- Save image -->
     <string name="saveicoimage" >Uložiť obrázok firmy</string>
-    <string name="saveicoimagemsg" >Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveicoimagemsg" >Musíte uložiť PNG, JPG obrázok do adresára /sdcard/eusecom/attendance/photo%s.png[jpg]</string>
     <string name="saveuserimage" >Uložiť obrázok užívateľa</string>
-    <string name="saveuserimagemsg" >Musíte uložiť PNG obrázok max. 150kB do adresára /sdcard/eusecom/attendance/photo%s.png</string>
+    <string name="saveuserimagemsg" >Musíte uložiť PNG, JPG obrázok do adresára /sdcard/eusecom/attendance/photo%s.png[jpg]</string>
 
 
     <!-- Tests-->

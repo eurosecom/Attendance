@@ -56,6 +56,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -69,6 +71,7 @@ import java.util.HashMap;
 import java.util.Map;
 import android.Manifest;
 
+import static com.squareup.picasso.NetworkPolicy.NO_CACHE;
 import static java.lang.System.out;
 
 public class MainActivity extends ActionBarActivity {
@@ -482,25 +485,43 @@ public class MainActivity extends ActionBarActivity {
             String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
             String imgUser = baseDir + File.separator + "/eusecom/attendance/photo" + myID + ".png";
             File fileUser = new File(imgUser);
+            if(!fileUser.exists()){
+                imgUser = baseDir + File.separator + "/eusecom/attendance/photo" + myID + ".jpg";
+                fileUser = new File(imgUser);
+            }
             Log.d("imgUser  ", imgUser);
 
             String myICO =  SettingsActivity.getUsIco(MainActivity.this);
             String imgIco = baseDir + File.separator + "/eusecom/attendance/photo" + myICO + ".png";
             File fileIco = new File(imgIco);
+            if(!fileIco.exists()){
+                imgIco = baseDir + File.separator + "/eusecom/attendance/photo" + myICO + ".jpg";
+                fileIco = new File(imgIco);
+            }
             Log.d("imgIco  ", imgIco);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                 if(fileUser.exists()){
-                    Bitmap bmp = BitmapFactory.decodeFile(imgUser);
-                    mUserImage.setImageBitmap(bmp);
+                    //Bitmap bmp = BitmapFactory.decodeFile(imgUser);
+                    //mUserImage.setImageBitmap(bmp);
+                    //Picasso.with(this).invalidate(new File(imgUser));
+                    Picasso.with(this).load(new File(imgUser))
+                            .resize(800, 600)
+                            .centerInside()
+                            .into(mUserImage);
                 }else{
                     mUserImage.setImageDrawable(getResources().getDrawable(R.drawable.zamestnanec, getApplicationContext().getTheme()));
                 }
 
                 if(fileIco.exists()){
-                    Bitmap bmp2 = BitmapFactory.decodeFile(imgIco);
-                    mIntoworkImage.setImageBitmap(bmp2);
+                    //Bitmap bmp2 = BitmapFactory.decodeFile(imgIco);
+                    //mIntoworkImage.setImageBitmap(bmp2);
+                    //.with(this).invalidate(new File(imgIco));
+                    Picasso.with(this).load(new File(imgIco))
+                            .resize(800, 600)
+                            .centerInside()
+                            .into(mIntoworkImage);
                 }else{
                     mIntoworkImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
                 }
@@ -509,15 +530,25 @@ public class MainActivity extends ActionBarActivity {
             } else {
 
                 if(fileUser.exists()){
-                    Bitmap bmp = BitmapFactory.decodeFile(imgUser);
-                    mUserImage.setImageBitmap(bmp);
+                    //Bitmap bmp = BitmapFactory.decodeFile(imgUser);
+                    //mUserImage.setImageBitmap(bmp);
+                    //Picasso.with(this).invalidate(new File(imgUser));
+                    Picasso.with(this).load(new File(imgUser))
+                            .resize(800, 600)
+                            .centerInside()
+                            .into(mUserImage);
                 }else{
                     mUserImage.setImageDrawable(getResources().getDrawable(R.drawable.zamestnanec));
                 }
 
                 if(fileIco.exists()){
-                    Bitmap bmp2 = BitmapFactory.decodeFile(imgIco);
-                    mIntoworkImage.setImageBitmap(bmp2);
+                    //Bitmap bmp2 = BitmapFactory.decodeFile(imgIco);
+                    //mIntoworkImage.setImageBitmap(bmp2);
+                    //Picasso.with(this).invalidate(new File(imgIco));
+                    Picasso.with(this).load(new File(imgIco))
+                            .resize(800, 600)
+                            .centerInside()
+                            .into(mIntoworkImage);
                 }else{
                     mIntoworkImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
                 }
@@ -532,12 +563,21 @@ public class MainActivity extends ActionBarActivity {
                 String myICO3 =  SettingsActivity.getUsIco(MainActivity.this);
                 String imgIco3 = baseDir3 + File.separator + "/eusecom/attendance/photo" + myICO3 + ".png";
                 File fileIco3 = new File(imgIco3);
+                if(!fileIco3.exists()){
+                    imgIco3 = baseDir + File.separator + "/eusecom/attendance/photo" + myICO3 + ".jpg";
+                    fileIco3 = new File(imgIco3);
+                }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-                    if(fileIco.exists()){
-                        Bitmap bmp3 = BitmapFactory.decodeFile(imgIco3);
-                        mCompanyImage.setImageBitmap(bmp3);
+                    if(fileIco3.exists()){
+                        //Bitmap bmp3 = BitmapFactory.decodeFile(imgIco3);
+                        //mCompanyImage.setImageBitmap(bmp3);
+                        //Picasso.with(this).invalidate(new File(imgIco3));
+                        Picasso.with(this).load(new File(imgIco3))
+                                .resize(800, 600)
+                                .centerInside()
+                                .into(mCompanyImage);
                     }else{
                         mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new, getApplicationContext().getTheme()));
                     }
@@ -545,8 +585,13 @@ public class MainActivity extends ActionBarActivity {
                 } else {
 
                     if(fileIco.exists()){
-                        Bitmap bmp3 = BitmapFactory.decodeFile(imgIco3);
-                        mCompanyImage.setImageBitmap(bmp3);
+                        //Bitmap bmp3 = BitmapFactory.decodeFile(imgIco3);
+                        //mCompanyImage.setImageBitmap(bmp3);
+                        //Picasso.with(this).invalidate(new File(imgIco3));
+                        Picasso.with(this).load(new File(imgIco3))
+                                .resize(800, 600)
+                                .centerInside()
+                                .into(mCompanyImage);
                     }else{
                         mCompanyImage.setImageDrawable(getResources().getDrawable(R.drawable.add2new));
                     }
@@ -870,13 +915,34 @@ public class MainActivity extends ActionBarActivity {
     {
 
         String sourceFilename= selectedImagePath;
-
-        String usuidx = SettingsActivity.getUserUid(this);
-        String destinationFilename = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usuidx + ".png";
-        if(ximage == 2 ){
+        String mextension = selectedImagePath.substring(selectedImagePath.lastIndexOf("."));
+        String destinationFilename ="";
+        if(ximage == 1 ) {
+            String usuidx = SettingsActivity.getUserUid(this);
+            destinationFilename = Environment.getExternalStorageDirectory().getPath() + File.separatorChar + "eusecom/attendance/photo" + usuidx + mextension;
+            String delfilejpg = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usuidx + ".jpg";
+            File filedelj = new File(delfilejpg);
+            filedelj.delete();
+            Picasso.with(this).invalidate(new File(delfilejpg));
+            String delfilepng = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usuidx + ".png";
+            File filedelp = new File(delfilepng);
+            filedelp.delete();
+            Picasso.with(this).invalidate(new File(delfilepng));
+        }else{
             String usicox = SettingsActivity.getUsIco(this);
-            destinationFilename = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usicox + ".png";
+            destinationFilename = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usicox + mextension;
+            String delfilejpg = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usicox + ".jpg";
+            File filedelj = new File(delfilejpg);
+            filedelj.delete();
+            Picasso.with(this).invalidate(new File(delfilejpg));
+            String delfilepng = Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"eusecom/attendance/photo" + usicox + ".png";
+            File filedelp = new File(delfilepng);
+            filedelp.delete();
+            Picasso.with(this).invalidate(new File(delfilepng));
         }
+
+
+        Log.d("selectedImagePath ext", mextension);
         Log.d("selectedImagePath sour", sourceFilename);
         Log.d("selectedImagePath dest", destinationFilename);
 
