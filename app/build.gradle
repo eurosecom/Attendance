@@ -27,8 +27,8 @@ android {
         applicationId "com.eusecom.attendance"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 2
-        versionName "2.0"
+        versionCode 201
+        versionName "2.01"
         //try Selectively compiling com.google.android.gms:play-services APIs, do not need multi dex
         //https://developers.google.com/android/guides/setup
         multiDexEnabled true
@@ -51,6 +51,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "google_maps_api_key", "AIzaSyB8fogk4Bnb4Gt5Yslv3rKRFHjNfLewldk"
         }
+    }
+
+    lintOptions {
+        //checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        //abortOnError false
     }
 }
 
